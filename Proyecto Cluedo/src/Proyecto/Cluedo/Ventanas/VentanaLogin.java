@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -49,11 +51,7 @@ public class VentanaLogin extends JFrame {
 	
 	private JPasswordField contraseña;
 	
-	/**
-	 * Parametro que sirve para salir
-	 */
-	
-	private JLabel botonSalir;
+
 	
 	
 	
@@ -233,6 +231,7 @@ public class VentanaLogin extends JFrame {
 		
 		panel.setBackground(new Color(1.0f,1.0f,1.0f,0.5f));
 		
+		
 		//Añadimos al panel
 		
 		getContentPane().setLayout(null);
@@ -332,6 +331,15 @@ public class VentanaLogin extends JFrame {
 			}}}
 		});
 		
+		registrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaRegistro ventanas=new VentanaRegistro();
+				ventanas.setVisible(true);
+				
+			}
+		});
 		
 	}
 	
