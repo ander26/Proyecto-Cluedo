@@ -1,20 +1,43 @@
 package Proyecto.Cluedo.Ventanas;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.util.Date;
 
-
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -22,13 +45,16 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import com.toedter.calendar.JDateChooser;
 
 
 public class VentanaRegistro extends JFrame {
 
-	private JButton botonRegistrar;
+	private JLabel botonRegistrar;
 	
-	private JButton botonCancelar;
+	private JLabel botonCancelar;
 	
 	private JTextField textoNombre;
 	
@@ -44,8 +70,9 @@ public class VentanaRegistro extends JFrame {
 
 	private JTextField textoContraseña2;
 	
+	private JDateChooser fechas;
 	
-	
+	private Icon iconoPerfil;
 	
 	
 	
@@ -108,9 +135,9 @@ public class VentanaRegistro extends JFrame {
 		
 		
 		
-		botonRegistrar= new JButton("Registrar");
+		botonRegistrar= new JLabel();
 		
-		botonCancelar= new JButton("Cancelar");
+		botonCancelar= new JLabel();
 		
 		JRadioButton hombre= new JRadioButton("Hombre",true);
 		
@@ -122,9 +149,16 @@ public class VentanaRegistro extends JFrame {
 		
 		ImageIcon imagen = new ImageIcon();
 		
-		Icon iconoPerfil;
+		
 		
 		JLabel labelPerfil= new JLabel();
+		
+		
+		Icon iconoRegistrar;
+		
+		fechas= new JDateChooser();
+		
+		Icon iconoCancelar;
 		
 		//Establecemos el formato 
 		
@@ -189,9 +223,9 @@ public class VentanaRegistro extends JFrame {
 		
 		textoRespuesta.setBounds(226, 732, 296, 25);
 		
-		botonRegistrar.setBounds(138, 798, 145, 57);
+		botonRegistrar.setBounds(138, 798, 170, 50);
 		
-		botonCancelar.setBounds(338	, 798, 145, 57);
+		botonCancelar.setBounds(338	, 793, 178, 52);
 		
 		
 		nombre.setBounds(115, 309, 65, 27);
@@ -214,11 +248,40 @@ public class VentanaRegistro extends JFrame {
 		
 		respuesta.setBounds(115,736,154,17);
 		
-		listaPreguntas.setBounds(237, 688, 281, 25);
+		listaPreguntas.setBounds(237, 688, 285, 25);
 		
 		hombre.setBackground(new Color(1.0f,1.0f,1.0f,0.95f));
 		
 		mujer.setBackground(new Color(1.0f,1.0f,1.0f,0.95f));
+		
+		try {
+			imagen = new ImageIcon(VentanaLogin.class.getResource("Imagenes/Iocno registro.png").toURI().toURL());
+		} catch (Exception e) {
+			System.out.println("No se ha encontrado el archivo");
+		}
+		
+		
+		
+		iconoRegistrar= new ImageIcon(imagen.getImage().getScaledInstance(botonRegistrar.getWidth(), botonRegistrar.getHeight(), Image.SCALE_DEFAULT));
+		
+		botonRegistrar.setIcon(iconoRegistrar);
+		
+		fechas.setBounds(226, 641, 296, 25);
+
+		fechas.setMaxSelectableDate(new Date(System.currentTimeMillis()));
+		
+
+		try {
+			imagen = new ImageIcon(VentanaLogin.class.getResource("Imagenes/botonCancelar.png").toURI().toURL());
+		} catch (Exception e) {
+			System.out.println("No se ha encontrado el archivo");
+		}
+		
+		
+		
+		iconoCancelar= new ImageIcon(imagen.getImage().getScaledInstance(botonCancelar.getWidth(), botonCancelar.getHeight(), Image.SCALE_DEFAULT));
+		
+		botonCancelar.setIcon(iconoCancelar);
 		
 		//Añadimos al panel
 		
@@ -268,47 +331,126 @@ public class VentanaRegistro extends JFrame {
 		
 		getContentPane().add(botonRegistrar);
 		
+		getContentPane().add(fechas);
+		
+		
+		
 		
 		
 		//Eventos
 		
-		botonCancelar.addActionListener(new ActionListener() {
+		botonCancelar.addMouseListener(new MouseAdapter() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent arg0) {
 				dispose();
 				
 			}
 		});
 		
-		JSpinner spinnerDia = new JSpinner();
-		spinnerDia.setModel(new SpinnerNumberModel(23, 1, 31, 1));
-		spinnerDia.setBounds(395, 637, 65, 25);
-		getContentPane().add(spinnerDia);
+	
+	labelPerfil.addMouseListener(new MouseAdapter() {
 		
-		JSpinner spinnerMes = new JSpinner();
-		spinnerMes.setModel(new SpinnerNumberModel(5, 1, 12, 1));
-		
-		spinnerMes.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				if ((int)spinnerMes.getValue()==1||(int)spinnerMes.getValue()==3||(int)spinnerMes.getValue()==5||(int)spinnerMes.getValue()==7||(int)spinnerMes.getValue()==8||(int)spinnerMes.getValue()==10||(int)spinnerMes.getValue()==12){
-					spinnerDia.setModel(new SpinnerNumberModel(23, 1, 31, 1));
-				}else if ((int)spinnerMes.getValue()==2){
-					spinnerDia.setModel(new SpinnerNumberModel(23, 1, 28, 1));
-				}else {
-					spinnerDia.setModel(new SpinnerNumberModel(23, 1, 30, 1));
-				}
+		@Override
+		public void mouseClicked(MouseEvent e) {
 			
+			
+			
+			JFileChooser elegidor= new JFileChooser();
+			
+			
+			
+			FileNameExtensionFilter filtro = new FileNameExtensionFilter(
+				    "Imagenes", ImageIO.getReaderFileSuffixes());
+			
+			
+			
+			elegidor.setFileFilter(filtro);
+			
+			int valor = elegidor.showOpenDialog(null);
+			
+			if (valor==JFileChooser.APPROVE_OPTION){
+				
+				File fichero=elegidor.getSelectedFile();
+				BufferedImage master= null;
+				try {
+					master= ImageIO.read(fichero);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "La imagen introducida no es correcta");
+				}
+				
+			 
+				
+			
+		        
+		        iconoPerfil= new ImageIcon(master.getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
+				
+				labelPerfil.setIcon(iconoPerfil);
+				
+			}else{
+				
 			}
-		});
-		spinnerMes.setBounds(321, 637, 65, 25);
-		getContentPane().add(spinnerMes);
+			
+		}
+	});
+	
+	botonRegistrar.addMouseListener(new MouseAdapter() {
 		
-		JSpinner spinnerAño = new JSpinner();
-		spinnerAño.setModel(new SpinnerNumberModel(new Integer(2016), new Integer(0), null, new Integer(1)));
-		spinnerAño.setBounds(245, 637, 65, 25);
-		getContentPane().add(spinnerAño);
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			boolean correccion= comprobacion();
+			
+			if (correccion){
+				
+			}else{
+				
+			}
+			
+		}
+	});
+		
+	}
+	
+	public boolean comprobacion(){
+		
+		String texto = null;
+		boolean correcto=true;
 		
 		
+		if (textoNombre.getText().trim().length()==0){
+			texto = "No se ha introducido el nombre, compruebelo de nuevo";
+			correcto=false;
+		}else if (textoApellido.getText().trim().length()==0){
+			texto= "No se ha introducido el apellido, compruebelo de nuevo";
+			correcto=false;
+		}else if (textoUsuario.getText().trim().length()==0){
+			texto= "No se ha introducido el usuario, compruebelo de nuevo";
+			correcto=false;
+		}else if (textoEmail.getText().trim().length()==0){
+			texto= "No se ha introducido el e-mail, compruebelo de nuevo";
+			correcto=false;
+		}else if (textoContraseña.getText().trim().length()==0){
+			texto= "No se ha introducido la contraseña, compruebelo de nuevo";
+			correcto=false;
+		}else if (textoContraseña2.getText().trim().length()==0){
+			texto= "No se ha introducido la verificacion de la contraseña, compruebelo de nuevo";
+			correcto=false;
+		}else if (textoRespuesta.getText().trim().length()==0){
+			texto= "No se ha introducido la respuesta a la pregunta de seguridad, compruebelo de nuevo";
+			correcto=false;
+		}else if (!(textoContraseña.getText().equals(textoContraseña2.getText()))){
+			texto="No coinciden las contraseñas compruebelo de nuevo";
+			correcto=false;
+		}else if (fechas.getDate()==null){
+			texto="Introduzca la fecha de nacimiento";
+			correcto=false;
+		}
+		
+		if (!(correcto)){
+			JOptionPane.showMessageDialog(null, texto,"Comprobacion" , JOptionPane.INFORMATION_MESSAGE);
+			return correcto;
+		}else{
+			return correcto;
+		}
 	}
 }

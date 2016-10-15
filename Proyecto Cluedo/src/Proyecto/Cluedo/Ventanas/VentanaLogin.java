@@ -3,7 +3,10 @@ package Proyecto.Cluedo.Ventanas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -50,9 +53,6 @@ public class VentanaLogin extends JFrame {
 	 */
 	
 	private JPasswordField contraseña;
-	
-
-	
 	
 	
 	
@@ -193,8 +193,8 @@ public class VentanaLogin extends JFrame {
 		imagenLogo.setIcon(icono);
 		
 		
-		
-		registrar.setBounds(537,513, 200, 56);
+		//537,513,200,56
+		registrar.setBounds(570,523, 140, 40);
 		
 		explicacion.setBounds(537, 368, 224, 150);
 		
@@ -407,7 +407,15 @@ public class VentanaLogin extends JFrame {
 		});
 		
 			
-			
+			botonEntrar.addMouseListener(new MouseAdapter() {
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					VentanaConectando conectando= new VentanaConectando();
+					conectando.setVisible(true);
+					
+				}
+			});
 		
 			
 		
