@@ -10,7 +10,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.awt.event.MouseListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,13 +31,13 @@ public class VentanaLogin extends JFrame {
 	 * Boton que sirve para comenzar el proceso de registro
 	 */
 
-	private JButton registrar;
+	private JLabel registrar;
 	
 	/**
 	 * Boton que sirve para entrar en la aplicacion
 	 */
 	
-	private JButton entrar;
+	private JLabel botonEntrar;
 	
 	/**
 	 * Campo que sirve para introducir el usuario
@@ -78,9 +78,9 @@ public class VentanaLogin extends JFrame {
 		//Generamos los componentes
 		
 		
-		registrar= new JButton("Registrarse");
+		registrar= new JLabel();
 		
-		entrar= new JButton("Entrar");
+		
 		
 		/**
 		 * Label que guarda la imagen del logo
@@ -153,8 +153,21 @@ public class VentanaLogin extends JFrame {
 		
 		JSeparator separador= new JSeparator(SwingConstants.VERTICAL);
 		
+		/**
+		 * Panel que tiene la parte de atras de los menus
+		 */
 		
 		JPanel panel= new JPanel();
+		
+		JLabel fondo= new JLabel();
+		
+		Icon iconoFondo;
+		
+		Icon iconoRegistrar;
+		
+		botonEntrar=new JLabel();
+		
+		Icon iconoEntrar;
 		
 		//Establecemos el formato
 		
@@ -179,9 +192,9 @@ public class VentanaLogin extends JFrame {
 		
 		imagenLogo.setIcon(icono);
 		
-		entrar.setBounds(144,513,224,56);
 		
-		registrar.setBounds(537,513, 224, 56);
+		
+		registrar.setBounds(537,513, 200, 56);
 		
 		explicacion.setBounds(537, 368, 224, 150);
 		
@@ -226,19 +239,64 @@ public class VentanaLogin extends JFrame {
 		salir.setIcon(iconoSalir);
 		
 		separador.setBounds(450, 370, JSeparator.WIDTH, 200);
+		//255
+		//350
+		panel.setBounds(105, 90, 691, 520);
 		
-		panel.setBounds(105, 255, 691, 350);
+		panel.setBackground(new Color(1.0f,1.0f,1.0f,0.85f));
 		
-		panel.setBackground(new Color(1.0f,1.0f,1.0f,0.5f));
+		fondo.setBounds(0,0,900,700);
+		
+		try {
+			imagen = new ImageIcon(VentanaLogin.class.getResource("Imagenes/deusto edifcio.jpg").toURI().toURL());
+		} catch (Exception e) {
+			System.out.println("No se ha encontrado el archivo");
+		}
 		
 		
+		
+		iconoFondo= new ImageIcon(imagen.getImage().getScaledInstance(fondo.getWidth(), fondo.getHeight(), Image.SCALE_DEFAULT));
+		
+		fondo.setIcon(iconoFondo);
+		
+		
+		botonEntrar.setBounds(144,513,224,56);
+		
+		
+		try {
+			imagen = new ImageIcon(VentanaLogin.class.getResource("Imagenes/boton_acceder.png").toURI().toURL());
+		} catch (Exception e) {
+			System.out.println("No se ha encontrado el archivo");
+		}
+		
+		
+		
+		iconoEntrar= new ImageIcon(imagen.getImage().getScaledInstance(botonEntrar.getWidth(), botonEntrar.getHeight(), Image.SCALE_DEFAULT));
+		
+		botonEntrar.setIcon(iconoEntrar);
+		
+
+		try {
+			imagen = new ImageIcon(VentanaLogin.class.getResource("Imagenes/Iocno registro.png").toURI().toURL());
+		} catch (Exception e) {
+			System.out.println("No se ha encontrado el archivo");
+		}
+		
+		
+		
+		iconoRegistrar= new ImageIcon(imagen.getImage().getScaledInstance(registrar.getWidth(), registrar.getHeight(), Image.SCALE_DEFAULT));
+		
+		registrar.setIcon(iconoRegistrar);
+		
+		
+	
 		//Añadimos al panel
 		
 		getContentPane().setLayout(null);
 		
 		getContentPane().add(imagenLogo);
 		
-		getContentPane ().add(entrar);
+		getContentPane().add(botonEntrar);
 		
 		getContentPane().add(labelRegistrar);
 		
@@ -257,10 +315,16 @@ public class VentanaLogin extends JFrame {
 		getContentPane().add(usuario);
 		
 		getContentPane().add(contraseña);
+		
+		getContentPane().add(panel);
+		
+		getContentPane().add(fondo);
+		
+		
 
 		
 		
-		getContentPane().add(panel);
+		
 		
 		//Eventos
 		
@@ -331,15 +395,21 @@ public class VentanaLogin extends JFrame {
 			}}}
 		});
 		
-		registrar.addActionListener(new ActionListener() {
+		registrar.addMouseListener(new MouseAdapter() {
+		
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				VentanaRegistro ventanas=new VentanaRegistro();
 				ventanas.setVisible(true);
 				
 			}
 		});
+		
+			
+			
+		
+			
 		
 	}
 	
