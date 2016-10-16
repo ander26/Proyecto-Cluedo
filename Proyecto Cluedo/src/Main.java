@@ -8,17 +8,15 @@ public class Main {
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);
 		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		VentanaLogin ventanaPrincipal = new VentanaLogin();
+		
+		while (ventanaPrincipal.isValid()){
+			
 		}
 		
 		ventana.dispose();
 		
-		VentanaLogin ventanaPrincipal = new VentanaLogin();
 		ventanaPrincipal.setVisible(true);
-		
 	}
 }
