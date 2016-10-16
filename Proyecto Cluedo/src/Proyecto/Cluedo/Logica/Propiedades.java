@@ -3,6 +3,8 @@ package Proyecto.Cluedo.Logica;
 import Proyecto.Cluedo.Datos.Cartas;
 
 public class Propiedades {
+	
+	
 	private int numTotArmas;
 	private int numTotLugares;
 	private int numTotSospechosos;

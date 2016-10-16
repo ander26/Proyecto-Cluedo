@@ -4,15 +4,32 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-public class Lugar extends Cartas{
-	public Lugar(String rutaicono,String nombre){
-	super();
-	// TODO Auto-generated constructor stub
-	this.rutaIcono=rutaicono;
-	icono.setSize(95, 152);
-	ImageIcon a=new ImageIcon(Lugar.class.getResource(rutaicono ) );
-	ImageIcon b=new ImageIcon(a.getImage().getScaledInstance(icono.getWidth(), icono.getHeight(),Image.SCALE_DEFAULT ));
-	icono.setIcon( b);
-	this.nombre=nombre;
-}
+public class Lugar extends Cartas {
+
+	/**
+	 * Constructor sin parametros
+	 */
+
+	public Lugar() {
+		super();
+
+	}
+
+	/**
+	 * Constructor con parametros
+	 * 
+	 * @param nombre
+	 *            Parametro que contiene el nombre del lugar
+	 * @param rutaIcono
+	 *            Parametro que contiene la ruta del icono
+	 * @param culpable
+	 *            Parametro que contiene si la carta esta involucrada
+	 */
+
+	public Lugar(String nombre, String rutaIcono, boolean culpable) {
+		super(nombre, rutaIcono, culpable);
+
+		labelCarta.setSize(95, 152);
+	}
+
 }

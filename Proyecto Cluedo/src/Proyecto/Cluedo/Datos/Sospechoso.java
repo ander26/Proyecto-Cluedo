@@ -5,14 +5,30 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Sospechoso extends Cartas {
-	public Sospechoso(String rutaicono,String nombre){
-	super();
-	// TODO Auto-generated constructor stub
-	this.rutaIcono=rutaicono;
-	icono.setSize(95, 152);
-	ImageIcon a=new ImageIcon(Sospechoso.class.getResource(rutaicono ) );
-	ImageIcon b=new ImageIcon(a.getImage().getScaledInstance(icono.getWidth(), icono.getHeight(),Image.SCALE_DEFAULT ));
-	icono.setIcon( b );
-	this.nombre=nombre;
-}
+
+	/**
+	 * Constructor sin parametros
+	 */
+	
+	public Sospechoso() {
+		super();
+		
+	}
+
+	/**
+	 * Constructor con parametros
+	 * @param nombre Parametro que contiene el nombre del sospechoso
+	 * @param rutaIcono Parametro que contiene la ruta del icono
+	 * @param culpable Parametro que contiene si la carta esta involucrada en el caso
+	 */
+	
+	public Sospechoso(String nombre, String rutaIcono, boolean culpable) {
+		super(nombre, rutaIcono, culpable);
+	
+		labelCarta.setSize(95, 152);
+	}
+	
+	
+	
+
 }
