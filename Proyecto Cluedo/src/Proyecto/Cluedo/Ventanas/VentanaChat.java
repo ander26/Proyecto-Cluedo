@@ -53,6 +53,7 @@ public class VentanaChat extends JFrame {
 		setResizable(false);
 		setSize(new Dimension(800, 600));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 		
 		//Creamos los compoenntes
 		
@@ -82,9 +83,7 @@ public class VentanaChat extends JFrame {
 		
 		JComboBox<String> estado = new JComboBox<String>(contenido);
 		
-		JLabel labelLogo = new JLabel();
 		
-		Icon iconoLogo;
 		
 		JLabel labelSalir = new JLabel();
 		
@@ -150,18 +149,7 @@ public class VentanaChat extends JFrame {
 		
 		labelFondo.setIcon(iconoFondo);
 		
-		labelLogo.setBounds(387, 5, 70, 70);
 		
-		
-		try{
-			imagen= new ImageIcon(VentanaChat.class.getResource("Imagenes/LOGO DEUSTLUEDO.png").toURI().toURL());
-		}catch (Exception e){
-			System.out.println("No se encuentra el archivo");
-		}
-		
-		iconoLogo= new ImageIcon(imagen.getImage().getScaledInstance(labelLogo.getWidth(), labelLogo.getHeight(), Image.SCALE_DEFAULT));
-		
-		labelLogo.setIcon(iconoLogo);
 		
 		estado.setBounds(110, 47, 87, 25);
 		
@@ -232,8 +220,6 @@ public class VentanaChat extends JFrame {
 		
 		getContentPane().add(mensaje);
 		
-		getContentPane().add(labelLogo);
-	
 		getContentPane().add(labelFondo);
 		
 		getContentPane().add(panelMensajes);

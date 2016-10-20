@@ -72,6 +72,12 @@ public class Usuario implements Logineable {
 	
 	private String email;
 	
+	/**
+	 * Atributo que contiene la ultima conexion
+	 */
+	
+	private Date conexion;
+	
 	
 	/**
 	 * Construcor con parametros
