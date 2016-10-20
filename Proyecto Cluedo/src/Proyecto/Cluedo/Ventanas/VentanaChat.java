@@ -18,9 +18,10 @@ public class VentanaChat extends JFrame {
 		
 		//Inicializamos el frame
 		
-		setUndecorated(false);
+		setUndecorated(true);
 		setResizable(false);
 		setSize(new Dimension(600, 400));
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		//Creamos los compoenntes
 		

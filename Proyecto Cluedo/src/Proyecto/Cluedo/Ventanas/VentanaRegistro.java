@@ -89,6 +89,7 @@ public class VentanaRegistro extends JFrame {
 		setResizable(false);
 		setSize(new Dimension(600, 900));
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		setBackground(new Color(1.0f,1.0f,1.0f,0.95f));
 		

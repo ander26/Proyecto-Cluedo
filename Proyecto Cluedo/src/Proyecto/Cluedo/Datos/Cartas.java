@@ -6,7 +6,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public abstract class Cartas {
+public class Cartas {
 	
 	//Generamos las variables 
 	
@@ -35,14 +35,22 @@ public abstract class Cartas {
 	protected boolean culpable;
 	
 	/**
+	 * Atributo que contiene que tipo de carta es
+	 */
+	
+	private TipoCarta tipo;
+	
+	/**
 	 * Constructor sin parametros
 	 */
 	
 	public Cartas (){
+		
 		this.nombre="";
 		this.rutaIcono="";
 		this.labelCarta= new JLabel();
 		this.culpable=false;
+	
 	}
 	
 	/**
@@ -53,15 +61,21 @@ public abstract class Cartas {
 	 * @param culpable Parametro que contiene si la carta es la que se busca en el juego o no 
 	 */
 	
-	public Cartas (String nombre, String rutaIcono,boolean culpable){
+	public Cartas (String nombre, String rutaIcono,boolean culpable,TipoCarta tipo){
+		
 		this.nombre=nombre;
 		this.rutaIcono=rutaIcono;
 		this.labelCarta=new JLabel();
 		this.culpable=culpable;
-		ImageIcon a = new ImageIcon(Arma.class.getResource(this.rutaIcono));
+		
+		ImageIcon a = new ImageIcon(Cartas.class.getResource(this.rutaIcono));
 		Icon b = new ImageIcon(
 				a.getImage().getScaledInstance(labelCarta.getWidth(), labelCarta.getHeight(), Image.SCALE_DEFAULT));
+		
 		labelCarta.setIcon(b);
+		labelCarta.setSize(95, 152);
+	
+		this.tipo=tipo;
 	}
 	
 	/**
@@ -70,7 +84,9 @@ public abstract class Cartas {
 	 */
 	
 	public String getNombre() {
+		
 		return nombre;
+	
 	}
 	
 	/**
@@ -79,7 +95,9 @@ public abstract class Cartas {
 	 */
 	
 	public void setNombre(String nombre) {
+	
 		this.nombre = nombre;
+	
 	}
 	
 	/**
@@ -88,7 +106,9 @@ public abstract class Cartas {
 	 */
 	
 	public String getRutaIcono() {
+	
 		return rutaIcono;
+	
 	}
 	
 	/**
@@ -97,7 +117,9 @@ public abstract class Cartas {
 	 */
 	
 	public void setRutaIcono(String rutaIcono) {
+	
 		this.rutaIcono = rutaIcono;
+	
 	}
 	
 	/**
@@ -106,7 +128,9 @@ public abstract class Cartas {
 	 */
 	
 	public JLabel getLabelCarta() {
+	
 		return labelCarta;
+	
 	}
 	
 	/**
@@ -115,7 +139,9 @@ public abstract class Cartas {
 	 */
 	
 	public void setLabelCarta(JLabel labelCarta) {
+		
 		this.labelCarta = labelCarta;
+	
 	}
 
 	/**
@@ -124,7 +150,9 @@ public abstract class Cartas {
 	 */
 	
 	public boolean isCulpable() {
+		
 		return culpable;
+	
 	}
 
 	/**
@@ -133,7 +161,27 @@ public abstract class Cartas {
 	 */
 	
 	public void setCulpable(boolean culpable) {
+		
 		this.culpable = culpable;
+	
+	}
+
+	/**
+	 * Metodo que sirve para obtener el tipo de carta
+	 * @return Devuelve el tipo de carta
+	 */
+	
+	public TipoCarta getTipo() {
+		return tipo;
+	}
+	
+	/**
+	 * Metodo que sirve para establecer el tipo de carta
+	 * @param tipo Parametro que contiene el tipo de carta
+	 */
+
+	public void setTipo(TipoCarta tipo) {
+		this.tipo = tipo;
 	}
 	
 	

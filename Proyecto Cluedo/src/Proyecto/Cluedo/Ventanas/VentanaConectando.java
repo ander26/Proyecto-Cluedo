@@ -34,6 +34,7 @@ public class VentanaConectando extends JFrame {
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		setBackground(new Color(1.0f,1.0f,1.0f,0.95f));
 

@@ -10,10 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import Proyecto.Cluedo.Datos.Arma;
+
 import Proyecto.Cluedo.Datos.Cartas;
-import Proyecto.Cluedo.Datos.Lugar;
-import Proyecto.Cluedo.Datos.Sospechoso;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.Propiedades;
 
@@ -27,7 +25,7 @@ public class VentanaApuntes  extends JFrame{
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Usuario Pepe=new Usuario(32,1);
+		/**Usuario Pepe=new Usuario(32,1);
 		Propiedades prop=new Propiedades(12,8,12,1);
 		Arma a1=new Arma("Imagenes/CIMG1094.JPG","a1",false);
 		Arma a2=new Arma("Imagenes/CIMG1095.JPG","a2",false);
@@ -62,6 +60,7 @@ public class VentanaApuntes  extends JFrame{
 		Lugar l7=new Lugar("Imagenes/P1000750.JPG","l7",false);
 		Lugar l8=new Lugar("Imagenes/P1000751.JPG","l8",false);
 		Cartas [][] a=new Cartas[3][12];
+		
 		a[0][0]=a1;
 		a[0][1]=a2;
 		a[0][2]=a3;
@@ -97,9 +96,9 @@ public class VentanaApuntes  extends JFrame{
 		prop.setBaraja(a);
 		int [] b={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 		
-		Pepe.setACartas(b);		
+				
 		JFrame f=new VentanaApuntes(Pepe,prop);
-		f.setVisible(true);
+		f.setVisible(true);*/
 	}
 	public VentanaApuntes(Usuario U1,Propiedades p){
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );

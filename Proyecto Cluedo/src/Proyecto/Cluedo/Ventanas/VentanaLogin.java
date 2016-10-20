@@ -72,7 +72,7 @@ public class VentanaLogin extends JFrame {
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		
-		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		
 		//Generamos los componentes
