@@ -393,6 +393,30 @@ public class VentanaRegistro extends JFrame {
 			}
 			
 		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			
+			ImageIcon imagenU= new ImageIcon();
+			
+			try{
+				imagenU= new ImageIcon(VentanaRegistro.class.getResource("Imagenes/userSeleccionado.png").toURI().toURL());
+			}catch (Exception e){
+				System.out.println("No se ha encontrado el archivo");
+			}
+			
+			Icon iconoPulsado= new ImageIcon(imagenU.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
+			labelPerfil.setIcon(iconoPulsado);
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			labelPerfil.setIcon(iconoPerfil);
+			
+		}
+
+		
 	});
 	
 	botonRegistrar.addMouseListener(new MouseAdapter() {
@@ -409,6 +433,8 @@ public class VentanaRegistro extends JFrame {
 			
 		}
 	});
+	
+	
 		
 	}
 	

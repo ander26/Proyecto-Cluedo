@@ -30,6 +30,8 @@ public class VentanaChat extends JFrame {
 		
 		getContentPane().setLayout(new BorderLayout());
 		
+		
+		
 	}
 	
 }
