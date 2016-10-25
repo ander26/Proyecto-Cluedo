@@ -30,6 +30,7 @@ import Proyecto.Cluedo.Ventanas.panelrosa;
 
 
 public class ventana extends JFrame{
+	
 	private JPanel pventana=new JPanel();
 	private panelrosa pdibujar;
 	private JPanel ppizarra=new JPanel();
@@ -47,6 +48,7 @@ public class ventana extends JFrame{
 	private static int[][] mibaraja=new int[3][4];
 
 	public static void main(String[] args) {
+		
 		// TODO Auto-generated method stub
 		mibaraja[0][0]=0;
 		mibaraja[0][1]=1;
@@ -188,13 +190,16 @@ public class ventana extends JFrame{
 			private Point pAnt = null;
 			@Override
 			public void mouseDragged(MouseEvent e) {
+				pAnt = e.getPoint();
+				
 				Graphics2D g2 = (Graphics2D) pdibujar.getGraphics();
-				g2.setColor( Color.green );
-				g2.setStroke( new BasicStroke( 1.5f ) );
+				g2.setColor( Color.white );
+				g2.setStroke( new BasicStroke( 2f ) );
 				if (pAnt!=null) {
 					g2.drawLine( pAnt.x, pAnt.y, e.getX(), e.getY() );  // Dibuja líneas al arrastrar
+				
 				}
-				pAnt = e.getPoint();
+				
 			}
 			@Override
 			public void mouseMoved(MouseEvent arg0) {
