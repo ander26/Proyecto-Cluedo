@@ -49,6 +49,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
+import Proyecto.Cluedo.Datos.LabelPerfil;
+
 
 public class VentanaRegistro extends JFrame {
 
@@ -74,7 +76,7 @@ public class VentanaRegistro extends JFrame {
 	
 	private Icon iconoPerfil;
 	
-	
+	private ImageIcon imagenPerfil = new ImageIcon();
 	
 	public static void main (String [] args){
 		VentanaRegistro ventana= new VentanaRegistro();
@@ -152,8 +154,8 @@ public class VentanaRegistro extends JFrame {
 		
 		
 		
-		JLabel labelPerfil= new JLabel();
-		
+		//JLabel labelPerfil= new JLabel();
+		LabelPerfil labelPerfil;
 		
 		Icon iconoRegistrar;
 		
@@ -177,16 +179,18 @@ public class VentanaRegistro extends JFrame {
 		
 		
 		try{
-		imagen= new ImageIcon(VentanaRegistro.class.getResource("Imagenes/user.png"));
+		imagenPerfil= new ImageIcon(VentanaRegistro.class.getResource("Imagenes/user.png"));
 		}catch (Exception e){
 			System.out.println("No se ha encontrado el archivo");
 		}
 		
-		labelPerfil.setBounds(210, 57, 200, 200);
+		labelPerfil =  new LabelPerfil(imagenPerfil, 210, 57, 200, 200);
 		
-		iconoPerfil= new ImageIcon(imagen.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
+		//labelPerfil.setBounds(210, 57, 200, 200);
 		
-		labelPerfil.setIcon(iconoPerfil);
+		//iconoPerfil= new ImageIcon(imagen.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
+		
+		//labelPerfil.setIcon(iconoPerfil);
 		
 		
 		
@@ -381,12 +385,12 @@ public class VentanaRegistro extends JFrame {
 				}
 				
 			 
-				
+				imagenPerfil = new ImageIcon(master);
 			
 		        
-		        iconoPerfil= new ImageIcon(master.getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
+		       // iconoPerfil= new ImageIcon(master.getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
 				
-				labelPerfil.setIcon(iconoPerfil);
+				labelPerfil.setImagen(imagenPerfil);
 				
 			}else{
 				
@@ -405,14 +409,16 @@ public class VentanaRegistro extends JFrame {
 				System.out.println("No se ha encontrado el archivo");
 			}
 			
-			Icon iconoPulsado= new ImageIcon(imagenU.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
-			labelPerfil.setIcon(iconoPulsado);
+			
+			//Icon iconoPulsado= new ImageIcon(imagenU.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
+			labelPerfil.setImagen(imagenU);
 			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			labelPerfil.setIcon(iconoPerfil);
+			
+			labelPerfil.setImagen(imagenPerfil);
 			
 		}
 

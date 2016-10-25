@@ -269,6 +269,7 @@ public class VentanaChat extends JFrame {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				principal.setText(principal.getText()+"\n"+"Pepe"+": "+mensaje.getText());
 				mensaje.setText("");
 				

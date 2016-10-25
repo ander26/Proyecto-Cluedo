@@ -212,7 +212,8 @@ public class VentanaMenu extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+				VentanaConectando ventana = new VentanaConectando();
+				ventana.setVisible(true);
 				
 			}
 		});
