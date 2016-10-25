@@ -8,7 +8,7 @@ package Proyecto.Cluedo.Ventanas;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
-import Proyecto.Cluedo.Ventanas.ventana.MyTableModel;
+import prog3.pr00.simulador.iu.ventana.MyTableModel;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;

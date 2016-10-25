@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.print.attribute.standard.JobKOctetsProcessed;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -72,7 +73,7 @@ public class VentanaLogin extends JFrame {
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		
-		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		
 		//Generamos los componentes
@@ -411,8 +412,13 @@ public class VentanaLogin extends JFrame {
 				
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					VentanaConectando conectando= new VentanaConectando();
-					conectando.setVisible(true);
+					JOptionPane.showMessageDialog(getContentPane(), "Bienvenido "+"Pepito"+" se te echaba de menos desde la ultima conexion "+" (ultima conexion)");
+					dispose();
+					
+					VentanaMenu menu= new VentanaMenu();
+					
+					menu.setVisible(true);
+					
 					
 				}
 			});

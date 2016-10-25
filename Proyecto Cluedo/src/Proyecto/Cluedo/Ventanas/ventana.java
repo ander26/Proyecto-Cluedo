@@ -26,6 +26,9 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 
+import Proyecto.Cluedo.Ventanas.panelrosa;
+
+
 public class ventana extends JFrame{
 	private JPanel pventana=new JPanel();
 	private panelrosa pdibujar;
@@ -75,7 +78,7 @@ public class ventana extends JFrame{
 		ppizarra.setBackground(Color.white);
 		//fondo ppizarra
 		ImageIcon image;		
-		image = new ImageIcon(VentanaApuntes.class.getResource("Imagenes/pizarra.png"));
+		image = new ImageIcon(ventana.class.getResource("Imagenes/pizarra.png"));
 		pdibujar=new panelrosa(image.getImage());
 //		ImageIcon image;		
 //		image = new ImageIcon(VentanaApuntes.class.getResource("Imagenes/pizarra.png"));
@@ -133,7 +136,7 @@ public class ventana extends JFrame{
 		
 		//panel de fondo de la tabla
 		  ImageIcon imagehoja;			
-		  imagehoja = new ImageIcon(VentanaApuntes.class.getResource("Imagenes/POSIT.jpg"));
+		  imagehoja = new ImageIcon(ventana.class.getResource("Imagenes/POSIT.jpg"));
 		 // phoja=new panelrosa(imagehoja.getImage().getScaledInstance(750,1000 , Image.SCALE_DEFAULT));
 		  phojap=new panelrosa(imagehoja.getImage());
 		  
@@ -155,16 +158,16 @@ public class ventana extends JFrame{
 		  phojap.add(phoja);
 		  //pventana.add(phoja,BorderLayout.CENTER);
 		  //titulo
-		  ImageIcon imagetit = new ImageIcon(VentanaApuntes.class.getResource("Imagenes/TITMISNOTAS.png"));
+		  ImageIcon imagetit = new ImageIcon(ventana.class.getResource("Imagenes/TITMISNOTAS.png"));
 		  ltitulo.setSize(200,200);
 	      Icon iconotit = new ImageIcon(imagetit.getImage().getScaledInstance(ltitulo.getWidth(), ltitulo.getHeight(), Image.SCALE_DEFAULT));
 	      ltitulo.setIcon(iconotit);
 	      //añadir boligrafo
-	      ImageIcon imageboli = new ImageIcon(VentanaApuntes.class.getResource("Imagenes/vacio.png"));
+	      ImageIcon imageboli = new ImageIcon(ventana.class.getResource("Imagenes/vacio.png"));
 		  JLabel lboli=new JLabel();
 		  lboli.setSize(100,600);		  
 	      Icon iconoboli = new ImageIcon(imageboli.getImage().getScaledInstance(lboli.getWidth(), lboli.getHeight(), Image.SCALE_DEFAULT));
-	      ImageIcon imagegarabato = new ImageIcon(VentanaApuntes.class.getResource("Imagenes/vacio.png"));
+	      ImageIcon imagegarabato = new ImageIcon(ventana.class.getResource("Imagenes/vacio.png"));
 		  JLabel lgarabato=new JLabel();
 		  lgarabato.setSize(100,600);		  
 	      Icon iconogarabato = new ImageIcon(imagegarabato.getImage().getScaledInstance(lgarabato.getWidth(), lgarabato.getHeight(), Image.SCALE_DEFAULT));
@@ -206,7 +209,7 @@ public class ventana extends JFrame{
         	for (int i=0;i<tabla.getRowCount();i++){
         	if(tipo==0){
         	if (((MyTableModelArmas) tabla.getModel()).isCellEditable(i, 2)==false){
-        		ImageIcon image= new ImageIcon(VentanaApuntes.class.getResource("Imagenes/Candado.png"));
+        		ImageIcon image= new ImageIcon(ventana.class.getResource("Imagenes/Candado.png"));
         		JLabel lpizarra=new JLabel();
                 lpizarra.setSize(10,10);
                 Icon icono = new ImageIcon(image.getImage().getScaledInstance(lpizarra.getWidth(), lpizarra.getHeight(), Image.SCALE_DEFAULT));
@@ -216,7 +219,7 @@ public class ventana extends JFrame{
         	if(tipo==1){
             	if (((MyTableModelLugares) tabla.getModel()).isCellEditable(i, 2)==false){
             		//
-            		ImageIcon image= new ImageIcon(VentanaApuntes.class.getResource("Imagenes/Candado.png"));
+            		ImageIcon image= new ImageIcon(ventana.class.getResource("Imagenes/Candado.png"));
             		JLabel lpizarra=new JLabel();
                     lpizarra.setSize(10,10);
                     lpizarra.setOpaque(false);                    
@@ -227,7 +230,7 @@ public class ventana extends JFrame{
         	}
         	if(tipo==2){
             	if (((MyTableModel) tabla.getModel()).isCellEditable(i, 2)==false){
-            		ImageIcon image= new ImageIcon(VentanaApuntes.class.getResource("Imagenes/Candado.png"));
+            		ImageIcon image= new ImageIcon(ventana.class.getResource("Imagenes/Candado.png"));
             		JLabel lpizarra=new JLabel();
                     lpizarra.setSize(10,10);
                     Icon icono = new ImageIcon(image.getImage().getScaledInstance(lpizarra.getWidth(), lpizarra.getHeight(), Image.SCALE_DEFAULT));

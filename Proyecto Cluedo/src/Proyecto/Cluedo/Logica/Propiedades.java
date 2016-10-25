@@ -3,12 +3,21 @@ package Proyecto.Cluedo.Logica;
 import Proyecto.Cluedo.Datos.Cartas;
 
 public class Propiedades {
+	
+	
 	private int numTotArmas;
 	private int numTotLugares;
 	private int numTotSospechosos;
 	private int numTotCartas;
 	private int numJugadores;
+	
 	private  Cartas [][] baraja;
+	
+	/**
+	 * Atributo que contiene el numero de cartas por usuario 
+	 */
+	
+	private int [] [] cartasUsuario;
 	
 	public Propiedades(int numTotArmas, int numTotLugares, int numTotSospechosos, int numJugadores) {
 		
