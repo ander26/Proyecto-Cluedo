@@ -215,6 +215,7 @@ public class ventana extends JFrame{
         	}
         	if(tipo==1){
             	if (((MyTableModelLugares) tabla.getModel()).isCellEditable(i, 2)==false){
+            		//
             		ImageIcon image= new ImageIcon(VentanaApuntes.class.getResource("Imagenes/Candado.png"));
             		JLabel lpizarra=new JLabel();
                     lpizarra.setSize(10,10);
