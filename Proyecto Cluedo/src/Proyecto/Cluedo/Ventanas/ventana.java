@@ -136,7 +136,7 @@ public class ventana extends JFrame{
 		ptabarmas.setLayout(new BorderLayout());
 		ptabarmas.add(tabarmas.getTableHeader(),BorderLayout.NORTH);		
 		tabarmas.getColumn("Notas").setPreferredWidth(300);
-		tabarmas.getColumn("Sospechosos").setPreferredWidth(100);
+		tabarmas.getColumn("Armas").setPreferredWidth(100);
 		tabarmas.getColumn("Mio").setPreferredWidth(20);	
 		tabarmas.getColumn("     ").setPreferredWidth(20);
 		tabarmas.setOpaque(false);
@@ -163,7 +163,7 @@ public class ventana extends JFrame{
 		ptablugares.setLayout(new BorderLayout());
 		ptablugares.add(tablugares.getTableHeader(),BorderLayout.NORTH);		
 		tablugares.getColumn("Notas").setPreferredWidth(300);
-		tablugares.getColumn("Sospechosos").setPreferredWidth(100);
+		tablugares.getColumn("Lugares").setPreferredWidth(100);
 		tablugares.getColumn("Mio").setPreferredWidth(20);	
 		tablugares.getColumn("     ").setPreferredWidth(20);
 		tablugares.setOpaque(false);
@@ -403,7 +403,7 @@ public class ventana extends JFrame{
 
 }
 	class MyTableModelArmas extends AbstractTableModel {
-	    private String[] columnNames = {"Mio","Sospechosos",
+	    private String[] columnNames = {"Mio","Armas",
 	                                    "     ","Notas"};
 	    private Object[][] data = {
 	    		{new ImageIcon (),new String ("Pistola"),new Boolean(false),""},{new ImageIcon (),new String("Biblia"),new Boolean(false),""},{new ImageIcon (),new String("Bocata envenenado"),new Boolean(false),""},{new ImageIcon (),new String("Chip"),new Boolean(false),""},{new ImageIcon (),new String("Botella"),new Boolean(false),""},{new ImageIcon (),"Sarten",new Boolean(false),""},
@@ -470,7 +470,7 @@ public class ventana extends JFrame{
 
 }
 	class MyTableModelLugares extends AbstractTableModel {
-	    private String[] columnNames = {"Mio","Sospechosos",
+	    private String[] columnNames = {"Mio","Lugares",
 	                                    "     ","Notas"};
 	    private Object[][] data = {
 	    		{new ImageIcon(),new String ("Facultad ingeniería"),new Boolean(false),""},{new ImageIcon (),new String("La Comercial"),new Boolean(false),""},{new ImageIcon (),new String("La L"),new Boolean(false),""},{"",new String("La capilla"),new Boolean(false),""},{new ImageIcon (),new String("Edificio Centenario"),new Boolean(false),""},{new ImageIcon (),"Edificio de letras",new Boolean(false),""},
