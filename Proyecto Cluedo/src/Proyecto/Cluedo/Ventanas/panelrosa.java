@@ -1,4 +1,4 @@
-package Proyecto.Cluedo.Ventanas;
+ package Proyecto.Cluedo.Ventanas;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;

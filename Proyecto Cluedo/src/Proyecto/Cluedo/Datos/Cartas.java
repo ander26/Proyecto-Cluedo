@@ -2,13 +2,16 @@ package Proyecto.Cluedo.Datos;
 
 import java.awt.Image;
 
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+
 public class Cartas {
 	
 	//Generamos las variables 
+	
 	
 	/**
 	 * Nombre que se le asigna al elemento de la carta
@@ -23,12 +26,6 @@ public class Cartas {
 	protected String rutaIcono;
 	
 	/**
-	 * Atributo que contiene el label que contendra la carta  
-	 */
-	
-	protected JLabel labelCarta;
-	
-	/**
 	 * Atributo que contiene un booleano para saber si es la carta culpable
 	 */
 	
@@ -38,7 +35,7 @@ public class Cartas {
 	 * Atributo que contiene que tipo de carta es
 	 */
 	
-	private TipoCarta tipo;
+	private int tipo;
 	
 	/**
 	 * Constructor sin parametros
@@ -48,33 +45,23 @@ public class Cartas {
 		
 		this.nombre="";
 		this.rutaIcono="";
-		this.labelCarta= new JLabel();
 		this.culpable=false;
 	
 	}
 	
 	/**
-	 * Constructor con parametros 
+	 * Constructor con parametros
 	 * @param nombre Parametro que contiene el nombre de la carta
 	 * @param rutaIcono Parametro que contiene la ruta del icono de la carta
 	 * @param icono Parametro que contiene el label en el que se contendra la carta
 	 * @param culpable Parametro que contiene si la carta es la que se busca en el juego o no 
 	 */
 	
-	public Cartas (String nombre, String rutaIcono,boolean culpable,TipoCarta tipo){
+	public Cartas (String nombre, String rutaIcono,boolean culpable,int tipo){
 		
 		this.nombre=nombre;
-		this.rutaIcono=rutaIcono;
-		this.labelCarta=new JLabel();
-		this.culpable=culpable;
-		
-		ImageIcon a = new ImageIcon(Cartas.class.getResource(this.rutaIcono));
-		Icon b = new ImageIcon(
-				a.getImage().getScaledInstance(labelCarta.getWidth(), labelCarta.getHeight(), Image.SCALE_DEFAULT));
-		
-		labelCarta.setIcon(b);
-		labelCarta.setSize(95, 152);
-	
+		this.rutaIcono=rutaIcono;		
+		this.culpable=culpable;		
 		this.tipo=tipo;
 	}
 	
@@ -122,28 +109,9 @@ public class Cartas {
 	
 	}
 	
-	/**
-	 * Metodo que sirve para obtener el label de la carta
-	 * @return Devuelve el label con el icono
-	 */
 	
-	public JLabel getLabelCarta() {
 	
-		return labelCarta;
 	
-	}
-	
-	/**
-	 * Metodo que sirve para establecer el icono 
-	 * @param labelCarta Parametro que contiene el icono 
-	 */
-	
-	public void setLabelCarta(JLabel labelCarta) {
-		
-		this.labelCarta = labelCarta;
-	
-	}
-
 	/**
 	 * Metodo que devuelve si una carta esta involucrada en el caso
 	 * @return Devuelve true si esta involucrada
@@ -171,7 +139,7 @@ public class Cartas {
 	 * @return Devuelve el tipo de carta
 	 */
 	
-	public TipoCarta getTipo() {
+	public int getTipo() {
 		return tipo;
 	}
 	
@@ -180,7 +148,7 @@ public class Cartas {
 	 * @param tipo Parametro que contiene el tipo de carta
 	 */
 
-	public void setTipo(TipoCarta tipo) {
+	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
 	
