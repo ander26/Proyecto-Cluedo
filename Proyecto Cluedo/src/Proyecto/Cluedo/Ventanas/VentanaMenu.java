@@ -297,7 +297,9 @@ public class VentanaMenu extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				
+
+				VentanaCrearPartida ventanas= new VentanaCrearPartida();
+				ventanas.setVisible(true);
 			}
 		});
 		
@@ -340,8 +342,6 @@ public class VentanaMenu extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				VentanaCrearPartida ventanas= new VentanaCrearPartida();
-				ventanas.setVisible(true);
 			}
 		});
 	}

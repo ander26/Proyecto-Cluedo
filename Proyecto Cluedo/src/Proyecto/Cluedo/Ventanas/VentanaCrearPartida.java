@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.nio.file.attribute.FileOwnerAttributeView;
+import java.util.Hashtable;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -39,13 +40,6 @@ public class VentanaCrearPartida extends JFrame {
 	
 	private Icon iconoSeleccionado;
 	
-	private JLabel labelAnterior = new JLabel();
-	
-	private Icon iconoAnterior;
-	
-	private JLabel labelSiguiente = new JLabel();
-	
-	private Icon iconoSiguiente;
 	
 	public static void main (String [] args){
 		
@@ -67,6 +61,8 @@ public class VentanaCrearPartida extends JFrame {
 		setLocationRelativeTo(null);
 		
 		getContentPane().setLayout(null);
+		
+		setBackground(new Color(1.0f,1.0f,1.0f,0.95f));
 		
 		//Generamos los componentes
 		
@@ -115,15 +111,25 @@ public class VentanaCrearPartida extends JFrame {
 		
 		//Damos formato a los componentes
 		
+		slider.setBackground(Color.white);
+		
+		Hashtable labelTable = new Hashtable();
+		
+		labelTable.put( new Integer( 2 ), new JLabel("2") );
+		labelTable.put( new Integer( 3 ), new JLabel("3") );
+		labelTable.put( new Integer( 4 ), new JLabel("4") );
+		
+		slider.setLabelTable( labelTable );
+		
 		titulo.setFont(new Font ("Berlin Sans FB Demi",Font.BOLD,38));
 		
-		titulo.setBounds(224, 89, 448, 55);
+		titulo.setBounds(240, 105, 448, 55);
 		
 		labelNombre.setFont(new Font("System", Font.BOLD, 13));
 		
 		labelNombre.setBounds(174, 172, 121, 17);
 		
-		textoNombre.setBounds(321, 159, 268, 25);
+		textoNombre.setBounds(321, 170, 268, 25);
 		
 		labelJugadores.setBounds(175,211,121,17);
 		
@@ -136,7 +142,7 @@ public class VentanaCrearPartida extends JFrame {
 		labelFondo.setBounds(0, 0, 900, 600);
 		
 		try{
-			imagen= new ImageIcon(VentanaCrearPartida.class.getResource("Imagenes/fondo.jpg").toURI().toURL());
+			imagen= new ImageIcon(VentanaCrearPartida.class.getResource("Imagenes/fondo.png").toURI().toURL());
 		}catch (Exception e){
 			System.out.println("No se ha encontrado el recurso");
 		}
@@ -157,7 +163,7 @@ public class VentanaCrearPartida extends JFrame {
 		
 		labelPodium.setIcon(iconoPodium);
 		
-		labelSeleccionado.setBounds(335, 243, 214,229 );
+		labelSeleccionado.setBounds(335, 239, 200,200 );
 		
 		try{
 			imagen= new ImageIcon(listaDeFichas[contador].getImage());
@@ -169,29 +175,7 @@ public class VentanaCrearPartida extends JFrame {
 		
 		labelSeleccionado.setIcon(iconoSeleccionado);
 		
-		labelSiguiente.setBounds(562, 294, 141, 146);
 		
-		try{
-			imagen= new ImageIcon(listaDeFichas[contador+1].getImage());
-		}catch (Exception e){
-			System.out.println("No se ha encontrado el recurso");
-		}
-		
-		iconoSiguiente= new ImageIcon(imagen.getImage().getScaledInstance(labelSiguiente.getWidth(), labelSiguiente.getHeight(), Image.SCALE_DEFAULT));
-		
-		labelSiguiente.setIcon(iconoSiguiente);
-		
-		labelAnterior.setBounds(200, 294, 141, 146);
-		
-		try{
-			imagen= new ImageIcon(listaDeFichas[contador-1].getImage());
-		}catch (Exception e){
-			System.out.println("No se ha encontrado el recurso");
-		}
-		
-		iconoAnterior= new ImageIcon(imagen.getImage().getScaledInstance(labelAnterior.getWidth(), labelAnterior.getHeight(), Image.SCALE_DEFAULT));
-		
-		labelAnterior.setIcon(iconoAnterior);
 		
 		labelEtiqueta.setBounds(226, 442, 428, 60);
 		
@@ -232,7 +216,9 @@ public class VentanaCrearPartida extends JFrame {
 		
 		labelSlider.setIcon(iconoSlider);
 		
-		labelTipo.setBounds(408, 460, 91, 17);
+		labelTipo.setBounds(408, 465, 110, 17);
+		
+		
 		
 		labelTipo.setText(listaTipos[contador]);
 		
@@ -240,7 +226,7 @@ public class VentanaCrearPartida extends JFrame {
 		
 		labelTipo.setFont(new Font("System", Font.BOLD, 22));
 		
-		labelCrear.setBounds(349, 503, 91, 85);
+		labelCrear.setBounds(370, 530, 75, 75);
 		
 		try{
 			imagen= new ImageIcon(VentanaCrearPartida.class.getResource("Imagenes/create.png").toURI().toURL());
@@ -253,7 +239,7 @@ public class VentanaCrearPartida extends JFrame {
 		
 		labelCrear.setIcon(iconoCrear);
 		
-		labelCancelar.setBounds(459, 518, 59, 55);
+		labelCancelar.setBounds(440, 546, 43, 43);
 		
 		try{
 			imagen= new ImageIcon(VentanaCrearPartida.class.getResource("Imagenes/back.png").toURI().toURL());
@@ -283,19 +269,11 @@ public class VentanaCrearPartida extends JFrame {
 		
 		getContentPane().add(labelCrear);
 		getContentPane().add(labelPodium);
-		getContentPane().add(labelSiguiente);
-		getContentPane().add(labelAnterior);
+		//getContentPane().add(labelSiguiente);
+		//getContentPane().add(labelAnterior);
 		getContentPane().add(labelSlider);
 		
 		getContentPane().add(labelSliderGirado);
-		
-		
-		
-		
-		
-		
-		
-		
 		getContentPane().add(labelFondo);
 		
 		//Generamos los eventos
@@ -322,16 +300,6 @@ public class VentanaCrearPartida extends JFrame {
 					contador=0;
 				}
 				
-				try{
-					imagen= new ImageIcon(listaDeFichas[contador-1].getImage());
-				}catch (Exception a){
-					System.out.println("No se ha encontrado el recurso");
-				}
-				
-				
-				iconoAnterior= new ImageIcon(imagen.getImage().getScaledInstance(labelAnterior.getWidth(), labelAnterior.getHeight(), Image.SCALE_DEFAULT));
-				
-				labelAnterior.setIcon(iconoAnterior);
 				
 				try{
 					imagen= new ImageIcon(listaDeFichas[contador].getImage());
@@ -344,16 +312,6 @@ public class VentanaCrearPartida extends JFrame {
 				
 				labelSeleccionado.setIcon(iconoSeleccionado);
 				
-				try{
-					imagen= new ImageIcon(listaDeFichas[contador+1].getImage());
-				}catch (Exception a){
-					System.out.println("No se ha encontrado el recurso");
-				}
-				
-				
-				iconoSiguiente= new ImageIcon(imagen.getImage().getScaledInstance(labelSiguiente.getWidth(), labelSiguiente.getHeight(), Image.SCALE_DEFAULT));
-				
-				labelSiguiente.setIcon(iconoSiguiente);
 				
 				labelTipo.setText(listaTipos[contador]);
 				
@@ -372,16 +330,6 @@ public class VentanaCrearPartida extends JFrame {
 					contador=7;
 				}
 				
-				try{
-					imagen= new ImageIcon(listaDeFichas[contador-1].getImage());
-				}catch (Exception a){
-					System.out.println("No se ha encontrado el recurso");
-				}
-				
-				
-				iconoAnterior= new ImageIcon(imagen.getImage().getScaledInstance(labelAnterior.getWidth(), labelAnterior.getHeight(), Image.SCALE_DEFAULT));
-				
-				labelAnterior.setIcon(iconoAnterior);
 				
 				try{
 					imagen= new ImageIcon(listaDeFichas[contador].getImage());
@@ -394,16 +342,6 @@ public class VentanaCrearPartida extends JFrame {
 				
 				labelSeleccionado.setIcon(iconoSeleccionado);
 				
-				try{
-					imagen= new ImageIcon(listaDeFichas[contador+1].getImage());
-				}catch (Exception a){
-					System.out.println("No se ha encontrado el recurso");
-				}
-				
-				
-				iconoSiguiente= new ImageIcon(imagen.getImage().getScaledInstance(labelSiguiente.getWidth(), labelSiguiente.getHeight(), Image.SCALE_DEFAULT));
-				
-				labelSiguiente.setIcon(iconoSiguiente);
 				
 				labelTipo.setText(listaTipos[contador]);
 				
