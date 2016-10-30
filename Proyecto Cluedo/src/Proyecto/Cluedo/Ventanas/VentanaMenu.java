@@ -1,15 +1,20 @@
 package Proyecto.Cluedo.Ventanas;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.print.attribute.standard.JobKOctetsProcessed;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import Proyecto.Cluedo.Datos.LabelPerfil;
 
 public class VentanaMenu extends JFrame{
 
@@ -21,7 +26,10 @@ public class VentanaMenu extends JFrame{
 	public VentanaMenu(){
 		
 		//Inicializamos el frame 
-		setSize(600,400);
+		
+		//600,400
+		
+		setSize(900,700);
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
@@ -32,19 +40,46 @@ public class VentanaMenu extends JFrame{
 		
 		//Generamos los componentes
 		
+		JLabel labelHierba = new JLabel();
+		
+		JLabel titulo1= new JLabel("CREAR PARTIDA");
+		
+		titulo1.setBounds(360,157,187,42);
+		
+		titulo1.setFont(new Font("Berlin Sans FB Demi", Font.BOLD, 23));
+		
+		titulo1.setForeground(Color.white);
+		
+		JLabel titulo2= new JLabel("BUSCAR PARTIDA");
+		
+		titulo2.setBounds(357,244,187,42);
+		
+		titulo2.setFont(new Font("Berlin Sans FB Demi", Font.BOLD, 22));
+		
+		titulo2.setForeground(Color.white);
+		
+		Icon iconoHierba;
+		
+		JLabel labelfondo= new JLabel ();
+		
+		Icon iconoFondo;
+		
 		ImageIcon imagen= new ImageIcon ();
 		
 		JLabel labelFoto= new JLabel();
 		
 		Icon iconoFoto;
 		
-		JLabel labelTitulo= new JLabel();
+		JLabel labelTitulo= new JLabel("MENU PRINCIPAL");
 		
-		Icon iconoTitulo;
-		
-		JLabel labelEmpezar= new JLabel();
+		JLabel labelEmpezar= new JLabel("Buscar Partida");
 		
 		Icon iconoEmpezar;
+		
+		JLabel labelCrear= new JLabel("Crear Partida");
+		
+		Icon iconoCrear;
+		
 		
 		JLabel labelConfiguracion= new JLabel();
 		
@@ -54,9 +89,9 @@ public class VentanaMenu extends JFrame{
 		
 		Icon iconoEstadistica;
 		
-		JLabel labelPerfil= new JLabel();
+		LabelPerfil labelPerfil;
 		
-		Icon iconoPerfil;
+		
 		
 		JLabel labelCerrar= new JLabel();
 		
@@ -64,7 +99,22 @@ public class VentanaMenu extends JFrame{
 		
 		//Establecemos el formato
 		
-		labelFoto.setBounds(67, 154, 466, 265);
+		try{
+			imagen=new ImageIcon (VentanaMenu.class.getResource("Imagenes/fondo.jpg").toURI().toURL());
+		}catch (Exception e){
+			System.out.println("No se encuentra el fondo");
+		}
+		
+		
+		labelfondo.setBounds(0, 0, getWidth(), getHeight());
+		
+		iconoFondo=new ImageIcon(imagen.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
+		
+		labelfondo.setIcon(iconoFondo);
+		
+		//67,154,466,265
+		
+		labelFoto.setBounds(104,273, 692, 392);
 		
 		try{
 			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/Menu.png").toURI().toURL());
@@ -76,23 +126,15 @@ public class VentanaMenu extends JFrame{
 		
 		labelFoto.setIcon(iconoFoto);
 		
-		labelTitulo.setBounds(143, 0, 320, 170);
+		labelTitulo.setBounds(248, 34, 415, 99);
 		
-		try{
-			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/multiplayer.png").toURI().toURL());
-		}catch (Exception e){
-			System.out.println("No se encuentra el archivo");
-		}
+		labelTitulo.setFont(new Font("Berlin Sans FB Demi", Font.BOLD, 50));
 		
-		iconoTitulo= new ImageIcon(imagen.getImage().getScaledInstance(labelTitulo.getWidth(), labelTitulo.getHeight(), Image.SCALE_DEFAULT));
-		
-		labelTitulo.setIcon(iconoTitulo);
-		
-		labelEmpezar.setBounds(266, 130, 68, 60);
+		labelEmpezar.setBounds(296, 145, 309, 80);
 		
 
 		try{
-			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/play.png").toURI().toURL());
+			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/button_green.png").toURI().toURL());
 		}catch (Exception e){
 			System.out.println("No se encuentra el archivo");
 		}
@@ -101,7 +143,20 @@ public class VentanaMenu extends JFrame{
 		
 		labelEmpezar.setIcon(iconoEmpezar);
 		
-		labelConfiguracion.setBounds(555, 67, 24, 24);
+		labelCrear.setBounds(296, 233, 309, 80);
+		
+
+		try{
+			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/button_green.png").toURI().toURL());
+		}catch (Exception e){
+			System.out.println("No se encuentra el archivo");
+		}
+		
+		iconoCrear= new ImageIcon(imagen.getImage().getScaledInstance(labelCrear.getWidth(), labelCrear.getHeight(), Image.SCALE_DEFAULT));
+		
+		labelCrear.setIcon(iconoCrear);
+		
+		labelConfiguracion.setBounds(800, 150, 50, 50);
 		
 		try{
 			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/configuracion.png").toURI().toURL());
@@ -113,7 +168,7 @@ public class VentanaMenu extends JFrame{
 		
 		labelConfiguracion.setIcon(iconoConfiguracion);
 		
-		labelEstadistica.setBounds(556, 108, 24, 24);
+		labelEstadistica.setBounds(800, 220, 50, 50);
 		
 		try{
 			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/trofeo.png").toURI().toURL());
@@ -125,7 +180,8 @@ public class VentanaMenu extends JFrame{
 		
 		labelEstadistica.setIcon(iconoEstadistica);
 		
-		labelPerfil.setBounds(556, 26, 24, 24);
+		
+		
 		
 		try{
 			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/user.png").toURI().toURL());
@@ -133,11 +189,10 @@ public class VentanaMenu extends JFrame{
 			System.out.println("No se encuentra el archivo");
 		}
 		
-		iconoPerfil= new ImageIcon(imagen.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
+		labelPerfil=new LabelPerfil(imagen, 800, 70, 50, 50);
 		
-		labelPerfil.setIcon(iconoPerfil);
 		
-		labelCerrar.setBounds(29, 26, 24, 24);
+		labelCerrar.setBounds(20, 26, 24, 24);
 		
 		try{
 			imagen= new ImageIcon(VentanaMenu.class.getResource("Imagenes/cierre.png").toURI().toURL());
@@ -149,17 +204,43 @@ public class VentanaMenu extends JFrame{
 		
 		labelCerrar.setIcon(iconoCerrar);
 		
+
+		try{
+			imagen=new ImageIcon (VentanaMenu.class.getResource("Imagenes/hierba.png").toURI().toURL());
+		}catch (Exception e){
+			System.out.println("No se encuentra el fondo");
+		}
+		
+		//0,150,600,400
+		
+		labelHierba.setBounds(0,193,920 ,507 );
+		
+		iconoHierba=new ImageIcon(imagen.getImage().getScaledInstance(labelHierba.getWidth(), labelHierba.getHeight(), Image.SCALE_DEFAULT));
+		
+		labelHierba.setIcon(iconoHierba);
+		
 		//Añadimos al panel
 		
 		getContentPane().setLayout(null);
 		
 		getContentPane().add(labelCerrar);
 		getContentPane().add(labelConfiguracion);
-		getContentPane().add(labelEmpezar);
+		
 		getContentPane().add(labelEstadistica);
 		getContentPane().add(labelFoto);
 		getContentPane().add(labelPerfil);
 		getContentPane().add(labelTitulo);
+		getContentPane().add(labelHierba);
+		
+		getContentPane().add(titulo1);
+		
+		getContentPane().add(titulo2);
+		
+		getContentPane().add(labelCrear);
+		getContentPane().add(labelEmpezar);
+		
+		
+		//getContentPane().add(labelfondo);
 		
 		//Eventos
 		
@@ -167,10 +248,13 @@ public class VentanaMenu extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int opcion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de querer cerrar sesion?", "Aviso de cierre de sesion", JOptionPane.YES_NO_OPTION);
+				
+				if (opcion==JOptionPane.OK_OPTION){
 				VentanaLogin ventana= new VentanaLogin();
 				ventana.setVisible(true);
 				dispose();
-				
+				}
 			}
 		});
 		
@@ -198,12 +282,12 @@ public class VentanaMenu extends JFrame{
 			public void mouseEntered(MouseEvent e) {
 				ImageIcon imagenBoton= new ImageIcon();
 				try{
-					imagenBoton= new ImageIcon(VentanaMenu.class.getResource("Imagenes/play seleccion.png").toURI().toURL());
+					imagenBoton= new ImageIcon(VentanaMenu.class.getResource("Imagenes/boton seleccionado.png").toURI().toURL());
 				}catch (Exception a){
 					System.out.println("No se encuentra el archivo");
 				}
 				
-				Icon icono= new ImageIcon(imagenBoton.getImage().getScaledInstance(labelEmpezar.getWidth()-4, labelEmpezar.getHeight()-7, Image.SCALE_DEFAULT));
+				Icon icono= new ImageIcon(imagenBoton.getImage().getScaledInstance(labelEmpezar.getWidth(), labelEmpezar.getHeight(), Image.SCALE_DEFAULT));
 				
 				
 				labelEmpezar.setIcon(icono);
@@ -212,8 +296,51 @@ public class VentanaMenu extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VentanaConectando ventana = new VentanaConectando();
-				ventana.setVisible(true);
+				
+
+				VentanaCrearPartida ventanas= new VentanaCrearPartida();
+				ventanas.setVisible(true);
+			}
+		});
+		
+		labelCrear.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				labelCrear.setIcon(iconoCrear);
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				ImageIcon imagenBoton= new ImageIcon();
+				try{
+					imagenBoton= new ImageIcon(VentanaMenu.class.getResource("Imagenes/boton seleccionado.png").toURI().toURL());
+				}catch (Exception a){
+					System.out.println("No se encuentra el archivo");
+				}
+				
+				Icon icono= new ImageIcon(imagenBoton.getImage().getScaledInstance(labelCrear.getWidth(), labelCrear.getHeight(), Image.SCALE_DEFAULT));
+				
+				
+				labelCrear.setIcon(icono);
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				
 			}
 		});
