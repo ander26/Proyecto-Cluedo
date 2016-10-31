@@ -8,13 +8,13 @@ import Proyecto.Cluedo.Datos.TipoCarta;
 public class Propiedades {
 	
 	
-	private int numTotArmas;
-	private int numTotLugares;
-	private int numTotSospechosos;
-	private int numTotCartas;
-	private int numJugadores;
+	private static int numTotArmas;
+	private static int numTotLugares;
+	private static int numTotSospechosos;
+	private static int numTotCartas;
+	private static int numJugadores;
 	
-	private ArrayList<ArrayList<Cartas>> baraja;
+	private static ArrayList<ArrayList<Cartas>> baraja;
 	
 	/**
 	 * Atributo que contiene el numero de cartas por usuario 
@@ -44,7 +44,7 @@ public class Propiedades {
 		alarma.add(new Cartas ("Chip","Imagenes/carchip.png",false,0));
 		alarma.add(new Cartas ("Botella","Imagenes/carbotella.png",false,0));
 		alarma.add(new Cartas ("Sarten","Imagenes/carpistola.png",false,0));
-		ArrayList<Cartas> allugares=new ArrayList();alarma.add(new Cartas ("Pistola","Imagenes/carpistola.png",false,0));
+		ArrayList<Cartas> allugares=new ArrayList();
 		allugares.add(new Cartas ("F. Ingenieria","Imagenes/clINGENIERIA.png",false,1));
 		allugares.add(new Cartas ("La Comercial","Imagenes/clCOMERCIAL.png",false,1));
 		allugares.add(new Cartas ("la L","Imagenes/clL.png",false,1));
@@ -52,11 +52,33 @@ public class Propiedades {
 		allugares.add(new Cartas ("Edificio centenario","Imagenes/clCENTENARIO.png",false,1));
 		allugares.add(new Cartas ("Edificio de letras","Imagenes/clFLETRAS.png",false,1));
 		allugares.add(new Cartas ("Biblioteca","Imagenes/clBIBLIOTECA.png",false,1));
-		allugares.add(new Cartas ("Zubiarte","Imagenes/clZUBIARTE.png",false,1));				
+		allugares.add(new Cartas ("Zubiarte","Imagenes/clZUBIARTE.png",false,1));		
+		ArrayList<Cartas> alcomodines=new ArrayList();
+		allugares.add(new Cartas ("Comodin1","Imagenes/clINGENIERIA.png",false,3));
+		allugares.add(new Cartas ("Comodin2","Imagenes/clINGENIERIA.png",false,3));		
 		this.baraja = new ArrayList();
 		this.baraja.add(alarma);
 		this.baraja.add(allugares);
 		this.baraja.add(alsospechoso);
+	}
+	//Escoje las 3 csrtas del asesinato y reparte las demas entre los jugadores
+	public static ArrayList<ArrayList<Integer>> [] repartirCartas(Jugador [] arJugadores){
+		//Seleccion de las crtas que hacen el asesinato(las que en la vida real se meten en un sobre)
+		for(int i=0;i<3;i++){
+			int num=(int) (Math.random()*10);
+			while(num>=baraja.get(i).size()){
+				num=(int) (Math.random()*10);
+			}
+			baraja.get(i).get(num).setCulpable(true);
+			baraja.get(i).get(num).setSeleccionada(true);			
+		}
+		for(int j=0;j<(numTotCartas-3+1);j++){
+			if(numTotCartas%numJugadores!=0){
+				
+			}
+			
+			
+		}
 	}
 
 	public int getNumTotArmas() {

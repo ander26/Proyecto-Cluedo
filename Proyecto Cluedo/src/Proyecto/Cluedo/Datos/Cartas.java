@@ -38,6 +38,13 @@ public class Cartas {
 	private int tipo;
 	
 	/**
+	 * Atributo que nos dice si esa carta ya esta repartida para un jugador
+	 */
+	
+	private boolean seleccionada;
+	
+	
+	/**
 	 * Constructor sin parametros
 	 */
 	
@@ -151,6 +158,15 @@ public class Cartas {
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
+	
+	public boolean isSeleccionada() {
+		return seleccionada;
+	}
+
+	public void setSeleccionada(boolean seleccionada) {
+		this.seleccionada = seleccionada;
+	}
+
 	
 	
 	
