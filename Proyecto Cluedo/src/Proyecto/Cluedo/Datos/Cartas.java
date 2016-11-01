@@ -53,6 +53,7 @@ public class Cartas {
 		this.nombre="";
 		this.rutaIcono="";
 		this.culpable=false;
+		this.seleccionada=false;
 	
 	}
 	
@@ -70,6 +71,7 @@ public class Cartas {
 		this.rutaIcono=rutaIcono;		
 		this.culpable=culpable;		
 		this.tipo=tipo;
+		this.seleccionada=false;
 	}
 	
 	/**

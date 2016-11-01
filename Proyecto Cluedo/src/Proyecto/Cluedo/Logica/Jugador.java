@@ -9,7 +9,7 @@ public class Jugador {
 
 	public Jugador() {
 		
-		MisCartas = null;
+		MisCartas = new ArrayList();
 		Monigote = null;
 		Turno=false;
 		
@@ -37,5 +37,8 @@ public class Jugador {
 
 	public void setMisCartas(ArrayList<ArrayList<Integer>> misCartas) {
 		MisCartas = misCartas;
+	}
+	public void setCarta(int indice,int num) {
+		MisCartas.get(indice).add(num);
 	}
 }
