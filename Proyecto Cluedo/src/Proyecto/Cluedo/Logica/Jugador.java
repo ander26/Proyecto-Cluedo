@@ -6,13 +6,24 @@ public class Jugador {
 	private ArrayList<ArrayList<Integer>> MisCartas;
 	private String Monigote;
 	private boolean Turno;
+	private int Lugar;
+
+	
 
 	public Jugador() {
 		
 		MisCartas = new ArrayList();
 		Monigote = null;
 		Turno=false;
+		Lugar=-1;
 		
+	}
+	public int getLugar() {
+		return Lugar;
+	}
+
+	public void setLugar(int lugar) {
+		Lugar = lugar;
 	}
 
 	public String getMonigote() {
