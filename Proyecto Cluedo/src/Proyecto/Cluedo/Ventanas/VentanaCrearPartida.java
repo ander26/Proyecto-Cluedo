@@ -80,7 +80,7 @@ public class VentanaCrearPartida extends JFrame {
 		
 		JTextField textoNombre = new JTextField();
 		
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 2, 4, 3);
+		JSlider slider = new JSlider(JSlider.HORIZONTAL, 2, 5, 3);
 		
 		JLabel labelPodium = new JLabel();
 		
@@ -118,6 +118,7 @@ public class VentanaCrearPartida extends JFrame {
 		labelTable.put( new Integer( 2 ), new JLabel("2") );
 		labelTable.put( new Integer( 3 ), new JLabel("3") );
 		labelTable.put( new Integer( 4 ), new JLabel("4") );
+		labelTable.put( new Integer( 5 ), new JLabel("5") );
 		
 		slider.setLabelTable( labelTable );
 		

@@ -78,6 +78,12 @@ public class Usuario implements Logineable {
 	
 	private Date conexion;
 	
+	/**
+	 * Constructor sin parametros
+	 */
+	public Usuario (){
+		
+	}
 	
 	/**
 	 * Construcor con parametros
@@ -356,6 +362,26 @@ public class Usuario implements Logineable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+
+
+	public Date getConexion() {
+		return conexion;
+	}
+
+
+
+	public void setConexion(Date conexion) {
+		this.conexion = conexion;
+	}
+
+
+
+	public static String[] getListaPreguntas() {
+		return LISTA_PREGUNTAS;
+	}
+	
+
 	
 	
 	
