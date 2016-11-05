@@ -60,7 +60,7 @@ public class GestionBaseDeDatos {
 			Statement statement = conexion.createStatement();
 			statement.setQueryTimeout(30);
 			try{
-			statement.executeUpdate("create table usuario (nombre string,apellido string,usuario string,email string,contraseña string,genero char,fechaNacimiento bigint,pregunta int,respuesta string, fechaUltimoLogin bigint)");
+			statement.executeUpdate("create table usuario (nombre string,apellido string,usuario string,email string,contraseña string,genero string,fechaNacimiento bigint,pregunta int,respuesta string, fechaUltimoLogin bigint)");
 			}catch (SQLException h){
 				logger.log(Level.WARNING, "La tabla ya esta creada");
 				return null;
@@ -78,7 +78,7 @@ public class GestionBaseDeDatos {
 		String sentSQL ="";
 		try {
 			
-			sentSQL="insert into usuario values ('"+u.getNombre()+"','"+u.getApellidos()+"','"+u.getUsuario()+"','"+u.getEmail()+"','"+u.getContraseña()+"','"+u.getGenero()+"','"+u.getFechaNacimeinto().getTime()+"','"+u.getPregunta()+"','"+u.getRespuesta()+"','"+u.getConexion().getTime()+")";
+			sentSQL="INSERT INTO usuario VALUES('"+u.getNombre()+"','"+u.getApellidos()+"','"+u.getUsuario()+"','"+u.getEmail()+"','"+u.getContraseña()+"','"+u.getGenero()+"',"+u.getFechaNacimeinto().getTime()+","+u.getPregunta()+",'"+u.getRespuesta()+"',"+u.getConexion().getTime()+")";
 			int val = st.executeUpdate( sentSQL );
 			
 			
@@ -89,7 +89,7 @@ public class GestionBaseDeDatos {
 			
 			logger.log( Level.INFO, "Se ha añadido la fila : "+sentSQL);
 			return true;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			logger.log( Level.SEVERE, "Error al insertar la fila: "+sentSQL);
 			return false;
 		}
@@ -113,7 +113,7 @@ public class GestionBaseDeDatos {
 	
 	
 	 
-	public static ArrayList<Usuario> consultaATabla( Statement st, String seleccion ) {
+	public  ArrayList<Usuario> consultaATabla( Statement st, String seleccion ) {
 		
 		ArrayList<Usuario> ret = new ArrayList<>();
 		
