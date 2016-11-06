@@ -39,6 +39,7 @@ public class VentanaAcusar extends JFrame {
 		// TODO Auto-generated method stub		
 		Jugador a =new Jugador();
 		a.setLugar(2);
+		//mete el fondo del lugar en el que este
 		String [] aimglug=new String [8];
 		aimglug[0]="Imagenes/ingenieria.jpg";
 		aimglug[1]="Imagenes/comercial.jpg";
@@ -63,7 +64,8 @@ public class VentanaAcusar extends JFrame {
 		paneldentropri.setLayout(new BoxLayout(paneldentropri,BoxLayout.X_AXIS));
 		//Añadir layout a los paneles de las cartas
 		pcsospechoso.setLayout(new BorderLayout());
-		pcsospechoso.setOpaque(false);
+		pcsospechoso.setOpaque(true);
+		pcsospechoso.setBackground(Color.BLUE);
 		//pclugar.setLayout(new BorderLayout());
 		//pclugar.setOpaque(false);
 		pcarma.setLayout(new BorderLayout());
@@ -111,6 +113,7 @@ public class VentanaAcusar extends JFrame {
 		//meter botones
 		ImageIcon iconobacusar = new ImageIcon(ventana.class.getResource("Imagenes/bacusar.png"));		
 		lbAcusar.setSize(200,150);
+		
 		Icon iconoacu = new ImageIcon(iconobacusar.getImage().getScaledInstance(lbAcusar.getWidth()	, lbAcusar.getHeight(), Image.SCALE_DEFAULT));
 		lbAcusar.setIcon(iconoacu);
 		ImageIcon iconobresolver = new ImageIcon(ventana.class.getResource("Imagenes/Bresolver.png"));		
@@ -212,6 +215,7 @@ public class VentanaAcusar extends JFrame {
 		});
 		
 		
+		
 	}
 	public static void meterCartas(Propiedades p,int panel,JPanel pan,JLabel label){	
 		String ruta=p.getBaraja().get(panel).get(arposcartas[panel]).getRutaIcono();		
@@ -220,6 +224,8 @@ public class VentanaAcusar extends JFrame {
 		label.setSize(227,283);
 		Icon icono = new ImageIcon(iconocarta.getImage().getScaledInstance(label.getWidth()	, label.getHeight(), Image.SCALE_DEFAULT));
 		label.setIcon(icono);
+		
+		pan.setOpaque(true);
 		label.setHorizontalAlignment(0);
 		pan.add(label,BorderLayout.CENTER);
 		label.repaint();

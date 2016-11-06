@@ -226,6 +226,13 @@ public class Propiedades {
 	public void setBaraja(ArrayList<ArrayList<Cartas>> baraja) {
 		this.baraja = baraja;
 	}
+	public int tirarDado(){
+		int num=(int)(Math.random()*10);
+		while(num>7){
+			num=(int)(Math.random()*10);
+			
+		}return num;
+	}
 
 	public static void main (String [] args){
 		Jugador a=new Jugador();
