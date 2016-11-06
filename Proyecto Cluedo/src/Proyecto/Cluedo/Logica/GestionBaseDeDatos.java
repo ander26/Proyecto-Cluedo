@@ -15,6 +15,24 @@ public class GestionBaseDeDatos {
 	private static Logger logger = Logger.getLogger(GestionBaseDeDatos.class.getName());
 	
 	/**
+	 * Metodo que devuelve un statement para usar la base de datos
+	 * @param con Parametro que contiene la conexion con la base 
+	 * @return Devuelve un statement para usar con la base 
+	 */
+	
+	public static Statement usarBD( Connection con ) {
+		try {
+			Statement statement = con.createStatement();
+			statement.setQueryTimeout(30);  // poner timeout 30 msg
+			return statement;
+		} catch (SQLException e) {
+			logger.log( Level.SEVERE, "Error en el establecimiento de la conexion con la base");
+			return null;
+		}
+	}
+	
+	
+	/**
 	 * Metodo que sirve para inicializar la base de datos
 	 * @param nombreBase Nombre de la base de datos
 	 * @return Devuelve la conexion con la base de datos 
@@ -60,12 +78,12 @@ public class GestionBaseDeDatos {
 			Statement statement = conexion.createStatement();
 			statement.setQueryTimeout(30);
 			try{
-			statement.executeUpdate("create table usuario (nombre string,apellido string,usuario string,email string,contraseña string,genero string,fechaNacimiento bigint,pregunta int,respuesta string, fechaUltimoLogin bigint)");
+			statement.executeUpdate("create table usuario (nombre string,apellido string,nombreUsuario string not null primary key,email string,contraseña string,genero string,fechaNacimiento bigint,pregunta int,respuesta string, fechaUltimoLogin bigint)");
 			}catch (SQLException h){
 				logger.log(Level.WARNING, "La tabla ya esta creada");
 				return null;
 			}
-			
+			logger.log(Level.INFO,"Se ha creado una tabla" );
 			return statement;
 		}catch (Exception e){
 			logger.log(Level.SEVERE, "Error en la creacion de la tabla");
@@ -133,14 +151,17 @@ public class GestionBaseDeDatos {
 				
 				u.setNombre( rs.getString( "nombre" ));
 				u.setContraseña(rs.getString( "contraseña" ));
-				u.setApellidos( rs.getString( "apellidos" ));
-				u.setUsuario( rs.getString( "usuario" ));
+				u.setApellidos( rs.getString( "apellido" ));
+				u.setUsuario( rs.getString( "nombreUsuario" ));
 				u.setContraseña(rs.getString( "contraseña" ));
 				u.setEmail( rs.getString( "email" ));
 				u.setPregunta(rs.getInt("pregunta"));
 				u.setRespuesta(rs.getString("respuesta"));
-				//Hay que buscar como arreglar lo del char
-				//u.setGenero(rs.getString("genero"));
+				if (rs.getString("genero").equals("HOMBRE")){
+					u.setGenero(Genero.HOMBRE);
+				}else{
+					u.setGenero(Genero.MUJER);
+				}
 				u.setConexion(new Date(rs.getLong("fechaUltimoLogin")));
 				u.setFechaNacimeinto(new Date (rs.getLong("fechaNacimiento")));
 				
@@ -148,12 +169,13 @@ public class GestionBaseDeDatos {
 			}
 			rs.close();
 			return ret;
-		} catch (IllegalArgumentException e) {  // Error en tipo usuario (enumerado)
-			e.printStackTrace();
+		} catch (IllegalArgumentException e) {  
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
 			return null;
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
+	
+	
 }

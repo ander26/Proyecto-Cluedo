@@ -7,6 +7,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import java.sql.*;
+
 import javax.print.attribute.standard.JobKOctetsProcessed;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -15,15 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import Proyecto.Cluedo.Datos.LabelPerfil;
+import Proyecto.Cluedo.Datos.Usuario;
 
 public class VentanaMenu extends JFrame{
 
-	public static void main (String [] args){
-		VentanaMenu ventana = new VentanaMenu();
-		ventana.setVisible(true);
-	}
-	
-	public VentanaMenu(){
+	public VentanaMenu(Connection conexion, Usuario u){
 		
 		//Inicializamos el frame 
 		
@@ -251,7 +249,7 @@ public class VentanaMenu extends JFrame{
 				int opcion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de querer cerrar sesion?", "Aviso de cierre de sesion", JOptionPane.YES_NO_OPTION);
 				
 				if (opcion==JOptionPane.OK_OPTION){
-				VentanaLogin ventana= new VentanaLogin();
+				VentanaLogin ventana= new VentanaLogin(conexion);
 				ventana.setVisible(true);
 				dispose();
 				}

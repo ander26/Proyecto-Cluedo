@@ -48,7 +48,7 @@ public class Usuario implements Logineable {
 	 * Atributo que contiene el genero del usuario
 	 */
 	
-	private String genero;
+	private Genero genero;
 	
 	/**
 	 * Atributo que contiene la fecha de nacimiento del usuario
@@ -108,7 +108,7 @@ public class Usuario implements Logineable {
 	 */
 	
 
-	public Usuario(String nombre, String apellidos, String usuario, String contraseña, String genero,
+	public Usuario(String nombre, String apellidos, String usuario, String contraseña, Genero genero,
 			Date fechaNacimeinto, String respuesta, int pregunta,String email,ImageIcon imagenPerfil) {
 		
 		this.nombre = nombre;
@@ -293,7 +293,7 @@ public class Usuario implements Logineable {
 	 * @return Devuelve el genero
 	 */
 
-	public String getGenero() {
+	public Genero getGenero() {
 		return genero;
 	}
 	
@@ -303,7 +303,7 @@ public class Usuario implements Logineable {
 	 */
 
 
-	public void setGenero(String genero) {
+	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
 

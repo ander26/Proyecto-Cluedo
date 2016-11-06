@@ -26,6 +26,8 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Date;
 
+import java.sql.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -49,10 +51,21 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
+import Proyecto.Cluedo.Datos.Genero;
 import Proyecto.Cluedo.Datos.LabelPerfil;
+import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
 
 public class VentanaRegistro extends JFrame {
+	
+	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
+	
+	private JRadioButton hombre= new JRadioButton("Hombre",true);
+	
+	private JRadioButton mujer = new JRadioButton("Mujer",false);
+	
+	private Usuario u;
 
 	private JLabel botonRegistrar;
 	
@@ -78,12 +91,9 @@ public class VentanaRegistro extends JFrame {
 	
 	private ImageIcon imagenPerfil = new ImageIcon();
 	
-	public static void main (String [] args){
-		VentanaRegistro ventana= new VentanaRegistro();
-		ventana.setVisible(true);
-	}
 	
-	public VentanaRegistro (){
+	
+	public VentanaRegistro (Connection conexion){
 		
 		//Inicializamos el frame
 		
@@ -142,9 +152,7 @@ public class VentanaRegistro extends JFrame {
 		
 		botonCancelar= new JLabel();
 		
-		JRadioButton hombre= new JRadioButton("Hombre",true);
 		
-		JRadioButton mujer = new JRadioButton("Mujer",false);
 		
 		String [] preguntas = {"¿Como se llamaba tu primera mascota?","¿Como se llamaba tu primer profesor?","¿Donde hiciste el primer viaje en avion?"};
 		
@@ -392,6 +400,8 @@ public class VentanaRegistro extends JFrame {
 				
 				labelPerfil.setImagen(imagenPerfil);
 				
+				u.setImagenPerfil(imagenPerfil);
+				
 			}else{
 				
 			}
@@ -413,6 +423,8 @@ public class VentanaRegistro extends JFrame {
 			//Icon iconoPulsado= new ImageIcon(imagenU.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
 			labelPerfil.setImagen(imagenU);
 			
+			
+			
 		}
 
 		@Override
@@ -432,8 +444,15 @@ public class VentanaRegistro extends JFrame {
 			boolean correccion= comprobacion();
 			
 			if (correccion){
-				
-			}else{
+				Usuario u = new Usuario(textoNombre.getText(), textoApellido.getText(), textoUsuario.getText(), textoContraseña.getText(), obtenerGenero (), fechas.getDate(), textoRespuesta.getText(),listaPreguntas.getSelectedIndex(), textoEmail.getText(), imagenPerfil);
+				u.setConexion(new Date(System.currentTimeMillis()));
+				Statement p = gestion.usarBD(conexion);
+				if (gestion.insertarUsuario(p, u)){
+					JOptionPane.showMessageDialog(getContentPane(), "Se ha registrado correctamente, empiece a jugar", "Confirmacion", JOptionPane.INFORMATION_MESSAGE);
+					dispose();
+				}else{
+					JOptionPane.showMessageDialog(getContentPane(), "El nombre de usuario ya esta cogido", "Error", JOptionPane.INFORMATION_MESSAGE);
+				}
 				
 			}
 			
@@ -484,6 +503,15 @@ public class VentanaRegistro extends JFrame {
 			return correcto;
 		}else{
 			return correcto;
+		}
+	}
+	
+	private Genero obtenerGenero (){
+		if (hombre.isSelected()){
+			return Genero.HOMBRE;
+			
+		}else{
+			return Genero.MUJER;
 		}
 	}
 }

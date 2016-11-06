@@ -14,7 +14,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import javax.print.attribute.standard.JobKOctetsProcessed;
@@ -30,6 +30,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Proyecto.Cluedo.Datos.Genero;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
@@ -70,7 +71,7 @@ public class VentanaLogin extends JFrame {
 		
 	}
 	
-	public VentanaLogin(Statement st){
+	public VentanaLogin(Connection conexion){
 		
 		//Incializamos el frame 
 		
@@ -407,7 +408,7 @@ public class VentanaLogin extends JFrame {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VentanaRegistro ventanas=new VentanaRegistro();
+				VentanaRegistro ventanas=new VentanaRegistro(conexion);
 				ventanas.setVisible(true);
 				
 			}
@@ -426,16 +427,20 @@ public class VentanaLogin extends JFrame {
 					}else if (obtenerContraseña(contraseña.getPassword()).trim().length()==0||obtenerContraseña(contraseña.getPassword()).equals("Contraseña")){
 						JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar el campo de la contraseña para poder acceder", "Aviso",JOptionPane.INFORMATION_MESSAGE);
 					}else {
-						
-						listadeUsuarios=gb.consultaATabla(st, new String("usuario="+usuario.getText()+" and contraseña="+obtenerContraseña(contraseña.getPassword())));
-					if (listadeUsuarios.size()!=1){
+					Statement st = gb.usarBD(conexion);
+					
+					listadeUsuarios=gb.consultaATabla(st, "nombreUsuario='"+usuario.getText()+"' and contraseña='"+obtenerContraseña(contraseña.getPassword())+"'");	
+
+					if (listadeUsuarios==null||listadeUsuarios.size()!=1){
 						JOptionPane.showMessageDialog(getContentPane(), "Los datos introducidos son incorrectos", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 					}else{
-					JOptionPane.showMessageDialog(getContentPane(), "Bienvenido "+"Pepito"+" se te echaba de menos desde la ultima conexion "+" (ultima conexion)");
+						
+					Usuario jugador = listadeUsuarios.get(0);
+					JOptionPane.showMessageDialog(getContentPane(), bienvenida(jugador.getGenero())+jugador.getNombre()+" se te echaba de menos desde la ultima conexion "+jugador.getConexion().toString());
 					
 					dispose();	
 						
-					VentanaMenu menu= new VentanaMenu();
+					VentanaMenu menu= new VentanaMenu(conexion,jugador);
 					
 					menu.setVisible(true);
 					}
@@ -452,7 +457,7 @@ public class VentanaLogin extends JFrame {
 		
 	}
 	
-	public String obtenerContraseña (char [] contraseña){
+	private String obtenerContraseña (char [] contraseña){
 		String contraseñaTexto ="";
 		
 		for (int i =0 ; i<contraseña.length;i++){
@@ -462,4 +467,12 @@ public class VentanaLogin extends JFrame {
 		return contraseñaTexto;
 	}
 	
+	private String bienvenida (Genero x){
+		if (x.equals(Genero.MUJER)){
+			return "Bienvenida ";
+			
+		}else{
+			return "Bienvenido ";
+		}
+	}
 }
