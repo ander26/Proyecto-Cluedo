@@ -82,6 +82,7 @@ public static void main(String[] args) {
 		pderecha.setBorder(blackline);
 		lsemaforo.setAlignmentX(CENTER_ALIGNMENT);
 		lcartel.setAlignmentX(CENTER_ALIGNMENT);
+		//
 		pcartel.setOpaque(false);
 		pcartel.add(lcartel);
 		pcartel.add(ltextocartel);		
