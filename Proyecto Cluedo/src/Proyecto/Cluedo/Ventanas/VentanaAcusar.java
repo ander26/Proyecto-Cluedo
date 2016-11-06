@@ -136,7 +136,7 @@ public class VentanaAcusar extends JFrame {
 				if(arposcartas[1]<prop.getBaraja().get(1).size() && arposcartas[1]>0){
 				arposcartas[1]=arposcartas[1]-1;
 				//meterCartas(prop,1,pclugar,labell);
-				repaint();
+				
 				}else{
 					
 				}
@@ -190,7 +190,7 @@ public class VentanaAcusar extends JFrame {
 				System.out.println(prop.getBaraja().get(2).size());
 				arposcartas[2]=arposcartas[2]-1;
 				meterCartas(prop,2,pcsospechoso,labels);
-				
+				getContentPane().repaint();
 				}
 				else{
 //					

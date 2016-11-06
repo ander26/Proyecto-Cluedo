@@ -3,6 +3,8 @@ package Proyecto.Cluedo.Datos;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
+
 import Proyecto.Cluedo.Interfaces.Logineable;
 
 public class Usuario implements Logineable {
@@ -46,7 +48,7 @@ public class Usuario implements Logineable {
 	 * Atributo que contiene el genero del usuario
 	 */
 	
-	private char genero;
+	private String genero;
 	
 	/**
 	 * Atributo que contiene la fecha de nacimiento del usuario
@@ -78,6 +80,18 @@ public class Usuario implements Logineable {
 	
 	private Date conexion;
 	
+	/**
+	 * Atributo que contiene la foto de perfil del usuario 
+	 */
+	
+	private ImageIcon imagenPerfil;
+	
+	/**
+	 * Constructor sin parametros
+	 */
+	public Usuario (){
+		
+	}
 	
 	/**
 	 * Construcor con parametros
@@ -90,11 +104,12 @@ public class Usuario implements Logineable {
 	 * @param respuesta Parametro que contiene la respuesta de seguridad
 	 * @param pregunta Parametro que contiene la posicion de la pregunta de seguridad del usuario 
 	 * @param email Parametro que contiene el email del usuario 
+	 * @param imagenPerfil Parametro que contiene la foto de perfil del usuario 
 	 */
 	
 
-	public Usuario(String nombre, String apellidos, String usuario, String contraseña, char genero,
-			Date fechaNacimeinto, String respuesta, int pregunta,String email) {
+	public Usuario(String nombre, String apellidos, String usuario, String contraseña, String genero,
+			Date fechaNacimeinto, String respuesta, int pregunta,String email,ImageIcon imagenPerfil) {
 		
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -105,6 +120,15 @@ public class Usuario implements Logineable {
 		this.respuesta = respuesta;
 		this.pregunta = pregunta;
 		this.email=email;
+		this.imagenPerfil=imagenPerfil;
+		
+		if (imagenPerfil == null){
+			try{
+			this.imagenPerfil= new ImageIcon(Usuario.class.getResource("Imagenes/user.png").toURI().toURL());
+			}catch ( Exception e){
+				System.out.println("No se ha encontrado la foto de defecto de perfil");
+			}
+		}
 		
 	}
 
@@ -269,7 +293,7 @@ public class Usuario implements Logineable {
 	 * @return Devuelve el genero
 	 */
 
-	public char getGenero() {
+	public String getGenero() {
 		return genero;
 	}
 	
@@ -279,7 +303,7 @@ public class Usuario implements Logineable {
 	 */
 
 
-	public void setGenero(char genero) {
+	public void setGenero(String genero) {
 		this.genero = genero;
 	}
 
@@ -356,6 +380,34 @@ public class Usuario implements Logineable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+
+
+	public Date getConexion() {
+		return conexion;
+	}
+
+
+
+	public void setConexion(Date conexion) {
+		this.conexion = conexion;
+	}
+
+
+
+	public static String[] getListaPreguntas() {
+		return LISTA_PREGUNTAS;
+	}
+
+	public ImageIcon getImagenPerfil() {
+		return imagenPerfil;
+	}
+
+	public void setImagenPerfil(ImageIcon imagenPerfil) {
+		this.imagenPerfil = imagenPerfil;
+	}
+	
+
 	
 	
 	
