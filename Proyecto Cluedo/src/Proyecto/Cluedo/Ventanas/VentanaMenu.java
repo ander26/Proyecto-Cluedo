@@ -187,7 +187,7 @@ public class VentanaMenu extends JFrame{
 			System.out.println("No se encuentra el archivo");
 		}
 		
-		labelPerfil=new LabelPerfil(imagen, 800, 70, 50, 50);
+		labelPerfil=new LabelPerfil(u.getImagenPerfil(), 800, 70, 50, 50);
 		
 		
 		labelCerrar.setBounds(20, 26, 24, 24);

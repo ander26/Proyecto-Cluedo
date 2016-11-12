@@ -49,9 +49,9 @@ public class VentanaChat extends JFrame {
 		
 		//Inicializamos el frame
 		
-		setUndecorated(true);
+		setUndecorated(false);
 		setResizable(false);
-		setSize(new Dimension(800, 600));
+		setSize(new Dimension(800, 630));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -85,9 +85,9 @@ public class VentanaChat extends JFrame {
 		
 		
 		
-		JLabel labelSalir = new JLabel();
+		//JLabel labelSalir = new JLabel();
 		
-		Icon iconoSalir;
+		//Icon iconoSalir;
 		
 		JLabel labelFondo= new JLabel();
 		
@@ -169,7 +169,7 @@ public class VentanaChat extends JFrame {
 		
 		labelPerfil.setIcon(iconoPerfil);
 		
-		labelSalir.setBounds(742,33,25,25);
+		/*labelSalir.setBounds(742,33,25,25);
 		
 		try{
 			imagen= new ImageIcon(VentanaChat.class.getResource("Imagenes/cierre.png").toURI().toURL());
@@ -179,7 +179,7 @@ public class VentanaChat extends JFrame {
 		
 		iconoSalir= new ImageIcon(imagen.getImage().getScaledInstance(labelSalir.getWidth(), labelSalir.getHeight(), Image.SCALE_DEFAULT));
 		
-		labelSalir.setIcon(iconoSalir);
+		labelSalir.setIcon(iconoSalir);*/
 		
 		mensaje.setBorder(BorderFactory.createLineBorder(Color.black));
 		
@@ -216,7 +216,7 @@ public class VentanaChat extends JFrame {
 		
 		getContentPane().add(labelPerfil);
 		
-		getContentPane().add(labelSalir);
+		//getContentPane().add(labelSalir);
 		
 		getContentPane().add(mensaje);
 		
@@ -295,14 +295,14 @@ public class VentanaChat extends JFrame {
 			
 		});
 		
-		labelSalir.addMouseListener(new MouseAdapter() {
+		/*labelSalir.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dispose();
 				
 			}
-		});
+		});*/
 		
 	}
 	

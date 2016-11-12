@@ -87,6 +87,12 @@ public class Usuario implements Logineable {
 	private ImageIcon imagenPerfil;
 	
 	/**
+	 * Atributo que contiene la puntuacion del usuario 
+	 */
+	
+	private long puntuacion;
+	
+	/**
 	 * Constructor sin parametros
 	 */
 	public Usuario (){
@@ -109,7 +115,7 @@ public class Usuario implements Logineable {
 	
 
 	public Usuario(String nombre, String apellidos, String usuario, String contraseña, Genero genero,
-			Date fechaNacimeinto, String respuesta, int pregunta,String email,ImageIcon imagenPerfil) {
+			Date fechaNacimeinto, String respuesta, int pregunta,String email,ImageIcon imagenPerfil,long puntuacion) {
 		
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -130,6 +136,7 @@ public class Usuario implements Logineable {
 			}
 		}
 		
+		this.puntuacion=puntuacion;
 	}
 
 	
@@ -154,6 +161,7 @@ public class Usuario implements Logineable {
 		return null;
 	}
 
+	
 	/**
 	 * Indica que el login del paciente es correcto
 	 * @param usuario Parametro que contiene el nombre de usuario 
@@ -162,7 +170,7 @@ public class Usuario implements Logineable {
 	 * @return Devuelve true si el login es correcto
 	 */
 	
-	@Override
+	
 	public boolean loginUsuario(String usuario, String contraseña, ArrayList<Usuario> listaDeUsuarios) {
 		
 		for (Usuario u: listaDeUsuarios){
@@ -405,6 +413,14 @@ public class Usuario implements Logineable {
 
 	public void setImagenPerfil(ImageIcon imagenPerfil) {
 		this.imagenPerfil = imagenPerfil;
+	}
+
+	public long getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(long puntuacion) {
+		this.puntuacion = puntuacion;
 	}
 	
 

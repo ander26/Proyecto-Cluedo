@@ -444,10 +444,10 @@ public class VentanaRegistro extends JFrame {
 			boolean correccion= comprobacion();
 			
 			if (correccion){
-				Usuario u = new Usuario(textoNombre.getText(), textoApellido.getText(), textoUsuario.getText(), textoContraseña.getText(), obtenerGenero (), fechas.getDate(), textoRespuesta.getText(),listaPreguntas.getSelectedIndex(), textoEmail.getText(), imagenPerfil);
+				Usuario u = new Usuario(textoNombre.getText(), textoApellido.getText(), textoUsuario.getText(), textoContraseña.getText(), obtenerGenero (), fechas.getDate(), textoRespuesta.getText(),listaPreguntas.getSelectedIndex(), textoEmail.getText(), imagenPerfil,0);
 				u.setConexion(new Date(System.currentTimeMillis()));
-				Statement p = gestion.usarBD(conexion);
-				if (gestion.insertarUsuario(p, u)){
+				
+				if (gestion.insertarUsuario(conexion, u)){
 					JOptionPane.showMessageDialog(getContentPane(), "Se ha registrado correctamente, empiece a jugar", "Confirmacion", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 				}else{

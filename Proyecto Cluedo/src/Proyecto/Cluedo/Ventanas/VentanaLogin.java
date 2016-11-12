@@ -427,9 +427,9 @@ public class VentanaLogin extends JFrame {
 					}else if (obtenerContraseña(contraseña.getPassword()).trim().length()==0||obtenerContraseña(contraseña.getPassword()).equals("Contraseña")){
 						JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar el campo de la contraseña para poder acceder", "Aviso",JOptionPane.INFORMATION_MESSAGE);
 					}else {
-					Statement st = gb.usarBD(conexion);
 					
-					listadeUsuarios=gb.consultaATabla(st, "nombreUsuario='"+usuario.getText()+"' and contraseña='"+obtenerContraseña(contraseña.getPassword())+"'");	
+					
+					listadeUsuarios=gb.consultaATabla(conexion, "NOMBREUSUARIO='"+usuario.getText()+"' AND CONTRASEÑA='"+obtenerContraseña(contraseña.getPassword())+"'");	
 
 					if (listadeUsuarios==null||listadeUsuarios.size()!=1){
 						JOptionPane.showMessageDialog(getContentPane(), "Los datos introducidos son incorrectos", "Aviso", JOptionPane.INFORMATION_MESSAGE);

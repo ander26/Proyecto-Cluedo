@@ -19,24 +19,42 @@ import javax.swing.border.Border;
 import Proyecto.Cluedo.Logica.Jugador;
 
 public class VentanaTablero extends JFrame {
-	JPanel pprincipal=new JPanel();
-	JPanel parriba=new JPanel();
-	panelrosa pabajo;
-	panelrosa pderecha;
-	panelrosa ptablero;	
-	JLabel lcartel=new JLabel();
-	JLabel ltextocartel=new JLabel();
-	JLabel lsemaforo=new JLabel();
-	JLabel lacusar=new JLabel();
-	JLabel lenviar=new JLabel();
-	JLabel lnotas=new JLabel();
-	JLabel lchat=new JLabel();
-	JLabel lusuario=new JLabel();
-	JLabel ldado=new JLabel();
-	JPanel pcartel=new JPanel();
+	
+	private JPanel pprincipal=new JPanel();
+
+	private JPanel parriba=new JPanel();
+
+	private static panelrosa pabajo;
+
+	private panelrosa pderecha;
+
+	private panelrosa ptablero;	
+
+	private JLabel lcartel=new JLabel();
+
+	private JLabel ltextocartel=new JLabel();
+
+	private JLabel lsemaforo=new JLabel();
+
+	private JLabel lacusar=new JLabel();
+
+	private JLabel lenviar=new JLabel();
+
+	private JLabel lnotas=new JLabel();
+
+	private JLabel lchat=new JLabel();
+
+	private JLabel lusuario=new JLabel();
+
+	private JLabel ldado=new JLabel();
+
+	private JPanel pcartel=new JPanel();
+	
 	private static int[][] mibaraja=new int[3][4];
-	JFrame g=new ventana();
-	VentanaChat ventana= new VentanaChat();
+
+	private JFrame g=new ventana();
+
+	private VentanaChat ventana= new VentanaChat();
 	
 	
 
@@ -47,18 +65,22 @@ public static void main(String[] args) {
 																	
 		JFrame f=new VentanaTablero();		
 		f.setVisible(true);
+		
+		
 	}
 	public VentanaTablero(){
+		 this.setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );		
-		setSize( 1330, 730 );				
+		//setSize( 1330, 730 );				
 		setResizable( true );
 		Border blackline = BorderFactory.createLineBorder(Color.DARK_GRAY,8);		
 		ImageIcon imagefondo = new ImageIcon(VentanaTablero.class.getResource("Imagenes/tablero - copia - copia.jpg"));
 		ptablero=new panelrosa(imagefondo.getImage());
 		ImageIcon imagefondocartel = new ImageIcon(VentanaTablero.class.getResource("Imagenes/fondocartel.jpg"));
 		ptablero.setBorder(blackline);
-		ImageIcon imagefondomadera = new ImageIcon(VentanaTablero.class.getResource("Imagenes/fondomadera.JPG"));
-		pabajo=new panelrosa(imagefondomadera.getImage());
+		ImageIcon imagefondomadera = new ImageIcon(VentanaTablero.class.getResource("Imagenes/fondomadera.jpg"));
+
+		pabajo=new panelrosa(imagefondomadera.getImage());	
 		pderecha=new panelrosa(imagefondocartel.getImage());
 		meterImgEnlabel("Imagenes/cartel.png",lcartel,500,600);
 		meterImgEnlabel("Imagenes/semafororojot.png",lsemaforo,200,150);
