@@ -296,7 +296,7 @@ public class VentanaMenu extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				
 
-				VentanaCrearPartida ventanas= new VentanaCrearPartida();
+				VentanaCrearPartida ventanas= new VentanaCrearPartida(conexion,u);
 				ventanas.setVisible(true);
 			}
 		});

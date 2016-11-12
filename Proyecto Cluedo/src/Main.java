@@ -22,7 +22,17 @@ public class Main {
 		
 		GestionBaseDeDatos gestion = new GestionBaseDeDatos();
 		Connection conexion = gestion.inicializarLaBase();
-
+		
+		/*try{
+			Statement statement = conexion.createStatement();
+			statement.executeUpdate("DROP TABLE IF EXISTS PARTIDA");
+		}catch (Exception e){
+			
+		}
+		String creacion = "CREATE TABLE PARTIDA (NOMBRE text, CODIGO int NOT NULL PRIMARY KEY, NUMEROJUGADORESMAXIMO int , NUMEROJUGADORESACTUAL int,POSICIONBARCO real,MENSAJECARTEL text)";
+		
+		gestion.crearTabla(creacion, conexion);*/
+		
 		
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);

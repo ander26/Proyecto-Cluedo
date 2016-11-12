@@ -8,16 +8,35 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.nio.file.attribute.FileOwnerAttributeView;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Hashtable;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import Proyecto.Cluedo.Datos.Partida;
+import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+
 public class VentanaCrearPartida extends JFrame {
+	
+	/**
+	 * Atributo a traves del cual se gestiona la base de datos 
+	 */
+	
+	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
+	
+	/**
+	 * Parametro que contiene la foto de las fichas
+	 */
 	
 	private ImageIcon [] listaDeFichas = {new ImageIcon(VentanaCrearPartida.class.getResource("Imagenes/coche.png")),
 			new ImageIcon(VentanaCrearPartida.class.getResource("Imagenes/barco.png")),
@@ -30,7 +49,15 @@ public class VentanaCrearPartida extends JFrame {
 			};
 
 	
+	/**
+	 * Parametro que contiene el nombre de las fichas 
+	 */
+	
 	private String [] listaTipos = {"Coche","Barco","Dedal","Sombrero","Perro","Zapato","Plancha","Carretilla"};
+	
+	/**
+	 * Parametro que contiene la ficha seleccionada 
+	 */
 	
 	private int contador =1;
 	
@@ -40,30 +67,23 @@ public class VentanaCrearPartida extends JFrame {
 	
 	private Icon iconoSeleccionado;
 	
-	
-	public static void main (String [] args){
-		
-		VentanaCrearPartida ventana= new VentanaCrearPartida();
-		ventana.setVisible(true);
-		
-	}
-	
-	public VentanaCrearPartida (){
+
+	public VentanaCrearPartida (Connection conexion, Usuario u){
 		
 		//Inicializamos el frame
 		
-		setSize(new Dimension(900, 600));
+		setSize(new Dimension(900, 630));
 		
-		setUndecorated(true);
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		setLocationRelativeTo(null);
 		
 		getContentPane().setLayout(null);
 		
-		setBackground(new Color(1.0f,1.0f,1.0f,0.95f));
+		setResizable(false);
+		//setBackground(new Color(1.0f,1.0f,1.0f,0.95f));
 		
+		//setUndecorated (true)
 		//Generamos los componentes
 		
 		
@@ -111,7 +131,7 @@ public class VentanaCrearPartida extends JFrame {
 		
 		//Damos formato a los componentes
 		
-		slider.setBackground(Color.white);
+		//slider.setBackground(Color.white);
 		
 		Hashtable labelTable = new Hashtable();
 		
@@ -279,6 +299,49 @@ public class VentanaCrearPartida extends JFrame {
 		
 		//Generamos los eventos
 		
+		labelCrear.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (textoNombre.getText().trim().equals("")){
+					JOptionPane.showMessageDialog(getContentPane(), "Debe introducir el nombre de la partida para poder crear una","Aviso",JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					dispose ();
+					
+					Partida p= new Partida(slider.getValue(), textoNombre.getText(),conexion);
+					
+					gestion.insertarPartida(conexion, p);
+					
+					VentanaConectando ventana = new VentanaConectando();
+					
+					ventana.setVisible(true);
+					
+					ventana.revalidate();
+					
+					comprobador comp= new comprobador(p,conexion);
+					
+					comp.start();
+					try {
+						comp.join();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					while (p.getNumeroJugadoresActual()!=p.getNumeroJugadoresMaximo()){
+						
+					}
+					
+					comp.acabar();
+					
+					ventana.dispose();
+					
+					//TODO: Aqui habria que llamar a la ventana principal 
+					
+					
+				}
+			}
+		});
+		
 		labelCancelar.addMouseListener(new MouseAdapter() {
 			
 			
@@ -349,4 +412,58 @@ public class VentanaCrearPartida extends JFrame {
 			}
 		});
 	}
+	
+	class comprobador extends Thread {
+		
+		/**
+		 * Parametro que le indica al hilo cuando acabar 
+		 */
+		
+		public boolean acabar =true;
+		
+		public Partida p;
+		
+		public Connection conexion;
+		
+		public comprobador (Partida p, Connection conexion){
+			this.p=p;
+			this.conexion=conexion;
+		}
+		
+		public void run (){
+		
+			String sql="SELECT NUMEROJUGADORESMAXIMO,NUMEROJUGADORESACTUAL FROM PARTIDA WHERE CODIGO="+p.getCodigo();
+		
+			while (acabar){
+				Statement statement;
+				try {
+					statement = conexion.createStatement();
+				
+				ResultSet rs=statement.executeQuery(sql);
+				
+				while (rs.next()){
+					p.setNumeroJugadoresActual(rs.getInt("NUMEROJUGADORESACTUAL"));
+					p.setNumeroJugadoresMaximo(rs.getInt("NUMEROJUGADORESMAXIMO"));
+				}
+			System.out.println(p.getNumeroJugadoresActual()+" "+p.getNumeroJugadoresMaximo());
+				try {
+					Thread.sleep(30000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		}
+		
+		public void acabar (){
+			this.acabar=false;
+		}
+	}
+
+
 }

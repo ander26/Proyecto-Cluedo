@@ -106,16 +106,15 @@ public class GestionBaseDeDatos {
 		try{
 			Statement statement = conexion.createStatement();
 			statement.setQueryTimeout(30);
-			try{
+			
 			statement.executeUpdate(creacion);
-			}catch (SQLException h){
-				logger.log(Level.WARNING, "La tabla ya esta creada");
-				return null;
-			}
+			
+			logger.log(Level.INFO, "Creada la tabla: "+creacion);
 			
 			return statement;
 		}catch (Exception e){
 			logger.log(Level.SEVERE, "Error en la creacion de la tabla");
+			e.printStackTrace();
 			return null;
 		}
 		
@@ -282,5 +281,106 @@ public class GestionBaseDeDatos {
 		}
 	}
 	
+	/**
+	 * Metodo que sirve para insertar una partida a la base de datos 
+	 * @param conexion Parametro que contiene la conexion con la base de datos 
+	 * @param p Parametro que contiene la partida que se desea añadir 
+	 * @return Devuelve true si se añade 
+	 */
+	
+	public boolean insertarPartida (Connection conexion,Partida p){
+		
+		String sql="";
+		
+		try{
+			
+			Statement statement = conexion.createStatement();
+			
+			sql="INSERT INTO PARTIDA VALUES ('"+p.getNombre()+"',"+p.getCodigo()+","+p.getNumeroJugadoresMaximo()+","+p.getNumeroJugadoresActual()+","+p.getPosicionBarco()+",'"+p.getMensajeCartel()+"')";
+			
+			statement.executeUpdate(sql);
+			
+			logger.log(Level.INFO, "Se ha añadido la partida: "+sql);
+			
+			statement.close();
+			
+			return true;
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "Erro el insertar la partida : "+sql);
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		
+	}
+	
+	/**
+	 * Metodo que sirve para borrar una lista de la base de datos 
+	 * @param conexion Parametro que contiene la conexion con la base
+	 * @param tabla Parametro que contiene de la tabla que se desea borrar
+	 * @param condicion Parametro que contiene la condicion para borrar 
+	 * @return Devuelve true si se ha borrado 
+	 */
+	
+	public boolean borrarPartida (Connection conexion,String tabla,String condicion){
+		
+		String sql = "";
+		
+		try {
+			
+			sql="DELETE FROM "+tabla+" WHERE "+condicion;
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(sql);
+			
+			logger.log(Level.INFO, "Se ha borrado la partida: "+sql);
+			
+			statement.close();
+			
+			return true;
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha conseguido borrar la partida");
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+	}
+	
+	public ArrayList <Integer> obtenerCodigoPartidas (Connection conexion){
+		
+		ArrayList <Integer> listadeCodigos = new ArrayList<Integer>();
+		
+		String sql="";
+		
+		try{
+			
+			Statement statement = conexion.createStatement();
+			
+			sql ="SELECT CODIGO FROM PARTIDA ORDER BY CODIGO";
+			
+			ResultSet rs = statement.executeQuery(sql);
+			
+			while (rs.next()){
+				
+				int indice=rs.getInt(1);
+				System.out.println(indice);
+				listadeCodigos.add(indice);
+			}
+			
+			rs.close();
+			
+			statement.close();
+			return listadeCodigos;
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 	
 }

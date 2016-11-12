@@ -35,7 +35,7 @@ public class Cartas {
 	 * Atributo que contiene que tipo de carta es
 	 */
 	
-	private int tipo;
+	private TipoCarta tipo;
 	
 	/**
 	 * Atributo que nos dice si esa carta ya esta repartida para un jugador
@@ -65,7 +65,7 @@ public class Cartas {
 	 * @param culpable Parametro que contiene si la carta es la que se busca en el juego o no 
 	 */
 	
-	public Cartas (String nombre, String rutaIcono,boolean culpable,int tipo){
+	public Cartas (String nombre, String rutaIcono,boolean culpable,TipoCarta tipo){
 		
 		this.nombre=nombre;
 		this.rutaIcono=rutaIcono;		
@@ -148,7 +148,7 @@ public class Cartas {
 	 * @return Devuelve el tipo de carta
 	 */
 	
-	public int getTipo() {
+	public TipoCarta getTipo() {
 		return tipo;
 	}
 	
@@ -157,7 +157,7 @@ public class Cartas {
 	 * @param tipo Parametro que contiene el tipo de carta
 	 */
 
-	public void setTipo(int tipo) {
+	public void setTipo(TipoCarta tipo) {
 		this.tipo = tipo;
 	}
 	

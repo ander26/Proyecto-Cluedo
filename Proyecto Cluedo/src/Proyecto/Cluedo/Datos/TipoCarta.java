@@ -3,5 +3,6 @@ package Proyecto.Cluedo.Datos;
 public enum TipoCarta {
 	ARMA,
 	LUGAR,
-	SOSPECHOSO
+	SOSPECHOSO,
+	COMODIN
 }

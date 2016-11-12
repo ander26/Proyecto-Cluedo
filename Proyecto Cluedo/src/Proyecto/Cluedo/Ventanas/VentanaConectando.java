@@ -46,7 +46,7 @@ public class VentanaConectando extends JFrame {
 		 * Label que contiene el texto Conectando
 		 */
 
-		JLabel conectando = new JLabel("Conectando...");
+		JLabel conectando = new JLabel("Esperando a jugadores...");
 
 		// Establecemos el formato
 
@@ -54,7 +54,7 @@ public class VentanaConectando extends JFrame {
 		getContentPane().add(etiqueta);
 		getContentPane().add(conectando);
 
-		conectando.setBounds(210, 130, 500, 500);
+		conectando.setBounds(100, 130, 550, 500);
 
 		conectando.setForeground(Color.BLUE);
 
