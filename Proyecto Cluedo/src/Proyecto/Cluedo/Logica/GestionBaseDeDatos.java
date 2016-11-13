@@ -383,4 +383,30 @@ public class GestionBaseDeDatos {
 		
 	}
 	
+	public void modificar (Connection conexion,String tabla,String actualizacion,String condicion){
+		String sql="";
+		
+		try{
+			
+			Statement statement = conexion.createStatement();
+			
+			sql="UPDATE "+tabla+" SET "+actualizacion+" WHERE "+condicion;
+			
+			statement.executeUpdate(sql);
+			
+			logger.log(Level.INFO, "Se ha modificado la linea: "+sql);
+			
+			statement.close();
+			
+			
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE,"Error a la hora de modificar la tabla");
+			e.printStackTrace();
+			
+		}
+		
+		
+	}
+	
 }
