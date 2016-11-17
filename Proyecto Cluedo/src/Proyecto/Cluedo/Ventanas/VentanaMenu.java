@@ -342,6 +342,16 @@ public class VentanaMenu extends JFrame{
 				
 			}
 		});
+		
+		labelPerfil.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				VentanaUsuario ventana= new VentanaUsuario(conexion, u);
+				ventana.setVisible(true);
+				
+			}
+		});
 	}
 	
 	

@@ -439,6 +439,8 @@ public class VentanaLogin extends JFrame {
 					
 					JOptionPane.showMessageDialog(getContentPane(), bienvenida(jugador.getGenero())+jugador.getNombre()+" se te echaba de menos desde la ultima conexion "+jugador.getConexion().toString());
 					
+					gb.modificar(conexion, "USUARIO", "FECHAULTIMOLOGIN='"+System.currentTimeMillis()+"'", "NOMBREUSUARIO='"+jugador.getUsuario()+"'");
+					
 					dispose();	
 						
 					
