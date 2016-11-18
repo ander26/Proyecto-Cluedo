@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.omg.CORBA.DynamicImplementation;
 
 import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Usuario;
@@ -128,3 +127,4 @@ public class VentanaUsuario extends JFrame{
 	}
 	
 }
+

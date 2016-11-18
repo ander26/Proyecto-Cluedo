@@ -45,6 +45,7 @@ public class GestionBaseDeDatos {
 	 */
 	
 	private static final String URL = "jdbc:postgresql://ec2-54-228-214-46.eu-west-1.compute.amazonaws.com:5432/d1uo969itg8nsu?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";   		
+	   		
 	
 	/**
 	 * Parametro que contiene el nombre de usuario 
@@ -281,6 +282,7 @@ public class GestionBaseDeDatos {
 		}
 	}
 	
+	
 	/**
 	 * Metodo que sirve para insertar una partida a la base de datos 
 	 * @param conexion Parametro que contiene la conexion con la base de datos 
@@ -383,6 +385,7 @@ public class GestionBaseDeDatos {
 		
 	}
 	
+
 	public void modificar (Connection conexion,String tabla,String actualizacion,String condicion){
 		String sql="";
 		
@@ -409,4 +412,36 @@ public class GestionBaseDeDatos {
 		
 	}
 	
+
+	//Tabla jugador
+
+	//INSERTAR JUGADORES
+public boolean insertarJugador (Connection conexion,Jugador j,Partida p ,Usuario u){
+		
+		String sql="";
+		
+		try{
+			
+			Statement statement = conexion.createStatement();
+			
+			sql="INSERT INTO JUGADOR VALUES ("+j.getCodigo()+","+p.getCodigo()+","+u.getUsuario()+","+j.getPosicionMuñeco()+","+j.getLugar()+","+j.getTurno()+",'"+j.getMonigote()+"')";
+						
+			statement.executeUpdate(sql);
+			
+			logger.log(Level.INFO, "Se ha añadido la partida: "+sql);
+			
+			statement.close();
+			
+			return true;
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "Erro el insertar la partida : "+sql);
+			e.printStackTrace();
+			return false;
+		}
+		}
+		
+	
+	
+
 }
