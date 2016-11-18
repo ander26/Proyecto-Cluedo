@@ -5,18 +5,41 @@ import java.util.ArrayList;
 public class Jugador {
 	private ArrayList<ArrayList<Integer>> MisCartas;
 	private String Monigote;
-	private boolean Turno;
 	private int Lugar;
+	private double PosicionMuñeco;
+	private int Codigo;
+	private int Turno;
+	private String Usuario;
+	private int CodigoPartida;
 
 	
 
 	public Jugador() {
 		
 		MisCartas = new ArrayList();
-		Monigote = null;
-		Turno=false;
-		Lugar=-1;
+		this.Monigote = null;
+		this.Turno=0;
+		this.Lugar=-1;
+		this.PosicionMuñeco=-1;
+		this.Codigo=-1;
+		this.Usuario="";
+		this.CodigoPartida=-1;
 		
+	}
+	public int getCodigoPartida() {
+		return CodigoPartida;
+	}
+	public void setCodigoPartida(int codigoPartida) {
+		CodigoPartida = codigoPartida;
+	}
+	public String getUsuario() {
+		return Usuario;
+	}
+	public void setUsuario(String usuario) {
+		Usuario = usuario;
+	}
+	public void setTurno(int turno) {
+		Turno = turno;
 	}
 	public int getLugar() {
 		return Lugar;
@@ -34,14 +57,22 @@ public class Jugador {
 		Monigote = monigote;
 	}
 
-	public boolean isTurno() {
+	
+	public double getPosicionMuñeco() {
+		return PosicionMuñeco;
+	}
+	public void setPosicionMuñeco(double posicionMuñeco) {
+		PosicionMuñeco = posicionMuñeco;
+	}
+	public int getCodigo() {
+		return Codigo;
+	}
+	public void setCodigo(int codigo) {
+		Codigo = codigo;
+	}
+	public int getTurno() {
 		return Turno;
 	}
-
-	public void setTurno(boolean turno) {
-		Turno = turno;
-	}
-
 	public ArrayList<ArrayList<Integer>> getMisCartas() {
 		return MisCartas;
 	}

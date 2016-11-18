@@ -416,8 +416,10 @@ public class GestionBaseDeDatos {
 	//Tabla jugador
 
 	//INSERTAR JUGADORES
+
 	
 	public boolean insertarJugador (Connection conexion,Jugador j,Partida p ,Usuario u){
+
 		
 		String sql="";
 		
@@ -425,22 +427,61 @@ public class GestionBaseDeDatos {
 			
 			Statement statement = conexion.createStatement();
 			
-			sql="INSERT INTO JUGADOR VALUES ("+j.getCodigo()+","+p.getCodigo()+","+u.getUsuario()+","+j.getPosicionMuñeco()+","+j.getLugar()+","+j.getTurno()+",'"+j.getMonigote()+"')";
+			sql="INSERT INTO JUGADOR VALUES ("+j.getCodigo()+","+j.getCodigoPartida()+","+j.getUsuario()+","+j.getPosicionMuñeco()+","+j.getLugar()+","+j.getTurno()+",'"+j.getMonigote()+"')";
 						
 			statement.executeUpdate(sql);
 			
-			logger.log(Level.INFO, "Se ha añadido la partida: "+sql);
+			logger.log(Level.INFO, "Se ha añadido el jugador: "+sql);
 			
 			statement.close();
 			
 			return true;
 			
 		}catch (Exception e){
-			logger.log(Level.SEVERE, "Erro el insertar la partida : "+sql);
+			logger.log(Level.SEVERE, "Erro el insertar el jugador : "+sql);
 			e.printStackTrace();
 			return false;
 		}
 		}
+
+public  ArrayList<Jugador> consultaATablaJugador(Connection conexion, String seleccion ) {
+	
+	ArrayList<Jugador> ret = new ArrayList<>();
+	
+	try {
+		
+		Statement statement = conexion.createStatement();
+		
+		
+		String sentSQL = "SELECT * FROM JUGADOR";
+		
+		if (seleccion!=null && !seleccion.equals(""))
+			
+			sentSQL = sentSQL + " WHERE " + seleccion;
+		
+		
+		ResultSet rs = statement.executeQuery( sentSQL );
+		
+		while (rs.next()) {
+			Jugador j = new Jugador();
+			
+			j.setCodigo(rs.getInt("COD_JUG"));
+			j.setLugar(rs.getInt("LUGAR"));
+			j.setMonigote(rs.getString("MUÑECO"));
+			j.setPosicionMuñeco(rs.getDouble("POS_MUÑECO"));
+			j.setTurno(rs.getInt("TURNO"));
+			j.setUsuario(rs.getString("USUARIO"));
+			j.setCodigoPartida(rs.getInt("COD_PARTIDA"));
+			ret.add(j);			
+				}
+		rs.close();
+		return ret;
+	} catch (Exception e) {  
+		logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+		e.printStackTrace();
+		return null;
+	}
+}
 		
 	
 	
