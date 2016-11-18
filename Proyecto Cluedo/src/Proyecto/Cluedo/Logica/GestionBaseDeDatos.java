@@ -121,6 +121,25 @@ public class GestionBaseDeDatos {
 		
 	}
 	
+	public static void cerrarBD (Connection con, Statement st){
+		try {
+			if (st!=null){
+				st.close();
+				logger.log(Level.INFO, "Se ha cerrado el statement");
+			}
+			
+			if (con!=null){
+				con.close();
+				logger.log(Level.INFO, "Se ha cerrado la conexion");
+			}
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha podido realizar la operacion de cierre");
+		}
+	}
+	
+	//TABLA USUARIO 
+	
+	
 	/**
 	 * Metodo que sirve para crear la tabla de usuario 
 	 * @param conexion Parametro que contiene la conexion con la base de datos 
@@ -196,22 +215,6 @@ public class GestionBaseDeDatos {
 		}
 	}
 	
-	public static void cerrarBD (Connection con, Statement st){
-		try {
-			if (st!=null){
-				st.close();
-				logger.log(Level.INFO, "Se ha cerrado el statement");
-			}
-			
-			if (con!=null){
-				con.close();
-				logger.log(Level.INFO, "Se ha cerrado la conexion");
-			}
-		}catch (Exception e){
-			logger.log(Level.SEVERE, "No se ha podido realizar la operacion de cierre");
-		}
-	}
-	
 	
 	 
 	public  ArrayList<Usuario> consultaATabla(Connection conexion, String seleccion ) {
@@ -282,6 +285,35 @@ public class GestionBaseDeDatos {
 		}
 	}
 	
+	public boolean borrarUsuario (Connection conexion,Usuario u){
+		
+		
+		String sql="";
+		
+		try{
+			
+			sql="DELETE FROM USUARIO WHERE NOMBREUSUARIO='"+u.getUsuario()+"'";
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(sql);
+			
+			logger.log(Level.INFO, "Se ha borrado correctamente:"+sql);
+			
+			statement.close();
+			return true;
+			
+		}catch (Exception e){
+			
+			logger.log(Level.SEVERE, "Ha habido un error a la hora de borrar a: "+sql);
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	//TABLA PARTIDA
+	
 	
 	/**
 	 * Metodo que sirve para insertar una partida a la base de datos 
@@ -317,6 +349,7 @@ public class GestionBaseDeDatos {
 		
 		
 	}
+	
 	
 	/**
 	 * Metodo que sirve para borrar una lista de la base de datos 

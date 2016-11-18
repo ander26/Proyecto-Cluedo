@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -34,6 +35,23 @@ public class Main {
 		gestion.crearTabla(creacion, conexion);*/
 		//String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO numeric(4,4),LUGAR INT,TURNO int,MUÑECO text)";
 		//gestion.crearTabla(creacion,conexion);
+		
+		
+//		try{
+//			Statement statament = conexion.createStatement();
+//			
+//			statament.executeUpdate("DELETE FROM PARTIDA");
+//			
+//			System.out.println("Se ha borrado todo");
+//			
+//			ArrayList <Integer> lista=gestion.obtenerCodigoPartidas(conexion);
+//			
+//			for (Integer i: lista){
+//				System.out.println(i);
+//			}
+//		}catch (Exception e){
+//			System.out.println("No se ha conseguido borrar");
+//		}
 		
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);

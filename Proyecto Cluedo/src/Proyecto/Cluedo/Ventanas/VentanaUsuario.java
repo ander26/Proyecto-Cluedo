@@ -6,22 +6,30 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Window;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
 import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
 public class VentanaUsuario extends JFrame{
+	
+	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
 
 	private LabelPerfil labelPerfil;
 	
@@ -70,7 +78,7 @@ public class VentanaUsuario extends JFrame{
 		ImageIcon imagen= new ImageIcon ();
 		
 		//100,5,300,300
-		labelPerfil= new LabelPerfil(u.getImagenPerfil(),131, 10, 218, 218);
+		labelPerfil= new LabelPerfil(u.getImagenPerfil(),133, 7, 218, 218);
 		
 		
 		//Establecemos el formato
@@ -122,8 +130,35 @@ public class VentanaUsuario extends JFrame{
 		//Generamos los eventos 
 		
 		
+		labelBorrar.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int valor = JOptionPane.showConfirmDialog(getContentPane(), "¿Estas seguro de querer borrar definitivamente el usuario?","Aviso",JOptionPane.YES_NO_CANCEL_OPTION);
+				
+				if (valor==JOptionPane.YES_OPTION){
+					gestion.borrarUsuario(conexion, u);
+					
+					for (Window window : Window.getWindows()) {
+					    window.dispose();
+					}
+					
+					VentanaLogin ventana = new VentanaLogin(conexion);
+					ventana.setVisible(true);
+					
+				}
+			}
+		});
+	
 		
-		
+		labelModificar.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+			}
+		});
 	}
 	
 }

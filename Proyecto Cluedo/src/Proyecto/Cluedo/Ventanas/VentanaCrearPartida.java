@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -305,11 +306,19 @@ public class VentanaCrearPartida extends JFrame {
 				if (textoNombre.getText().trim().equals("")){
 					JOptionPane.showMessageDialog(getContentPane(), "Debe introducir el nombre de la partida para poder crear una","Aviso",JOptionPane.INFORMATION_MESSAGE);
 				}else{
-					dispose ();
+					
+					for (Window window : Window.getWindows()) {
+					    window.dispose();
+					}
 					
 					Partida p= new Partida(slider.getValue(), textoNombre.getText(),conexion);
 					
 					gestion.insertarPartida(conexion, p);
+					comprobador comp= new comprobador(p,conexion);
+					
+					
+					
+					comp.start();
 					
 					VentanaConectando ventana = new VentanaConectando();
 					
@@ -317,25 +326,15 @@ public class VentanaCrearPartida extends JFrame {
 					
 					ventana.revalidate();
 					
-					comprobador comp= new comprobador(p,conexion);
+
 					
-					comp.start();
-					try {
-						comp.join();
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+//					
+//					if (! (comp.isAlive())){
+//						
+//					}
+//					
+				
 					
-					while (p.getNumeroJugadoresActual()!=p.getNumeroJugadoresMaximo()){
-						
-					}
-					
-					comp.acabar();
-					
-					ventana.dispose();
-					
-					//TODO: Aqui habria que llamar a la ventana principal 
 					
 					
 				}
@@ -434,7 +433,7 @@ public class VentanaCrearPartida extends JFrame {
 		
 			String sql="SELECT NUMEROJUGADORESMAXIMO,NUMEROJUGADORESACTUAL FROM PARTIDA WHERE CODIGO="+p.getCodigo();
 		
-			while (acabar){
+			while (p.getNumeroJugadoresActual()<p.getNumeroJugadoresMaximo()){
 				Statement statement;
 				try {
 					statement = conexion.createStatement();
@@ -458,12 +457,41 @@ public class VentanaCrearPartida extends JFrame {
 				e1.printStackTrace();
 			}
 		}
+			acabar =false;
 		}
 		
-		public void acabar (){
-			this.acabar=false;
-		}
+	
+	
+	}
+//	
+//	class pintar extends Thread {
+//		
+//		/**
+//		 * Parametro que le indica al hilo cuando acabar 
+//		 */
+//		
+//		public boolean acabar;
+//		
+//		private VentanaConectando ventana=new VentanaConectando();
+//	
+//		
+//		public pintar (boolean acabar){
+//			this.acabar=acabar;
+//		}
+//		
+//		public void run (){
+//		
+//			while (acabar){
+//				ventana.setVisible(true);
+//			}
+//	
+//	
+//	}
+//	
+//		public void setAcabar (boolean acabar){
+//			this.acabar=acabar;
+//		}
+//	}
 	}
 
 
-}

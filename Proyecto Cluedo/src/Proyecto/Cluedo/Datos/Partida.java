@@ -133,7 +133,7 @@ public class Partida {
 		for (Integer i: listaCodigos){
 			if (contador==i){
 				contador++;
-				System.out.println(contador);
+				
 			}else{
 				return contador;
 			}
