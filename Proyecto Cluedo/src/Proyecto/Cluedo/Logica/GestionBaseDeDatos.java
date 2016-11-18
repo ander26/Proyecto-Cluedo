@@ -416,7 +416,8 @@ public class GestionBaseDeDatos {
 	//Tabla jugador
 
 	//INSERTAR JUGADORES
-public boolean insertarJugador (Connection conexion,Jugador j,Partida p ,Usuario u){
+	
+	public boolean insertarJugador (Connection conexion,Jugador j,Partida p ,Usuario u){
 		
 		String sql="";
 		
