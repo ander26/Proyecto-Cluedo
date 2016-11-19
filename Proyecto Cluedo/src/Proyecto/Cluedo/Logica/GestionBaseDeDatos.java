@@ -24,499 +24,732 @@ import javax.swing.ImageIcon;
 
 import Proyecto.Cluedo.Datos.*;
 
-
-
 public class GestionBaseDeDatos {
 
 	/**
 	 * Parametro que contiene el logger para ir viendo lo que pasa
 	 */
-	
+
 	private static Logger logger = Logger.getLogger(GestionBaseDeDatos.class.getName());
-	
+
 	/**
 	 * Parametro que contiene el driver para utilizar la base de datos de heroku
 	 */
-	
-	private static final String DRIVER = "org.postgresql.Driver";   
-	
+
+	private static final String DRIVER = "org.postgresql.Driver";
+
 	/**
-	 * Parametro que contiene el enlace a la base de datos 
+	 * Parametro que contiene el enlace a la base de datos
 	 */
-	
-	private static final String URL = "jdbc:postgresql://ec2-54-228-214-46.eu-west-1.compute.amazonaws.com:5432/d1uo969itg8nsu?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";   		
-	   		
-	
+
+	private static final String URL = "jdbc:postgresql://ec2-54-228-214-46.eu-west-1.compute.amazonaws.com:5432/d1uo969itg8nsu?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+
 	/**
-	 * Parametro que contiene el nombre de usuario 
+	 * Parametro que contiene el nombre de usuario
 	 */
-	
-	private static final String USERNAME = "ssdiyqrzfdvpfe";   
-	
+
+	private static final String USERNAME = "ssdiyqrzfdvpfe";
+
 	/**
-	 * Parametro que contiene la contraseña 
+	 * Parametro que contiene la contraseña
 	 */
-	
-	private static final String PASSWORD = "M8Wk6yhGomz7HKFTBopcsYpMfM"; 
-	
+
+	private static final String PASSWORD = "M8Wk6yhGomz7HKFTBopcsYpMfM";
+
 	/**
 	 * Metodo que devuelve un statement para usar la base de datos
-	 * @param con Parametro que contiene la conexion con la base 
-	 * @return Devuelve un statement para usar con la base 
+	 * 
+	 * @param con
+	 *            Parametro que contiene la conexion con la base
+	 * @return Devuelve un statement para usar con la base
 	 */
-	
-	public static Statement usarBD( Connection con ) {
+
+	public static Statement usarBD(Connection con) {
 		try {
 			Statement statement = con.createStatement();
 			return statement;
 		} catch (SQLException e) {
-			logger.log( Level.SEVERE, "Error en el establecimiento de la conexion con la base");
+			logger.log(Level.SEVERE, "Error en el establecimiento de la conexion con la base");
 			return null;
 		}
 	}
-	
-	
+
 	/**
 	 * Metodo que sirve para inicializar la base de datos
-	 * @return Devuelve la conexion con la base de datos 
+	 * 
+	 * @return Devuelve la conexion con la base de datos
 	 */
-	
-	public static Connection inicializarLaBase (){
-		try{
+
+	public static Connection inicializarLaBase() {
+		try {
 			Class.forName(DRIVER);
-			
-			Connection conexion = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+
+			Connection conexion = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			logger.log(Level.INFO, "Inicializada la base de datos");
 			return conexion;
-			
-		}catch (Exception e){
-			logger.log(Level.SEVERE,"Error en la inicializacion de la base de datos");
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Error en la inicializacion de la base de datos");
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Metodo que sirve para introducir un update
-	 * @param creacion Parametro que contiene el comando SQL
-	 * @param conexion Parametro que contiene la conexion con la base de datos 
-	 * @return Devuelve el statement que genera el update 
+	 * 
+	 * @param creacion
+	 *            Parametro que contiene el comando SQL
+	 * @param conexion
+	 *            Parametro que contiene la conexion con la base de datos
+	 * @return Devuelve el statement que genera el update
 	 */
-	
-	public static Statement crearTabla (String creacion , Connection conexion){
-		
-		try{
+
+	public static Statement crearTabla(String creacion, Connection conexion) {
+
+		try {
 			Statement statement = conexion.createStatement();
 			statement.setQueryTimeout(30);
-			
+
 			statement.executeUpdate(creacion);
-			
-			logger.log(Level.INFO, "Creada la tabla: "+creacion);
-			
+
+			logger.log(Level.INFO, "Creada la tabla: " + creacion);
+
 			return statement;
-		}catch (Exception e){
+		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error en la creacion de la tabla");
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
-	public static void cerrarBD (Connection con, Statement st){
+
+	public static void cerrarBD(Connection con, Statement st) {
 		try {
-			if (st!=null){
+			if (st != null) {
 				st.close();
 				logger.log(Level.INFO, "Se ha cerrado el statement");
 			}
-			
-			if (con!=null){
+
+			if (con != null) {
 				con.close();
 				logger.log(Level.INFO, "Se ha cerrado la conexion");
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha podido realizar la operacion de cierre");
 		}
 	}
-	
-	//TABLA USUARIO 
-	
-	
-	/**
-	 * Metodo que sirve para crear la tabla de usuario 
-	 * @param conexion Parametro que contiene la conexion con la base de datos 
-	 * @return Devuelve el statament que crea la tabla 
-	 */
-	
-	public static Statement crearTablaUsuario (Connection conexion){
 
-		try{
-			
+	// TABLA USUARIO
+
+	/**
+	 * Metodo que sirve para crear la tabla de usuario
+	 * 
+	 * @param conexion
+	 *            Parametro que contiene la conexion con la base de datos
+	 * @return Devuelve el statament que crea la tabla
+	 */
+
+	public static Statement crearTablaUsuario(Connection conexion) {
+
+		try {
+
 			Statement statement = conexion.createStatement();
-			
-			try{
-			statement.executeUpdate("CREATE TABLE USUARIO (NOMBRE text,APELLIDO text,NOMBREUSUARIO text not null primary key,EMAIL text,CONTRASEÑA text,GENERO text,FECHANACIMIENTO bigint,PREGUNTA integer,RESPUESTA text, FECHAULTIMOLOGIN bigint,IMAGENPERFIL bytea,PUNTUACION bigint)");
-			}catch (SQLException h){
+
+			try {
+				statement.executeUpdate(
+						"CREATE TABLE USUARIO (NOMBRE text,APELLIDO text,NOMBREUSUARIO text not null primary key,EMAIL text,CONTRASEÑA text,GENERO text,FECHANACIMIENTO bigint,PREGUNTA integer,RESPUESTA text, FECHAULTIMOLOGIN bigint,IMAGENPERFIL bytea,PUNTUACION bigint)");
+			} catch (SQLException h) {
 				logger.log(Level.WARNING, "La tabla ya esta creada");
 				return null;
 			}
-			logger.log(Level.INFO,"Se ha creado una tabla" );
+			logger.log(Level.INFO, "Se ha creado una tabla");
 			return statement;
-		}catch (Exception e){
+		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error en la creacion de la tabla");
 			return null;
 		}
 	}
-	
-	
-	public static boolean insertarUsuario( Connection conexion, Usuario u ) {
-		
-		
+
+	public static boolean insertarUsuario(Connection conexion, Usuario u) {
+
 		try {
-			
+
 			Image image = u.getImagenPerfil().getImage();
-            BufferedImage bImage = new BufferedImage(image.getWidth(null),image.getHeight(null),BufferedImage.TYPE_INT_RGB);
-            Graphics bg = bImage.getGraphics();
-            bg.drawImage(image,0,0,null);
-            bg.dispose();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ImageIO.write(bImage,"jpeg",out);
-            byte[] buf = out.toByteArray();
-            ByteArrayInputStream inStream = new ByteArrayInputStream(buf);
-           
-			
-			
-			/*File file = new File(u.getImagenPerfil().toString().substring(6));
-			FileInputStream fils = new FileInputStream(file);
-			*/
-			PreparedStatement ps = conexion.prepareStatement("INSERT INTO USUARIO VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-			
+			BufferedImage bImage = new BufferedImage(image.getWidth(null), image.getHeight(null),
+					BufferedImage.TYPE_INT_RGB);
+			Graphics bg = bImage.getGraphics();
+			bg.drawImage(image, 0, 0, null);
+			bg.dispose();
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ImageIO.write(bImage, "jpeg", out);
+			byte[] buf = out.toByteArray();
+			ByteArrayInputStream inStream = new ByteArrayInputStream(buf);
+
+			/*
+			 * File file = new
+			 * File(u.getImagenPerfil().toString().substring(6));
+			 * FileInputStream fils = new FileInputStream(file);
+			 */
+			PreparedStatement ps = conexion
+					.prepareStatement("INSERT INTO USUARIO VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
 			ps.setString(1, u.getNombre());
 			ps.setString(2, u.getApellidos());
 			ps.setString(3, u.getUsuario());
 			ps.setString(4, u.getEmail());
 			ps.setString(5, u.getContraseña());
-			ps.setString(6, ""+u.getGenero());
+			ps.setString(6, "" + u.getGenero());
 			ps.setLong(7, u.getFechaNacimeinto().getTime());
 			ps.setInt(8, u.getPregunta());
 			ps.setString(9, u.getRespuesta());
 			ps.setLong(10, u.getConexion().getTime());
-			
-			
-			ps.setBinaryStream(11, inStream	,inStream.available());
+
+			ps.setBinaryStream(11, inStream, inStream.available());
 			ps.setLong(12, u.getPuntuacion());
 			ps.executeUpdate();
 			ps.close();
-			
-			logger.log( Level.INFO, "Se ha añadido la fila");
+
+			logger.log(Level.INFO, "Se ha añadido la fila");
 			return true;
 		} catch (Exception e) {
-			logger.log( Level.SEVERE, "Error al insertar la fila");
+			logger.log(Level.SEVERE, "Error al insertar la fila");
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
-	
-	 
-	public  ArrayList<Usuario> consultaATabla(Connection conexion, String seleccion ) {
-		
+
+	public ArrayList<Usuario> consultaATabla(Connection conexion, String seleccion) {
+
 		ArrayList<Usuario> ret = new ArrayList<>();
-		
+
 		try {
-			
+
 			Statement statement = conexion.createStatement();
-			
+
 			String sentSQL = "SELECT * FROM USUARIO";
-			
-			if (seleccion!=null && !seleccion.equals(""))
-				
+
+			if (seleccion != null && !seleccion.equals(""))
+
 				sentSQL = sentSQL + " WHERE " + seleccion;
-			
-			
-			ResultSet rs = statement.executeQuery( sentSQL );
-			
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
 			while (rs.next()) {
 				Usuario u = new Usuario();
-				
-				u.setNombre( rs.getString( "NOMBRE" ));
-				u.setContraseña(rs.getString( "CONTRASEÑA" ));
-				u.setApellidos( rs.getString( "APELLIDO" ));
-				u.setUsuario( rs.getString( "NOMBREUSUARIO" ));
-				u.setEmail( rs.getString( "EMAIL" ));
+
+				u.setNombre(rs.getString("NOMBRE"));
+				u.setContraseña(rs.getString("CONTRASEÑA"));
+				u.setApellidos(rs.getString("APELLIDO"));
+				u.setUsuario(rs.getString("NOMBREUSUARIO"));
+				u.setEmail(rs.getString("EMAIL"));
 				u.setPregunta(rs.getInt("PREGUNTA"));
 				u.setRespuesta(rs.getString("RESPUESTA"));
-				if (rs.getString("GENERO").equals("HOMBRE")){
+				if (rs.getString("GENERO").equals("HOMBRE")) {
 					u.setGenero(Genero.HOMBRE);
-				}else{
+				} else {
 					u.setGenero(Genero.MUJER);
 				}
 				u.setConexion(new Date(rs.getLong("FECHAULTIMOLOGIN")));
-				u.setFechaNacimeinto(new Date (rs.getLong("FECHANACIMIENTO")));
-				
-				ImageIcon imagen=new ImageIcon();
-				/** Blob blob = rs.getBlob("IMAGENPERFIL");
-				 byte[] data = blob.getBytes(1, (int)blob.length());
-				 img = ImageIO.read(new ByteArrayInputStream(data));
-				 try {
-				 img = ImageIO.read(new ByteArrayInputStream(data));
-				 } catch (IOException ex) {
-					 
-				 }
-				*/
-				
+				u.setFechaNacimeinto(new Date(rs.getLong("FECHANACIMIENTO")));
+
+				ImageIcon imagen = new ImageIcon();
+				/**
+				 * Blob blob = rs.getBlob("IMAGENPERFIL"); byte[] data =
+				 * blob.getBytes(1, (int)blob.length()); img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); try { img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); } catch (IOException ex) {
+				 * 
+				 * }
+				 */
+
 				byte[] imgBytes = rs.getBytes(11);
-				
-				BufferedImage img=null;
+
+				BufferedImage img = null;
 				img = ImageIO.read(new ByteArrayInputStream(imgBytes));
-				
-				 imagen.setImage(img);
-				 
+
+				imagen.setImage(img);
+
 				u.setImagenPerfil(imagen);
-				
+
 				u.setPuntuacion(rs.getLong("PUNTUACION"));
 
-				ret.add( u );
+				ret.add(u);
 			}
 			rs.close();
 			return ret;
-		} catch (Exception e) {  
+		} catch (Exception e) {
 			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public boolean borrarUsuario (Connection conexion,Usuario u){
-		
-		
-		String sql="";
-		
-		try{
-			
-			sql="DELETE FROM USUARIO WHERE NOMBREUSUARIO='"+u.getUsuario()+"'";
-			
-			Statement statement = conexion.createStatement();
-			
-			statement.executeUpdate(sql);
-			
-			logger.log(Level.INFO, "Se ha borrado correctamente:"+sql);
-			
-			statement.close();
-			return true;
-			
-		}catch (Exception e){
-			
-			logger.log(Level.SEVERE, "Ha habido un error a la hora de borrar a: "+sql);
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
-	
-	//TABLA PARTIDA
-	
-	
-	/**
-	 * Metodo que sirve para insertar una partida a la base de datos 
-	 * @param conexion Parametro que contiene la conexion con la base de datos 
-	 * @param p Parametro que contiene la partida que se desea añadir 
-	 * @return Devuelve true si se añade 
-	 */
-	
-	public boolean insertarPartida (Connection conexion,Partida p){
-		
-		String sql="";
-		
-		try{
-			
-			Statement statement = conexion.createStatement();
-			
-			sql="INSERT INTO PARTIDA VALUES ('"+p.getNombre()+"',"+p.getCodigo()+","+p.getNumeroJugadoresMaximo()+","+p.getNumeroJugadoresActual()+","+p.getPosicionBarco()+",'"+p.getMensajeCartel()+"')";
-			
-			statement.executeUpdate(sql);
-			
-			logger.log(Level.INFO, "Se ha añadido la partida: "+sql);
-			
-			statement.close();
-			
-			return true;
-			
-		}catch (Exception e){
-			logger.log(Level.SEVERE, "Erro el insertar la partida : "+sql);
-			e.printStackTrace();
-			return false;
-		}
-		
-		
-		
-	}
-	
-	
-	/**
-	 * Metodo que sirve para borrar una lista de la base de datos 
-	 * @param conexion Parametro que contiene la conexion con la base
-	 * @param tabla Parametro que contiene de la tabla que se desea borrar
-	 * @param condicion Parametro que contiene la condicion para borrar 
-	 * @return Devuelve true si se ha borrado 
-	 */
-	
-	public boolean borrarPartida (Connection conexion,String tabla,String condicion){
-		
+
+	public boolean borrarUsuario(Connection conexion, Usuario u) {
+
 		String sql = "";
-		
+
 		try {
-			
-			sql="DELETE FROM "+tabla+" WHERE "+condicion;
-			
+
+			sql = "DELETE FROM USUARIO WHERE NOMBREUSUARIO='" + u.getUsuario() + "'";
+
 			Statement statement = conexion.createStatement();
-			
+
 			statement.executeUpdate(sql);
-			
-			logger.log(Level.INFO, "Se ha borrado la partida: "+sql);
-			
+
+			logger.log(Level.INFO, "Se ha borrado correctamente:" + sql);
+
 			statement.close();
-			
 			return true;
-			
-		}catch (Exception e){
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "Ha habido un error a la hora de borrar a: " + sql);
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	// TABLA PARTIDA
+
+	/**
+	 * Metodo que sirve para insertar una partida a la base de datos
+	 * 
+	 * @param conexion
+	 *            Parametro que contiene la conexion con la base de datos
+	 * @param p
+	 *            Parametro que contiene la partida que se desea añadir
+	 * @return Devuelve true si se añade
+	 */
+
+	public boolean insertarPartida(Connection conexion, Partida p) {
+
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "INSERT INTO PARTIDA VALUES ('" + p.getNombre() + "'," + p.getCodigo() + ","
+					+ p.getNumeroJugadoresMaximo() + "," + p.getNumeroJugadoresActual() + "," + p.getPosicionBarco()
+					+ ",'" + p.getMensajeCartel() + "')";
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha añadido la partida: " + sql);
+
+			statement.close();
+
+			return true;
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Erro el insertar la partida : " + sql);
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	/**
+	 * Metodo que sirve para borrar una lista de la base de datos
+	 * 
+	 * @param conexion
+	 *            Parametro que contiene la conexion con la base
+	 * @param tabla
+	 *            Parametro que contiene de la tabla que se desea borrar
+	 * @param condicion
+	 *            Parametro que contiene la condicion para borrar
+	 * @return Devuelve true si se ha borrado
+	 */
+
+	public boolean borrarPartida(Connection conexion, String tabla, String condicion) {
+
+		String sql = "";
+
+		try {
+
+			sql = "DELETE FROM " + tabla + " WHERE " + condicion;
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha borrado la partida: " + sql);
+
+			statement.close();
+
+			return true;
+
+		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha conseguido borrar la partida");
 			e.printStackTrace();
 			return false;
 		}
-		
-		
+
 	}
-	
-	public ArrayList <Integer> obtenerCodigoPartidas (Connection conexion){
-		
-		ArrayList <Integer> listadeCodigos = new ArrayList<Integer>();
-		
-		String sql="";
-		
-		try{
-			
+
+	public ArrayList<Integer> obtenerCodigoPartidas(Connection conexion) {
+
+		ArrayList<Integer> listadeCodigos = new ArrayList<Integer>();
+
+		String sql = "";
+
+		try {
+
 			Statement statement = conexion.createStatement();
-			
-			sql ="SELECT CODIGO FROM PARTIDA ORDER BY CODIGO";
-			
+
+			sql = "SELECT CODIGO FROM PARTIDA ORDER BY CODIGO";
+
 			ResultSet rs = statement.executeQuery(sql);
-			
-			while (rs.next()){
-				
-				int indice=rs.getInt(1);
-				System.out.println(indice);
+
+			while (rs.next()) {
+
+				int indice = rs.getInt(1);
+				// System.out.println(indice);
 				listadeCodigos.add(indice);
 			}
-			
+
 			rs.close();
-			
+
 			statement.close();
 			return listadeCodigos;
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-		
+
+	}
+	
+	public ArrayList<Integer> obtenerCodigoPartidasSinCompletar(Connection conexion) {
+
+		ArrayList<Integer> listadeCodigos = new ArrayList<Integer>();
+
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "SELECT CODIGO FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+
+				int indice = rs.getInt(1);
+				// System.out.println(indice);
+				listadeCodigos.add(indice);
+			}
+
+			rs.close();
+
+			statement.close();
+			return listadeCodigos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+
+	public ArrayList<String> obtenerNombrePartidas(Connection conexion) {
+
+		ArrayList<String> listadeNombre = new ArrayList<String>();
+
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "SELECT NOMBRE FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+				String nombre = rs.getString(1);
+				listadeNombre.add(nombre);
+			}
+
+			rs.close();
+
+			statement.close();
+			return listadeNombre;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public ArrayList<Integer> obtenerJugadoresPartidas(Connection conexion, String columna) {
+
+		ArrayList<Integer> listadeJugadores = new ArrayList<Integer>();
+
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "SELECT " + columna
+					+ " FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+				int jugador = rs.getInt(1);
+				listadeJugadores.add(jugador);
+			}
+
+			rs.close();
+
+			statement.close();
+			return listadeJugadores;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public void modificar(Connection conexion, String tabla, String actualizacion, String condicion) {
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "UPDATE " + tabla + " SET " + actualizacion + " WHERE " + condicion;
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha modificado la linea: " + sql);
+
+			statement.close();
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Error a la hora de modificar la tabla");
+			e.printStackTrace();
+
+		}
+
 	}
 	
 
-	public void modificar (Connection conexion,String tabla,String actualizacion,String condicion){
+	public ArrayList<String > obtenerNombreP(Connection conexion,ArrayList <Integer> partida) {
+
+		ArrayList<String> listaNombre = new ArrayList<String>();
+
+		String sql = "";
+
+		try {
+			Statement statement = conexion.createStatement();
+			
+			for (Integer i:partida){
+			
+
+			sql = "SELECT NOMBRE FROM PARTIDA WHERE CODIGO="+i;
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+				
+				String nombre = rs.getString(1);
+				listaNombre.add(nombre);
+			
+			}
+			rs.close();
+			}
+			
+
+			statement.close();
+			
+			return listaNombre;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	public Partida obtenerPartida (Connection conexion,int codigo){
+		
 		String sql="";
 		
 		try{
 			
 			Statement statement = conexion.createStatement();
 			
-			sql="UPDATE "+tabla+" SET "+actualizacion+" WHERE "+condicion;
+			sql="SELECT * FROM PARTIDA WHERE CODIGO ="+codigo;
 			
-			statement.executeUpdate(sql);
+			ResultSet resultado=statement.executeQuery(sql);
+			Partida p = new Partida();
+			while (resultado.next()){
+			int CODIGO=resultado.getInt("CODIGO");
+			String nombre =resultado.getString("NOMBRE");
+			int jugadorActual = resultado.getInt("NUMEROJUGADORESACTUAL");
+			int jugadorMaximo = resultado.getInt("NUMEROJUGADORESMAXIMO");
 			
-			logger.log(Level.INFO, "Se ha modificado la linea: "+sql);
+			double posicionBarco = resultado.getDouble("POSICIONBARCO");
 			
-			statement.close();
+			String texto = resultado.getString("MENSAJECARTEL");
 			
 			
+			
+			p.setCodigo(CODIGO);
+			p.setMensajeCartel(texto);
+			p.setNombre(nombre);
+			p.setNumeroJugadoresActual(jugadorActual);
+			p.setNumeroJugadoresMaximo(jugadorMaximo);
+			p.setPosicionBarco(posicionBarco);
+			}
+			
+			resultado.close();
+			
+			logger.log(Level.INFO, "Se ha obtenido correctamente la partida "+codigo);
+	
+			return p;
 			
 		}catch (Exception e){
-			logger.log(Level.SEVERE,"Error a la hora de modificar la tabla");
+			
+			logger.log(Level.SEVERE, "Ha habido un error a la hora de encontrar una partida :"+ codigo);
+			
 			e.printStackTrace();
 			
+			return null;
+			
 		}
-		
-		
 	}
 	
 
-	//Tabla jugador
+	// Tabla jugador
 
-	//INSERTAR JUGADORES
+	// INSERTAR JUGADORES
 
-	
-	public boolean insertarJugador (Connection conexion,Jugador j,Partida p ,Usuario u){
+	public boolean insertarJugador(Connection conexion, Jugador j, Partida p, Usuario u) {
 
-		
-		String sql="";
-		
-		try{
-			
+		String sql = "";
+
+		try {
+
 			Statement statement = conexion.createStatement();
-			
-			sql="INSERT INTO JUGADOR VALUES ("+j.getCodigo()+","+j.getCodigoPartida()+","+j.getUsuario()+","+j.getPosicionMuñeco()+","+j.getLugar()+","+j.getTurno()+",'"+j.getMonigote()+"')";
-						
+
+			sql = "INSERT INTO JUGADOR VALUES (" + j.getCodigo() + "," + j.getCodigoPartida() + ",'" + j.getUsuario()
+					+ "'," + j.getPosicionMuñeco() + "," + j.getLugar() + "," + j.getTurno() + ",'" + j.getMonigote()
+					+ "')";
+
 			statement.executeUpdate(sql);
-			
-			logger.log(Level.INFO, "Se ha añadido el jugador: "+sql);
-			
+
+			logger.log(Level.INFO, "Se ha añadido el jugador: " + sql);
+
 			statement.close();
-			
+
 			return true;
-			
-		}catch (Exception e){
-			logger.log(Level.SEVERE, "Erro el insertar el jugador : "+sql);
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Erro el insertar el jugador : " + sql);
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public ArrayList<Jugador> consultaATablaJugador(Connection conexion, String seleccion) {
+
+		ArrayList<Jugador> ret = new ArrayList<>();
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT * FROM JUGADOR";
+
+			if (seleccion != null && !seleccion.equals(""))
+
+				sentSQL = sentSQL + " WHERE " + seleccion;
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+				Jugador j = new Jugador();
+
+				j.setCodigo(rs.getInt("COD_JUG"));
+				j.setLugar(rs.getInt("LUGAR"));
+				j.setMonigote(rs.getString("MUÑECO"));
+				j.setPosicionMuñeco(rs.getDouble("POS_MUÑECO"));
+				j.setTurno(rs.getInt("TURNO"));
+				j.setUsuario(rs.getString("NOMBRE_USUARIO"));
+				j.setCodigoPartida(rs.getInt("COD_PARTIDA"));
+				ret.add(j);
+			}
+			rs.close();
+			return ret;
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ArrayList<Integer> obtenerCodigoPartidaJugador(Connection conexion, String usuario) {
+
+		ArrayList<Integer> listadeCodigos = new ArrayList<Integer>();
+
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "SELECT COD_PARTIDA FROM JUGADOR WHERE NOMBRE_USUARIO='"+usuario+"' ORDER BY COD_PARTIDA";
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+				int codigo = rs.getInt(1);
+				listadeCodigos.add(codigo);
+			}
+
+			rs.close();
+
+			statement.close();
+			return listadeCodigos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 
-public  ArrayList<Jugador> consultaATablaJugador(Connection conexion, String seleccion ) {
-	
-	ArrayList<Jugador> ret = new ArrayList<>();
-	
-	try {
-		
-		Statement statement = conexion.createStatement();
-		
-		
-		String sentSQL = "SELECT * FROM JUGADOR";
-		
-		if (seleccion!=null && !seleccion.equals(""))
-			
-			sentSQL = sentSQL + " WHERE " + seleccion;
-		
-		
-		ResultSet rs = statement.executeQuery( sentSQL );
-		
-		while (rs.next()) {
-			Jugador j = new Jugador();
-			
-			j.setCodigo(rs.getInt("COD_JUG"));
-			j.setLugar(rs.getInt("LUGAR"));
-			j.setMonigote(rs.getString("MUÑECO"));
-			j.setPosicionMuñeco(rs.getDouble("POS_MUÑECO"));
-			j.setTurno(rs.getInt("TURNO"));
-			j.setUsuario(rs.getString("USUARIO"));
-			j.setCodigoPartida(rs.getInt("COD_PARTIDA"));
-			ret.add(j);			
-				}
-		rs.close();
-		return ret;
-	} catch (Exception e) {  
-		logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
-		e.printStackTrace();
-		return null;
 	}
-}
-		
 	
-	
+	public ArrayList<Integer> obtenerCodigoJugador(Connection conexion) {
 
+		ArrayList<Integer> listadeCodigos = new ArrayList<Integer>();
+
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "SELECT COD_JUG FROM JUGADOR ORDER BY COD_JUG";
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+
+				int indice = rs.getInt(1);
+				// System.out.println(indice);
+				listadeCodigos.add(indice);
+			}
+
+			rs.close();
+
+			statement.close();
+			return listadeCodigos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 }

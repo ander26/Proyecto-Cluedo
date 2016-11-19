@@ -65,7 +65,10 @@ public class Partida {
 		this.codigo=generadorCodigo(gestion.obtenerCodigoPartidas(conexion));
 	}
 
-
+	public Partida (){
+		
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

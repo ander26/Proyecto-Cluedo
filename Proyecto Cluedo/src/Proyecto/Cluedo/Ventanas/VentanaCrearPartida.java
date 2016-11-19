@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.Icon;
@@ -25,7 +26,9 @@ import javax.swing.JTextField;
 
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Hilo.comprobador;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+import Proyecto.Cluedo.Logica.Jugador;
 
 public class VentanaCrearPartida extends JFrame {
 	
@@ -314,13 +317,20 @@ public class VentanaCrearPartida extends JFrame {
 					Partida p= new Partida(slider.getValue(), textoNombre.getText(),conexion);
 					
 					gestion.insertarPartida(conexion, p);
+					
+					Jugador j = new Jugador(listaTipos[contador],u.getUsuario(),p.getCodigo(),conexion);
+					
+					gestion.insertarJugador(conexion, j, p, u);
+					
+					VentanaConectando ventana = new VentanaConectando();
+
 					comprobador comp= new comprobador(p,conexion);
 					
 					
 					
 					comp.start();
 					
-					VentanaConectando ventana = new VentanaConectando();
+					
 					
 					ventana.setVisible(true);
 					
@@ -412,57 +422,7 @@ public class VentanaCrearPartida extends JFrame {
 		});
 	}
 	
-	class comprobador extends Thread {
-		
-		/**
-		 * Parametro que le indica al hilo cuando acabar 
-		 */
-		
-		public boolean acabar =true;
-		
-		public Partida p;
-		
-		public Connection conexion;
-		
-		public comprobador (Partida p, Connection conexion){
-			this.p=p;
-			this.conexion=conexion;
-		}
-		
-		public void run (){
-		
-			String sql="SELECT NUMEROJUGADORESMAXIMO,NUMEROJUGADORESACTUAL FROM PARTIDA WHERE CODIGO="+p.getCodigo();
-		
-			while (p.getNumeroJugadoresActual()<p.getNumeroJugadoresMaximo()){
-				Statement statement;
-				try {
-					statement = conexion.createStatement();
-				
-				ResultSet rs=statement.executeQuery(sql);
-				
-				while (rs.next()){
-					p.setNumeroJugadoresActual(rs.getInt("NUMEROJUGADORESACTUAL"));
-					p.setNumeroJugadoresMaximo(rs.getInt("NUMEROJUGADORESMAXIMO"));
-				}
-			System.out.println(p.getNumeroJugadoresActual()+" "+p.getNumeroJugadoresMaximo());
-				try {
-					Thread.sleep(30000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-			acabar =false;
-		}
-		
-	
-	
-	}
+}
 //	
 //	class pintar extends Thread {
 //		
@@ -492,6 +452,6 @@ public class VentanaCrearPartida extends JFrame {
 //			this.acabar=acabar;
 //		}
 //	}
-	}
+	
 
 

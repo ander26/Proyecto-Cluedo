@@ -340,6 +340,8 @@ public class VentanaMenu extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				VentanaBuscarPartida ventana = new VentanaBuscarPartida(conexion, u);
+				ventana.setVisible(true);
 			}
 		});
 		
@@ -352,6 +354,8 @@ public class VentanaMenu extends JFrame{
 				
 			}
 		});
+		
+		
 	}
 	
 	
