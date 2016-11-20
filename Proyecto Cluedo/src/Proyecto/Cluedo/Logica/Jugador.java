@@ -10,7 +10,7 @@ public class Jugador {
 	
 	private ArrayList<ArrayList<Integer>> MisCartas;
 	
-	private String Monigote;
+	private String Ficha;
 	
 	private int Lugar;
 	
@@ -32,9 +32,9 @@ public class Jugador {
 		
 	}
 	
-	public Jugador (String monigote, String Usuario, int CodigoPartida,Connection conexion){
+	public Jugador (String Ficha, String Usuario, int CodigoPartida,Connection conexion){
 		
-		this.Monigote=monigote;
+		this.Ficha=Ficha;
 		this.Codigo=generadorCodigo(gestion.obtenerCodigoJugador(conexion));
 		this.Usuario=Usuario;
 		this.CodigoPartida=CodigoPartida;
@@ -76,12 +76,12 @@ public class Jugador {
 		Lugar = lugar;
 	}
 
-	public String getMonigote() {
-		return Monigote;
+	public String getFicha() {
+		return Ficha;
 	}
 
-	public void setMonigote(String monigote) {
-		Monigote = monigote;
+	public void setMonigote(String Ficha) {
+		this.Ficha = Ficha;
 	}
 
 	

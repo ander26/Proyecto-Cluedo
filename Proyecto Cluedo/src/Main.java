@@ -37,11 +37,11 @@ public class Main {
 //		String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO real,LUGAR INT,TURNO int,MUÑECO text,DIBUJO bytea)";
 //		gestion.crearTabla(creacion,conexion);
 		
-		
+//		
 //		try{
 //			Statement statament = conexion.createStatement();
 //			
-//			statament.executeUpdate("DELETE FROM JUGADOR");
+//			statament.executeUpdate("DELETE FROM PARTIDA");
 //			
 //			System.out.println("Se ha borrado todo");
 //			

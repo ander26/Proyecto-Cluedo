@@ -792,7 +792,7 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 			Statement statement = conexion.createStatement();
 
 			sql = "INSERT INTO JUGADOR VALUES (" + j.getCodigo() + "," + j.getCodigoPartida() + ",'" + j.getUsuario()
-					+ "'," + j.getPosicionMuñeco() + "," + j.getLugar() + "," + j.getTurno() + ",'" + j.getMonigote()
+					+ "'," + j.getPosicionMuñeco() + "," + j.getLugar() + "," + j.getTurno() + ",'" + j.getFicha()
 					+ "')";
 
 			statement.executeUpdate(sql);
