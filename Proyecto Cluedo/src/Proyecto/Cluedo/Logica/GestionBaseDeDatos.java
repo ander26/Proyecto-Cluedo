@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -283,6 +284,161 @@ public class GestionBaseDeDatos {
 			return null;
 		}
 	}
+public  ArrayList<Usuario> consultaATablaOrdenadoNombreUsuario(Connection conexion) {
+		
+		ArrayList<Usuario> ret = new ArrayList<>();
+		
+		try {
+			
+			Statement statement = conexion.createStatement();
+			
+			String sentSQL = "SELECT * FROM USUARIO ORDER BY NOMBREUSUARIO";
+			
+			ResultSet rs = statement.executeQuery( sentSQL );
+			
+			while (rs.next()) {
+				Usuario u = new Usuario();
+				
+				u.setNombre( rs.getString( "NOMBRE" ));
+				u.setContraseña(rs.getString( "CONTRASEÑA" ));
+				u.setApellidos( rs.getString( "APELLIDO" ));
+				u.setUsuario( rs.getString( "NOMBREUSUARIO" ));
+				u.setEmail( rs.getString( "EMAIL" ));
+				u.setPregunta(rs.getInt("PREGUNTA"));
+				u.setRespuesta(rs.getString("RESPUESTA"));
+				if (rs.getString("GENERO").equals("HOMBRE")){
+					u.setGenero(Genero.HOMBRE);
+				}else{
+					u.setGenero(Genero.MUJER);
+				}
+				u.setConexion(new Date(rs.getLong("FECHAULTIMOLOGIN")));
+				u.setFechaNacimeinto(new Date (rs.getLong("FECHANACIMIENTO")));
+				
+				ImageIcon imagen=new ImageIcon();
+				/** Blob blob = rs.getBlob("IMAGENPERFIL");
+				 byte[] data = blob.getBytes(1, (int)blob.length());
+				 img = ImageIO.read(new ByteArrayInputStream(data));
+				 try {
+				 img = ImageIO.read(new ByteArrayInputStream(data));
+				 } catch (IOException ex) {
+					 
+				 }
+				*/
+				
+				byte[] imgBytes = rs.getBytes(11);
+				
+				BufferedImage img=null;
+				img = ImageIO.read(new ByteArrayInputStream(imgBytes));
+				
+				 imagen.setImage(img);
+				 
+				u.setImagenPerfil(imagen);
+				
+				u.setPuntuacion(rs.getLong("PUNTUACION"));
+
+				ret.add( u );
+			}
+			rs.close();
+			return ret;
+		} catch (Exception e) {  
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+public  ArrayList<Usuario> consultaATablaOrdenadoPuntuacion(Connection conexion) {
+	
+	ArrayList<Usuario> ret = new ArrayList<>();
+	
+	try {
+		
+		Statement statement = conexion.createStatement();
+		
+		String sentSQL = "SELECT * FROM USUARIO ORDER BY PUNTUACION DESC";
+		
+		ResultSet rs = statement.executeQuery( sentSQL );
+		
+		while (rs.next()) {
+			Usuario u = new Usuario();
+			
+			u.setNombre( rs.getString( "NOMBRE" ));
+			u.setContraseña(rs.getString( "CONTRASEÑA" ));
+			u.setApellidos( rs.getString( "APELLIDO" ));
+			u.setUsuario( rs.getString( "NOMBREUSUARIO" ));
+			u.setEmail( rs.getString( "EMAIL" ));
+			u.setPregunta(rs.getInt("PREGUNTA"));
+			u.setRespuesta(rs.getString("RESPUESTA"));
+			if (rs.getString("GENERO").equals("HOMBRE")){
+				u.setGenero(Genero.HOMBRE);
+			}else{
+				u.setGenero(Genero.MUJER);
+			}
+			u.setConexion(new Date(rs.getLong("FECHAULTIMOLOGIN")));
+			u.setFechaNacimeinto(new Date (rs.getLong("FECHANACIMIENTO")));
+			
+			ImageIcon imagen=new ImageIcon();
+			/** Blob blob = rs.getBlob("IMAGENPERFIL");
+			 byte[] data = blob.getBytes(1, (int)blob.length());
+			 img = ImageIO.read(new ByteArrayInputStream(data));
+			 try {
+			 img = ImageIO.read(new ByteArrayInputStream(data));
+			 } catch (IOException ex) {
+				 
+			 }
+			*/
+			
+			byte[] imgBytes = rs.getBytes(11);
+			
+			BufferedImage img=null;
+			img = ImageIO.read(new ByteArrayInputStream(imgBytes));
+			
+			 imagen.setImage(img);
+			 
+			u.setImagenPerfil(imagen);
+			
+			u.setPuntuacion(rs.getLong("PUNTUACION"));
+
+			ret.add( u );
+		}
+		rs.close();
+		return ret;
+	} catch (Exception e) {  
+		logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+		e.printStackTrace();
+		return null;
+	}
+}
+	
+public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String seleccion ) {
+		
+	HashMap<String,Integer> ret=new HashMap<>();
+		
+		try {
+			
+			Statement statement = conexion.createStatement();
+			
+			String sentSQL = "SELECT NOMBREUSUARIO,PUNTUACION FROM USUARIO";
+			
+			if (seleccion!=null && !seleccion.equals(""))
+				
+				sentSQL = sentSQL + " WHERE " + seleccion;
+			
+			
+			ResultSet rs = statement.executeQuery( sentSQL );
+			
+			while (rs.next()) {
+				ret.put(rs.getString("NOMBREUSUARIO"),(int) rs.getFloat("PUNTUACION"));
+				
+			}
+			rs.close();
+			return ret;
+		} catch (Exception e) {  
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+}
 
 	public boolean borrarUsuario(Connection conexion, Usuario u) {
 
