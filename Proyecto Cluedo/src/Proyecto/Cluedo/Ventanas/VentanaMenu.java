@@ -340,8 +340,6 @@ public class VentanaMenu extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				VentanaBuscarPartida ventana = new VentanaBuscarPartida(conexion, u);
-				ventana.setVisible(true);
 			}
 		});
 		
@@ -354,8 +352,13 @@ public class VentanaMenu extends JFrame{
 				
 			}
 		});
-		
-		
+		labelEstadistica.addMouseMotionListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0){
+				VentanaRanking ranking=new VentanaRanking(conexion);
+				ranking.setVisible(true);
+			}
+		});
 	}
 	
 	
