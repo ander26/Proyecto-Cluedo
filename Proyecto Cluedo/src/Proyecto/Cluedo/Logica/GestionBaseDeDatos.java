@@ -464,6 +464,47 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 			return false;
 		}
 	}
+	
+	public void cambiarFoto (Connection conexion , Usuario u){
+		
+		String sql = "";
+		
+		try{
+			
+			Image image = u.getImagenPerfil().getImage();
+			
+			BufferedImage bImage = new BufferedImage(image.getWidth(null), image.getHeight(null),
+					BufferedImage.TYPE_INT_RGB);
+			Graphics bg = bImage.getGraphics();
+			bg.drawImage(image, 0, 0, null);
+			bg.dispose();
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ImageIO.write(bImage, "jpeg", out);
+			byte[] buf = out.toByteArray();
+			ByteArrayInputStream inStream = new ByteArrayInputStream(buf);
+			
+			Statement statement = conexion.createStatement();
+			
+			PreparedStatement ps = conexion
+					.prepareStatement("UPDATE USUARIO SET IMAGENPERFIL=? WHERE NOMBREUSUARIO=?");
+
+
+			ps.setBinaryStream(1, inStream, inStream.available());
+			ps.setString(2, u.getUsuario());
+			ps.executeUpdate();
+			ps.close();
+			
+			logger.log(Level.INFO, "Se ha modificado correctamente la foto"+sql);
+			
+		}catch (Exception e){
+			
+			logger.log(Level.SEVERE, "No se ha podido cambiar la foto "+sql);
+			
+			e.printStackTrace();
+		}
+		
+		
+	}
 
 	// TABLA PARTIDA
 

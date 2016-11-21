@@ -1,5 +1,6 @@
 package Proyecto.Cluedo.Datos;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -88,6 +89,15 @@ public class LabelPerfil extends JLabel{
 	}
 	
 
+	public void cambiarTamaño (int anchura, int altura){
+		setSize(new Dimension(anchura, altura));
+	}
+	
+	public void cambiarPosicion (int X, int Y){
+		setLocation(X,Y);
+	}
+	
+	
 
 	
 	

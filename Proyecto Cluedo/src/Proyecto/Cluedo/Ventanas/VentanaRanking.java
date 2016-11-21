@@ -28,7 +28,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Proyecto.Cluedo.Datos.Genero;
-import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
@@ -209,7 +208,6 @@ public class VentanaRanking extends JFrame{
 			Icon icono = new ImageIcon(imicon.getImage().getScaledInstance(label.getWidth()	, label.getHeight(), Image.SCALE_DEFAULT));
 			label.setIcon(icono);
 		}
-		
 		public void RellenarLista(ArrayList<Usuario> arrayl){			
 			lista=new JList<String>();
 			String []arr=new String[arrayl.size()];
@@ -220,11 +218,8 @@ public class VentanaRanking extends JFrame{
 		}
 		
 		public void PonerGanadores(){
-		
-			
 			for(int i=0;i<3;i++){
-				
-				LabelPerfil a=new LabelPerfil(ALUsuarios.get(i).getImagenPerfil(), 0, 0, 50, 50);
+				JLabel a=new JLabel();
 				JPanel pa=new JPanel();
 				
 				JPanel pabajo=new JPanel();
@@ -233,6 +228,9 @@ public class VentanaRanking extends JFrame{
 				
 				pa.setOpaque(false);
 				pabajo.setOpaque(false);
+				a.setSize(50,50);
+				Icon icono = new ImageIcon(ALUsuarios.get(i).getImagenPerfil().getImage().getScaledInstance(a.getWidth()	, a.getHeight(), Image.SCALE_DEFAULT));
+				a.setIcon(icono);
 				
 				pa.add(a);
 				

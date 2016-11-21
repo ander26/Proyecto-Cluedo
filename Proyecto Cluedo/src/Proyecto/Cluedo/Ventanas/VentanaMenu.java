@@ -355,6 +355,16 @@ public class VentanaMenu extends JFrame{
 			}
 		});
 		
+		labelEstadistica.addMouseListener(new MouseAdapter() {
+
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				VentanaRanking2 ventana = new VentanaRanking2(conexion);
+				ventana.setVisible(true);
+				
+			}
+		});
 		
 	}
 	
