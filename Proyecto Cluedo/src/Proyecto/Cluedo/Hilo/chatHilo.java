@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
@@ -29,7 +30,7 @@ public class chatHilo extends Thread {
 	
 	private ArrayList <String> listaMensajes;
 	
-	
+//	private JPanel panel;
 	
 	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JTextArea principal,JList <String> usuarios){
 		this.conexion=conexion;
@@ -37,7 +38,7 @@ public class chatHilo extends Thread {
 		this.usuariosLinea=usuariosLinea;
 		this.principal=principal;
 		this.usuarios=usuarios;
-		
+//		this.panel=panel;
 	}
 	
 	public void run (){
@@ -67,6 +68,7 @@ public class chatHilo extends Thread {
 			
 			principal.setText(tabla);
 			
+//			panel.validate();
 			
 			try {
 				Thread.sleep(10000);

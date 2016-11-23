@@ -38,21 +38,21 @@ public class Main {
 //		gestion.crearTabla(creacion,conexion);
 		
 		
-		try{
-			Statement statament = conexion.createStatement();
-			
-			statament.executeUpdate("DELETE FROM CHAT");
-			
-			System.out.println("Se ha borrado todo");
-			
-			ArrayList <Integer> lista=gestion.obtenerCodigoPartidas(conexion);
-			
-			for (Integer i: lista){
-				System.out.println(i);
-			}
-		}catch (Exception e){
-			System.out.println("No se ha conseguido borrar");
-		}
+//		try{
+//			Statement statament = conexion.createStatement();
+//			
+//			statament.executeUpdate("DELETE FROM CHAT");
+//			
+//			System.out.println("Se ha borrado todo");
+//			
+//			ArrayList <Integer> lista=gestion.obtenerCodigoPartidas(conexion);
+//			
+//			for (Integer i: lista){
+//				System.out.println(i);
+//			}
+//		}catch (Exception e){
+//			System.out.println("No se ha conseguido borrar");
+//		}
 //	
 		
 //		String creacion = "CREATE TABLE CHAT(MENSAJE text,FECHAENVIO bigint NOT NULL,CODIGOPARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE, CODIGOJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG),PRIMARY KEY (FECHAENVIO,CODIGOPARTIDA,CODIGOJUGADOR))";

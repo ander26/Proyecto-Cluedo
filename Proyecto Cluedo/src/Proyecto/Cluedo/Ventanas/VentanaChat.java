@@ -58,6 +58,7 @@ public class VentanaChat extends JFrame {
 		
 		j.setEnLinea(true);
 		
+		gestion.modificarEstado(conexion, j);
 		
 		//Inicializamos el frame
 		
@@ -209,7 +210,7 @@ public class VentanaChat extends JFrame {
 //		usuarios.setModel(modelo);
 		
 
-		chatHilo hilo= new chatHilo(conexion, j, usuariosLinea, principal, usuarios);
+		
 		
 		//Lo añadimos al panel
 		
@@ -239,8 +240,10 @@ public class VentanaChat extends JFrame {
 	
 		getContentPane().add(panelLista);
 		
+		chatHilo hilo= new chatHilo(conexion, j, usuariosLinea, principal, usuarios);
 		
 		
+		hilo.start();
 		
 		
 		

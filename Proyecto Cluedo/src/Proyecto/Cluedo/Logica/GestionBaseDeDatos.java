@@ -1041,7 +1041,7 @@ public class GestionBaseDeDatos {
 			logger.log(Level.INFO, "Se han obtenido correctamente los mensajes");
 
 			
-			SQL = "SELECT NOMBRE_USUARIO FROM JUGADOR,CHAT WHERE JUGADOR.COD_JUG=CHAT.CODIGOJUGADOR AND CHAAT.CODIGOPARTIDA="+codigoPartida+" ORDER BY CHAT.FECHAENVIO";
+			SQL = "SELECT NOMBRE_USUARIO FROM JUGADOR,CHAT WHERE JUGADOR.COD_JUG=CHAT.CODIGOJUGADOR AND CHAT.CODIGOPARTIDA="+codigoPartida+" ORDER BY CHAT.FECHAENVIO";
 			
 			ResultSet rsp= statement.executeQuery(SQL);
 			
@@ -1072,6 +1072,29 @@ public class GestionBaseDeDatos {
 			return null;
 		}
 		
+		
+	}
+	
+	public void modificarEstado (Connection conexion, Jugador j){
+		String SQL ="";
+		
+		try{
+			
+			Statement statement = conexion.createStatement();
+			
+			SQL="UPDATE JUGADOR SET ENLINEA='"+j.isEnLinea()+"' WHERE COD_JUG="+j.getCodigo();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha modificado correctamente el estado"+SQL);
+			
+			statement.close();
+			
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha modificado correctamente");
+			e.printStackTrace();
+		}
 		
 	}
 }
