@@ -291,35 +291,106 @@ public class VentanaUsuario extends JFrame {
 //		});
 //
 //
-//		labelBorrar.addMouseListener(new MouseAdapter() {
-//
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				int valor = JOptionPane.showConfirmDialog(getContentPane(),
-//						"¿Estas seguro de querer borrar definitivamente el usuario?", "Aviso",
-//						JOptionPane.YES_NO_CANCEL_OPTION);
-//
-//				if (valor == JOptionPane.YES_OPTION) {
-//					gestion.borrarUsuario(conexion, u);
-//
-//					for (Window window : Window.getWindows()) {
-//						window.dispose();
-//					}
-//
-//					VentanaLogin ventana = new VentanaLogin(conexion);
-//					ventana.setVisible(true);
-//
-//				}
-//			}
-//
-//		});
-
-		labelModificar.addMouseListener(new MouseAdapter() {
+		labelBorrar.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int valor = JOptionPane.showConfirmDialog(getContentPane(),
+						"¿Estas seguro de querer borrar definitivamente el usuario?", "Aviso",
+						JOptionPane.YES_NO_OPTION);
 
+				if (valor == JOptionPane.YES_OPTION) {
+					gestion.borrarUsuario(conexion, u);
+
+					for (Window window : Window.getWindows()) {
+						window.dispose();
+					}
+
+					VentanaLogin ventana = new VentanaLogin(conexion);
+					ventana.setVisible(true);
+
+				}
 			}
+
+		});
+
+		labelModificar.addMouseListener(new MouseAdapter() {
+
+			String [] opciones ={"Nombre","Apellido","Contraseña","Email"};
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			    String cambio = (String) JOptionPane.showInputDialog(getContentPane(), 
+			            "¿Que valor desea modificar?",
+			            "Cambio",
+			            JOptionPane.QUESTION_MESSAGE, 
+			            null, 
+			            opciones, 
+			            opciones[0]);
+			    if (cambio!=null){
+			    switch (cambio){
+			    
+			    case "Nombre": 
+			    	String name = JOptionPane.showInputDialog(getContentPane(), "Introduzca el nombre: ");
+			    	
+			    	if (name.trim().length()>0){
+			    		
+			    		gestion.modificar(conexion, "USUARIO", "NOMBRE='"+name+"'", "NOMBREUSUARIO='"+u.getUsuario()+"'");
+			    		
+			    		JOptionPane.showMessageDialog(getContentPane(), "Se ha modificado correctamente el nombre");
+			    		
+			    	}else {
+			    		JOptionPane.showMessageDialog(getContentPane(), "No se ha introducido ningun valor");
+			    	}
+			    	break;
+			    
+			    case "Apellido":
+			    	
+			    	String apellido = JOptionPane.showInputDialog(getContentPane(), "Introduzca el apellido: ");
+			    	
+			    	if (apellido.trim().length()>0){
+			    		
+			    		gestion.modificar(conexion, "USUARIO", "APELLIDO='"+apellido+"'", "NOMBREUSUARIO='"+u.getUsuario()+"'");
+			    		
+			    		JOptionPane.showMessageDialog(getContentPane(), "Se ha modificado correctamente el apellido");
+			    		
+			    	}else {
+			    		JOptionPane.showMessageDialog(getContentPane(), "No se ha introducido ningun valor");
+			    	}
+			    	break;
+			    	
+			    case "Contraseña":
+			    	String contraseña = JOptionPane.showInputDialog(getContentPane(), "Introduzca la contraseña: ");
+			    	
+			    	if (contraseña.trim().length()>0){
+			    		
+			    		gestion.modificar(conexion, "USUARIO", "CONTRASEÑA='"+contraseña+"'", "NOMBREUSUARIO='"+u.getUsuario()+"'");
+			    		
+			    		JOptionPane.showMessageDialog(getContentPane(), "Se ha modificado correctamente la contraseña");
+			    	}else {
+			    		JOptionPane.showMessageDialog(getContentPane(), "No se ha introducido ningun valor");
+			    	}
+			    	break;
+			    	
+			    case "Email":
+			    	
+			    	String email = JOptionPane.showInputDialog(getContentPane(), "Introduzca el email: ");
+			    	
+			    	if (email.trim().length()>0){
+			    		gestion.modificar(conexion, "USUARIO", "EMAIL='"+email+"'", "NOMBREUSUARIO='"+u.getUsuario()+"'");
+			    		
+			    		JOptionPane.showMessageDialog(getContentPane(), "Se ha modificado correctamente el email");
+			    	}else {
+			    		JOptionPane.showMessageDialog(getContentPane(), "No se ha introducido ningun valor");
+			    	}
+			    	break;
+			    
+			    }
+			    
+			}
+			    }
+			
+			
 		});
 
 

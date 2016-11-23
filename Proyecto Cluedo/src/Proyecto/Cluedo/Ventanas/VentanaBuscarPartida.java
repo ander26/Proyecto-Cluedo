@@ -44,6 +44,7 @@ import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Hilo.comprobador;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+import Proyecto.Cluedo.Logica.Jugador;
 
 public class VentanaBuscarPartida extends JFrame {
 
@@ -346,7 +347,11 @@ public class VentanaBuscarPartida extends JFrame {
 		        
 		       Partida p=gestion.obtenerPartida(conexion, listaCodigosSinCompletar.get(modelRow));
 		        
-		        comprobador comp= new comprobador(p,conexion);
+		       //TODO: Hay que hacer aqui para que elija la ficha
+		       
+		       	Jugador j= new Jugador("Barco", u.getUsuario(), p.getCodigo(), conexion);
+		       
+		        comprobador comp= new comprobador(p,conexion,j,u);
 				
 				VentanaConectando ventana = new VentanaConectando();
 				

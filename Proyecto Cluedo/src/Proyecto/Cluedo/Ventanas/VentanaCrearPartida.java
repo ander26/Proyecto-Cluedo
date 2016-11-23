@@ -324,7 +324,7 @@ public class VentanaCrearPartida extends JFrame {
 					
 					VentanaConectando ventana = new VentanaConectando();
 
-					comprobador comp= new comprobador(p,conexion);
+					comprobador comp= new comprobador(p,conexion,j,u);
 					
 					
 					

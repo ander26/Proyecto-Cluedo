@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.Jugador;
 
 public class VentanaTablero extends JFrame {
@@ -54,21 +56,14 @@ public class VentanaTablero extends JFrame {
 
 	private JFrame g=new ventana();
 
-	private VentanaChat ventana= new VentanaChat();
+	private VentanaChat ventana;
 	
 	
 
-	
-public static void main(String[] args) {
-		
-		// TODO Auto-generated method stub		
-																	
-		JFrame f=new VentanaTablero();		
-		f.setVisible(true);
+
+	public VentanaTablero(Connection conexion, Jugador j,Usuario u){
 		
 		
-	}
-	public VentanaTablero(){
 		 this.setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );		
 		//setSize( 1330, 730 );				
@@ -187,7 +182,7 @@ public static void main(String[] args) {
 		lchat.addMouseListener( new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-																						
+				ventana= new VentanaChat(conexion, j, u);																
 				ventana.setVisible(true);
 			}
 			

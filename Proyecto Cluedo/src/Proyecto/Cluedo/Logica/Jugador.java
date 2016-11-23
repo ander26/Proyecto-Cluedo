@@ -26,6 +26,8 @@ public class Jugador {
 
 	private BufferedImage dibujo;
 	
+	private boolean enLinea;
+	
 
 	public Jugador() {
 	
@@ -45,6 +47,8 @@ public class Jugador {
 		this.PosicionMuñeco=-1;
 		
 		dibujo=null;
+		
+		enLinea=false;
 		
 		
 	}
@@ -141,4 +145,18 @@ public class Jugador {
 		
 		return contador;
 	}
+
+	public boolean isEnLinea() {
+		return enLinea;
+	}
+
+	public void setEnLinea(boolean enLinea) {
+		this.enLinea = enLinea;
+	}
+
+	public void setFicha(String ficha) {
+		Ficha = ficha;
+	}
+	
+	
 }

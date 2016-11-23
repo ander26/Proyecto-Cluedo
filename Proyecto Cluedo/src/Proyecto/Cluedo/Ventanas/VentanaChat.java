@@ -18,6 +18,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -28,24 +29,30 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
+import Proyecto.Cluedo.Datos.Chat;
+import Proyecto.Cluedo.Datos.LabelPerfil;
+import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+import Proyecto.Cluedo.Logica.Jugador;
+
 public class VentanaChat extends JFrame {
 
-	JLabel usuariosLinea;
+	private JLabel usuariosLinea;
 	
-	int contadorUsuarios=0;
+	private int contadorUsuarios=0;
 	
-	public static void main (String [] args){
-		VentanaChat ventana= new VentanaChat();
-		ventana.setVisible(true);
-		
-	}
+	private GestionBaseDeDatos gestion= new GestionBaseDeDatos();
+
 	
-	public VentanaChat(){
+
+	
+	public VentanaChat(Connection conexion,Jugador j,Usuario u){
 		
 		//Inicializamos el frame
 		
@@ -61,7 +68,7 @@ public class VentanaChat extends JFrame {
 		
 		ImageIcon imagen= new ImageIcon ();
 		
-		usuariosLinea=new JLabel("  Usuarios en linea: "+contadorUsuarios);
+		usuariosLinea=new JLabel();
 		
 		JLabel labelEnviar = new JLabel ();
 		
@@ -73,9 +80,7 @@ public class VentanaChat extends JFrame {
 		
 		JList <String> usuarios = new JList<String>();
 		
-		JLabel labelPerfil = new JLabel();
-		
-		Icon iconoPerfil;
+		LabelPerfil labelPerfil;
 		
 		JLabel nombre = new JLabel ("Pepe");
 		
@@ -157,17 +162,19 @@ public class VentanaChat extends JFrame {
 		
 		nombre.setForeground(Color.white);
 		
-		labelPerfil.setBounds(28, 14, 65, 65);
-		
-		try{
-			imagen= new ImageIcon(VentanaChat.class.getResource("Imagenes/user.png").toURI().toURL());
-		}catch (Exception e){
-			System.out.println("No se encuentra el archivo");
-		}
-		
-		iconoPerfil= new ImageIcon(imagen.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
-		
-		labelPerfil.setIcon(iconoPerfil);
+		labelPerfil=new LabelPerfil(u.getImagenPerfil(), 28, 14, 65, 65);
+
+//		labelPerfil.setBounds(28, 14, 65, 65);
+//		
+//		try{
+//			imagen= new ImageIcon(VentanaChat.class.getResource("Imagenes/user.png").toURI().toURL());
+//		}catch (Exception e){
+//			System.out.println("No se encuentra el archivo");
+//		}
+//		
+//		iconoPerfil= new ImageIcon(imagen.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_DEFAULT));
+//		
+//		labelPerfil.setIcon(iconoPerfil);
 		
 		/*labelSalir.setBounds(742,33,25,25);
 		
@@ -270,9 +277,15 @@ public class VentanaChat extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				principal.setText(principal.getText()+"\n"+"Pepe"+": "+mensaje.getText());
-				mensaje.setText("");
+				if (mensaje.getText().trim().length()>0){
+					
+					Chat c= new Chat(mensaje.getText(), j.getCodigoPartida(), j.getCodigo());
+				gestion.insertarChat(conexion, c);
 				
+				mensaje.setText("");
+				}else{
+					JOptionPane.showMessageDialog(getContentPane(), "No se ha introducido ningun texto","Aviso",JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		
@@ -282,8 +295,16 @@ public class VentanaChat extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode()==KeyEvent.VK_ENTER){
-					principal.setText(principal.getText()+"\n"+"Pepe"+": "+mensaje.getText());
+					
+					if (mensaje.getText().trim().length()>0){
+						
+						Chat c= new Chat(mensaje.getText(), j.getCodigoPartida(), j.getCodigo());
+					gestion.insertarChat(conexion, c);
+					
 					mensaje.setText("");
+					}else{
+						JOptionPane.showMessageDialog(getContentPane(), "No se ha introducido ningun texto","Aviso",JOptionPane.INFORMATION_MESSAGE);
+					}
 					
 				}
 				

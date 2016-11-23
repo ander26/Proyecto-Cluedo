@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Proyecto.Cluedo.Datos.Partida;
+import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
 public class comprobador extends Thread {
@@ -16,10 +18,16 @@ public class comprobador extends Thread {
 	public Partida p;
 
 	public Connection conexion;
+	
+	private Jugador j;
+	
+	private Usuario u;
 
-	public comprobador(Partida p, Connection conexion) {
+	public comprobador(Partida p, Connection conexion,Jugador j,Usuario u) {
 		this.p = p;
 		this.conexion = conexion;
+		this.j=j;
+		this.u=u;
 	}
 
 	public void run() {
@@ -39,7 +47,7 @@ public class comprobador extends Thread {
 				}
 				System.out.println(p.getNumeroJugadoresActual() + " " + p.getNumeroJugadoresMaximo());
 				try {
-					Thread.sleep(30000);
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -55,9 +63,18 @@ public class comprobador extends Thread {
 			    window.dispose();
 			}
 		
-		 VentanaTablero tablero = new VentanaTablero();
+		 VentanaTablero tablero = new VentanaTablero(conexion,j,u);
 		 tablero.setVisible(true);
 		
 	}
 
+	public void setJ(Jugador j) {
+		this.j = j;
+	}
+
+	public void setU(Usuario u) {
+		this.u = u;
+	}
+
+	
 }

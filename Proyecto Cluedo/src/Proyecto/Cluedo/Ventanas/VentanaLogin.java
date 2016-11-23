@@ -9,6 +9,9 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
@@ -31,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Proyecto.Cluedo.Datos.Genero;
+import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
@@ -456,6 +460,7 @@ public class VentanaLogin extends JFrame {
 				}
 			});
 		
+
 			
 		
 	}
