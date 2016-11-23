@@ -126,9 +126,11 @@ public class Cartas {
 	 * @return Devuelve true si esta involucrada
 	 */
 	
-	public boolean isCulpable() {
-		
-		return culpable;
+	public int isCulpable() {
+		if(this.culpable){
+			return 1;
+		}
+		return 0;
 	
 	}
 
@@ -137,10 +139,14 @@ public class Cartas {
 	 * @param culpable Parametro que contiene si una carta es culpable
 	 */
 	
-	public void setCulpable(boolean culpable) {
+	public void setCulpable(int culpable) {
+		if(culpable==1){
+			this.culpable=true;
+		}else{
+			this.culpable = false;
+			
+		}
 		
-		this.culpable = culpable;
-	
 	}
 
 	/**
@@ -148,8 +154,13 @@ public class Cartas {
 	 * @return Devuelve el tipo de carta
 	 */
 	
-	public TipoCarta getTipo() {
-		return tipo;
+	public int getTipo() {
+		if(this.tipo==TipoCarta.ARMA){
+			return 0;
+			
+			
+		}
+		return 1;
 	}
 	
 	/**

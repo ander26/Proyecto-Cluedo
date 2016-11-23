@@ -908,4 +908,33 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 		}
 
 	}
+	//cartas
+	public boolean insertarCarta(Connection conexion, Cartas c) {
+
+		String sql = "";
+
+		try {
+			
+
+			Statement statement = conexion.createStatement();
+
+			sql = "INSERT INTO CARTA VALUES ('" + c.getNombre() + "','" + c.getRutaIcono() + "'," + c.
+					+ "'," + j.getPosicionMuñeco() + "," + j.getLugar() + "," + j.getTurno() + ",'" + j.getFicha()
+					+ "')";
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha añadido el jugador: " + sql);
+
+			statement.close();
+
+			return true;
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Erro el insertar el jugador : " + sql);
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }

@@ -54,7 +54,8 @@ public class Main {
 //			System.out.println("No se ha conseguido borrar");
 //		}
 //	
-		
+//		String creacion = "CREATE TABLE CARTA(NOMBRE text NOT NULL PRIMARY KEY,RUTAICONO text,CULPABLE int,TIPOCARTA text)";
+//		gestion.crearTabla(creacion, conexion);
 		
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);
