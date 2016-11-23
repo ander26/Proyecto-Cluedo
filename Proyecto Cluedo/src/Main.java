@@ -58,6 +58,7 @@ public class Main {
 //		String creacion = "CREATE TABLE CHAT(MENSAJE text,FECHAENVIO bigint NOT NULL,CODIGOPARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE, CODIGOJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG),PRIMARY KEY (FECHAENVIO,CODIGOPARTIDA,CODIGOJUGADOR))";
 //		gestion.crearTabla(creacion,conexion);
 		
+		
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);
 		
