@@ -307,7 +307,7 @@ public class VentanaChat extends JFrame {
 					
 					if (mensaje.getText().trim().length()>0){
 						
-						Chat c= new Chat(mensaje.getText(), j.getCodigoPartida(), j.getCodigo(),j.getUsuario());
+					Chat c= new Chat(mensaje.getText(), j.getCodigoPartida(), j.getCodigo(),j.getUsuario());
 					gestion.insertarChat(conexion, c);
 					
 					mensaje.setText("");

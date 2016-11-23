@@ -1030,38 +1030,40 @@ public class GestionBaseDeDatos {
 			ResultSet rs= statement.executeQuery(SQL);
 			
 			while (rs.next()){
-				
+				if (rs!=null){
 				String mensaje = rs.getString(1);
 				
 				listaMensajes.add(mensaje);
 			}
+				}
 			
 			rs.close();
 			
 			logger.log(Level.INFO, "Se han obtenido correctamente los mensajes");
 
 			
-			SQL = "SELECT NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY CHAT.FECHAENVIO";
+			SQL = "SELECT NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY FECHAENVIO";
 			
 			ResultSet rsp= statement.executeQuery(SQL);
 			
 			while (rsp.next()){
-				
+				if (rsp!=null){
 				String usuario = rsp.getString(1);
 				
 				listaUsuarios.add(usuario);
 			}
+				}
 			
 			rsp.close();
 			
 			logger.log(Level.INFO, "Se han obtenido correctamente los usuarios");
 			
-			for (int i=0;i<listaMensajes.size();i++){
+			for (int i=0;i<listaUsuarios.size();i++){
 				
-				listaMensajes.add("\n"+listaUsuarios.get(i)+": "+listaMensajes.get(i));
+				listaChat.add("\n"+listaUsuarios.get(i)+": "+listaMensajes.get(i));
 			}
 			
-			return listaMensajes;
+			return listaChat;
 			
 		}catch (Exception e){
 			
