@@ -47,7 +47,7 @@ public class comprobador extends Thread {
 				}
 				System.out.println(p.getNumeroJugadoresActual() + " " + p.getNumeroJugadoresMaximo());
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

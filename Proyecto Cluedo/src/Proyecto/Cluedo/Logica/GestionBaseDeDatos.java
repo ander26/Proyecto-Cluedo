@@ -992,7 +992,7 @@ public class GestionBaseDeDatos {
 			
 			
 			
-			SQL = "INSERT INTO CHAT VALUES ('"+c.getMensaje()+"',"+c.getFechaEnvio().getTime()+","+c.getCodigoPartida()+","+c.getCodigoJugador()+")";
+			SQL = "INSERT INTO CHAT VALUES ('"+c.getMensaje()+"',"+c.getFechaEnvio().getTime()+","+c.getCodigoPartida()+","+c.getCodigoJugador()+",'"+c.getNombreUsuario()+"')";
 			
 			
 			statement.executeUpdate(SQL);
@@ -1041,7 +1041,7 @@ public class GestionBaseDeDatos {
 			logger.log(Level.INFO, "Se han obtenido correctamente los mensajes");
 
 			
-			SQL = "SELECT NOMBRE_USUARIO FROM JUGADOR,CHAT WHERE JUGADOR.COD_JUG=CHAT.CODIGOJUGADOR AND CHAT.CODIGOPARTIDA="+codigoPartida+" ORDER BY CHAT.FECHAENVIO";
+			SQL = "SELECT NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY CHAT.FECHAENVIO";
 			
 			ResultSet rsp= statement.executeQuery(SQL);
 			
