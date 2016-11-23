@@ -18,6 +18,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.nio.channels.NetworkChannel;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ import javax.swing.border.Border;
 import Proyecto.Cluedo.Datos.Chat;
 import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Hilo.chatHilo;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 
@@ -53,6 +55,9 @@ public class VentanaChat extends JFrame {
 
 	
 	public VentanaChat(Connection conexion,Jugador j,Usuario u){
+		
+		j.setEnLinea(true);
+		
 		
 		//Inicializamos el frame
 		
@@ -82,12 +87,11 @@ public class VentanaChat extends JFrame {
 		
 		LabelPerfil labelPerfil;
 		
-		JLabel nombre = new JLabel ("Pepe");
+		JLabel nombre = new JLabel (j.getUsuario());
 		
 		String [] contenido ={"En linea","Desconectado"};
 		
 		JComboBox<String> estado = new JComboBox<String>(contenido);
-		
 		
 		
 		//JLabel labelSalir = new JLabel();
@@ -194,16 +198,18 @@ public class VentanaChat extends JFrame {
 		
 		usuariosLinea.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		ArrayList<String> listadeConectados=new ArrayList<String>();
+//		ArrayList<String> listadeConectados=new ArrayList<String>();
+//		
+//		DefaultListModel modelo = new DefaultListModel();
+//		
+//		for(int i = 1; i<=50; i++){
+//		        modelo.addElement(i);
+//		}
+//		
+//		usuarios.setModel(modelo);
 		
-		DefaultListModel modelo = new DefaultListModel();
-		
-		for(int i = 1; i<=50; i++){
-		        modelo.addElement(i);
-		}
-		
-		usuarios.setModel(modelo);
-		
+
+		chatHilo hilo= new chatHilo(conexion, j, usuariosLinea, principal, usuarios);
 		
 		//Lo añadimos al panel
 		

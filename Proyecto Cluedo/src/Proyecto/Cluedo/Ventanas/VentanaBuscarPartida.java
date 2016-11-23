@@ -351,6 +351,8 @@ public class VentanaBuscarPartida extends JFrame {
 		       
 		       	Jugador j= new Jugador("Barco", u.getUsuario(), p.getCodigo(), conexion);
 		       
+		       	gestion.insertarJugador(conexion, j, p, u);
+		       	
 		        comprobador comp= new comprobador(p,conexion,j,u);
 				
 				VentanaConectando ventana = new VentanaConectando();

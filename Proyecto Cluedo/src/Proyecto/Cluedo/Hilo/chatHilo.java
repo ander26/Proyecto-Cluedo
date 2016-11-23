@@ -29,8 +29,14 @@ public class chatHilo extends Thread {
 	
 	private ArrayList <String> listaMensajes;
 	
-	public chatHilo(){
-		
+	
+	
+	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JTextArea principal,JList <String> usuarios){
+		this.conexion=conexion;
+		this.j=j;
+		this.usuariosLinea=usuariosLinea;
+		this.principal=principal;
+		this.usuarios=usuarios;
 		
 	}
 	
