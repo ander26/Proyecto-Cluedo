@@ -2,8 +2,10 @@ package Proyecto.Cluedo.Hilo;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -26,13 +28,13 @@ public class chatHilo extends Thread {
 	
 	private ArrayList <String> listaUsuarios;
 	
-	public JTextArea principal;
+	public JEditorPane principal;
 	
 	private ArrayList <String> listaMensajes;
 	
 //	private JPanel panel;
 	
-	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JTextArea principal,JList <String> usuarios){
+	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JEditorPane principal,JList <String> usuarios){
 		this.conexion=conexion;
 		this.j=j;
 		this.usuariosLinea=usuariosLinea;
@@ -58,15 +60,35 @@ public class chatHilo extends Thread {
 			
 			usuariosLinea.setText("  Usuarios en linea: "+listaUsuarios.size());
 			
+			usuariosLinea.revalidate();
+			
 			listaMensajes=gestion.obtenerChats(conexion, j.getCodigoPartida());
 			
-			String tabla="";
+			String tabla="<html><body>";
 			
 			for (String s: listaMensajes){
+//				StringTokenizer tokenizer= new StringTokenizer(s,":");
+//				String nombreusuario=tokenizer.nextToken();
+//				nombreusuario=nombreusuario.replaceAll("<br>", "");
+////					System.out.println(nombreusuario);
+//				if(nombreusuario.equals(j.getUsuario())){
+//				
+//					tabla=tabla+"<DIV ALIGN=right>"+s+"   </DIV>";
+//				}else{
+//				tabla=tabla+s;
+//			}
+				
 				tabla=tabla+s;
-			}
+				}
+			
+			tabla=tabla+"</body></html>";
+			String imgsrc = chatHilo.class.getResource("Imagenes/happy.png").toString();
+			tabla=tabla.replaceAll(":\\)", "<img src='" + imgsrc + "' width=30 height=30></img>");
+			
 			
 			principal.setText(tabla);
+			
+			
 			
 //			panel.validate();
 			

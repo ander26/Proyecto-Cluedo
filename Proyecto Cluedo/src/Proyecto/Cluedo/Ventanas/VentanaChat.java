@@ -20,6 +20,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.nio.channels.NetworkChannel;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -36,7 +40,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.text.html.HTMLDocument;
 
 import Proyecto.Cluedo.Datos.Chat;
 import Proyecto.Cluedo.Datos.LabelPerfil;
@@ -66,7 +72,7 @@ public class VentanaChat extends JFrame {
 		
 		setUndecorated(false);
 		setResizable(false);
-		setSize(new Dimension(800, 630));
+		setSize(new Dimension(802, 633));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -84,7 +90,7 @@ public class VentanaChat extends JFrame {
 		
 		JTextArea mensaje= new JTextArea();
 		
-		JTextArea principal = new JTextArea();
+		JEditorPane principal = new JEditorPane("text/html","");
 		
 		JList <String> usuarios = new JList<String>();
 		
@@ -133,9 +139,15 @@ public class VentanaChat extends JFrame {
 		
 		mensaje.setForeground(Color.lightGray);
 		
-		panelMensajes.setBounds(184,83,616,442);
+		panelMensajes.setBounds(184,83,612,442);
 		
-		principal.setEnabled(false);
+		principal.setEditable(false);
+		
+		Font font = UIManager.getFont("Label.font");
+		
+		String bodyRule = "body { font-family: "+font.getFamily()+"; "+"font-size: "+font.getSize()+"pt; }";
+		
+		((HTMLDocument)principal.getDocument()).getStyleSheet().addRule(bodyRule);
 		
 		panelLista.setBounds(0,130,185,470);
 		
@@ -248,15 +260,7 @@ public class VentanaChat extends JFrame {
 		hilo.start();
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		
 		
 		
@@ -315,6 +319,7 @@ public class VentanaChat extends JFrame {
 					mensaje.setText("");
 					}else{
 						JOptionPane.showMessageDialog(getContentPane(), "No se ha introducido ningun texto","Aviso",JOptionPane.INFORMATION_MESSAGE);
+						mensaje.setText("");
 					}
 					
 				}
@@ -340,6 +345,20 @@ public class VentanaChat extends JFrame {
 					
 					gestion.modificarEstado(conexion, j);
 					
+					ArrayList <String> listaUsuarios=gestion.obtenerJugadoresLinea(conexion, j);
+					
+					DefaultListModel modelo = new DefaultListModel();
+					
+					for (String s: listaUsuarios){
+						modelo.addElement(s);
+					}
+					
+					usuarios.setModel(modelo);
+					
+					
+					usuariosLinea.setText("  Usuarios en linea: "+listaUsuarios.size());
+					
+					usuariosLinea.repaint();
 					chatHilo hilo = new chatHilo(conexion, j, labelFondo, principal, usuarios);
 					
 					hilo.start();
@@ -352,11 +371,40 @@ public class VentanaChat extends JFrame {
 					
 					gestion.modificarEstado(conexion, j);
 					
+					ArrayList <String> listaUsuarios=gestion.obtenerJugadoresLinea(conexion, j);
+					
+					DefaultListModel modelo = new DefaultListModel();
+					
+					for (String s: listaUsuarios){
+						modelo.addElement(s);
+					}
+					
+					usuarios.setModel(modelo);
+					
+					
+					usuariosLinea.setText("  Usuarios en linea: "+listaUsuarios.size());
+					
+					usuariosLinea.repaint();
+					
 				}
 				
 			}
 		});
 		
+		
+		addWindowListener(new WindowAdapter() {
+			
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				j.setEnLinea(false);
+				
+				gestion.modificarEstado(conexion, j);
+				
+			}
+
+			
+		});
 		/*labelSalir.addMouseListener(new MouseAdapter() {
 			
 			@Override

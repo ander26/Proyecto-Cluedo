@@ -1036,7 +1036,7 @@ public class GestionBaseDeDatos {
 				
 				String usuario = rs.getString(2);
 				
-				listaMensajes.add("\n"+usuario+": "+mensaje);
+				listaMensajes.add("<br> &nbsp &nbsp &nbsp "+usuario+": "+mensaje+" &nbsp &nbsp &nbsp <br>");
 //				listaMensajes.add(mensaje);
 			}
 				}
