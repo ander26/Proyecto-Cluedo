@@ -143,6 +143,7 @@ public class VentanaChat extends JFrame {
 		
 		principal.setEditable(false);
 		
+		
 		Font font = UIManager.getFont("Label.font");
 		
 		String bodyRule = "body { font-family: "+font.getFamily()+"; "+"font-size: "+font.getSize()+"pt; }";
