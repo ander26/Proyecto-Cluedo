@@ -10,6 +10,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints.Key;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -323,6 +325,36 @@ public class VentanaChat extends JFrame {
 			
 			
 			
+		});
+		
+		estado.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String linea= (String) estado.getSelectedItem();
+				
+				if (linea.equals("En linea")){
+					
+					j.setEnLinea(true);
+					
+					gestion.modificarEstado(conexion, j);
+					
+					chatHilo hilo = new chatHilo(conexion, j, labelFondo, principal, usuarios);
+					
+					hilo.start();
+					
+				}else{
+					
+					JOptionPane.showMessageDialog(getContentPane(), "Si estas desconectado, no recibiras ningun chat ni apareceras entre los usuarios en linea");
+					
+					j.setEnLinea(false);
+					
+					gestion.modificarEstado(conexion, j);
+					
+				}
+				
+			}
 		});
 		
 		/*labelSalir.addMouseListener(new MouseAdapter() {

@@ -1015,9 +1015,9 @@ public class GestionBaseDeDatos {
 		
 		ArrayList <String> listaMensajes= new ArrayList<String>();
 		
-		ArrayList<String> listaUsuarios = new ArrayList<String>();
-		
-		ArrayList <String> listaChat = new ArrayList<>();
+//		ArrayList<String> listaUsuarios = new ArrayList<String>();
+//		
+//		ArrayList <String> listaChat = new ArrayList<>();
 		
 		String SQL = "";
 		
@@ -1025,15 +1025,19 @@ public class GestionBaseDeDatos {
 			
 			Statement statement= conexion.createStatement();
 			
-			SQL="SELECT MENSAJE FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY FECHAENVIO";
+			SQL="SELECT MENSAJE,NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida;
 			
 			ResultSet rs= statement.executeQuery(SQL);
 			
 			while (rs.next()){
 				if (rs!=null){
+				
 				String mensaje = rs.getString(1);
 				
-				listaMensajes.add(mensaje);
+				String usuario = rs.getString(2);
+				
+				listaMensajes.add("\n"+usuario+": "+mensaje);
+//				listaMensajes.add(mensaje);
 			}
 				}
 			
@@ -1041,29 +1045,30 @@ public class GestionBaseDeDatos {
 			
 			logger.log(Level.INFO, "Se han obtenido correctamente los mensajes");
 
+			return listaMensajes;
 			
-			SQL = "SELECT NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY FECHAENVIO";
+//			SQL = "SELECT NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY FECHAENVIO";
+//			
+//			ResultSet rsp= statement.executeQuery(SQL);
+//			
+//			while (rsp.next()){
+//				if (rsp!=null){
+//				String usuario = rsp.getString(1);
+//				
+//				listaUsuarios.add(usuario);
+//			}
+//				}
+//			
+//			rsp.close();
+//			
+//			logger.log(Level.INFO, "Se han obtenido correctamente los usuarios");
 			
-			ResultSet rsp= statement.executeQuery(SQL);
-			
-			while (rsp.next()){
-				if (rsp!=null){
-				String usuario = rsp.getString(1);
-				
-				listaUsuarios.add(usuario);
-			}
-				}
-			
-			rsp.close();
-			
-			logger.log(Level.INFO, "Se han obtenido correctamente los usuarios");
-			
-			for (int i=0;i<listaUsuarios.size();i++){
-				
-				listaChat.add("\n"+listaUsuarios.get(i)+": "+listaMensajes.get(i));
-			}
-			
-			return listaChat;
+//			for (int i=0;i<listaUsuarios.size();i++){
+//				
+//				listaChat.add("\n"+listaUsuarios.get(i)+": "+listaMensajes.get(i));
+//			}
+//			
+//			return listaChat;
 			
 		}catch (Exception e){
 			
