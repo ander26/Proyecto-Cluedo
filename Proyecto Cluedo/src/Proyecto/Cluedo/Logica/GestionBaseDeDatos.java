@@ -397,14 +397,18 @@ public  ArrayList<Usuario> consultaATablaOrdenadoPuntuacion(Connection conexion)
 			}else{
 				u.setGenero(Genero.MUJER);
 			}
+			ret.add(u);
+		}
 			rs.close();
 			return ret;
+		
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
 			e.printStackTrace();
 			return null;
 		}
-	}
+	
+	
 }
 	
 public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String seleccion ) {
@@ -965,7 +969,7 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 			
 			
 			
-			SQL = "INSERT INTO CHAT VALUES ('"+c.getMensaje()+"',"+c.getFechaEnvio().getTime()+","+c.getCodigoPartida()+","+c.getCodigoJugador()+")";
+			SQL = "INSERT INTO CHAT VALUES ('"+c.getMensaje()+"',"+c.getFechaEnvio().getTime()+","+c.getCodigoPartida()+","+c.getCodigoJugador()+",'"+c.getNombreUsuario()+"')";
 			
 			
 			statement.executeUpdate(SQL);
@@ -988,9 +992,9 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 		
 		ArrayList <String> listaMensajes= new ArrayList<String>();
 		
-		ArrayList<String> listaUsuarios = new ArrayList<String>();
-		
-		ArrayList <String> listaChat = new ArrayList<>();
+//		ArrayList<String> listaUsuarios = new ArrayList<String>();
+//		
+//		ArrayList <String> listaChat = new ArrayList<>();
 		
 		String SQL = "";
 		
@@ -998,43 +1002,50 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 			
 			Statement statement= conexion.createStatement();
 			
-			SQL="SELECT MENSAJE FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY FECHAENVIO";
+			SQL="SELECT MENSAJE,NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida;
 			
 			ResultSet rs= statement.executeQuery(SQL);
 			
 			while (rs.next()){
+				if (rs!=null){
 				
 				String mensaje = rs.getString(1);
 				
-				listaMensajes.add(mensaje);
+				String usuario = rs.getString(2);
+				
+				listaMensajes.add("<br> &nbsp &nbsp &nbsp "+usuario+": "+mensaje+" &nbsp &nbsp &nbsp <br>");
+//				listaMensajes.add(mensaje);
 			}
+				}
 			
 			rs.close();
 			
 			logger.log(Level.INFO, "Se han obtenido correctamente los mensajes");
 
-			
-			SQL = "SELECT NOMBRE_USUARIO FROM JUGADOR,CHAT WHERE JUGADOR.COD_JUG=CHAT.CODIGOJUGADOR AND CHAAT.CODIGOPARTIDA="+codigoPartida+" ORDER BY CHAT.FECHAENVIO";
-			
-			ResultSet rsp= statement.executeQuery(SQL);
-			
-			while (rsp.next()){
-				
-				String usuario = rsp.getString(1);
-				
-				listaUsuarios.add(usuario);
-			}
-			
-			rsp.close();
-			
-			logger.log(Level.INFO, "Se han obtenido correctamente los usuarios");
-			
-			for (int i=0;i<listaMensajes.size();i++){
-				
-				listaMensajes.add("\n"+listaUsuarios.get(i)+": "+listaMensajes.get(i));
-			}
-			
 			return listaMensajes;
+			
+//			SQL = "SELECT NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY FECHAENVIO";
+//			
+//			ResultSet rsp= statement.executeQuery(SQL);
+//			
+//			while (rsp.next()){
+//				if (rsp!=null){
+//				String usuario = rsp.getString(1);
+//				
+//				listaUsuarios.add(usuario);
+//			}
+//				}
+//			
+//			rsp.close();
+//			
+//			logger.log(Level.INFO, "Se han obtenido correctamente los usuarios");
+			
+//			for (int i=0;i<listaUsuarios.size();i++){
+//				
+//				listaChat.add("\n"+listaUsuarios.get(i)+": "+listaMensajes.get(i));
+//			}
+//			
+//			return listaChat;
 			
 		}catch (Exception e){
 			
@@ -1047,6 +1058,7 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 		
 		
 	}
+
 	//CARTAS
 //////////////////////////////////////////////////////////////////////////////////////////
 public ArrayList<Cartas> consultaATablaCartas(Connection conexion, String seleccion){
@@ -1108,4 +1120,29 @@ public ArrayList<String> obtenerCartasDeJugador( Connection conexion, int codpar
 		return null;
 	}
 }
+
+	
+	public void modificarEstado (Connection conexion, Jugador j){
+		String SQL ="";
+		
+		try{
+			
+			Statement statement = conexion.createStatement();
+			
+			SQL="UPDATE JUGADOR SET ENLINEA='"+j.isEnLinea()+"' WHERE COD_JUG="+j.getCodigo();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha modificado correctamente el estado"+SQL);
+			
+			statement.close();
+			
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha modificado correctamente");
+			e.printStackTrace();
+		}
+		
+	}
+
 }

@@ -10,6 +10,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints.Key;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -18,6 +20,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.nio.channels.NetworkChannel;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -26,6 +32,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -33,11 +40,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.text.html.HTMLDocument;
 
 import Proyecto.Cluedo.Datos.Chat;
 import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Hilo.chatHilo;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 
@@ -54,11 +64,15 @@ public class VentanaChat extends JFrame {
 	
 	public VentanaChat(Connection conexion,Jugador j,Usuario u){
 		
+		j.setEnLinea(true);
+		
+		gestion.modificarEstado(conexion, j);
+		
 		//Inicializamos el frame
 		j.setEnLinea(true);
 		setUndecorated(false);
 		setResizable(false);
-		setSize(new Dimension(800, 630));
+		setSize(new Dimension(802, 633));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -76,18 +90,17 @@ public class VentanaChat extends JFrame {
 		
 		JTextArea mensaje= new JTextArea();
 		
-		JTextArea principal = new JTextArea();
+		JEditorPane principal = new JEditorPane("text/html","");
 		
 		JList <String> usuarios = new JList<String>();
 		
 		LabelPerfil labelPerfil;
 		
-		JLabel nombre = new JLabel ("Pepe");
+		JLabel nombre = new JLabel (j.getUsuario());
 		
 		String [] contenido ={"En linea","Desconectado"};
 		
 		JComboBox<String> estado = new JComboBox<String>(contenido);
-		
 		
 		
 		//JLabel labelSalir = new JLabel();
@@ -126,9 +139,16 @@ public class VentanaChat extends JFrame {
 		
 		mensaje.setForeground(Color.lightGray);
 		
-		panelMensajes.setBounds(184,83,616,442);
+		panelMensajes.setBounds(184,83,612,442);
 		
-		principal.setEnabled(false);
+		principal.setEditable(false);
+		
+		
+		Font font = UIManager.getFont("Label.font");
+		
+		String bodyRule = "body { font-family: "+font.getFamily()+"; "+"font-size: "+font.getSize()+"pt; }";
+		
+		((HTMLDocument)principal.getDocument()).getStyleSheet().addRule(bodyRule);
 		
 		panelLista.setBounds(0,130,185,470);
 		
@@ -194,15 +214,17 @@ public class VentanaChat extends JFrame {
 		
 		usuariosLinea.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		ArrayList<String> listadeConectados=new ArrayList<String>();
+//		ArrayList<String> listadeConectados=new ArrayList<String>();
+//		
+//		DefaultListModel modelo = new DefaultListModel();
+//		
+//		for(int i = 1; i<=50; i++){
+//		        modelo.addElement(i);
+//		}
+//		
+//		usuarios.setModel(modelo);
 		
-		DefaultListModel modelo = new DefaultListModel();
-		
-		for(int i = 1; i<=50; i++){
-		        modelo.addElement(i);
-		}
-		
-		usuarios.setModel(modelo);
+
 		
 		
 		//Lo añadimos al panel
@@ -233,19 +255,13 @@ public class VentanaChat extends JFrame {
 	
 		getContentPane().add(panelLista);
 		
+		chatHilo hilo= new chatHilo(conexion, j, usuariosLinea, principal, usuarios);
 		
 		
+		hilo.start();
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		
 		
 		
@@ -279,7 +295,7 @@ public class VentanaChat extends JFrame {
 				
 				if (mensaje.getText().trim().length()>0){
 					
-					Chat c= new Chat(mensaje.getText(), j.getCodigoPartida(), j.getCodigo());
+					Chat c= new Chat(mensaje.getText(), j.getCodigoPartida(), j.getCodigo(),j.getUsuario());
 				gestion.insertarChat(conexion, c);
 				
 				mensaje.setText("");
@@ -298,12 +314,13 @@ public class VentanaChat extends JFrame {
 					
 					if (mensaje.getText().trim().length()>0){
 						
-						Chat c= new Chat(mensaje.getText(), j.getCodigoPartida(), j.getCodigo());
+					Chat c= new Chat(mensaje.getText(), j.getCodigoPartida(), j.getCodigo(),j.getUsuario());
 					gestion.insertarChat(conexion, c);
 					
 					mensaje.setText("");
 					}else{
 						JOptionPane.showMessageDialog(getContentPane(), "No se ha introducido ningun texto","Aviso",JOptionPane.INFORMATION_MESSAGE);
+						mensaje.setText("");
 					}
 					
 				}
@@ -316,6 +333,79 @@ public class VentanaChat extends JFrame {
 			
 		});
 		
+		estado.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String linea= (String) estado.getSelectedItem();
+				
+				if (linea.equals("En linea")){
+					
+					j.setEnLinea(true);
+					
+					gestion.modificarEstado(conexion, j);
+					
+					ArrayList <String> listaUsuarios=gestion.obtenerJugadoresLinea(conexion, j);
+					
+					DefaultListModel modelo = new DefaultListModel();
+					
+					for (String s: listaUsuarios){
+						modelo.addElement(s);
+					}
+					
+					usuarios.setModel(modelo);
+					
+					
+					usuariosLinea.setText("  Usuarios en linea: "+listaUsuarios.size());
+					
+					usuariosLinea.repaint();
+					chatHilo hilo = new chatHilo(conexion, j, labelFondo, principal, usuarios);
+					
+					hilo.start();
+					
+				}else{
+					
+					JOptionPane.showMessageDialog(getContentPane(), "Si estas desconectado, no recibiras ningun chat ni apareceras entre los usuarios en linea");
+					
+					j.setEnLinea(false);
+					
+					gestion.modificarEstado(conexion, j);
+					
+					ArrayList <String> listaUsuarios=gestion.obtenerJugadoresLinea(conexion, j);
+					
+					DefaultListModel modelo = new DefaultListModel();
+					
+					for (String s: listaUsuarios){
+						modelo.addElement(s);
+					}
+					
+					usuarios.setModel(modelo);
+					
+					
+					usuariosLinea.setText("  Usuarios en linea: "+listaUsuarios.size());
+					
+					usuariosLinea.repaint();
+					
+				}
+				
+			}
+		});
+		
+		
+		addWindowListener(new WindowAdapter() {
+			
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				j.setEnLinea(false);
+				
+				gestion.modificarEstado(conexion, j);
+				
+			}
+
+			
+		});
 		/*labelSalir.addMouseListener(new MouseAdapter() {
 			
 			@Override

@@ -348,7 +348,15 @@ public class VentanaBuscarPartida extends JFrame {
 		        
 		       Partida p=gestion.obtenerPartida(conexion, listaCodigosSinCompletar.get(modelRow));
 		        
-		        comprobador comp= new comprobador(p,conexion);
+
+		       //TODO: Hay que hacer aqui para que elija la ficha
+		       
+		       	Jugador j= new Jugador("Barco", u.getUsuario(), p.getCodigo(), conexion);
+		       
+		       	gestion.insertarJugador(conexion, j, p, u);
+		       	
+		        comprobador comp= new comprobador(p,conexion,j,u);
+
 				
 				VentanaConectando ventana = new VentanaConectando();
 				

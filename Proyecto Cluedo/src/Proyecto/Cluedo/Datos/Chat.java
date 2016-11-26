@@ -12,13 +12,14 @@ public class Chat {
 	
 	private int CodigoJugador;
 
+	private String nombreUsuario;
 	
-	
-	public Chat (String mensaje,int CodigoPartida,int CodigoJugador){
+	public Chat (String mensaje,int CodigoPartida,int CodigoJugador,String nombreUsuario){
 		this.mensaje=mensaje;
 		this.fechaEnvio=new Date(System.currentTimeMillis());
 		this.CodigoJugador=CodigoJugador;
 		this.CodigoPartida=CodigoPartida;
+		this.nombreUsuario=nombreUsuario;
 	}
 	
 	
@@ -53,6 +54,17 @@ public class Chat {
 	public void setCodigoJugador(int codigoJugador) {
 		CodigoJugador = codigoJugador;
 	}
+
+
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
+
+
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
+	
 	
 	
 }

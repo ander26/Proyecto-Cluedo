@@ -8,13 +8,14 @@ import java.sql.Statement;
 
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
 public class comprobador extends Thread {
 
 	
-
+	public GestionBaseDeDatos base;
 	public Partida p;
 
 	public Connection conexion;
@@ -63,7 +64,7 @@ public class comprobador extends Thread {
 			    window.dispose();
 			}
 		
-		 VentanaTablero tablero = new VentanaTablero(conexion,j,u);
+		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p);
 		 tablero.setVisible(true);
 		
 	}
