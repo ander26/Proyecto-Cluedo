@@ -159,8 +159,14 @@ public class Cartas {
 			return 0;
 			
 			
-		}
+		}if(this.tipo==TipoCarta.LUGAR){
 		return 1;
+		}if(this.tipo==TipoCarta.SOSPECHOSO){
+			return 2;
+		}else{
+			return 3;
+		}
+		
 	}
 	
 	/**
@@ -168,8 +174,19 @@ public class Cartas {
 	 * @param tipo Parametro que contiene el tipo de carta
 	 */
 
-	public void setTipo(TipoCarta tipo) {
-		this.tipo = tipo;
+	public void setTipo(int tipo) {
+		if(tipo==0){
+			this.tipo = TipoCarta.ARMA;
+			
+			
+		}if(tipo==1){
+			this.tipo = TipoCarta.LUGAR;
+		}if(tipo==2){
+			this.tipo = TipoCarta.SOSPECHOSO;
+		}else{
+			this.tipo = TipoCarta.COMODIN;
+		}
+		
 	}
 	
 	public boolean isSeleccionada() {

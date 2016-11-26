@@ -140,6 +140,29 @@ public class GestionBaseDeDatos {
 		}
 	}
 
+	public void modificar(Connection conexion, String tabla, String actualizacion, String condicion) {
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "UPDATE " + tabla + " SET " + actualizacion + " WHERE " + condicion;
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha modificado la linea: " + sql);
+
+			statement.close();
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Error a la hora de modificar la tabla");
+			e.printStackTrace();
+
+		}
+
+	}
+
 	// TABLA USUARIO
 
 	/**
@@ -284,47 +307,47 @@ public class GestionBaseDeDatos {
 			return null;
 		}
 	}
-public  ArrayList<Usuario> consultaATablaOrdenadoNombreUsuario(Connection conexion) {
-		
+
+	public ArrayList<Usuario> consultaATablaOrdenadoNombreUsuario(Connection conexion) {
+
 		ArrayList<Usuario> ret = new ArrayList<>();
-		
+
 		try {
-			
+
 			Statement statement = conexion.createStatement();
-			
+
 			String sentSQL = "SELECT * FROM USUARIO ORDER BY NOMBREUSUARIO";
-			
-			ResultSet rs = statement.executeQuery( sentSQL );
-			
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
 			while (rs.next()) {
 				Usuario u = new Usuario();
-				
-				u.setNombre( rs.getString( "NOMBRE" ));
-				u.setContraseña(rs.getString( "CONTRASEÑA" ));
-				u.setApellidos( rs.getString( "APELLIDO" ));
-				u.setUsuario( rs.getString( "NOMBREUSUARIO" ));
-				u.setEmail( rs.getString( "EMAIL" ));
+
+				u.setNombre(rs.getString("NOMBRE"));
+				u.setContraseña(rs.getString("CONTRASEÑA"));
+				u.setApellidos(rs.getString("APELLIDO"));
+				u.setUsuario(rs.getString("NOMBREUSUARIO"));
+				u.setEmail(rs.getString("EMAIL"));
 				u.setPregunta(rs.getInt("PREGUNTA"));
 				u.setRespuesta(rs.getString("RESPUESTA"));
-				if (rs.getString("GENERO").equals("HOMBRE")){
+				if (rs.getString("GENERO").equals("HOMBRE")) {
 					u.setGenero(Genero.HOMBRE);
-				}else{
+				} else {
 					u.setGenero(Genero.MUJER);
 				}
 				u.setConexion(new Date(rs.getLong("FECHAULTIMOLOGIN")));
-				u.setFechaNacimeinto(new Date (rs.getLong("FECHANACIMIENTO")));
-				
-				ImageIcon imagen=new ImageIcon();
-				/** Blob blob = rs.getBlob("IMAGENPERFIL");
-				 byte[] data = blob.getBytes(1, (int)blob.length());
-				 img = ImageIO.read(new ByteArrayInputStream(data));
-				 try {
-				 img = ImageIO.read(new ByteArrayInputStream(data));
-				 } catch (IOException ex) {
-					 
-				 }
-				*/
-				
+				u.setFechaNacimeinto(new Date(rs.getLong("FECHANACIMIENTO")));
+
+				ImageIcon imagen = new ImageIcon();
+				/**
+				 * Blob blob = rs.getBlob("IMAGENPERFIL"); byte[] data =
+				 * blob.getBytes(1, (int)blob.length()); img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); try { img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); } catch (IOException ex) {
+				 * 
+				 * }
+				 */
+
 				byte[] imgBytes = rs.getBytes(11);
 				
 				BufferedImage img=null;
@@ -374,39 +397,13 @@ public  ArrayList<Usuario> consultaATablaOrdenadoPuntuacion(Connection conexion)
 			}else{
 				u.setGenero(Genero.MUJER);
 			}
-			u.setConexion(new Date(rs.getLong("FECHAULTIMOLOGIN")));
-			u.setFechaNacimeinto(new Date (rs.getLong("FECHANACIMIENTO")));
-			
-			ImageIcon imagen=new ImageIcon();
-			/** Blob blob = rs.getBlob("IMAGENPERFIL");
-			 byte[] data = blob.getBytes(1, (int)blob.length());
-			 img = ImageIO.read(new ByteArrayInputStream(data));
-			 try {
-			 img = ImageIO.read(new ByteArrayInputStream(data));
-			 } catch (IOException ex) {
-				 
-			 }
-			*/
-			
-			byte[] imgBytes = rs.getBytes(11);
-			
-			BufferedImage img=null;
-			img = ImageIO.read(new ByteArrayInputStream(imgBytes));
-			
-			 imagen.setImage(img);
-			 
-			u.setImagenPerfil(imagen);
-			
-			u.setPuntuacion(rs.getLong("PUNTUACION"));
-
-			ret.add( u );
+			rs.close();
+			return ret;
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
 		}
-		rs.close();
-		return ret;
-	} catch (Exception e) {  
-		logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
-		e.printStackTrace();
-		return null;
 	}
 }
 	
@@ -937,4 +934,138 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 		}
 	}
 	
+
+	public ArrayList<String> obtenerJugadoresLinea(Connection conexion, Jugador j) {
+
+		ArrayList<String> listaUsuarios = new ArrayList<String>();
+
+		String SQL = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			SQL = "SELECT NOMBRE_USUARIO FROM JUGADOR WHERE ENLINEA='t' AND COD_PARTIDA=" + j.getCodigoPartida();
+
+			ResultSet rs = statement.executeQuery(SQL);
+
+			while (rs.next()) {
+
+				String nombreUsuario = rs.getString(1);
+
+				listaUsuarios.add(nombreUsuario);
+
+			}
+
+			logger.log(Level.INFO, "Se han obtenido correctamente los datos de usuario");
+			
+			statement.close();
+
+			return listaUsuarios;
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "Ha habido un error a la hora de obtener los jugadores en linea: " + SQL);
+
+			e.printStackTrace();
+
+			return null;
+		}
+
+	}
+	
+	//TABLA CHAT
+	
+	public void insertarChat (Connection conexion,Chat c){
+		
+		String SQL= "";
+		
+		try{
+			
+			Statement statement = conexion.createStatement();
+			
+			
+			
+			SQL = "INSERT INTO CHAT VALUES ('"+c.getMensaje()+"',"+c.getFechaEnvio().getTime()+","+c.getCodigoPartida()+","+c.getCodigoJugador()+")";
+			
+			
+			statement.executeUpdate(SQL);
+			
+			
+			logger.log(Level.INFO, "Se ha añadido correctamente el chat "+SQL);
+			
+			statement.close();
+			
+		}catch (Exception e){
+			
+			logger.log(Level.SEVERE, "Ha habido un eror a la hora de insertar el chat "+SQL);
+			
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public ArrayList <String> obtenerChats (Connection conexion,int codigoPartida){
+		
+		ArrayList <String> listaMensajes= new ArrayList<String>();
+		
+		ArrayList<String> listaUsuarios = new ArrayList<String>();
+		
+		ArrayList <String> listaChat = new ArrayList<>();
+		
+		String SQL = "";
+		
+		try{
+			
+			Statement statement= conexion.createStatement();
+			
+			SQL="SELECT MENSAJE FROM CHAT WHERE CODIGOPARTIDA="+codigoPartida+" ORDER BY FECHAENVIO";
+			
+			ResultSet rs= statement.executeQuery(SQL);
+			
+			while (rs.next()){
+				
+				String mensaje = rs.getString(1);
+				
+				listaMensajes.add(mensaje);
+			}
+			
+			rs.close();
+			
+			logger.log(Level.INFO, "Se han obtenido correctamente los mensajes");
+
+			
+			SQL = "SELECT NOMBRE_USUARIO FROM JUGADOR,CHAT WHERE JUGADOR.COD_JUG=CHAT.CODIGOJUGADOR AND CHAAT.CODIGOPARTIDA="+codigoPartida+" ORDER BY CHAT.FECHAENVIO";
+			
+			ResultSet rsp= statement.executeQuery(SQL);
+			
+			while (rsp.next()){
+				
+				String usuario = rsp.getString(1);
+				
+				listaUsuarios.add(usuario);
+			}
+			
+			rsp.close();
+			
+			logger.log(Level.INFO, "Se han obtenido correctamente los usuarios");
+			
+			for (int i=0;i<listaMensajes.size();i++){
+				
+				listaMensajes.add("\n"+listaUsuarios.get(i)+": "+listaMensajes.get(i));
+			}
+			
+			return listaMensajes;
+			
+		}catch (Exception e){
+			
+			logger.log(Level.SEVERE, "No se han podido obtener los chats"+SQL);
+			
+			e.printStackTrace();
+			
+			return null;
+		}
+		
+		
+	}
 }

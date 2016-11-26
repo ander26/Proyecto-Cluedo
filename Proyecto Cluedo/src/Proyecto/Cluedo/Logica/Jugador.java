@@ -92,4 +92,42 @@ public class Jugador {
 	public void setCarta(int indice,String nombre) {
 		MisCartas.get(indice).add(nombre);
 	}
+		public BufferedImage getDibujo() {
+		return dibujo;
+	}
+
+	public void setDibujo(BufferedImage dibujo) {
+		this.dibujo = dibujo;
+	}
+	
+	public int generadorCodigo (ArrayList <Integer> listaCodigos ){
+		
+		int contador =1;
+	
+		
+		for (Integer i: listaCodigos){
+			if (contador==i){
+				contador++;
+				
+			}else{
+				return contador;
+			}
+		}
+		
+		return contador;
+	}
+
+	public boolean isEnLinea() {
+		return enLinea;
+	}
+
+	public void setEnLinea(boolean enLinea) {
+		this.enLinea = enLinea;
+	}
+
+	public void setFicha(String ficha) {
+		Ficha = ficha;
+	}
+	
+	
 }

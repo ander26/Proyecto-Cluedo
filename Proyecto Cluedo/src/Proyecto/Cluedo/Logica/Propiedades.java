@@ -1,8 +1,14 @@
 package Proyecto.Cluedo.Logica;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Proyecto.Cluedo.Datos.Cartas;
+import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.TipoCarta;
 import Proyecto.Cluedo.Ventanas.VentanaCartas;
 
@@ -14,54 +20,40 @@ public class Propiedades {
 	private static int numTotSospechosos;
 	private static int numTotCartas;
 	private static int numJugadores;
+	private static Connection conexion;
+	private static Partida Partida;
+	
 	
 	private static ArrayList<ArrayList<Cartas>> baraja;
-	
+	private static Logger logger = Logger.getLogger(Propiedades.class.getName());
 	/**
 	 * Atributo que contiene el numero de cartas por usuario 
 	 */
 	
 	private int [] [] cartasUsuario;
 	
-	public Propiedades(int numTotArmas, int numTotLugares, int numTotSospechosos, int numJugadores) {
+	public Propiedades(int numTotArmas, int numTotLugares, int numTotSospechosos, int numJugadores,Connection con,GestionBaseDeDatos base,Partida p) {
 		
 		this.numTotArmas = numTotArmas;
 		this.numTotLugares = numTotLugares;
 		this.numTotSospechosos = numTotSospechosos;
 		this.numTotCartas=numTotArmas+numTotLugares+numTotSospechosos;
 		this.numJugadores = numJugadores;
-		ArrayList<Cartas> alsospechoso=new ArrayList();
-		alsospechoso.add(new Cartas ("Inspector Gadget","Imagenes/casinspecGadget.png",false,TipoCarta.SOSPECHOSO));
-		alsospechoso.add(new Cartas ("Paris Hilton", "Imagenes/casparish.png",false,TipoCarta.SOSPECHOSO));
-		alsospechoso.add(new Cartas ("Usain  Bolt", "Imagenes/casbolt.png",false,TipoCarta.SOSPECHOSO));
-		alsospechoso.add(new Cartas ("Socrates","Imagenes/cassocrates.png",false,TipoCarta.SOSPECHOSO));
-		alsospechoso.add(new Cartas ("Minerva", "Imagenes/casMCGONAGALL.png",false,TipoCarta.SOSPECHOSO));
-		alsospechoso.add(new Cartas ("La Momia","Imagenes/casLAmomia.png" ,false,TipoCarta.SOSPECHOSO));
-		alsospechoso.add(new Cartas ("El Papa","Imagenes/caspapa.png" ,false,TipoCarta.SOSPECHOSO));
-		ArrayList<Cartas> alarma=new ArrayList();
-		alarma.add(new Cartas ("Pistola","Imagenes/carpistola.png",false,TipoCarta.ARMA));
-		alarma.add(new Cartas ("Biblia","Imagenes/carbiblia.png",false,TipoCarta.ARMA));
-		alarma.add(new Cartas ("Bocata envenenado","Imagenes/carbocata.png",false,TipoCarta.ARMA));
-		alarma.add(new Cartas ("Chip","Imagenes/carchip.png",false,TipoCarta.ARMA));
-		alarma.add(new Cartas ("Botella","Imagenes/carbotella.png",false,TipoCarta.ARMA));
-		alarma.add(new Cartas ("Sarten","Imagenes/carpistola.png",false,TipoCarta.ARMA));
-		ArrayList<Cartas> allugares=new ArrayList();
-		allugares.add(new Cartas ("F. Ingenieria","Imagenes/clINGENIERIA.png",false,TipoCarta.LUGAR));
-		allugares.add(new Cartas ("La Comercial","Imagenes/clCOMERCIAL.png",false,TipoCarta.LUGAR));
-		allugares.add(new Cartas ("la L","Imagenes/clL.png",false,TipoCarta.LUGAR));
-		allugares.add(new Cartas ("La Capilla","Imagenes/clCAPILLA.png",false,TipoCarta.LUGAR));
-		allugares.add(new Cartas ("Edificio centenario","Imagenes/clCENTENARIO.png",false,TipoCarta.LUGAR));
-		allugares.add(new Cartas ("Edificio de letras","Imagenes/clFLETRAS.png",false,TipoCarta.LUGAR));
-		allugares.add(new Cartas ("Biblioteca","Imagenes/clBIBLIOTECA.png",false,TipoCarta.LUGAR));
-		allugares.add(new Cartas ("Zubiarte","Imagenes/clZUBIARTE.png",false,TipoCarta.LUGAR));		
-		ArrayList<Cartas> alcomodines=new ArrayList();
-		alcomodines.add(new Cartas ("Comodin1","Imagenes/clINGENIERIA.png",false,TipoCarta.COMODIN));
-		alcomodines.add(new Cartas ("Comodin2","Imagenes/clINGENIERIA.png",false,TipoCarta.COMODIN));		
-		this.baraja = new ArrayList();
-		this.baraja.add(alarma);
-		this.baraja.add(allugares);
+		ArrayList<Cartas> alsospechoso=base.consultaATablaCartas(con, "TIPOCARTA=2");
+		
+		ArrayList<Cartas> alarma=base.consultaATablaCartas(con, "TIPOCARTA=0");
+		
+		ArrayList<Cartas> allugares=base.consultaATablaCartas(con, "TIPOCARTA=1");
+			
+		ArrayList<Cartas> alcomodines=base.consultaATablaCartas(con, "TIPOCARTA=3");
+			
+		this.baraja = new ArrayList();		
 		this.baraja.add(alsospechoso);
+		this.baraja.add(allugares);
+		this.baraja.add(alarma);
 		this.baraja.add(alcomodines);
+		this.conexion=conexion;
+		this.Partida=p;
 	
 	}
 //	//Escoje las 3 csrtas del asesinato y reparte las demas entre los jugadores
@@ -210,7 +202,24 @@ public class Propiedades {
 			if(jug==numJugadores){
 				jug=0;
 			}
-			arJug[jug].setCarta(TipoCartaToInt(acartas.get(baraja).getTipo()),acartas.get(baraja).getNombre() );
+			//arJug[jug].setCarta(acartas.get(baraja).getTipo(),acartas.get(baraja).getNombre() );
+			Statement statement;
+			try {
+				statement = conexion.createStatement();
+				String sql = "INSERT INTO JUEGA VALUES ('" +acartas.get(baraja).getNombre() + "'," + acartas.get(baraja).getTipo() + "," + arJug[jug].getCodigo()
+						+ "," + Partida.getCodigo() +  ")";
+
+				statement.executeUpdate(sql);
+
+				logger.log(Level.INFO, "Se ha añadido la carta: " + sql);
+
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			RepartirRecursivo(jug+1,baraja+1, arJug, acartas);
 		}
 		
@@ -218,28 +227,31 @@ public class Propiedades {
 	}
 	public ArrayList<Cartas> meterAlSobre(Jugador []arJugadores,ArrayList<Cartas> acartas){
 		int [] contcartas=new int[arJugadores.length];
+		 String [] Asesinato=new String[3];
 		for(int i=0;i<3;i++){
 			int num=(int) (Math.random()*10);
 			while(num>=baraja.get(i).size()){
 				num=(int) (Math.random()*10);
 			}
-			baraja.get(i).get(num).setCulpable(true);
+			//baraja.get(i).get(num).setCulpable(1);
+			Asesinato[i]=baraja.get(i).get(num).getNombre();
+			
 			acartas.remove(baraja.get(i).get(num));
+		}
+		Statement statement;
+		try {
+			statement = conexion.createStatement();
+			statement.executeUpdate("INSERT INTO SOSPECHOSO VALUES (" +Partida.getCodigo()  + ",'" + Asesinato[0] + "','" + Asesinato[1]
+					+ "','" +Asesinato[2]  +  "')");	
+			statement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return acartas;
 		
 	}
-	public int TipoCartaToInt(TipoCarta tc){
-		if(tc==TipoCarta.SOSPECHOSO){
-			return 0;
-		}else if(tc==TipoCarta.ARMA){
-			return 1;
-		}else if(tc==TipoCarta.LUGAR){
-			return 2;
-		}else{
-			return 3;
-		}
-	}
+	
 	public void barajear(int i){
 		for (int j=0;j<300;j++){
 			int num=(int) (Math.random()*10);
@@ -252,10 +264,6 @@ public class Propiedades {
 			}
 			Cartas origen=baraja.get(i).get(num);
 			Cartas destino=baraja.get(i).get(numdos);
-//			baraja.get(i).add(numdos,origen);
-//			baraja.get(i).add(num,destino);
-//			baraja.get(i).remove(num+1);
-//			baraja.get(i).remove(numdos+1);
 			baraja.get(i).set(numdos, origen);
 			baraja.get(i).set(num,destino);
 			
@@ -319,30 +327,30 @@ public class Propiedades {
 	}
 
 	public static void main (String [] args){
-		Jugador a=new Jugador();
-		Jugador b=new Jugador();
-		Jugador c=new Jugador();
-		Jugador d=new Jugador();
-		Jugador e=new Jugador();
-		Jugador [] arrjug=new Jugador [5];
-		arrjug[0]=a;
-		arrjug[1]=b;
-		arrjug[2]=c;
-		arrjug[3]=d;
-		arrjug[4]=e;
-		Propiedades prop =new Propiedades(7,8,7,5);
-		prop.RepartirCartas(arrjug);
-		for(int i=0;i<arrjug.length;i++){
-			
-			for(int j=0;j<4;j++){
-				for(int h=0;h<arrjug[i].getMisCartas().get(j).size();h++){
-					System.out.println(arrjug[i].getMisCartas().get(j).get(h)+" "+h+" "+i);
-				}
-			}
+//		Jugador a=new Jugador();
+//		Jugador b=new Jugador();
+//		Jugador c=new Jugador();
+//		Jugador d=new Jugador();
+//		Jugador e=new Jugador();
+//		Jugador [] arrjug=new Jugador [5];
+//		arrjug[0]=a;
+//		arrjug[1]=b;
+//		arrjug[2]=c;
+//		arrjug[3]=d;
+//		arrjug[4]=e;
+//		Propiedades prop =new Propiedades(7,8,7,5);
+//		prop.RepartirCartas(arrjug);
+//		for(int i=0;i<arrjug.length;i++){
+//			
+//			for(int j=0;j<4;j++){
+//				for(int h=0;h<arrjug[i].getMisCartas().get(j).size();h++){
+//					System.out.println(arrjug[i].getMisCartas().get(j).get(h)+" "+h+" "+i);
+//				}
+//			}
 		}
 		
 	}
 	
 	
 	
-	}
+	

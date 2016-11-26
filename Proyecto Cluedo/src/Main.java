@@ -24,7 +24,7 @@ public class Main {
 		
 		GestionBaseDeDatos gestion = new GestionBaseDeDatos();
 		Connection conexion = gestion.inicializarLaBase();
-//		
+		
 //		try{
 //			Statement statement = conexion.createStatement();
 //			statement.executeUpdate("DROP TABLE IF EXISTS JUGADOR");
@@ -34,7 +34,7 @@ public class Main {
 //		String creacion = "CREATE TABLE PARTIDA (NOMBRE text, CODIGO int NOT NULL PRIMARY KEY, NUMEROJUGADORESMAXIMO int , NUMEROJUGADORESACTUAL int,POSICIONBARCO real,MENSAJECARTEL text)";
 //		
 //		gestion.crearTabla(creacion, conexion);
-//		String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO real,LUGAR INT,TURNO int,MUÑECO text,DIBUJO bytea)";
+//		String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO real,LUGAR INT,TURNO int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
 //		gestion.crearTabla(creacion,conexion);
 		
 //		
@@ -56,6 +56,9 @@ public class Main {
 //	
 //		String creacion = "CREATE TABLE CARTA(NOMBRE text NOT NULL PRIMARY KEY,RUTAICONO text,CULPABLE int,TIPOCARTA text)";
 //		gestion.crearTabla(creacion, conexion);
+		
+//		String creacion = "CREATE TABLE CHAT(MENSAJE text,FECHAENVIO bigint NOT NULL,CODIGOPARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE, CODIGOJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG),PRIMARY KEY (FECHAENVIO,CODIGOPARTIDA,CODIGOJUGADOR))";
+//		gestion.crearTabla(creacion,conexion);
 		
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);

@@ -3,10 +3,13 @@ package Proyecto.Cluedo.Ventanas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.sql.*;
 
 import javax.print.attribute.standard.JobKOctetsProcessed;
@@ -339,6 +342,22 @@ public class VentanaMenu extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				VentanaBuscarPartida ventana=new VentanaBuscarPartida(conexion,u);
+				ventana.setVisible(true);
+			}
+		});
+		
+		addWindowFocusListener(new WindowFocusListener() {
+
+			@Override
+			public void windowGainedFocus(WindowEvent e) {
+				labelPerfil.setImagen(u.getImagenPerfil());
+				
+			}
+
+			@Override
+			public void windowLostFocus(WindowEvent e) {
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -352,6 +371,7 @@ public class VentanaMenu extends JFrame{
 				
 			}
 		});
+
 		labelEstadistica.addMouseMotionListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent arg0){
@@ -359,6 +379,9 @@ public class VentanaMenu extends JFrame{
 				ranking.setVisible(true);
 			}
 		});
+
+		
+
 	}
 	
 	

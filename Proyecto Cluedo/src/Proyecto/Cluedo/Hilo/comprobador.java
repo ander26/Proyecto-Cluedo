@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Proyecto.Cluedo.Datos.Partida;
+import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
 public class comprobador extends Thread {
@@ -55,9 +57,18 @@ public class comprobador extends Thread {
 			    window.dispose();
 			}
 		
-		 VentanaTablero tablero = new VentanaTablero();
+		 VentanaTablero tablero = new VentanaTablero(conexion,j,u);
 		 tablero.setVisible(true);
 		
 	}
 
+	public void setJ(Jugador j) {
+		this.j = j;
+	}
+
+	public void setU(Usuario u) {
+		this.u = u;
+	}
+
+	
 }
