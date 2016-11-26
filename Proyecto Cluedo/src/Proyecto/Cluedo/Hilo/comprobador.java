@@ -18,10 +18,16 @@ public class comprobador extends Thread {
 	public Partida p;
 
 	public Connection conexion;
+	
+	private Jugador j;
+	
+	private Usuario u;
 
-	public comprobador(Partida p, Connection conexion) {
+	public comprobador(Partida p, Connection conexion,Jugador j,Usuario u) {
 		this.p = p;
 		this.conexion = conexion;
+		this.j=j;
+		this.u=u;
 	}
 
 	public void run() {
@@ -41,7 +47,7 @@ public class comprobador extends Thread {
 				}
 				System.out.println(p.getNumeroJugadoresActual() + " " + p.getNumeroJugadoresMaximo());
 				try {
-					Thread.sleep(30000);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

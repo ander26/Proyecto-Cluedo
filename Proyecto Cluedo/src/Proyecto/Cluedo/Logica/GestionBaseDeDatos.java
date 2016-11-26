@@ -666,28 +666,7 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 
 	}
 
-	public void modificar(Connection conexion, String tabla, String actualizacion, String condicion) {
-		String sql = "";
 
-		try {
-
-			Statement statement = conexion.createStatement();
-
-			sql = "UPDATE " + tabla + " SET " + actualizacion + " WHERE " + condicion;
-
-			statement.executeUpdate(sql);
-
-			logger.log(Level.INFO, "Se ha modificado la linea: " + sql);
-
-			statement.close();
-
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Error a la hora de modificar la tabla");
-			e.printStackTrace();
-
-		}
-
-	}
 	
 
 	public ArrayList<String > obtenerNombreP(Connection conexion,ArrayList <Integer> partida) {
@@ -828,7 +807,7 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 
 				j.setCodigo(rs.getInt("COD_JUG"));
 				j.setLugar(rs.getInt("LUGAR"));
-				j.setMonigote(rs.getString("MUÑECO"));
+				j.setFicha(rs.getString("MUÑECO"));
 				j.setPosicionMuñeco(rs.getDouble("POS_MUÑECO"));
 				j.setTurno(rs.getInt("TURNO"));
 				j.setUsuario(rs.getString("NOMBRE_USUARIO"));
@@ -906,8 +885,8 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 
 	}
 	//cartas
-	public boolean insertarCarta(Connection conexion, Cartas c) {
-
+	public boolean insertarCarta(Connection conexion, Cartas c,Jugador j) {
+		
 		String sql = "";
 
 		try {
@@ -915,7 +894,7 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 
 			Statement statement = conexion.createStatement();
 
-			sql = "INSERT INTO CARTA VALUES ('" + c.getNombre() + "','" + c.getRutaIcono() + "'," + c.
+			sql = "INSERT INTO CARTA VALUES ('" + c.getNombre() + "','" + c.getRutaIcono() + "'," + c.isCulpable()
 					+ "'," + j.getPosicionMuñeco() + "," + j.getLugar() + "," + j.getTurno() + ",'" + j.getFicha()
 					+ "')";
 
@@ -1068,4 +1047,65 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 		
 		
 	}
+	//CARTAS
+//////////////////////////////////////////////////////////////////////////////////////////
+public ArrayList<Cartas> consultaATablaCartas(Connection conexion, String seleccion){
+	ArrayList<Cartas> ret = new ArrayList<>();
+
+	try {
+
+		Statement statement = conexion.createStatement();
+
+
+			String sentSQL = "SELECT * FROM CARTAS";
+
+			if (seleccion!=null && !seleccion.equals(""))
+
+				sentSQL = sentSQL + " WHERE " + seleccion;
+
+
+			ResultSet rs = statement.executeQuery( sentSQL );
+
+			while (rs.next()) {
+				Cartas c = new Cartas();
+				
+				c.setNombre(rs.getString("NOMBRE"));
+				c.setRutaIcono(rs.getString("RUTAICONO"));
+				c.setCulpable(rs.getInt("CULPABLE"));
+				c.setTipo(rs.getInt("TIPOCARTA" ));
+				ret.add(c);			
+			}
+			rs.close();
+			return ret;
+	} catch (Exception e) {  
+		logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+		e.printStackTrace();
+		return null;
+	}
+}
+	
+public ArrayList<String> obtenerCartasDeJugador( Connection conexion, int codpartidda,int codjug,int tipo){
+	ArrayList<String> ret = new ArrayList<>();
+	
+	try {
+
+		Statement statement = conexion.createStatement();
+
+
+			String sentSQL = "SELECT NOMBRECARTA FROM JUEGA WHERE TIPOCARTA="+tipo+"AND CODJUGADOR="+codjug+"AND CODPARTIDA="+codpartidda;
+
+			ResultSet rs = statement.executeQuery( sentSQL );
+
+			while (rs.next()) {
+				
+				ret.add(rs.getString("NOMBRECARTA"));			
+			}
+			rs.close();
+			return ret;
+	} catch (Exception e) {  
+		logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+		e.printStackTrace();
+		return null;
+	}
+}
 }

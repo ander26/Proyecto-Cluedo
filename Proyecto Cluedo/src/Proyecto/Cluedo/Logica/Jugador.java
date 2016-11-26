@@ -1,16 +1,21 @@
 package Proyecto.Cluedo.Logica;
 
+import java.awt.image.BufferedImage;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 public class Jugador {
 	private ArrayList<ArrayList<String>> MisCartas;
-	private String Monigote;
+	private String Ficha;
 	private int Lugar;
 	private double PosicionMuñeco;
 	private int Codigo;
 	private int Turno;
 	private String Usuario;
 	private int CodigoPartida;
+	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
+	private BufferedImage dibujo;
+	private boolean enLinea;
 
 	
 
@@ -26,13 +31,45 @@ public class Jugador {
 		MisCartas.add(lugar);
 		MisCartas.add(comodin);
 		
-		this.Monigote = null;
+		this.Ficha = null;
 		this.Turno=0;
 		this.Lugar=-1;
 		this.PosicionMuñeco=-1;
 		this.Codigo=-1;
 		this.Usuario="";
 		this.CodigoPartida=-1;
+		dibujo=null;
+		
+		enLinea=false;
+		
+	}
+public Jugador(String Ficha, String Usuario, int CodigoPartida,Connection conexion) {
+		
+		MisCartas = new ArrayList();
+		ArrayList<String> sospechosos=new ArrayList();
+		ArrayList<String> lugar=new ArrayList();
+		ArrayList<String> arma=new ArrayList();
+		ArrayList<String> comodin=new ArrayList();
+		MisCartas.add(sospechosos);
+		MisCartas.add(arma);
+		MisCartas.add(lugar);
+		MisCartas.add(comodin);
+		
+		
+		this.Ficha=Ficha;
+		this.Codigo=generadorCodigo(gestion.obtenerCodigoJugador(conexion));
+		this.Usuario=Usuario;
+		this.CodigoPartida=CodigoPartida;
+		MisCartas= new ArrayList<>();
+		this.Turno=0;
+		
+		this.Lugar=-1;
+		this.PosicionMuñeco=-1;
+		
+		dibujo=null;
+		
+		enLinea=false;
+		
 		
 	}
 	public int getCodigoPartida() {
@@ -58,12 +95,12 @@ public class Jugador {
 		Lugar = lugar;
 	}
 
-	public String getMonigote() {
-		return Monigote;
+	public String getFicha() {
+		return Ficha;
 	}
 
-	public void setMonigote(String monigote) {
-		Monigote = monigote;
+	public void setFicha(String Ficha) {
+		this.Ficha = Ficha;
 	}
 
 	
@@ -125,9 +162,6 @@ public class Jugador {
 		this.enLinea = enLinea;
 	}
 
-	public void setFicha(String ficha) {
-		Ficha = ficha;
-	}
 	
 	
 }
