@@ -355,7 +355,10 @@ public class VentanaBuscarPartida extends JFrame {
 		       
 		       	gestion.insertarJugador(conexion, j, p, u);
 		       	
-		        comprobador comp= new comprobador(p,conexion,j,u);
+		       	Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresActual(),conexion,gestion,p);
+				
+		       	
+		        comprobador comp= new comprobador(p,conexion,j,u,gestion,prop);
 
 				
 				VentanaConectando ventana = new VentanaConectando();
@@ -369,13 +372,12 @@ public class VentanaBuscarPartida extends JFrame {
 				ventana.revalidate();
 				//int numJugadores=gestion.obtenerJugadoresJugando(conexion, listaCodigosSinCompletar.get(modelRow));
 				if(p.getNumeroJugadoresActual()==p.getNumeroJugadoresMaximo()){
-					Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresActual(),conexion,gestion,p);
 					ArrayList<Jugador> arrLjug=gestion.consultaATablaJugador(conexion,"COD_PARTIDA="+p.getCodigo());
 					Jugador [] arrJug=new Jugador[p.getNumeroJugadoresMaximo()];
 					for(int i=0;i<arrLjug.size();i++){
 						arrJug[i]=arrLjug.get(i);
 					}
-					prop.RepartirCartas(arrJug);
+					prop.RepartirCartas(arrJug,conexion);
 				}
 		    
 		    }

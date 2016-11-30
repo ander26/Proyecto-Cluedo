@@ -159,12 +159,14 @@ public class Cartas {
 			return 0;
 			
 			
-		}if(this.tipo==TipoCarta.LUGAR){
+		}else if(this.tipo==TipoCarta.LUGAR){
 		return 1;
-		}if(this.tipo==TipoCarta.SOSPECHOSO){
+		}else if(this.tipo==TipoCarta.SOSPECHOSO){
 			return 2;
-		}else{
+		}else if(this.tipo==TipoCarta.COMODIN){
 			return 3;
+		}else{
+			return 4;
 		}
 		
 	}
@@ -179,11 +181,11 @@ public class Cartas {
 			this.tipo = TipoCarta.ARMA;
 			
 			
-		}if(tipo==1){
+		}else if (tipo==1){
 			this.tipo = TipoCarta.LUGAR;
-		}if(tipo==2){
+		}else if(tipo==2){
 			this.tipo = TipoCarta.SOSPECHOSO;
-		}else{
+		}else if(tipo==3){
 			this.tipo = TipoCarta.COMODIN;
 		}
 		

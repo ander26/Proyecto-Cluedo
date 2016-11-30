@@ -52,7 +52,7 @@ public class Propiedades {
 		this.baraja.add(allugares);
 		this.baraja.add(alarma);
 		this.baraja.add(alcomodines);
-		this.conexion=conexion;
+		this.conexion=con;
 		this.Partida=p;
 	
 	}
@@ -171,7 +171,7 @@ public class Propiedades {
 //	
 //	}
 	
-	public void RepartirCartas(Jugador [] arJugadores){
+	public void RepartirCartas(Jugador [] arJugadores,Connection con){
 		int k=0;
 		ArrayList<Cartas> al=new ArrayList();
 		barajear(0);
@@ -191,7 +191,7 @@ public class Propiedades {
 		for(int i=0;i<al.size();i++){
 			System.out.println(al.get(i).getNombre());
 		}
-		ArrayList<Cartas> alcartasParaRepartir=meterAlSobre(arJugadores,al);
+		ArrayList<Cartas> alcartasParaRepartir=meterAlSobre(arJugadores,al,con);
 		RepartirRecursivo(0,0,arJugadores,alcartasParaRepartir);
 		
 	}
@@ -225,7 +225,7 @@ public class Propiedades {
 		
 		
 	}
-	public ArrayList<Cartas> meterAlSobre(Jugador []arJugadores,ArrayList<Cartas> acartas){
+	public ArrayList<Cartas> meterAlSobre(Jugador []arJugadores,ArrayList<Cartas> acartas,Connection conexion){
 		int [] contcartas=new int[arJugadores.length];
 		 String [] Asesinato=new String[3];
 		for(int i=0;i<3;i++){
@@ -238,9 +238,9 @@ public class Propiedades {
 			
 			acartas.remove(baraja.get(i).get(num));
 		}
-		Statement statement;
+		
 		try {
-			statement = conexion.createStatement();
+		Statement statement = conexion.createStatement();
 			statement.executeUpdate("INSERT INTO SOSPECHOSO VALUES (" +Partida.getCodigo()  + ",'" + Asesinato[0] + "','" + Asesinato[1]
 					+ "','" +Asesinato[2]  +  "')");	
 			statement.close();

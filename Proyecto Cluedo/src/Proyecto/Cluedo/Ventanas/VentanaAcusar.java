@@ -23,7 +23,7 @@ public class VentanaAcusar extends JFrame {
 	//private static JPanel pclugar=new JPanel();
 	private static JPanel pcarma=new JPanel();
 	private static panelrosa pprincipal;
-	private static Propiedades prop =new Propiedades(6,8,7,2);
+	//private static Propiedades prop =new Propiedades(6,8,7,2);
 	private static int [] arposcartas=new int[3];
 	private static JLabel labels=new JLabel();
 	//private static JLabel labell=new JLabel();
@@ -53,7 +53,7 @@ public class VentanaAcusar extends JFrame {
 		JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
 		f.setVisible(true);
 	}
-	public VentanaAcusar(String ruta){
+	public VentanaAcusar(String ruta,Propiedades prop){
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );		
 		setSize( 1330, 730 );			
 		setMinimumSize(new Dimension(900,500));		

@@ -29,6 +29,7 @@ import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Hilo.comprobador;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaCrearPartida extends JFrame {
 	
@@ -72,7 +73,7 @@ public class VentanaCrearPartida extends JFrame {
 	private Icon iconoSeleccionado;
 	
 
-	public VentanaCrearPartida (Connection conexion, Usuario u){
+	public VentanaCrearPartida (Connection conexion, Usuario u,GestionBaseDeDatos base){
 		
 		//Inicializamos el frame
 		
@@ -323,8 +324,11 @@ public class VentanaCrearPartida extends JFrame {
 					gestion.insertarJugador(conexion, j, p, u);
 					
 					VentanaConectando ventana = new VentanaConectando();
+					
+					Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresMaximo(),conexion,gestion,p);
+					
 
-					comprobador comp= new comprobador(p,conexion,j,u);
+					comprobador comp= new comprobador(p,conexion,j,u,base,prop);
 					
 					
 					

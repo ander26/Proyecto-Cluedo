@@ -119,7 +119,7 @@ public class Main {
 		Cartas v=new Cartas ("Comodin2","Imagenes/comodin.png",false,TipoCarta.COMODIN);	
 		Cartas [] array={a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v};
 		
-		//meterCartas(conexion,array,gestion);
+//		meterCartas(conexion,array,gestion);
 //		
 //		String crea = "CREATE TABLE SOSPECHOSO(CODPARTIDA int NOT NULL PRIMARY KEY REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,ASESINO text,LUGAR text ,ARMA text)";
 //		gestion.crearTabla(crea, conexion);
@@ -132,7 +132,7 @@ public class Main {
 		ventana.setVisible(true);
 		
 		
-		VentanaLogin ventanaPrincipal = new VentanaLogin(conexion);
+		VentanaLogin ventanaPrincipal = new VentanaLogin(conexion,gestion);
 		
 		while (ventanaPrincipal.isValid()){			
 		}

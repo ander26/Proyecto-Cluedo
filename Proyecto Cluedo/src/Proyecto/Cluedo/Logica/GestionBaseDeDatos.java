@@ -889,18 +889,18 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 
 	}
 	//cartas
-	public boolean insertarCarta(Connection conexion, Cartas c,Jugador j) {
+	public boolean insertarCarta(Connection conexion, Cartas c) {
 		
 		String sql = "";
 
 		try {
 			
-
+			String creacion = "CREATE TABLE CARTA(NOMBRE text NOT NULL PRIMARY KEY,RUTAICONO text,CULPABLE int,TIPOCARTA int)";
+			
 			Statement statement = conexion.createStatement();
 
 			sql = "INSERT INTO CARTA VALUES ('" + c.getNombre() + "','" + c.getRutaIcono() + "'," + c.isCulpable()
-					+ "'," + j.getPosicionMuñeco() + "," + j.getLugar() + "," + j.getTurno() + ",'" + j.getFicha()
-					+ "')";
+					+ "'," + c.getTipo()+ "')";
 
 			statement.executeUpdate(sql);
 
@@ -911,7 +911,7 @@ public  HashMap<String,Integer> consultaATablaHash(Connection conexion, String s
 			return true;
 
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Erro el insertar el jugador : " + sql);
+			logger.log(Level.SEVERE, "Erro el insertar la carta : " + sql);
 			e.printStackTrace();
 			return false;
 		}
@@ -1069,7 +1069,7 @@ public ArrayList<Cartas> consultaATablaCartas(Connection conexion, String selecc
 		Statement statement = conexion.createStatement();
 
 
-			String sentSQL = "SELECT * FROM CARTAS";
+			String sentSQL = "SELECT * FROM CARTA";
 
 			if (seleccion!=null && !seleccion.equals(""))
 
@@ -1097,6 +1097,7 @@ public ArrayList<Cartas> consultaATablaCartas(Connection conexion, String selecc
 }
 	
 public ArrayList<String> obtenerCartasDeJugador( Connection conexion, int codpartidda,int codjug,int tipo){
+	System.out.println("entro en obtener cartas de jugador");
 	ArrayList<String> ret = new ArrayList<>();
 	
 	try {
@@ -1110,7 +1111,8 @@ public ArrayList<String> obtenerCartasDeJugador( Connection conexion, int codpar
 
 			while (rs.next()) {
 				
-				ret.add(rs.getString("NOMBRECARTA"));			
+				ret.add(rs.getString("NOMBRECARTA"));	
+				System.out.println(rs.getString("NOMBRECARTA"));
 			}
 			rs.close();
 			return ret;

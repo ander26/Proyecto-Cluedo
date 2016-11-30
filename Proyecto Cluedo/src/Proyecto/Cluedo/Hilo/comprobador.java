@@ -10,6 +10,7 @@ import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Logica.Propiedades;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
 public class comprobador extends Thread {
@@ -23,12 +24,16 @@ public class comprobador extends Thread {
 	private Jugador j;
 	
 	private Usuario u;
+	
+	private Propiedades prop;
 
-	public comprobador(Partida p, Connection conexion,Jugador j,Usuario u) {
+	public comprobador(Partida p, Connection conexion,Jugador j,Usuario u,GestionBaseDeDatos base,Propiedades prop) {
 		this.p = p;
 		this.conexion = conexion;
 		this.j=j;
 		this.u=u;
+		this.base=base;
+		this.prop=prop;
 	}
 
 	public void run() {
@@ -46,12 +51,14 @@ public class comprobador extends Thread {
 					p.setNumeroJugadoresActual(rs.getInt("NUMEROJUGADORESACTUAL"));
 					p.setNumeroJugadoresMaximo(rs.getInt("NUMEROJUGADORESMAXIMO"));
 				}
+				statement.close();
 				System.out.println(p.getNumeroJugadoresActual() + " " + p.getNumeroJugadoresMaximo());
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					System.out.println("error");
 				}
 
 			} catch (SQLException e1) {
@@ -64,7 +71,7 @@ public class comprobador extends Thread {
 			    window.dispose();
 			}
 		
-		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p);
+		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop);
 		 tablero.setVisible(true);
 		
 	}
