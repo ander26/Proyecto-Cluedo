@@ -69,6 +69,7 @@ public class VentanaRegistro extends JFrame {
 
 	private JLabel botonRegistrar;
 	
+	
 	private JLabel botonCancelar;
 	
 	private JTextField textoNombre;

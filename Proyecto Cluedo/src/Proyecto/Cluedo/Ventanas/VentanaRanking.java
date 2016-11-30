@@ -1,3 +1,4 @@
+
 package Proyecto.Cluedo.Ventanas;
 
 import java.awt.BorderLayout;
@@ -64,7 +65,6 @@ public class VentanaRanking extends JFrame{
 	private JLabel marcoIzquierda=new JLabel("           ");
 	
 	//private JPanel ppodium=new JPanel();
-	
 	private int num;
 	
 	private JLabel foto=new JLabel();
@@ -89,9 +89,7 @@ public class VentanaRanking extends JFrame{
 	
 	
 	//public VentanaRanking(Connection conexion,GestionBaseDeDatos gestion){
-		
-	public VentanaRanking(Connection con){
-			
+		public VentanaRanking(Connection con){
 			ALUsuarios=base.consultaATablaOrdenadoPuntuacion(con);	
 			RellenarLista(ALUsuarios);
 			PonerGanadores();			
@@ -102,11 +100,9 @@ public class VentanaRanking extends JFrame{
 			setResizable( true );
 			ImageIcon imagefondo = new ImageIcon(VentanaRanking.class.getResource("Imagenes/fondo2.jpg"));
 			ImageIcon imagecartel = new ImageIcon(VentanaRanking.class.getResource("Imagenes/cartel.png"));
-			
 			//ImageIcon imagefondopodium = new ImageIcon(VentanaRanking.class.getResource("Imagenes/podiumrojo.png"));
 								
 			//Layout
-			
 			pslista.setBackground(Color.BLACK);
 			lista.setOpaque(false);
 			
@@ -116,21 +112,15 @@ public class VentanaRanking extends JFrame{
 			ppodium.add(lpodium);
 			pprincipal=new panelrosa(imagefondo.getImage());
 			pcartel=new panelrosa(imagecartel.getImage());
-			
 			//pmedio=new panelrosa(imagefondopodium.getImage());
-			
 			pprincipal.setOpaque(false);
 			pderecho.setOpaque(false);
-			
 			//foto.setAlignmentX(LEFT_ALIGNMENT);
-			
 			pfotodos.setLayout(new BorderLayout());
 			pfotodos.setOpaque(false);
 			ppodium.setOpaque(false);
 			pmedio.setOpaque(false);
-			
 			//pmedio.setBackground(Color.BLACK);
-			
 			pizquierdo.setOpaque(false);
 			patriloro.setOpaque(false);
 			patrilbronce.setOpaque(false);
@@ -149,9 +139,7 @@ public class VentanaRanking extends JFrame{
 			pslista.setSize(200,600);
 			plista.add(pslista,BorderLayout.CENTER);
 			pprincipal.setLayout(new BoxLayout(pprincipal,BoxLayout.X_AXIS));
-			
 			//pderecho.setLayout(null);
-			
 			pmedio.setLayout(new BoxLayout(pmedio,BoxLayout.Y_AXIS));
 			pizquierdo.setAlignmentX(LEFT_ALIGNMENT);
 			pderecho.setAlignmentX(RIGHT_ALIGNMENT);
@@ -168,16 +156,13 @@ public class VentanaRanking extends JFrame{
 			meterImgEnlabel("Imagenes/columna.png",latrilbronce,100,300);
 			meterImgEnlabel("Imagenes/podium.png",lpodium,600,400);
 			meterImgEnlabel("Imagenes/cartel.png",lcartel,300,200);
-			
 			//add
 			
 			pcartel.add(puntos);
 			parriba.add(pcartel);
-			
 			//Icon icono = new ImageIcon(u.getImagenPerfil().getImage().getScaledInstance(foto.getWidth()	, foto.getHeight(), Image.SCALE_DEFAULT));
 			//foto.setIcon(icono);
 			//foto.setAlignmentX(CENTER_ALIGNMENT);			
-			
 			patrilplata.add(lcopaoro);
 			patrilplata.add(latrilplata);
 			patriloro.add(lcopaplata);
@@ -187,24 +172,19 @@ public class VentanaRanking extends JFrame{
 			pizquierdo.add(patriloro);
 			pizquierdo.add(patrilplata);
 			pizquierdo.add(patrilbronce);
-			
 			//pmedio.add(lcartel);
 			//ppodium.add(lpodium);
-			
 			pfotodos.add(pfoto,BorderLayout.SOUTH);
 			pderecho.add(plista);
 			pmedio.add(parriba);
 			pmedio.add(pfotodos);
 			pmedio.add(ppodium);			
-			
 			//pmedio.add(ppodium,BorderLayout.SOUTH);
 			//pprincipal.add(pcartel);
-			
 			pprincipal.add(pizquierdo);
 			pprincipal.add(pmedio);					
 			pprincipal.add(pderecho);			
 			getContentPane().add(pprincipal);
-			
 			lista.addListSelectionListener(new ListSelectionListener() {
 			      public void valueChanged(ListSelectionEvent evt) {
 			    	  num=lista.getSelectedIndex();

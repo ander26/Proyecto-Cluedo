@@ -126,9 +126,11 @@ public class Cartas {
 	 * @return Devuelve true si esta involucrada
 	 */
 	
-	public boolean isCulpable() {
-		
-		return culpable;
+	public int isCulpable() {
+		if(this.culpable){
+			return 1;
+		}
+		return 0;
 	
 	}
 
@@ -137,10 +139,14 @@ public class Cartas {
 	 * @param culpable Parametro que contiene si una carta es culpable
 	 */
 	
-	public void setCulpable(boolean culpable) {
+	public void setCulpable(int culpable) {
+		if(culpable==1){
+			this.culpable=true;
+		}else{
+			this.culpable = false;
+			
+		}
 		
-		this.culpable = culpable;
-	
 	}
 
 	/**
@@ -148,8 +154,22 @@ public class Cartas {
 	 * @return Devuelve el tipo de carta
 	 */
 	
-	public TipoCarta getTipo() {
-		return tipo;
+	public int getTipo() {
+		if(this.tipo==TipoCarta.ARMA){
+			return 0;
+			
+			
+		}else if(this.tipo==TipoCarta.LUGAR){
+		return 1;
+		}else if(this.tipo==TipoCarta.SOSPECHOSO){
+			return 2;
+		}else if(this.tipo==TipoCarta.COMODIN){
+			return 3;
+		}else{
+			return 4;
+			
+		}
+		
 	}
 	
 	/**
@@ -157,8 +177,19 @@ public class Cartas {
 	 * @param tipo Parametro que contiene el tipo de carta
 	 */
 
-	public void setTipo(TipoCarta tipo) {
-		this.tipo = tipo;
+	public void setTipo(int tipo) {
+		if(tipo==0){
+			this.tipo = TipoCarta.ARMA;
+			
+			
+		}else if (tipo==1){
+			this.tipo = TipoCarta.LUGAR;
+		}else if(tipo==2){
+			this.tipo = TipoCarta.SOSPECHOSO;
+		}else if(tipo==3){
+			this.tipo = TipoCarta.COMODIN;
+		}
+		
 	}
 	
 	public boolean isSeleccionada() {

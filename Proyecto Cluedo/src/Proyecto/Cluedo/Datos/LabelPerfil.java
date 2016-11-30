@@ -32,6 +32,7 @@ public class LabelPerfil extends JLabel{
 		
 		this.anchura=anchura;
 		
+		
 		setBounds(x,y,anchura,altura);
 		
 		this.imagen=imagen;
@@ -89,16 +90,16 @@ public class LabelPerfil extends JLabel{
 	}
 	
 
-	public void cambiarTamaño (int anchura, int altura){
-		setSize(new Dimension(anchura, altura));
-	}
-	
-	public void cambiarPosicion (int X, int Y){
-		setLocation(X,Y);
-	}
-	
-	
 
+		public void cambiarTamaño (int anchura, int altura){
+				setSize(new Dimension(anchura, altura));
+			}
+			
+			public void cambiarPosicion (int X, int Y){
+				setLocation(X,Y);
+			}
+			
+			
 	
 	
 }

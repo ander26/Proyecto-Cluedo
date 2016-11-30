@@ -23,7 +23,7 @@ public class VentanaAcusar extends JFrame {
 	//private static JPanel pclugar=new JPanel();
 	private static JPanel pcarma=new JPanel();
 	private static panelrosa pprincipal;
-	private static Propiedades prop =new Propiedades(6,8,7,2);
+	//private static Propiedades prop =new Propiedades(6,8,7,2);
 	private static int [] arposcartas=new int[3];
 	private static JLabel labels=new JLabel();
 	//private static JLabel labell=new JLabel();
@@ -34,26 +34,8 @@ public class VentanaAcusar extends JFrame {
 	private JPanel pbotonera=new JPanel();
 	private JPanel pantesbotonera=new JPanel();
 	
-	public static void main(String[] args) {
-		
-		// TODO Auto-generated method stub		
-		Jugador a =new Jugador();
-		a.setLugar(2);
-		//mete el fondo del lugar en el que este
-		String [] aimglug=new String [8];
-		aimglug[0]="Imagenes/ingenieria.jpg";
-		aimglug[1]="Imagenes/comercial.jpg";
-		aimglug[2]="Imagenes/capilla.JPG";
-		aimglug[3]="Imagenes/centenario.jpg";
-		aimglug[4]="Imagenes/letras.jpg";
-		aimglug[5]="Imagenes/biblioteca.jpeg";
-		aimglug[6]="Imagenes/zubiarte.jpg";
-		aimglug[7]="Imagenes/zubiarte.jpg";
-																		
-		JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
-		f.setVisible(true);
-	}
-	public VentanaAcusar(String ruta){
+	
+	public VentanaAcusar(String ruta,Propiedades prop){
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );		
 		setSize( 1330, 730 );			
 		setMinimumSize(new Dimension(900,500));		
@@ -66,6 +48,7 @@ public class VentanaAcusar extends JFrame {
 		pcsospechoso.setLayout(new BorderLayout());
 		pcsospechoso.setOpaque(true);
 		pcsospechoso.setBackground(Color.BLUE);
+		
 		//pclugar.setLayout(new BorderLayout());
 		//pclugar.setOpaque(false);
 		pcarma.setLayout(new BorderLayout());

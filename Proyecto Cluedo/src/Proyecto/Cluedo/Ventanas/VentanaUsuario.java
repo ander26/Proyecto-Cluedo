@@ -221,6 +221,7 @@ public class VentanaUsuario extends JFrame {
 
 						}
 					}
+					
 				});
 				
 				
@@ -306,7 +307,7 @@ public class VentanaUsuario extends JFrame {
 						window.dispose();
 					}
 
-					VentanaLogin ventana = new VentanaLogin(conexion);
+					VentanaLogin ventana = new VentanaLogin(conexion,gestion);
 					ventana.setVisible(true);
 
 				}

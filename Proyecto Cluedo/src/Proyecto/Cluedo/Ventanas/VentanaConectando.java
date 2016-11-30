@@ -20,6 +20,7 @@ public class VentanaConectando extends JFrame {
 	 */
 
 	private ImageIcon imageIcon;
+	
 
 	public static void main(String[] args) {
 		VentanaConectando ventana = new VentanaConectando();

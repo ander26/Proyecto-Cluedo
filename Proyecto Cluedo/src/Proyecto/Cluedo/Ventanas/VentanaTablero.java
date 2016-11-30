@@ -17,8 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaTablero extends JFrame {
 	
@@ -54,14 +57,14 @@ public class VentanaTablero extends JFrame {
 	
 	private static int[][] mibaraja=new int[3][4];
 
-	private JFrame g=new ventana();
+	private JFrame g;
 
 	private VentanaChat ventana;
 	
 	
 
 
-	public VentanaTablero(Connection conexion, Jugador j,Usuario u){
+	public VentanaTablero(Connection conexion, Jugador j,Usuario u,GestionBaseDeDatos base,Partida p,Propiedades prop){
 		
 		
 		 this.setExtendedState(MAXIMIZED_BOTH);
@@ -132,7 +135,7 @@ public class VentanaTablero extends JFrame {
 				aimglug[6]="Imagenes/zubiarte.jpg";
 				aimglug[7]="Imagenes/zubiarte.jpg";
 																				
-				JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
+				JFrame f=new VentanaAcusar(aimglug[a.getLugar()],prop);		
 				f.setVisible(true);
 			}
 			
@@ -148,7 +151,7 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 																						
-				VentanaCartas ventana = new VentanaCartas();
+				VentanaCartas ventana = new VentanaCartas(base,j,p,conexion);
 				ventana.setVisible(true);
 			}
 			
@@ -173,6 +176,7 @@ public class VentanaTablero extends JFrame {
 				mibaraja[2][3]=0;
 				
 				
+				g=new ventana(prop, base, conexion, j, p);
 				g.setVisible(true);
 			}
 			

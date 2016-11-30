@@ -10,6 +10,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +27,11 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-
+import Proyecto.Cluedo.Datos.Cartas;
+import Proyecto.Cluedo.Datos.Partida;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Logica.Propiedades;
 import Proyecto.Cluedo.Ventanas.panelrosa;
 
 
@@ -73,31 +79,20 @@ public class ventana extends JFrame{
 	
 	private JPanel phoja=new JPanel();
 	
-	private static int[][] mibaraja=new int[3][4];
-
-	public static void main(String[] args) {
-		
-		// TODO Auto-generated method stub
-		
-		mibaraja[0][0]=5;
-		mibaraja[0][1]=1;
-		mibaraja[0][2]=2;
-		mibaraja[0][3]=3;
-		mibaraja[1][0]=4;
-		mibaraja[1][1]=5;
-		mibaraja[1][2]=1;
-		mibaraja[1][3]=2;
-		mibaraja[2][0]=3;
-		mibaraja[2][1]=4;
-		mibaraja[2][2]=5;
-		mibaraja[2][3]=0;
-		
-		JFrame f=new ventana();
-		
-		f.setVisible(true);
-	}
+	private ArrayList<ArrayList<String>> mibaraja=new ArrayList<ArrayList<String>>();
 	
-	public ventana(){
+	//private static int[][] mibaraja=new int[3][4];
+
+	
+	
+	public ventana(Propiedades prop,GestionBaseDeDatos base,Connection con,Jugador j,Partida p){
+		System.out.println(base);
+		System.out.println(con);
+		System.out.println(j.getCodigo());
+		System.out.println(p.getCodigo());
+		mibaraja.add( base.obtenerCartasDeJugador(con, p.getCodigo(), j.getCodigo(),1));
+		mibaraja.add(base.obtenerCartasDeJugador(con, p.getCodigo(), j.getCodigo(),0));
+		mibaraja.add(base.obtenerCartasDeJugador(con, p.getCodigo(), j.getCodigo(), 2));
 		
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 		
@@ -142,7 +137,7 @@ public class ventana extends JFrame{
 		tabarmas.setOpaque(false);
 		tabarmas.setSize(new Dimension(753,700));		
 		ptabarmas.add(tabarmas,BorderLayout.CENTER);
-		ponerCandado(mibaraja,tabarmas,0);
+		ponerCandado(tabarmas,0);
 		//tabla asesinos
 		ptabla.setLayout(new BorderLayout());
 		ptabla.add(tabla.getTableHeader(),BorderLayout.NORTH);		
@@ -158,7 +153,7 @@ public class ventana extends JFrame{
 		
 		
 		ptabla.add(tabla,BorderLayout.CENTER);
-		ponerCandado(mibaraja,tabla,2);
+		ponerCandado(tabla,2);
 		//tabla lugares
 		ptablugares.setLayout(new BorderLayout());
 		ptablugares.add(tablugares.getTableHeader(),BorderLayout.NORTH);		
@@ -178,7 +173,7 @@ public class ventana extends JFrame{
 		tablugares.getTableHeader().setDefaultRenderer(renderertit);
 		tabla.getTableHeader().setDefaultRenderer(renderertit);
 		ptablugares.add(tablugares,BorderLayout.CENTER);
-		ponerCandado(mibaraja,tablugares,1);
+		ponerCandado(tablugares,1);
 		
 		//panel de fondo de la tabla
 		  ImageIcon imagehoja;			
@@ -290,7 +285,7 @@ public class ventana extends JFrame{
 	}
         
         //Poner candado y bloquear 
-        public  void ponerCandado(int[][]cartas,JTable tabla,int tipo){
+        public  void ponerCandado(JTable tabla,int tipo){
         	for (int i=0;i<tabla.getRowCount();i++){
         	if(tipo==0){
         	if (((MyTableModelArmas) tabla.getModel()).isCellEditable(i, 2)==false){
@@ -336,8 +331,8 @@ public class ventana extends JFrame{
 	    private String[] columnNames = {"Mio","Sospechosos",
 	                                    "     ","Notas"};
 	    private Object[][] data = {
-	    		{new ImageIcon (),new String ("Inspector gadgets"),new Boolean(false),""},{new ImageIcon (),new String("Paris Hilton"),new Boolean(false),""},{new ImageIcon (),new String("Usain Bolt"),new Boolean(false),""},{new ImageIcon (),new String("Socrates"),new Boolean(false),""},{new ImageIcon (),new String("Amuriza"),new Boolean(false),""},{new ImageIcon (),"Minerva McGonagall",new Boolean(false),""},
-	         	{new ImageIcon (),"La Momia",new Boolean(false),""},{new ImageIcon (),"Jueza Alaya",new Boolean(false),""}};
+	    		{new ImageIcon (),new String ("Inspector Gadget"),new Boolean(false),""},{new ImageIcon (),new String("Paris Hilton"),new Boolean(false),""},{new ImageIcon (),new String("Usain  Bolt"),new Boolean(false),""},{new ImageIcon (),new String("Socrates"),new Boolean(false),""},{new ImageIcon (),new String("El Papa"),new Boolean(false),""},{new ImageIcon (),"Minerva",new Boolean(false),""},
+	         	{new ImageIcon (),"La Momia",new Boolean(false),""}};
 
 	    public int getColumnCount() {
 	        return columnNames.length;
@@ -375,8 +370,9 @@ public class ventana extends JFrame{
 	        if (col < 2) {
 	            return false;
 	        } else {
-	        	for (int i:mibaraja[2]){
-	        		if(row==i){
+	        	for (String i:mibaraja.get(2)){
+	        		System.out.println(data[row][2]+" "+i);	        		
+	        		if(data[row][1].equals(i)){
 	        			Logger.getLogger(getClass().getName()).log(Level.INFO, "no editable fila"+row);
 	        			return false;
 	        		}
@@ -445,8 +441,10 @@ public class ventana extends JFrame{
 	        if (col < 2) {
 	            return false;
 	        } else {
-	        	for (int i:mibaraja[0]){
-	        		if(row==i){
+	        	for (String i:mibaraja.get(1)){
+	        		System.out.println(data[row][1]+" "+i);
+	        		if(data[row][1].equals(i)){
+	        			System.out.println("he entrado");
 	        			return false;
 	        		}
 	        		
@@ -473,7 +471,7 @@ public class ventana extends JFrame{
 	    private String[] columnNames = {"Mio","Lugares",
 	                                    "     ","Notas"};
 	    private Object[][] data = {
-	    		{new ImageIcon(),new String ("Facultad ingeniería"),new Boolean(false),""},{new ImageIcon (),new String("La Comercial"),new Boolean(false),""},{new ImageIcon (),new String("La L"),new Boolean(false),""},{"",new String("La capilla"),new Boolean(false),""},{new ImageIcon (),new String("Edificio Centenario"),new Boolean(false),""},{new ImageIcon (),"Edificio de letras",new Boolean(false),""},
+	    		{new ImageIcon(),new String ("F. Ingenieria"),new Boolean(false),""},{new ImageIcon (),new String("La Comercial"),new Boolean(false),""},{new ImageIcon (),new String("la L"),new Boolean(false),""},{"",new String("La Capilla"),new Boolean(false),""},{new ImageIcon (),new String("Edificio centenario"),new Boolean(false),""},{new ImageIcon (),"Edificio de letras",new Boolean(false),""},
 	    		{new ImageIcon (),"Biblioteca",new Boolean(false),""},{new ImageIcon (),"Zubiarte",new Boolean(false),""}};
 
 	    public int getColumnCount() {
@@ -482,6 +480,7 @@ public class ventana extends JFrame{
 
 	    public int getRowCount() {
 	        return data.length;
+	        
 	    }
 
 	    public String getColumnName(int col) {
@@ -512,8 +511,10 @@ public class ventana extends JFrame{
 	        if (col < 2) {
 	            return false;
 	        } else {
-	        	for (int i:mibaraja[1]){
-	        		if(row==i){
+	        	for (String i:mibaraja.get(0)){
+	        		System.out.println(data[row][0]+" "+i);
+	        		
+	        		if(data[row][1].equals(i)){
 	        			return false;
 	        		}
 	        	}

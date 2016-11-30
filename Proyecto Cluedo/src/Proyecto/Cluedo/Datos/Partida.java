@@ -67,6 +67,7 @@ public class Partida {
 
 	public Partida (){
 		
+		
 	}
 	
 	public String getNombre() {

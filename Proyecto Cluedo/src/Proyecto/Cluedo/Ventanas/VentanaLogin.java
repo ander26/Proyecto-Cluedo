@@ -75,7 +75,7 @@ public class VentanaLogin extends JFrame {
 		
 	}
 	
-	public VentanaLogin(Connection conexion){
+	public VentanaLogin(Connection conexion,GestionBaseDeDatos base){
 		
 		//Incializamos el frame 
 		
@@ -439,7 +439,7 @@ public class VentanaLogin extends JFrame {
 						JOptionPane.showMessageDialog(getContentPane(), "Los datos introducidos son incorrectos", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 					}else{
 					Usuario jugador = listadeUsuarios.get(0);
-					VentanaMenu menu= new VentanaMenu(conexion,jugador);	
+					VentanaMenu menu= new VentanaMenu(conexion,jugador,base);	
 					
 					JOptionPane.showMessageDialog(getContentPane(), bienvenida(jugador.getGenero())+jugador.getNombre()+" se te echaba de menos desde la ultima conexion "+jugador.getConexion().toString());
 					
