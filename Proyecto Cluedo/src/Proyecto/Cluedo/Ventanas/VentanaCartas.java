@@ -131,16 +131,16 @@ public class VentanaCartas extends JFrame{
 //		meterCartas(a,prop,1,pdlugares);
 //		meterCartas(a,prop,2,pdsospechosos);
 //		meterCartas(a,prop,3,pcomodines);
-		meterCartas(j,p,0,parmas,base,con,0,hueco);
-		meterCartas(j,p,1,pdlugares,base,con,1,hueco2);
-		meterCartas(j,p,2,pdsospechosos,base,con,2,hueco3);
+		meterCartas(j,p,0,parmas,base,con,0,hueco,hueco2);
+		meterCartas(j,p,1,pdlugares,base,con,1,hueco2,hueco);
+		meterCartas(j,p,2,pdsospechosos,base,con,2,hueco3,hueco);
 		//meterCartas(j,p,3,pcomodines,base,con,3);		
 		pprincipal.add(BorderLayout.SOUTH,lenviar);
 		pprincipal.add(BorderLayout.CENTER,ptabbed);
 		getContentPane().add(pprincipal);
 
 			}
-	public static void meterCartas(Jugador jugador,Partida p,int panel,JPanel pan,GestionBaseDeDatos base,Connection con,int tipo,JLabel hueco){	
+	public static void meterCartas(Jugador jugador,Partida p,int panel,JPanel pan,GestionBaseDeDatos base,Connection con,int tipo,JLabel hueco,JLabel hueco2){	
 			ArrayList<String> cartasdepalo=base.obtenerCartasDeJugador(con, p.getCodigo(), jugador.getCodigo(), tipo);
 			int k=0;
 			for(int i=0;i<cartasdepalo.size();i++){
@@ -170,7 +170,7 @@ public class VentanaCartas extends JFrame{
 				panelcentrado.setBackground(Color.BLUE);
 				JPanel panelnoesquina=new JPanel();
 				panelnoesquina.setLayout(new BorderLayout());
-				panelnoesquina.add(hueco,BorderLayout.WEST);
+				panelnoesquina.add(hueco2,BorderLayout.WEST);
 				panelnoesquina.add(panelcentrado,BorderLayout.CENTER);
 				pan.add(panelnoesquina, BorderLayout.WEST);
 			}
