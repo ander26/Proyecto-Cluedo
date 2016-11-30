@@ -52,6 +52,7 @@ public class VentanaCartas extends JFrame{
 		
 		JPanel pmesa=new JPanel();
 		JLabel lmesa=new JLabel();
+		
 		ImageIcon iconomesa = new ImageIcon(ventana.class.getResource("Imagenes/mesa.png"));		
 		lmesa.setSize(800,100);
 		Icon iconomesaa = new ImageIcon(iconomesa.getImage().getScaledInstance(lmesa.getWidth()	, lmesa.getHeight(), Image.SCALE_DEFAULT));

@@ -258,6 +258,7 @@ public class VentanaRanking extends JFrame {
 						+ "Puntuacion <br>" + ALUsuarios.get(num).getPuntuacion() + "</div></body></html>");
 
 				panelCentro.revalidate();
+				
 
 			}
 

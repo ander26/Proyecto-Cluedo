@@ -175,6 +175,7 @@ public class VentanaTablero extends JFrame {
 				mibaraja[2][2]=5;
 				mibaraja[2][3]=0;
 				
+				
 				g=new ventana(prop, base, conexion, j, p);
 				g.setVisible(true);
 			}

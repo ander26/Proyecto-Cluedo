@@ -20,6 +20,7 @@ import Proyecto.Cluedo.Ventanas.VentanaLogin;
 import Proyecto.Cluedo.Ventanas.VentanaLogo;
 
 public class Main {
+	
 
 	
 	public static void main (String [] args){

@@ -369,6 +369,7 @@ public class VentanaBuscarPartida extends JFrame {
 				
 				ventana.setVisible(true);
 				
+				
 				ventana.revalidate();
 				//int numJugadores=gestion.obtenerJugadoresJugando(conexion, listaCodigosSinCompletar.get(modelRow));
 				if(p.getNumeroJugadoresActual()==p.getNumeroJugadoresMaximo()){

@@ -500,6 +500,7 @@ public class ventana extends JFrame{
 
 	    public int getRowCount() {
 	        return data.length;
+	        
 	    }
 
 	    public String getColumnName(int col) {

@@ -66,6 +66,7 @@ public class VentanaAcusar extends JFrame {
 		pcsospechoso.setLayout(new BorderLayout());
 		pcsospechoso.setOpaque(true);
 		pcsospechoso.setBackground(Color.BLUE);
+		
 		//pclugar.setLayout(new BorderLayout());
 		//pclugar.setOpaque(false);
 		pcarma.setLayout(new BorderLayout());

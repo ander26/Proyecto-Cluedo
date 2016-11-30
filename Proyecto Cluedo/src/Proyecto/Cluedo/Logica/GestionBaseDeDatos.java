@@ -1105,6 +1105,7 @@ public ArrayList<String> obtenerCartasDeJugador( Connection conexion, int codpar
 		Statement statement = conexion.createStatement();
 
 
+		
 			String sentSQL = "SELECT NOMBRECARTA FROM JUEGA WHERE TIPOCARTA="+tipo+"AND CODJUGADOR="+codjug+"AND CODPARTIDA="+codpartidda;
 
 			ResultSet rs = statement.executeQuery( sentSQL );

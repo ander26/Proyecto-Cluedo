@@ -25,6 +25,7 @@ public class Usuario implements Logineable {
 	
 	private String nombre;
 	
+	
 	/**
 	 * Atributo que contiene los apellidos del usuario
 	 */

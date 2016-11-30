@@ -31,6 +31,7 @@ public class LabelPerfil extends JLabel{
 		
 		this.anchura=anchura;
 		
+		
 		setBounds(x,y,anchura,altura);
 		
 		this.imagen=imagen;

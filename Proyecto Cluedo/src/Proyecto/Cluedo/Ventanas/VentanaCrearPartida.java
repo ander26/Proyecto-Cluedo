@@ -332,6 +332,7 @@ public class VentanaCrearPartida extends JFrame {
 					
 					
 					
+					
 					comp.start();
 					
 					

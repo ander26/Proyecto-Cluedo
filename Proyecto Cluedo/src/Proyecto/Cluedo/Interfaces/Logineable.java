@@ -16,6 +16,7 @@ public interface Logineable {
 	
 	public String recuperarContraseña (String usuario,String respuesta,ArrayList <Usuario> listaDeUsuarios);
 
+	
 	/**
 	 * Indica que el login del paciente es correcto
 	 * @param usuario Parametro que contiene el nombre de usuario 

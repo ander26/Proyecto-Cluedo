@@ -77,6 +77,7 @@ public class comprobador extends Thread {
 	}
 
 	public void setJ(Jugador j) {
+		
 		this.j = j;
 	}
 

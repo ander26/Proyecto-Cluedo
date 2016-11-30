@@ -132,6 +132,7 @@ public Jugador(String Ficha, String Usuario, int CodigoPartida,Connection conexi
 		public BufferedImage getDibujo() {
 		return dibujo;
 	}
+		
 
 	public void setDibujo(BufferedImage dibujo) {
 		this.dibujo = dibujo;

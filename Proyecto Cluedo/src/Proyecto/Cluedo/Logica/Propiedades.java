@@ -21,6 +21,7 @@ public class Propiedades {
 	private static int numTotCartas;
 	private static int numJugadores;
 	private static Connection conexion;
+	
 	private static Partida Partida;
 	
 	

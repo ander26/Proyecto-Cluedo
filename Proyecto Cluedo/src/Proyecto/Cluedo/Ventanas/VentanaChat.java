@@ -66,6 +66,7 @@ public class VentanaChat extends JFrame {
 		
 		j.setEnLinea(true);
 		
+		
 		gestion.modificarEstado(conexion, j);
 		
 		//Inicializamos el frame
