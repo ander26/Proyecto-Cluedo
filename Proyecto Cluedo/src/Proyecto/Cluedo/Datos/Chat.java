@@ -16,6 +16,7 @@ public class Chat {
 	
 	public Chat (String mensaje,int CodigoPartida,int CodigoJugador,String nombreUsuario){
 		this.mensaje=mensaje;
+		
 		this.fechaEnvio=new Date(System.currentTimeMillis());
 		this.CodigoJugador=CodigoJugador;
 		this.CodigoPartida=CodigoPartida;

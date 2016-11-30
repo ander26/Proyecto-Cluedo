@@ -45,6 +45,7 @@ import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Hilo.comprobador;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaBuscarPartida extends JFrame {
 
@@ -347,13 +348,18 @@ public class VentanaBuscarPartida extends JFrame {
 		        
 		       Partida p=gestion.obtenerPartida(conexion, listaCodigosSinCompletar.get(modelRow));
 		        
+
 		       //TODO: Hay que hacer aqui para que elija la ficha
 		       
 		       	Jugador j= new Jugador("Barco", u.getUsuario(), p.getCodigo(), conexion);
 		       
 		       	gestion.insertarJugador(conexion, j, p, u);
 		       	
-		        comprobador comp= new comprobador(p,conexion,j,u);
+		       	Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresActual(),conexion,gestion,p);
+				
+		       	
+		        comprobador comp= new comprobador(p,conexion,j,u,gestion,prop);
+
 				
 				VentanaConectando ventana = new VentanaConectando();
 				
@@ -363,9 +369,17 @@ public class VentanaBuscarPartida extends JFrame {
 				
 				ventana.setVisible(true);
 				
-				ventana.revalidate();
 				
-		    
+				ventana.revalidate();
+				//int numJugadores=gestion.obtenerJugadoresJugando(conexion, listaCodigosSinCompletar.get(modelRow));
+				if(p.getNumeroJugadoresActual()==p.getNumeroJugadoresMaximo()){
+					ArrayList<Jugador> arrLjug=gestion.consultaATablaJugador(conexion,"COD_PARTIDA="+p.getCodigo());
+					Jugador [] arrJug=new Jugador[p.getNumeroJugadoresMaximo()];
+					for(int i=0;i<arrLjug.size();i++){
+						arrJug[i]=arrLjug.get(i);
+					}
+					prop.RepartirCartas(arrJug,conexion);
+				}
 		    
 		    }
 		};

@@ -23,6 +23,7 @@ public class panelrosa extends JPanel{
 	    public panelrosa(Image imagen) {
 		
 		this.imagen = imagen;
+		
 	}
 
 

@@ -21,10 +21,12 @@ import javax.swing.JOptionPane;
 
 import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaMenu extends JFrame{
 
-	public VentanaMenu(Connection conexion, Usuario u){
+	public VentanaMenu(Connection conexion, Usuario u,GestionBaseDeDatos base){
 		
 		//Inicializamos el frame 
 		
@@ -252,7 +254,7 @@ public class VentanaMenu extends JFrame{
 				int opcion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de querer cerrar sesion?", "Aviso de cierre de sesion", JOptionPane.YES_NO_OPTION);
 				
 				if (opcion==JOptionPane.OK_OPTION){
-				VentanaLogin ventana= new VentanaLogin(conexion);
+				VentanaLogin ventana= new VentanaLogin(conexion,base);
 				ventana.setVisible(true);
 				dispose();
 				}
@@ -299,7 +301,7 @@ public class VentanaMenu extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				
 
-				VentanaCrearPartida ventanas= new VentanaCrearPartida(conexion,u);
+				VentanaCrearPartida ventanas= new VentanaCrearPartida(conexion,u,base);
 				ventanas.setVisible(true);
 			}
 		});
@@ -342,8 +344,8 @@ public class VentanaMenu extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				VentanaBuscarPartida ventana=new VentanaBuscarPartida(conexion,u);
 				
-				VentanaBuscarPartida ventana = new VentanaBuscarPartida(conexion, u);
 				ventana.setVisible(true);
 			}
 		});
@@ -372,18 +374,17 @@ public class VentanaMenu extends JFrame{
 				
 			}
 		});
-		
-		labelEstadistica.addMouseListener(new MouseAdapter() {
 
-			
+		labelEstadistica.addMouseMotionListener(new MouseAdapter(){
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				VentanaRanking ventana = new VentanaRanking(conexion);
-				ventana.setVisible(true);
-				
+			public void mouseClicked(MouseEvent arg0){
+				VentanaRanking ranking=new VentanaRanking(conexion);
+				ranking.setVisible(true);
 			}
 		});
+
 		
+
 	}
 	
 	

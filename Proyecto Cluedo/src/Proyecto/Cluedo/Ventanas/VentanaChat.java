@@ -66,10 +66,11 @@ public class VentanaChat extends JFrame {
 		
 		j.setEnLinea(true);
 		
+		
 		gestion.modificarEstado(conexion, j);
 		
 		//Inicializamos el frame
-		
+		j.setEnLinea(true);
 		setUndecorated(false);
 		setResizable(false);
 		setSize(new Dimension(802, 633));
