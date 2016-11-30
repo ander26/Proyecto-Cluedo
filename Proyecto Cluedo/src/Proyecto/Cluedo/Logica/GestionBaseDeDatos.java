@@ -43,7 +43,7 @@ public class GestionBaseDeDatos {
 	 * Parametro que contiene el enlace a la base de datos
 	 */
 
-	private static final String URL = "jdbc:postgresql://ec25422821446.euwest1.compute.amazonaws.com:5432/d1uo969itg8nsu?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+	private static final String URL = "jdbc:postgresql://ec2-54-228-214-46.eu-west-1.compute.amazonaws.com:5432/d1uo969itg8nsu?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
 
 	/**
 	 * Parametro que contiene el nombre de usuario
