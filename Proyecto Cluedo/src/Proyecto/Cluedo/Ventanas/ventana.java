@@ -80,6 +80,7 @@ public class ventana extends JFrame{
 	private JPanel phoja=new JPanel();
 	
 	private ArrayList<ArrayList<String>> mibaraja=new ArrayList<ArrayList<String>>();
+
 	
 	//private static int[][] mibaraja=new int[3][4];
 
@@ -104,7 +105,13 @@ public class ventana extends JFrame{
 		
 		f.setVisible(true);
 	}
+
+
+	//private static int[][] mibaraja=new int[3][4];
+
 	
+	
+
 	public ventana(Propiedades prop,GestionBaseDeDatos base,Connection con,Jugador j,Partida p){
 		System.out.println(base);
 		System.out.println(con);

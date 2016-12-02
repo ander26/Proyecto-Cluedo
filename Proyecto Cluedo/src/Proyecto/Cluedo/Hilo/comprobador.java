@@ -17,6 +17,7 @@ public class comprobador extends Thread {
 
 	
 	public GestionBaseDeDatos base;
+
 	public Partida p;
 
 	public Connection conexion;

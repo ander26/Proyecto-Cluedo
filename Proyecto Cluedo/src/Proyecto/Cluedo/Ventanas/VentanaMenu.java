@@ -375,7 +375,9 @@ public class VentanaMenu extends JFrame{
 			}
 		});
 
-		labelEstadistica.addMouseMotionListener(new MouseAdapter(){
+
+		labelEstadistica.addMouseListener(new MouseAdapter(){
+
 			@Override
 			public void mouseClicked(MouseEvent arg0){
 				VentanaRanking ranking=new VentanaRanking(conexion);

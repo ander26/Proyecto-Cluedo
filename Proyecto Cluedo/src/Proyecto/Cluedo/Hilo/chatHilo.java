@@ -9,6 +9,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
@@ -32,20 +33,25 @@ public class chatHilo extends Thread {
 	
 	private ArrayList <String> listaMensajes;
 	
+	private JScrollPane panelMensajes;
+	
 //	private JPanel panel;
 	
-	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JEditorPane principal,JList <String> usuarios){
+	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JEditorPane principal,JList <String> usuarios,JScrollPane panelMensajes){
 		this.conexion=conexion;
 		this.j=j;
 		this.usuariosLinea=usuariosLinea;
 		this.principal=principal;
 		this.usuarios=usuarios;
+		this.panelMensajes=panelMensajes;
 //		this.panel=panel;
 	}
 	
 	public void run (){
 		
 		while (j.isEnLinea()){
+			
+			listaUsuarios= new ArrayList<>();
 			
 			listaUsuarios=gestion.obtenerJugadoresLinea(conexion, j);
 			
@@ -88,7 +94,9 @@ public class chatHilo extends Thread {
 			
 			principal.setText(tabla);
 			
+			panelMensajes.getVerticalScrollBar().setValue(panelMensajes.getVerticalScrollBar().getMaximum());
 			
+			panelMensajes.validate();
 			
 //			panel.validate();
 			

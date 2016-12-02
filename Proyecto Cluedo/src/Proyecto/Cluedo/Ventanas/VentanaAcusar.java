@@ -34,6 +34,7 @@ public class VentanaAcusar extends JFrame {
 	private JPanel pbotonera=new JPanel();
 	private JPanel pantesbotonera=new JPanel();
 	
+
 	public static void main(String[] args) {
 		
 		// TODO Auto-generated method stub		
@@ -53,6 +54,8 @@ public class VentanaAcusar extends JFrame {
 		JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
 		f.setVisible(true);
 	}
+	
+
 	public VentanaAcusar(String ruta,Propiedades prop){
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );		
 		setSize( 1330, 730 );			

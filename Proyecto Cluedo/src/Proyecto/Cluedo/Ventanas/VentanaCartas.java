@@ -3,14 +3,18 @@ package Proyecto.Cluedo.Ventanas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+
+
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -29,6 +33,7 @@ import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaCartas extends JFrame{
+
 //	private JTabbedPane ptabbed=new JTabbedPane();
 	private panelrosa pprincipal;
 	private int r=150;
@@ -202,6 +207,20 @@ public class VentanaCartas extends JFrame{
 	public VentanaCartas(GestionBaseDeDatos base,Jugador j,Partida p,Connection con){
 		ImageIcon imageestrellas = new ImageIcon(ventana.class.getResource("Imagenes/mesa.jpg"));
 		pprincipal=new panelrosa(imageestrellas.getImage());
+//=======
+//	private JTabbedPane ptabbed=new JTabbedPane();
+//	private JPanel pprincipal=new JPanel();
+//	private panelrosa psospechosos;
+//	private JPanel pdsospechosos=new JPanel();
+//	private panelrosa parmas;
+//	private JPanel pdarmas=new JPanel();
+//	private panelrosa plugares;
+//	private JPanel pdlugares=new JPanel();
+//	private JPanel pcomodines=new JPanel();
+//	private JLabel lenviar;
+//
+//	public VentanaCartas(GestionBaseDeDatos base,Jugador j,Partida p,Connection con){
+//>>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );		
 		setSize( 1330, 730 );		
 		setMinimumSize(new Dimension(900,500));
@@ -226,7 +245,32 @@ public class VentanaCartas extends JFrame{
 		Icon iflechaizquierda = new ImageIcon(iiflechaizquierda.getImage().getScaledInstance(flechaizquierda.getWidth()	, flechaizquierda.getHeight(), Image.SCALE_DEFAULT));
 		flechaderecha.setIcon(iflechaderecha);
 		
+
 		flechaizquierda.setIcon(iflechaizquierda);
+//
+//		setMinimumSize(new Dimension(900,500));		
+//		setResizable( true );
+//		//Poner fondo a los paneles
+//		ImageIcon imagearma = new ImageIcon(ventana.class.getResource("Imagenes/claustro.jpg"));
+//		parmas=new panelrosa(imagearma.getImage());
+//		ImageIcon imagelugares = new ImageIcon(ventana.class.getResource("Imagenes/violencia.png"));
+//		plugares=new panelrosa(imagelugares.getImage());
+//		ImageIcon imagesospechosos = new ImageIcon(ventana.class.getResource("Imagenes/asesino.jpg"));
+//		psospechosos=new panelrosa(imagesospechosos.getImage());
+//		pcomodines=new JPanel();
+//		//parmas
+//		
+//		JPanel pmesa=new JPanel();
+//		JLabel lmesa=new JLabel();
+//		
+//		ImageIcon iconomesa = new ImageIcon(ventana.class.getResource("Imagenes/mesa.png"));		
+//		lmesa.setSize(800,100);
+//		Icon iconomesaa = new ImageIcon(iconomesa.getImage().getScaledInstance(lmesa.getWidth()	, lmesa.getHeight(), Image.SCALE_DEFAULT));
+//		lmesa.setIcon(iconomesaa);
+//		pmesa.add(lmesa);
+//		pmesa.setOpaque(false);
+//		
+//>>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
 		
 		pbotonera.add(flechaizquierda);
 		pbotonera.add(flechaderecha);
@@ -276,6 +320,7 @@ public class VentanaCartas extends JFrame{
 					
 				});
 		
+
 		}
 	public void meterCartas(GestionBaseDeDatos base,Connection con,Partida p, Jugador jugador){
 		ArrayList<String> cartassitios=base.obtenerCartasDeJugador(con, p.getCodigo(), jugador.getCodigo(), 0);
@@ -291,7 +336,34 @@ public class VentanaCartas extends JFrame{
 		numCartas=cartassitios.size()+cartassospechosos.size()+cartasarmas.size()+cartascomodin.size();
 		double alfa=Math.PI/numCartas;
 		double beta=alfa;
+//
+//		//crear ptabbed		
+//		ptabbed.addTab("", iconoarma, parmas,"");
+//		ptabbed.setMnemonicAt(0, KeyEvent.VK_1);		
+//		ptabbed.addTab("", iconolugares, plugares,"");
+//		ptabbed.setMnemonicAt(1, KeyEvent.VK_2);
+//		ptabbed.addTab("", iconosospechosos,psospechosos,"");
+//		ptabbed.setMnemonicAt(2, KeyEvent.VK_3);
+//		ptabbed.addTab("", iconocomodines, pcomodines,"");
+//		ptabbed.setMnemonicAt(0, KeyEvent.VK_4);
+//		//ptabbed.setTabPlacement(JTabbedPane.BOTTOM);
+//		ptabbed.setBorder(null);
+//		pprincipal.setLayout(new BorderLayout());
+//		ImageIcon iconoenviar = new ImageIcon(ventana.class.getResource("Imagenes/BOTONENVIAR.png"));		
+//		lenviar=new JLabel();
+//		lenviar.setSize(170,113);
+//		Icon icono = new ImageIcon(iconoenviar.getImage().getScaledInstance(lenviar.getWidth()	, lenviar.getHeight(), Image.SCALE_DEFAULT));
+//		lenviar.setIcon(icono);
+//		//Añadir layout a los paneles
+//		parmas.setLayout(new BorderLayout());
+//		
+//		parmas.add(BorderLayout.SOUTH,pmesa);
+//		
+//		pdlugares.setLayout(new BorderLayout());
+//		pdlugares.setOpaque(false);
+//>>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
 		
+
 		int PCcircunferencia=getWidth()/2;
 		for (int i=0;i<numCartas;i++){
 			System.out.println(beta);
@@ -317,9 +389,105 @@ public class VentanaCartas extends JFrame{
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+//=======
+//		pcomodines.setLayout(new BorderLayout());
+//		pdsospechosos.setLayout(new BorderLayout());	
+//		pdsospechosos.setOpaque(false);
+//		
+//		//Añadir los paneles a sus respectivos paneles
+//		JLabel hueco=new JLabel();
+//		JLabel hueco2=new JLabel();
+//		JLabel hueco3=new JLabel();
+//		hueco.setSize(new Dimension(300,200));
+//		ImageIcon vacio = new ImageIcon(ventana.class.getResource("Imagenes/vacio.png"));
+//		Icon iconovacio = new ImageIcon(vacio.getImage().getScaledInstance(hueco.getWidth()	, hueco.getHeight(), Image.SCALE_DEFAULT));
+//		hueco.setIcon(iconovacio);
+//		hueco2.setIcon(iconovacio);
+//		hueco3.setIcon(iconovacio);
+//		
+//	
+//		
+//		
+//		plugares.setLayout(new BorderLayout());	
+//		plugares.add(pdlugares,BorderLayout.CENTER);
+//		plugares.add(hueco2,BorderLayout.WEST);
+//		//plugares.add(hueco,BorderLayout.WEST);
+//		
+//		psospechosos.setLayout(new BorderLayout());
+//		psospechosos.add(pdsospechosos,BorderLayout.CENTER);
+//		psospechosos.add(hueco3,BorderLayout.WEST);
+//		//psospechosos.add(hueco,BorderLayout.WEST);
+//		
+//		
+////		Jugador a=new Jugador();
+////		Jugador b=new Jugador();
+////		Jugador [] arrjug=new Jugador [2];
+////		arrjug[0]=a;
+////		arrjug[1]=b;
+////		Propiedades prop =new Propiedades(6,8,7,2);
+////		prop.repartirCartas(arrjug);
+////		meterCartas(a,prop,0,pdarmas);
+////		meterCartas(a,prop,1,pdlugares);
+////		meterCartas(a,prop,2,pdsospechosos);
+////		meterCartas(a,prop,3,pcomodines);
+//		meterCartas(j,p,0,parmas,base,con,0,hueco,hueco2);
+//		meterCartas(j,p,1,pdlugares,base,con,1,hueco2,hueco);
+//		meterCartas(j,p,2,pdsospechosos,base,con,2,hueco3,hueco);
+//		//meterCartas(j,p,3,pcomodines,base,con,3);		
+//		pprincipal.add(BorderLayout.SOUTH,lenviar);
+//		pprincipal.add(BorderLayout.CENTER,ptabbed);
+//		getContentPane().add(pprincipal);
+//
+//>>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
 			}
+
 			beta=beta+alfa;
 		}
 	}
 
+//=======
+//	public static void meterCartas(Jugador jugador,Partida p,int panel,JPanel pan,GestionBaseDeDatos base,Connection con,int tipo,JLabel hueco,JLabel hueco2){	
+//			ArrayList<String> cartasdepalo=base.obtenerCartasDeJugador(con, p.getCodigo(), jugador.getCodigo(), tipo);
+//			int k=0;
+//			for(int i=0;i<cartasdepalo.size();i++){
+//				System.out.println(cartasdepalo.get(i));
+//				String ruta=base.consultaATablaCartas(con,"NOMBRE="+"'"+cartasdepalo.get(i)+"'").get(0).getRutaIcono();
+////			for(int j=0;j<jugador.getMisCartas().get(panel).size();j++){				
+////			String ruta=p.getBaraja().get(panel).get(jugador.getMisCartas().get(panel).get(j)).getRutaIcono();
+//			JLabel label=new JLabel();
+//			System.out.println(ruta);
+//			ImageIcon iconocarta = new ImageIcon(ventana.class.getResource(ruta));		
+//			label.setSize(227,283);
+//			Icon icono = new ImageIcon(iconocarta.getImage().getScaledInstance(label.getWidth()	, label.getHeight(), Image.SCALE_DEFAULT));
+//			label.setIcon(icono);
+//			JPanel panelcentrado=new JPanel();
+//			panelcentrado.add(label);
+//			if(k==0){
+//				pan.add(panelcentrado, BorderLayout.CENTER);
+//			}else if(k==1){
+//				panelcentrado.setBackground(Color.BLUE);
+//				JPanel panelnoesquina=new JPanel();
+//				panelnoesquina.setLayout(new BorderLayout());
+//				panelnoesquina.add(hueco,BorderLayout.EAST);
+//				panelnoesquina.add(panelcentrado,BorderLayout.CENTER);
+//				pan.add(panelnoesquina, BorderLayout.EAST);
+//				
+//			}else if(k==2){
+//				panelcentrado.setBackground(Color.BLUE);
+//				JPanel panelnoesquina=new JPanel();
+//				panelnoesquina.setLayout(new BorderLayout());
+//				panelnoesquina.add(hueco2,BorderLayout.WEST);
+//				panelnoesquina.add(panelcentrado,BorderLayout.CENTER);
+//				pan.add(panelnoesquina, BorderLayout.WEST);
+//			}
+//			
+//			k=k+1;
+//			
+//			}
+//			
+//		
+//			
+//	}
+//	
+//>>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
 }
