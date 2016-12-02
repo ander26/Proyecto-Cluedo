@@ -256,7 +256,7 @@ public class VentanaChat extends JFrame {
 	
 		getContentPane().add(panelLista);
 		
-		chatHilo hilo= new chatHilo(conexion, j, usuariosLinea, principal, usuarios);
+		chatHilo hilo= new chatHilo(conexion, j, usuariosLinea, principal, usuarios,panelMensajes);
 		
 		
 		hilo.start();
@@ -361,7 +361,7 @@ public class VentanaChat extends JFrame {
 					usuariosLinea.setText("  Usuarios en linea: "+listaUsuarios.size());
 					
 					usuariosLinea.repaint();
-					chatHilo hilo = new chatHilo(conexion, j, labelFondo, principal, usuarios);
+					chatHilo hilo = new chatHilo(conexion, j, labelFondo, principal, usuarios,panelMensajes);
 					
 					hilo.start();
 					

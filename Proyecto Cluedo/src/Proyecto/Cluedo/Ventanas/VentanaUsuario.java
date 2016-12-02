@@ -116,7 +116,11 @@ public class VentanaUsuario extends JFrame {
 		labelHueco.setText("       ");
 
 		labelPerfil.setAlignmentY(CENTER_ALIGNMENT);
+		
+		labelBorrar.setToolTipText("Pulse aqui si desea borrar definitivamente su cuenta");
 
+		labelModificar.setToolTipText("Pulse aqui si desea moficar algun campo de su cuenta");
+		
 		// Añadimos los paneles
 
 		getContentPane().setLayout(new BorderLayout());

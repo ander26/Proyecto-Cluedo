@@ -26,6 +26,10 @@ public class LabelPerfil extends JLabel{
 	private ImageIcon imagen;
 	
 	
+	public LabelPerfil(){
+		
+	}
+	
 	public LabelPerfil(ImageIcon imagen,int x,int y,int altura,int anchura) {
 		
 		this.altura=altura;

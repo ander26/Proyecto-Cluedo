@@ -401,7 +401,7 @@ public class VentanaRegistro extends JFrame {
 				
 				labelPerfil.setImagen(imagenPerfil);
 				
-				u.setImagenPerfil(imagenPerfil);
+
 				
 			}else{
 				

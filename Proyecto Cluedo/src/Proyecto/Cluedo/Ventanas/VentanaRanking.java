@@ -25,12 +25,46 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.Renderer;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Proyecto.Cluedo.Datos.Genero;
+import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+
+
+class miListRenderer implements ListCellRenderer {
+	  protected static Border noFocusBorder = new EmptyBorder(15, 1, 1, 1);
+
+	  protected static TitledBorder focusBorder = new TitledBorder(LineBorder.createGrayLineBorder(),
+	      "Seleccionado");
+
+	  protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+
+	  public Component getListCellRendererComponent(JList list, Object value, int index,
+	      boolean isSelected, boolean cellHasFocus) {
+		
+	    JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index,
+	        isSelected, cellHasFocus);
+	    renderer.setBackground(Color.white);
+	    if (cellHasFocus){
+	    renderer.setForeground(Color.black);	
+	    }else{
+	    renderer.setForeground(Color.red.darker());
+	    }
+	    
+	    renderer.setFont(new Font("System", Font.BOLD, 14));
+	    renderer.setBorder(cellHasFocus ? focusBorder : noFocusBorder);
+	    return renderer;
+	  }
+}
+
+
 
 public class VentanaRanking extends JFrame{
 	
@@ -67,23 +101,13 @@ public class VentanaRanking extends JFrame{
 	//private JPanel ppodium=new JPanel();
 	private int num;
 	
-	private JLabel foto=new JLabel();
+	private LabelPerfil foto=new LabelPerfil(null,0,0,200,200);
 	
 	
 	private GestionBaseDeDatos base=new GestionBaseDeDatos();
 	private ArrayList<Usuario> ALUsuarios;
 	//Codigo cogido de la practica 1
-	private DefaultListCellRenderer miListRenderer = new DefaultListCellRenderer() {
-		private static final long serialVersionUID = 1L;
-		@Override
-		public Component getListCellRendererComponent(
-				JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-			JLabel miComp = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-			 miComp.setForeground( java.awt.Color.RED );
-			 miComp.setBackground(Color.black);
-			return miComp;
-		}
-	};
+	
 	
 	
 	
@@ -94,7 +118,13 @@ public class VentanaRanking extends JFrame{
 			RellenarLista(ALUsuarios);
 			PonerGanadores();			
 			
-			lista.setCellRenderer(miListRenderer);;
+			ListCellRenderer renderer = new miListRenderer();
+			
+			lista.setCellRenderer(renderer);
+			
+			lista.setSelectedIndex(0);
+			
+			
 			setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );	
 			setSize( 1330, 830 );					
 			setResizable( true );
@@ -103,9 +133,9 @@ public class VentanaRanking extends JFrame{
 			//ImageIcon imagefondopodium = new ImageIcon(VentanaRanking.class.getResource("Imagenes/podiumrojo.png"));
 								
 			//Layout
-			pslista.setBackground(Color.BLACK);
+			pslista.setBackground(Color.WHITE);
 			lista.setOpaque(false);
-			
+		
 			puntos.setFont(new Font("ITALIC",Font.BOLD,30));
 			puntos.setForeground(Color.YELLOW);
 			pfoto.add(foto);
@@ -157,7 +187,7 @@ public class VentanaRanking extends JFrame{
 			meterImgEnlabel("Imagenes/podium.png",lpodium,600,400);
 			meterImgEnlabel("Imagenes/cartel.png",lcartel,300,200);
 			//add
-			
+		
 			pcartel.add(puntos);
 			parriba.add(pcartel);
 			//Icon icono = new ImageIcon(u.getImagenPerfil().getImage().getScaledInstance(foto.getWidth()	, foto.getHeight(), Image.SCALE_DEFAULT));
@@ -181,10 +211,27 @@ public class VentanaRanking extends JFrame{
 			pmedio.add(ppodium);			
 			//pmedio.add(ppodium,BorderLayout.SOUTH);
 			//pprincipal.add(pcartel);
+			
+//			pprincipal.add(parriba, BorderLayout.NORTH);
 			pprincipal.add(pizquierdo);
 			pprincipal.add(pmedio);					
 			pprincipal.add(pderecho);			
 			getContentPane().add(pprincipal);
+			
+			foto.setSize(200,200);	
+			
+	    	  Icon icono = new ImageIcon(ALUsuarios.get(0).getImagenPerfil().getImage().getScaledInstance(foto.getWidth()	, foto.getHeight(), Image.SCALE_DEFAULT));
+			  foto.setIcon(icono);
+			  
+			  foto.setAlignmentX(CENTER_ALIGNMENT);	
+			  
+			  
+			  pfoto.add(foto);
+			  
+			  
+			  puntos.setText("<html><body> <br> <br> <P ALIGN=center> "+ALUsuarios.get(num).getPuntuacion()+"<br> <br> &nbsp;&nbsp; &nbsp;&nbsp;       PUNTOS &nbsp;&nbsp;&nbsp;&nbsp;       <br>  <br> <br></body></html> ");
+			  pprincipal.revalidate();
+			  
 			lista.addListSelectionListener(new ListSelectionListener() {
 			      public void valueChanged(ListSelectionEvent evt) {
 			    	  num=lista.getSelectedIndex();
@@ -193,8 +240,13 @@ public class VentanaRanking extends JFrame{
 						
 			    	  Icon icono = new ImageIcon(ALUsuarios.get(num).getImagenPerfil().getImage().getScaledInstance(foto.getWidth()	, foto.getHeight(), Image.SCALE_DEFAULT));
 					  foto.setIcon(icono);
+					  
 					  foto.setAlignmentX(CENTER_ALIGNMENT);	
+					  
+					  
 					  pfoto.add(foto);
+					  
+					  
 					  puntos.setText("<html><body> <br> <br> <P ALIGN=center> "+ALUsuarios.get(num).getPuntuacion()+"<br> <br> &nbsp;&nbsp; &nbsp;&nbsp;       PUNTOS &nbsp;&nbsp;&nbsp;&nbsp;       <br>  <br> <br></body></html> ");
 					  pprincipal.revalidate();
 					 						
@@ -220,7 +272,10 @@ public class VentanaRanking extends JFrame{
 		
 		public void PonerGanadores(){
 			for(int i=0;i<3;i++){
-				JLabel a=new JLabel();
+				JLabel espacio= new JLabel("<html><body>&nrsp</body><html> ");
+				espacio.setOpaque(true);
+				espacio.setForeground(new Color (0.0f,0.0f,0.0f,0.0f));
+				LabelPerfil a=new LabelPerfil(null,0, 0, 50	, 50);
 				JPanel pa=new JPanel();
 				
 				JPanel pabajo=new JPanel();
@@ -232,7 +287,7 @@ public class VentanaRanking extends JFrame{
 				a.setSize(50,50);
 				Icon icono = new ImageIcon(ALUsuarios.get(i).getImagenPerfil().getImage().getScaledInstance(a.getWidth()	, a.getHeight(), Image.SCALE_DEFAULT));
 				a.setIcon(icono);
-				
+				pa.add(espacio);
 				pa.add(a);
 				
 				pabajo.add(pa,BorderLayout.SOUTH);
