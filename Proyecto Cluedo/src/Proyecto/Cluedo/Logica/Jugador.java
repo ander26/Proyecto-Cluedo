@@ -9,10 +9,6 @@ public class Jugador {
 	private ArrayList<ArrayList<String>> MisCartas;
 
 	
-	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
-	
-	private ArrayList<ArrayList<String>> MisCartas;
-	
 
 	private String Ficha;
 	private int Lugar;

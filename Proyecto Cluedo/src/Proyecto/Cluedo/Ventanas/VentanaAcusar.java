@@ -35,25 +35,25 @@ public class VentanaAcusar extends JFrame {
 	private JPanel pantesbotonera=new JPanel();
 	
 
-	public static void main(String[] args) {
-		
-		// TODO Auto-generated method stub		
-		Jugador a =new Jugador();
-		a.setLugar(2);
-		//mete el fondo del lugar en el que este
-		String [] aimglug=new String [8];
-		aimglug[0]="Imagenes/ingenieria.jpg";
-		aimglug[1]="Imagenes/comercial.jpg";
-		aimglug[2]="Imagenes/capilla.JPG";
-		aimglug[3]="Imagenes/centenario.jpg";
-		aimglug[4]="Imagenes/letras.jpg";
-		aimglug[5]="Imagenes/biblioteca.jpeg";
-		aimglug[6]="Imagenes/zubiarte.jpg";
-		aimglug[7]="Imagenes/zubiarte.jpg";
-																		
-		JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
-		f.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		
+//		// TODO Auto-generated method stub		
+//		Jugador a =new Jugador();
+//		a.setLugar(2);
+//		//mete el fondo del lugar en el que este
+//		String [] aimglug=new String [8];
+//		aimglug[0]="Imagenes/ingenieria.jpg";
+//		aimglug[1]="Imagenes/comercial.jpg";
+//		aimglug[2]="Imagenes/capilla.JPG";
+//		aimglug[3]="Imagenes/centenario.jpg";
+//		aimglug[4]="Imagenes/letras.jpg";
+//		aimglug[5]="Imagenes/biblioteca.jpeg";
+//		aimglug[6]="Imagenes/zubiarte.jpg";
+//		aimglug[7]="Imagenes/zubiarte.jpg";
+//																		
+//		JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
+//		f.setVisible(true);
+//	}
 	
 
 	public VentanaAcusar(String ruta,Propiedades prop){

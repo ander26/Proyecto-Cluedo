@@ -38,6 +38,211 @@ import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
 
+//<<<<<<< HEAD
+//
+//
+//// Establecemos el formato
+//
+//setSize(915, 634);
+//
+//setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//
+//setMinimumSize(new Dimension(915,634));
+//
+//// Generamos los componentes
+//
+//
+//
+//ImageIcon imagen = new ImageIcon();
+//
+//Icon icono;
+//
+//// Establecemos el formato
+//
+//ALUsuarios = base.consultaATablaOrdenadoPuntuacion(conexion);
+//
+//RellenarLista(ALUsuarios);
+//
+//lista.setCellRenderer(miListRenderer);
+//;
+//
+//// lista.setOpaque(false);
+//
+//try {
+//	imagen = new ImageIcon(VentanaRanking.class.getResource("Imagenes/fondoRanking.png").toURI().toURL());
+//} catch (MalformedURLException e) {
+//	// TODO Auto-generated catch block
+//	e.printStackTrace();
+//} catch (URISyntaxException e) {
+//	// TODO Auto-generated catch block
+//	e.printStackTrace();
+//}
+//
+//panelrosa panelCentro = new panelrosa(imagen.getImage());
+//
+//JScrollPane panel = new JScrollPane(lista);
+//panel.setBounds(47, 158, 142, 342);
+//panel.setBackground(Color.white);
+//
+//try {
+//	imagen = new ImageIcon(ALUsuarios.get(0).getImagenPerfil().getImage());
+//} catch (Exception e) {
+//	System.out.println("No se encuentra el archivo");
+//}
+//
+//labelFoto1 = new LabelPerfil(imagen, 736, 470, 95, 95);
+//
+//try {
+//	imagen = new ImageIcon(ALUsuarios.get(1).getImagenPerfil().getImage());
+//} catch (Exception e) {
+//	System.out.println("No se encuentra el archivo");
+//}
+//
+//labelFoto2 = new LabelPerfil(imagen, 667, 463, 76, 79);
+//
+//try {
+//	imagen = new ImageIcon(ALUsuarios.get(2).getImagenPerfil().getImage());
+//} catch (Exception e) {
+//	System.out.println("No se encuentra el archivo");
+//}
+//
+//labelFoto3 = new LabelPerfil(imagen, 827, 485, 66, 66);
+//
+//try {
+//	imagen = new ImageIcon(ALUsuarios.get(0).getImagenPerfil().getImage());
+//} catch (Exception e) {
+//	System.out.println("No se encuentra el archivo");
+//}
+//
+//labelFotoP = new LabelPerfil(imagen, 340, 185, 220, 220);
+//
+//labelPuntuacion.setText("<html><body><DIV ALIGN=center>" + ALUsuarios.get(0).getNombre() + "<br>"
+//		+ "Puntuacion <br>" + ALUsuarios.get(0).getPuntuacion() + "</div></body></html>");
+//
+//labelPuntuacion.setBounds(384, 40, 140, 90);
+//
+//labelPuntuacion.setForeground(Color.YELLOW.darker());
+//
+//labelPuntuacion.setFont(new Font("System", Font.BOLD, 24));
+//
+//// Añadimos al panel
+//
+//getContentPane().setLayout(new BorderLayout());
+//
+//panelCentro.setLayout(null);
+//
+//getContentPane().add(panelCentro, BorderLayout.CENTER);
+//
+//panelCentro.add(labelFoto1);
+//
+//panelCentro.add(labelFoto2);
+//
+//panelCentro.add(labelFoto3);
+//
+//panelCentro.add(labelFotoP);
+//
+//panelCentro.add(labelPuntuacion);
+//
+//panelCentro.add(panel);
+//
+//
+//
+//// Generamos los eventos
+//
+//addComponentListener(new ComponentAdapter() {
+//	@Override
+//	public void componentResized(ComponentEvent e) { // Al
+//														// redimensionarse
+//														// el panel,
+//														// reajustamos
+//														// sus
+//														// componentes
+//
+//		double escalaX = getContentPane().getWidth() / (double) ANCHURA; // Nueva
+//		// escala
+//		// X
+//		double escalaY = getContentPane().getHeight()  / (double) ALTURA ; // Nueva
+//					// escala
+//					// Y
+//
+//		panelCentro.remove(panel);
+//			
+//		panel.setBounds((int) (X[0] * escalaX), (int) (Y[0] * escalaY),
+//					(int) (Anchura[0] * escalaX), (int) (Altura[0] * escalaY));
+//		
+//		panelCentro.add(panel);
+//		
+//		panelCentro.remove(labelPuntuacion);
+//		
+//		
+//		
+//		labelPuntuacion.setLocation((getContentPane().getWidth()/2-Anchura[1]/2), (int) (Y[1] * (escalaY)));
+//	
+//		
+//		panelCentro.add(labelPuntuacion);
+//		
+//		panelCentro.remove(labelFotoP);
+//		
+//		labelFotoP= new LabelPerfil (ALUsuarios.get(contador).getImagenPerfil(),(int) (X[2] * escalaX), (int) (Y[2] * escalaY),
+//				(int) (Anchura[2] * escalaY), (int) (Altura[2] * escalaX));
+//		
+//		panelCentro.add(labelFotoP);
+//		
+//		panelCentro.remove(labelFoto1);
+//		
+//		labelFoto1= new LabelPerfil(ALUsuarios.get(0).getImagenPerfil(),(int) (X[4] * escalaX), (int) (Y[4] * escalaY),
+//				(int) (Anchura[4] * escalaY), (int) (Altura[4] * escalaX));
+//		
+//		panelCentro.add(labelFoto1);
+//		
+//		panelCentro.remove(labelFoto2);
+//		
+//		labelFoto2=new LabelPerfil(ALUsuarios.get(1).getImagenPerfil(),(int) (X[3] * escalaX), (int) (Y[3] * escalaY),
+//				(int) (Anchura[3] * escalaY), (int) (Altura[3] * escalaX));
+//		
+//		panelCentro.add(labelFoto2);
+//		
+//		panelCentro.remove(labelFoto3);
+//		
+//		labelFoto3=new LabelPerfil(ALUsuarios.get(2).getImagenPerfil(),(int) (X[5] * escalaX), (int) (Y[5] * escalaY),
+//				(int) (Anchura[5] * escalaY), (int) (Altura[5] * escalaX));
+//		
+//		panelCentro.add(labelFoto3);
+//		
+//	
+//		 }
+//});
+//
+//lista.addListSelectionListener(new ListSelectionListener() {
+//	public void valueChanged(ListSelectionEvent evt) {
+//		int num = lista.getSelectedIndex();
+//
+//		contador = num;
+//		
+//		labelFotoP.setImagen(ALUsuarios.get(num).getImagenPerfil());
+//
+//		labelPuntuacion.setText("<html><body><DIV ALIGN=center>" + ALUsuarios.get(num).getNombre() + "<br>"
+//				+ "Puntuacion <br>" + ALUsuarios.get(num).getPuntuacion() + "</div></body></html>");
+//
+//		panelCentro.revalidate();
+//		
+//
+//	}
+//
+//});
+//}
+//
+//public void RellenarLista(ArrayList<Usuario> arrayl) {
+//lista = new JList<String>();
+//String[] arr = new String[arrayl.size()];
+//for (int i = 0; i < arrayl.size(); i++) {
+//	arr[i] = arrayl.get(i).getUsuario();
+//}
+//lista.setListData(arr);
+//}
+
+// Codigo cogido de la practica 1
+
 class miListRenderer implements ListCellRenderer {
 	  protected static Border noFocusBorder = new EmptyBorder(15, 1, 1, 1);
 
@@ -48,225 +253,6 @@ class miListRenderer implements ListCellRenderer {
 
 	  public Component getListCellRendererComponent(JList list, Object value, int index,
 	      boolean isSelected, boolean cellHasFocus) {
-		
-//<<<<<<< HEAD
-//		
-//		
-//		// Establecemos el formato
-//
-//		setSize(915, 634);
-//
-//		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//		
-//		setMinimumSize(new Dimension(915,634));
-//
-//		// Generamos los componentes
-//
-//
-//
-//		ImageIcon imagen = new ImageIcon();
-//
-//		Icon icono;
-//
-//		// Establecemos el formato
-//
-//		ALUsuarios = base.consultaATablaOrdenadoPuntuacion(conexion);
-//
-//		RellenarLista(ALUsuarios);
-//
-//		lista.setCellRenderer(miListRenderer);
-//		;
-//
-//		// lista.setOpaque(false);
-//
-//		try {
-//			imagen = new ImageIcon(VentanaRanking.class.getResource("Imagenes/fondoRanking.png").toURI().toURL());
-//		} catch (MalformedURLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (URISyntaxException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		panelrosa panelCentro = new panelrosa(imagen.getImage());
-//
-//		JScrollPane panel = new JScrollPane(lista);
-//		panel.setBounds(47, 158, 142, 342);
-//		panel.setBackground(Color.white);
-//
-//		try {
-//			imagen = new ImageIcon(ALUsuarios.get(0).getImagenPerfil().getImage());
-//		} catch (Exception e) {
-//			System.out.println("No se encuentra el archivo");
-//		}
-//
-//		labelFoto1 = new LabelPerfil(imagen, 736, 470, 95, 95);
-//
-//		try {
-//			imagen = new ImageIcon(ALUsuarios.get(1).getImagenPerfil().getImage());
-//		} catch (Exception e) {
-//			System.out.println("No se encuentra el archivo");
-//		}
-//
-//		labelFoto2 = new LabelPerfil(imagen, 667, 463, 76, 79);
-//
-//		try {
-//			imagen = new ImageIcon(ALUsuarios.get(2).getImagenPerfil().getImage());
-//		} catch (Exception e) {
-//			System.out.println("No se encuentra el archivo");
-//		}
-//
-//		labelFoto3 = new LabelPerfil(imagen, 827, 485, 66, 66);
-//
-//		try {
-//			imagen = new ImageIcon(ALUsuarios.get(0).getImagenPerfil().getImage());
-//		} catch (Exception e) {
-//			System.out.println("No se encuentra el archivo");
-//		}
-//
-//		labelFotoP = new LabelPerfil(imagen, 340, 185, 220, 220);
-//
-//		labelPuntuacion.setText("<html><body><DIV ALIGN=center>" + ALUsuarios.get(0).getNombre() + "<br>"
-//				+ "Puntuacion <br>" + ALUsuarios.get(0).getPuntuacion() + "</div></body></html>");
-//
-//		labelPuntuacion.setBounds(384, 40, 140, 90);
-//
-//		labelPuntuacion.setForeground(Color.YELLOW.darker());
-//
-//		labelPuntuacion.setFont(new Font("System", Font.BOLD, 24));
-//
-//		// Añadimos al panel
-//
-//		getContentPane().setLayout(new BorderLayout());
-//
-//		panelCentro.setLayout(null);
-//
-//		getContentPane().add(panelCentro, BorderLayout.CENTER);
-//
-//		panelCentro.add(labelFoto1);
-//
-//		panelCentro.add(labelFoto2);
-//
-//		panelCentro.add(labelFoto3);
-//
-//		panelCentro.add(labelFotoP);
-//
-//		panelCentro.add(labelPuntuacion);
-//
-//		panelCentro.add(panel);
-//
-//	
-//
-//		// Generamos los eventos
-//
-//		addComponentListener(new ComponentAdapter() {
-//			@Override
-//			public void componentResized(ComponentEvent e) { // Al
-//																// redimensionarse
-//																// el panel,
-//																// reajustamos
-//																// sus
-//																// componentes
-//
-//				double escalaX = getContentPane().getWidth() / (double) ANCHURA; // Nueva
-//				// escala
-//				// X
-//				double escalaY = getContentPane().getHeight()  / (double) ALTURA ; // Nueva
-//							// escala
-//							// Y
-//
-//				panelCentro.remove(panel);
-//					
-//				panel.setBounds((int) (X[0] * escalaX), (int) (Y[0] * escalaY),
-//							(int) (Anchura[0] * escalaX), (int) (Altura[0] * escalaY));
-//				
-//				panelCentro.add(panel);
-//				
-//				panelCentro.remove(labelPuntuacion);
-//				
-//				
-//				
-//				labelPuntuacion.setLocation((getContentPane().getWidth()/2-Anchura[1]/2), (int) (Y[1] * (escalaY)));
-//			
-//				
-//				panelCentro.add(labelPuntuacion);
-//				
-//				panelCentro.remove(labelFotoP);
-//				
-//				labelFotoP= new LabelPerfil (ALUsuarios.get(contador).getImagenPerfil(),(int) (X[2] * escalaX), (int) (Y[2] * escalaY),
-//						(int) (Anchura[2] * escalaY), (int) (Altura[2] * escalaX));
-//				
-//				panelCentro.add(labelFotoP);
-//				
-//				panelCentro.remove(labelFoto1);
-//				
-//				labelFoto1= new LabelPerfil(ALUsuarios.get(0).getImagenPerfil(),(int) (X[4] * escalaX), (int) (Y[4] * escalaY),
-//						(int) (Anchura[4] * escalaY), (int) (Altura[4] * escalaX));
-//				
-//				panelCentro.add(labelFoto1);
-//				
-//				panelCentro.remove(labelFoto2);
-//				
-//				labelFoto2=new LabelPerfil(ALUsuarios.get(1).getImagenPerfil(),(int) (X[3] * escalaX), (int) (Y[3] * escalaY),
-//						(int) (Anchura[3] * escalaY), (int) (Altura[3] * escalaX));
-//				
-//				panelCentro.add(labelFoto2);
-//				
-//				panelCentro.remove(labelFoto3);
-//				
-//				labelFoto3=new LabelPerfil(ALUsuarios.get(2).getImagenPerfil(),(int) (X[5] * escalaX), (int) (Y[5] * escalaY),
-//						(int) (Anchura[5] * escalaY), (int) (Altura[5] * escalaX));
-//				
-//				panelCentro.add(labelFoto3);
-//				
-//			
-//				 }
-//		});
-//
-//		lista.addListSelectionListener(new ListSelectionListener() {
-//			public void valueChanged(ListSelectionEvent evt) {
-//				int num = lista.getSelectedIndex();
-//
-//				contador = num;
-//				
-//				labelFotoP.setImagen(ALUsuarios.get(num).getImagenPerfil());
-//
-//				labelPuntuacion.setText("<html><body><DIV ALIGN=center>" + ALUsuarios.get(num).getNombre() + "<br>"
-//						+ "Puntuacion <br>" + ALUsuarios.get(num).getPuntuacion() + "</div></body></html>");
-//
-//				panelCentro.revalidate();
-//				
-//
-//			}
-//
-//		});
-//	}
-//
-//	public void RellenarLista(ArrayList<Usuario> arrayl) {
-//		lista = new JList<String>();
-//		String[] arr = new String[arrayl.size()];
-//		for (int i = 0; i < arrayl.size(); i++) {
-//			arr[i] = arrayl.get(i).getUsuario();
-//		}
-//		lista.setListData(arr);
-//	}
-
-	// Codigo cogido de la practica 1
-
-	private DefaultListCellRenderer miListRenderer = new DefaultListCellRenderer() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
-				boolean cellHasFocus) {
-			JLabel miComp = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-			miComp.setForeground(Color.red.darker());
-			miComp.setFont(new Font("System", Font.BOLD, 14));
-			miComp.setBackground(Color.WHITE);
-			return miComp;
-		}
-	};
 
 
 	    JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index,

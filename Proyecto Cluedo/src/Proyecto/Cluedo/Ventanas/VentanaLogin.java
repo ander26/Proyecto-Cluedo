@@ -66,7 +66,6 @@ public class VentanaLogin extends JFrame {
 
 	private JPasswordField contraseña;
 
-
 	/**
 	 * Label que contiene el boton si se olvida la contraseña
 	 */
@@ -76,7 +75,6 @@ public class VentanaLogin extends JFrame {
 	public VentanaLogin(Connection conexion, GestionBaseDeDatos base) {
 
 		// Incializamos el frame
-
 
 		setSize(new Dimension(900, 700));
 		setResizable(false);
@@ -401,23 +399,6 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 
-
-					if (listadeUsuarios==null||listadeUsuarios.size()!=1){
-						JOptionPane.showMessageDialog(getContentPane(), "Los datos introducidos son incorrectos", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-					}else{
-					Usuario jugador = listadeUsuarios.get(0);
-					VentanaMenu menu= new VentanaMenu(conexion,jugador,base);	
-					
-					JOptionPane.showMessageDialog(getContentPane(), bienvenida(jugador.getGenero())+jugador.getNombre()+" se te echaba de menos desde la ultima conexion "+jugador.getConexion().toString());
-					
-					gb.modificar(conexion, "USUARIO", "FECHAULTIMOLOGIN='"+System.currentTimeMillis()+"'", "NOMBREUSUARIO='"+jugador.getUsuario()+"'");
-					
-					dispose();	
-						
-					
-					
-					menu.setVisible(true);
-
 		registrar.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -467,7 +448,6 @@ public class VentanaLogin extends JFrame {
 						dispose();
 
 						menu.setVisible(true);
-
 					}
 				}
 

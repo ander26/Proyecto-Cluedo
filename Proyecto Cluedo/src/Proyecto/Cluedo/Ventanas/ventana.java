@@ -84,27 +84,27 @@ public class ventana extends JFrame{
 	
 	//private static int[][] mibaraja=new int[3][4];
 
-	public static void main(String[] args) {
-		
-		// TODO Auto-generated method stub
-		
-		mibaraja[0][0]=5;
-		mibaraja[0][1]=1;
-		mibaraja[0][2]=2;
-		mibaraja[0][3]=3;
-		mibaraja[1][0]=4;
-		mibaraja[1][1]=5;
-		mibaraja[1][2]=1;
-		mibaraja[1][3]=2;
-		mibaraja[2][0]=3;
-		mibaraja[2][1]=4;
-		mibaraja[2][2]=5;
-		mibaraja[2][3]=0;
-		
-		JFrame f=new ventana();
-		
-		f.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		
+//		// TODO Auto-generated method stub
+//		
+//		mibaraja[0][0]=5;
+//		mibaraja[0][1]=1;
+//		mibaraja[0][2]=2;
+//		mibaraja[0][3]=3;
+//		mibaraja[1][0]=4;
+//		mibaraja[1][1]=5;
+//		mibaraja[1][2]=1;
+//		mibaraja[1][3]=2;
+//		mibaraja[2][0]=3;
+//		mibaraja[2][1]=4;
+//		mibaraja[2][2]=5;
+//		mibaraja[2][3]=0;
+//		
+//		JFrame f=new ventana();
+//		
+//		f.setVisible(true);
+//	}
 
 
 	//private static int[][] mibaraja=new int[3][4];
