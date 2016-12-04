@@ -321,6 +321,9 @@ public class VentanaRanking extends JFrame{
 	
 	//public VentanaRanking(Connection conexion,GestionBaseDeDatos gestion){
 		public VentanaRanking(Connection con){
+			
+			setBackground(Color.white);
+			
 			ALUsuarios=base.consultaATablaOrdenadoPuntuacion(con);	
 			RellenarLista(ALUsuarios);
 			PonerGanadores();			
@@ -335,7 +338,7 @@ public class VentanaRanking extends JFrame{
 			setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );	
 			setSize( 1330, 830 );					
 			setResizable( true );
-			ImageIcon imagefondo = new ImageIcon(VentanaRanking.class.getResource("Imagenes/fondo2.jpg"));
+			ImageIcon imagefondo = new ImageIcon(VentanaRanking.class.getResource("Imagenes/fondo2.png"));
 			ImageIcon imagecartel = new ImageIcon(VentanaRanking.class.getResource("Imagenes/cartel.png"));
 			//ImageIcon imagefondopodium = new ImageIcon(VentanaRanking.class.getResource("Imagenes/podiumrojo.png"));
 								
@@ -479,9 +482,7 @@ public class VentanaRanking extends JFrame{
 		
 		public void PonerGanadores(){
 			for(int i=0;i<3;i++){
-				JLabel espacio= new JLabel("<html><body>&nrsp</body><html> ");
-				espacio.setOpaque(true);
-				espacio.setForeground(new Color (0.0f,0.0f,0.0f,0.0f));
+				
 				LabelPerfil a=new LabelPerfil(null,0, 0, 50	, 50);
 				JPanel pa=new JPanel();
 				
@@ -494,7 +495,8 @@ public class VentanaRanking extends JFrame{
 				a.setSize(50,50);
 				Icon icono = new ImageIcon(ALUsuarios.get(i).getImagenPerfil().getImage().getScaledInstance(a.getWidth()	, a.getHeight(), Image.SCALE_DEFAULT));
 				a.setIcon(icono);
-				pa.add(espacio);
+				
+				
 				pa.add(a);
 				
 				pabajo.add(pa,BorderLayout.SOUTH);
