@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.util.HashMap;
 
@@ -102,9 +103,27 @@ public class VentanaTablero extends JFrame {
 		JLabel labelCartas = new JLabel();
 
 		JLabel labelDenunciar = new JLabel();
+		
+		JLabel jugador1 = new JLabel();
+		
+		
+		jugador1.setBounds(170, 750, 80	, 80);
+		
+		try {
 
+			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/barco.png").toURI().toURL());
+		} catch (Exception e) {
+
+			System.out.println("No se ha encontrado el archivo");
+		}
+
+		icono = new ImageIcon(
+				imagen.getImage().getScaledInstance(jugador1.getWidth(), jugador1.getHeight(), Image.SCALE_DEFAULT));
+
+		jugador1.setIcon(icono);
+		
 		labelDado.setBounds(100, 130, 80, 80);
-
+		
 		try {
 
 			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/dado.gif").toURI().toURL());
@@ -336,6 +355,8 @@ public class VentanaTablero extends JFrame {
 
 		fondo.add(panelD);
 
+		fondo.add(jugador1);
+		
 		flechaI.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -487,6 +508,27 @@ public class VentanaTablero extends JFrame {
 
 		});
 
+		fondo.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				System.out.println(e.getX());
+				System.out.println(e.getY());
+				
+			}
+		});
+		
+		addWindowListener(new WindowAdapter() {
+			
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				VentanaMenu ventana = new VentanaMenu(conexion, u, base);
+				ventana.setVisible(true);
+			}
+	
+		});
 	}
 
 	public void meterImgEnlabel(String ruta, JLabel label, int largo, int ancho) {

@@ -942,6 +942,54 @@ public class GestionBaseDeDatos {
 		}
 
 	}
+	
+	public Jugador obtenerJu (Connection conexion, Partida p, Usuario u){
+		
+		
+		String SQL = "";
+		Jugador j= new Jugador();;
+		try{
+			
+			Statement statement = conexion.createStatement();
+
+			SQL = "SELECT * FROM JUGADOR WHERE COD_PARTIDA="+p.getCodigo()+" AND NOMBRE_USUARIO='"+u.getUsuario()+"'";
+
+			ResultSet rs = statement.executeQuery(SQL);
+
+			while (rs.next()) {
+				
+
+				j.setCodigo(rs.getInt("COD_JUG"));
+				j.setLugar(rs.getInt("LUGAR"));
+				j.setFicha(rs.getString("MUÑECO"));
+				j.setPosicionMuñeco(rs.getDouble("POS_MUÑECO"));
+				j.setTurno(rs.getInt("TURNO"));
+				j.setUsuario(rs.getString("NOMBRE_USUARIO"));
+				j.setCodigoPartida(rs.getInt("COD_PARTIDA"));
+				
+				j.setEnLinea(rs.getBoolean("ENLINEA"));
+			}
+
+			rs.close();
+
+
+			statement.close();
+			return j;
+			
+			
+		}catch (Exception e){
+			
+			logger.log(Level.SEVERE, "No se ha conseguido obtener el jugador a partir de de la partida y el usuario");
+			
+			e.printStackTrace();
+			
+			return null;
+		}
+		
+		
+		
+		
+	}
 
 	// cartas
 	public boolean insertarCarta(Connection conexion, Cartas c) {

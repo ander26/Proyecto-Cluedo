@@ -52,9 +52,9 @@ public class VentanaBuscarPartida extends JFrame {
 	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
 
 	private JLabel labelPGuardada = new JLabel("P.Guardada");
-	
+
 	private JLabel labelPAbierta = new JLabel("P.Abierta");
-	
+
 	public VentanaBuscarPartida(Connection conexion, Usuario u) {
 
 		// Establecemos el formato al panel
@@ -263,6 +263,22 @@ public class VentanaBuscarPartida extends JFrame {
 		        JTable table = (JTable)e.getSource();
 		        int modelRow = Integer.valueOf( e.getActionCommand() );
 		        System.out.println(modelRow);
+		        
+		        for (Window window : Window.getWindows()) {
+				    window.dispose();
+				}
+		        
+		       Partida p=gestion.obtenerPartida(conexion, listaCodigos.get(modelRow));
+		        
+		       
+		       	Jugador j= gestion.obtenerJu(conexion, p, u);
+		       
+		      Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresActual(),conexion,gestion,p);
+				
+		      VentanaTablero ventana = new VentanaTablero(conexion, j, u, gestion, p, prop);
+		      
+		      ventana.setVisible(true);
+		      
 		    }
 		};
 		 
@@ -477,8 +493,5 @@ public class VentanaBuscarPartida extends JFrame {
 		getContentPane().add(fondo);
 
 	}
-	
-	
+
 }
-
-
