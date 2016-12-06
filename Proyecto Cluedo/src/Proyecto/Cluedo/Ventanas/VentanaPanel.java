@@ -65,6 +65,8 @@ public class VentanaPanel  extends JFrame{
 		
 		mensaje.setVerticalAlignment(JLabel.CENTER);
 		
+		
+		
 		//Establecemos el formato
 		
 		panel.setLayout(new BorderLayout());
