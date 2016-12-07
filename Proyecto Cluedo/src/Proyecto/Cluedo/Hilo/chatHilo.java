@@ -1,5 +1,6 @@
 package Proyecto.Cluedo.Hilo;
 
+import java.awt.Container;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -35,16 +36,16 @@ public class chatHilo extends Thread {
 	
 	private JScrollPane panelMensajes;
 	
-//	private JPanel panel;
+	private Container panel;
 	
-	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JEditorPane principal,JList <String> usuarios,JScrollPane panelMensajes){
+	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JEditorPane principal,JList <String> usuarios,JScrollPane panelMensajes,Container panel){
 		this.conexion=conexion;
 		this.j=j;
 		this.usuariosLinea=usuariosLinea;
 		this.principal=principal;
 		this.usuarios=usuarios;
 		this.panelMensajes=panelMensajes;
-//		this.panel=panel;
+		this.panel=panel;
 	}
 	
 	public void run (){
@@ -91,14 +92,14 @@ public class chatHilo extends Thread {
 			String imgsrc = chatHilo.class.getResource("Imagenes/happy.png").toString();
 			tabla=tabla.replaceAll(":\\)", "<img src='" + imgsrc + "' width=30 height=30></img>");
 			
-			
+			panelMensajes.getVerticalScrollBar().setValue(panelMensajes.getVerticalScrollBar().getMaximum());
 			principal.setText(tabla);
 			
 			panelMensajes.getVerticalScrollBar().setValue(panelMensajes.getVerticalScrollBar().getMaximum());
 			
-			panelMensajes.validate();
+//			panelMensajes.revalidate();
 			
-//			panel.validate();
+			panel.revalidate();
 			
 			try {
 				Thread.sleep(2000);
