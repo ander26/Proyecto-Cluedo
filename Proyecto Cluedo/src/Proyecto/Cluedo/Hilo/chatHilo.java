@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JEditorPane;
@@ -12,6 +13,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import org.hamcrest.Matcher;
 
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
@@ -37,6 +40,8 @@ public class chatHilo extends Thread {
 	private JScrollPane panelMensajes;
 	
 	private Container panel;
+	
+	private int contador =0;
 	
 	public chatHilo(Connection conexion,Jugador j,JLabel usuariosLinea,JEditorPane principal,JList <String> usuarios,JScrollPane panelMensajes,Container panel){
 		this.conexion=conexion;
@@ -84,18 +89,53 @@ public class chatHilo extends Thread {
 //				}else{
 //				tabla=tabla+s;
 //			}
-				
-				tabla=tabla+s;
+				Pattern patern =Pattern.compile(j.getUsuario()+": ");
+				System.out.println(s);
+				System.out.println(patern);
+				if (patern.matcher(s).find()){
+					System.out.println("SI");
+					s=s.replaceAll(j.getUsuario()+":", "<font color=\"green\">"+j.getUsuario()+":");
+					s=s+"</font>";
+					System.out.println(s);
+				}else {
+					System.out.println("NO");
+				}
+				tabla=tabla+s+"<br>";
 				}
 			
 			tabla=tabla+"</body></html>";
-			String imgsrc = chatHilo.class.getResource("Imagenes/happy.png").toString();
-			tabla=tabla.replaceAll(":\\)", "<img src='" + imgsrc + "' width=30 height=30></img>");
 			
-			panelMensajes.getVerticalScrollBar().setValue(panelMensajes.getVerticalScrollBar().getMaximum());
+			String imgsrc1 = chatHilo.class.getResource("Imagenes/laugh.png").toString();
+			tabla=tabla.replaceAll(":\\)\\)", "<img src='" + imgsrc1 + "' width=30 height=30></img>");
+
+			String imgsrc2 = chatHilo.class.getResource("Imagenes/happy.png").toString();
+			tabla=tabla.replaceAll(":\\)", "<img src='" + imgsrc2 + "' width=30 height=30></img>");
+			
+			
+			String imgsrc3 = chatHilo.class.getResource("Imagenes/sad.png").toString();
+			tabla=tabla.replaceAll(":\\(", "<img src='" + imgsrc3 + "' width=28 height=28></img>");
+			
+			
+
+			
+			String imgsrc4 = chatHilo.class.getResource("Imagenes/caca.png").toString();
+			tabla=tabla.replaceAll("mierda", "<img src='" + imgsrc4 + "' width=30 height=30></img>");
+			
+			tabla=tabla.replaceAll("gilipollas", "INSULTO");
+			
+			tabla=tabla.replaceAll("puta", "INSULTO");
+			
+			tabla=tabla.replaceAll("zorra", "INSULTO");
+			
+			
+			
+			if (tabla.length()!=contador){
+//			panelMensajes.getVerticalScrollBar().setValue(panelMensajes.getVerticalScrollBar().getMaximum());
 			principal.setText(tabla);
-			
-			panelMensajes.getVerticalScrollBar().setValue(panelMensajes.getVerticalScrollBar().getMaximum());
+			principal.setSelectionStart(tabla.length());
+			contador=tabla.length();
+			}
+//			panelMensajes.getVerticalScrollBar().setValue(panelMensajes.getVerticalScrollBar().getMaximum());
 			
 //			panelMensajes.revalidate();
 			

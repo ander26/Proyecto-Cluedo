@@ -254,7 +254,7 @@ public class VentanaBuscarPartida extends JFrame {
 		}
 		
 		tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
-		tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
+		tabla.getColumnModel().getColumn(1).setPreferredWidth(144);
 		
 		AbstractAction añadir2 = new AbstractAction()
 		{
