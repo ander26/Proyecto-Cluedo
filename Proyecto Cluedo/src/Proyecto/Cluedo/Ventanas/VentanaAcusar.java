@@ -21,6 +21,7 @@ import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaAcusar extends JFrame {
 	
+
 //	private static JPanel pcsospechoso=new JPanel();
 //	//private static JPanel pclugar=new JPanel();
 //	private static JPanel pcarma=new JPanel();
@@ -278,6 +279,52 @@ public class VentanaAcusar extends JFrame {
 		//ventana
 		pbotonera.setOpaque(false);
 		
+//=======
+//	private static JPanel pcsospechoso=new JPanel();
+//	//private static JPanel pclugar=new JPanel();
+//	private static JPanel pcarma=new JPanel();
+//	private static panelrosa pprincipal;
+//	//private static Propiedades prop =new Propiedades(6,8,7,2);
+//	private static int [] arposcartas=new int[3];
+//	private static JLabel labels=new JLabel();
+//	//private static JLabel labell=new JLabel();
+//	private static JLabel labela=new JLabel();
+//	private static JPanel paneldentropri=new JPanel();
+//	private JLabel lbAcusar=new JLabel();
+//	private JLabel lbResolver=new JLabel();
+//	private JPanel pbotonera=new JPanel();
+//	private JPanel pantesbotonera=new JPanel();
+//	
+//
+////	public static void main(String[] args) {
+////		
+////		// TODO Auto-generated method stub		
+////		Jugador a =new Jugador();
+////		a.setLugar(2);
+////		//mete el fondo del lugar en el que este
+////		String [] aimglug=new String [8];
+////		aimglug[0]="Imagenes/ingenieria.jpg";
+////		aimglug[1]="Imagenes/comercial.jpg";
+////		aimglug[2]="Imagenes/capilla.JPG";
+////		aimglug[3]="Imagenes/centenario.jpg";
+////		aimglug[4]="Imagenes/letras.jpg";
+////		aimglug[5]="Imagenes/biblioteca.jpeg";
+////		aimglug[6]="Imagenes/zubiarte.jpg";
+////		aimglug[7]="Imagenes/zubiarte.jpg";
+////																		
+////		JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
+////		f.setVisible(true);
+////	}
+//	
+//
+//	public VentanaAcusar(String ruta,Propiedades prop){
+//		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );		
+//		setSize( 1330, 730 );			
+//		setMinimumSize(new Dimension(900,500));		
+//		setResizable( true );
+//		ImageIcon imagefondo = new ImageIcon(ventana.class.getResource(ruta));
+//		pprincipal=new panelrosa(imagefondo.getImage());		
+//>>>>>>> refs/remotes/origin/master
 		pprincipal.setLayout(new BorderLayout());
 		pprincipal.add(ptabbed,BorderLayout.CENTER);
 		ImageIcon iconobacusar = new ImageIcon(ventana.class.getResource("Imagenes/bacusar.png"));		
