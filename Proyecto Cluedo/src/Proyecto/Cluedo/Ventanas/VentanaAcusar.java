@@ -277,6 +277,7 @@ public class VentanaAcusar extends JFrame {
 		pprincipal.setBackground(Color.GRAY);
 		//ventana
 		pbotonera.setOpaque(false);
+		
 		pprincipal.setLayout(new BorderLayout());
 		pprincipal.add(ptabbed,BorderLayout.CENTER);
 		ImageIcon iconobacusar = new ImageIcon(ventana.class.getResource("Imagenes/bacusar.png"));		

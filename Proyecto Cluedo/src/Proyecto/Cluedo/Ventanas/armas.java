@@ -29,6 +29,7 @@ public class armas extends panelrosa{
 	public artilugio lsarten=new artilugio("Imagenes/sarten.png","Sarten");
 	public artilugio lpistola=new artilugio("Imagenes/revolver.png","Pistola");
 	public artilugio [] arrarmas=new artilugio[6];
+	
 	public int apuntador=9;
 	
 	

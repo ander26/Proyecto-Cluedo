@@ -41,6 +41,7 @@ public class VentanaCartas extends JFrame{
 	private JPanel pcentrar=new JPanel();
 	private int poscartas=0;
 	private int numCartas;
+	
 	private ArrayList<CartasTorcidas> cartas=new ArrayList<CartasTorcidas>();
 //	private panelrosa psospechosos;
 //	private JPanel pdsospechosos=new JPanel();

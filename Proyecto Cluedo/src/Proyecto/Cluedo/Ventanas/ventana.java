@@ -53,6 +53,7 @@ public class ventana extends JFrame{
 	
 	private JPanel pventana=new JPanel();
 	
+	
 	private panelrosa pdibujar;
 	
 	private JPanel ppizarra=new JPanel();

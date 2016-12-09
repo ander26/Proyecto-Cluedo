@@ -24,6 +24,7 @@ public class personaje extends JLabel {
 		this.setIcon(icono);
 		this.setForeground(Color.CYAN);
 		
+		
 		this.ruta=ruta;
 		this.seleccionado=false;
 		this.nombre=nombre;

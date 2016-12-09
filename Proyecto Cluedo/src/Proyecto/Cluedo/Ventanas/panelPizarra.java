@@ -25,6 +25,7 @@ public class panelPizarra extends JPanel {
 		private Point pAnt = null;
 		private boolean pintando=false;
 		
+		
 		private Point x;
 	    
 		    

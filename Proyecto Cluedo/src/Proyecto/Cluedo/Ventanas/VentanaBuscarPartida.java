@@ -62,6 +62,7 @@ public class VentanaBuscarPartida extends JFrame {
 		setResizable(false);
 
 		setSize(new Dimension(800, 600));
+		
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
