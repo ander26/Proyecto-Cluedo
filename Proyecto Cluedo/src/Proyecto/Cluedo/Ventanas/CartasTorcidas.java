@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -18,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import com.sun.image.codec.*;
 
 
 
@@ -28,8 +30,8 @@ public class CartasTorcidas extends JLabel {
 	
 	
 	public CartasTorcidas(String ruta,double beta) throws MalformedURLException, URISyntaxException{
-		ImageIcon iconocarta = new ImageIcon(ventana.class.getResource(ruta));	
-		setSize(800,1000);
+		ImageIcon iconocarta = new ImageIcon(CartasTorcidas.class.getResource(ruta));	
+		setSize(850,650);
 		Icon icono = new ImageIcon(iconocarta.getImage().getScaledInstance(this.getWidth()	, this.getHeight(), Image.SCALE_DEFAULT));
 		this.setIcon(icono);
 		//setIcon( new ImageIcon( CartasTorcidas.class.getResource( ruta)) );
@@ -48,10 +50,35 @@ System.out.println("entro en paint componet");
        	g2.rotate( beta,  getIcon().getIconWidth()/2, getIcon().getIconHeight()/2 ); // getIcon().getIconWidth()/2, getIcon().getIconHeight()/2 );
         // Dibujado de la imagen  
        	if(oscuro==false){
-        g2.drawImage( img, 50,200, 200,300, null );
+       		BufferedImage imagen;
+       		try {
+				imagen = ImageIO.read(getClass().getResource(ruta));
+				Graphics g3=imagen.getGraphics();
+				g3.setColor(new Color(255,255,0,100));
+				g3.fillRect(0,0,100,150);
+				
+//				JPEGImageDecoder decoder=JPEGCodec.createJPEGDecoder(getClass().getResource(ruta));
+//				RescaleOp rop= new RescaleOp(componentes,desplazamiento,null);
+//				BufferedImage destino=rop.filter(imagen, null);
+	    		//Color c2=new Color(blue+20,green,red);
+	    		//.setRGB(0,0, blue);	    		
+				g2.drawImage( imagen, 550,320, 100,150, null );
+	           	
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//       		BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null),
+//       		        BufferedImage.TYPE_INT_RGB);
+    		
+    		
+    		//bufferedImage.setRGB(0,0,50);
+    			
+    		
+        //g2.drawImage( img, 550,320, 100,150, null );
        	}else{        
        //	BufferedImage bfimg;
-       		g2.drawImage( img, 50, 0, 200,300, null );
+       		g2.drawImage( img, 550, 120, 125,175, null );
            	
 //        ColorConvertOp ccop=new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY),null);
 //		Image imgb=ccop.filter(bfimg,null);

@@ -35,9 +35,9 @@ import Proyecto.Cluedo.Logica.Propiedades;
 public class VentanaCartas extends JFrame{
 
 //	private JTabbedPane ptabbed=new JTabbedPane();
-	private panelrosa pprincipal;
-	private int r=150;
-	private JPanel pventana=new JPanel();
+	private JPanel pprincipal=new JPanel();
+	private int r=50;
+	private panelrosa pventana;
 	private JPanel pcentrar=new JPanel();
 	private int poscartas=0;
 	private int numCartas;
@@ -206,7 +206,7 @@ public class VentanaCartas extends JFrame{
 //	}
 	public VentanaCartas(GestionBaseDeDatos base,Jugador j,Partida p,Connection con){
 		ImageIcon imageestrellas = new ImageIcon(ventana.class.getResource("Imagenes/mesa.jpg"));
-		pprincipal=new panelrosa(imageestrellas.getImage());
+		pventana=new panelrosa(imageestrellas.getImage());
 //=======
 //	private JTabbedPane ptabbed=new JTabbedPane();
 //	private JPanel pprincipal=new JPanel();
@@ -230,7 +230,7 @@ public class VentanaCartas extends JFrame{
 		pventana.setLayout(new BorderLayout());		
 		pventana.add(pprincipal,BorderLayout.CENTER);
 		getContentPane().add(pventana);
-		pprincipal.setBackground(Color.BLACK);
+		pprincipal.setOpaque(false);
 		pprincipal.repaint();
 		JPanel pbotonera=new JPanel();
 		pbotonera.setLayout(new BoxLayout(pbotonera,BoxLayout.X_AXIS));
@@ -279,7 +279,13 @@ public class VentanaCartas extends JFrame{
 		Icon isend= new ImageIcon(iisend.getImage().getScaledInstance(lsend.getWidth()	, lsend.getHeight(), Image.SCALE_DEFAULT));
 		lsend.setIcon(isend);
 		pbotonera.add(lsend);
+		JLabel lmano=new JLabel();
+		lmano.setSize(300,300);
+		ImageIcon iimano = new ImageIcon(ventana.class.getResource("Imagenes/mano.png"));
+		Icon imano= new ImageIcon(iimano.getImage().getScaledInstance(lmano.getWidth()	, lmano.getHeight(), Image.SCALE_DEFAULT));
+		lmano.setIcon(imano);
 		pcentrar.add(pbotonera);
+		pventana.add(lmano,BorderLayout.EAST);
 		pventana.add(pcentrar,BorderLayout.SOUTH);
 		//escuchadores
 				flechaizquierda.addMouseListener( new MouseAdapter() {
@@ -288,7 +294,7 @@ public class VentanaCartas extends JFrame{
 						if(poscartas>0){
 							poscartas=poscartas-1;							
 							cartas.get(poscartas).setOscuro(true);
-							if(poscartas>1){
+							if(poscartas<numCartas-1){
 								cartas.get(poscartas+1).setOscuro(false);
 								
 							}
@@ -304,10 +310,10 @@ public class VentanaCartas extends JFrame{
 				flechaderecha.addMouseListener( new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
-						if(poscartas<numCartas){
+						if(poscartas<numCartas-1){
 							poscartas=poscartas+1;
 							cartas.get(poscartas).setOscuro(true);
-							if(poscartas<numCartas){
+							if(poscartas>0){
 								cartas.get(poscartas-1).setOscuro(false);
 								
 							}
@@ -335,7 +341,7 @@ public class VentanaCartas extends JFrame{
 		cartasdepalo.addAll(cartasdepalo);
 		numCartas=cartassitios.size()+cartassospechosos.size()+cartasarmas.size()+cartascomodin.size();
 		double alfa=Math.PI/numCartas;
-		double beta=alfa;
+		double beta=0;
 //
 //		//crear ptabbed		
 //		ptabbed.addTab("", iconoarma, parmas,"");
@@ -367,7 +373,7 @@ public class VentanaCartas extends JFrame{
 		int PCcircunferencia=getWidth()/2;
 		for (int i=0;i<numCartas;i++){
 			System.out.println(beta);
-			double x=r*Math.cos(beta)+r;
+			double x=r*Math.cos(beta)+r+100;
 			double y=r-(r*Math.sin(beta))+50;
 			double inclinacion=90-beta;	
 			String ruta=base.consultaATablaCartas(con,"NOMBRE="+"'"+cartasdepalo.get(i)+"'").get(0).getRutaIcono();

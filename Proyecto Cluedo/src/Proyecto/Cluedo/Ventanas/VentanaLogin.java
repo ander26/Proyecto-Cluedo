@@ -14,6 +14,9 @@ import java.awt.event.ComponentListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -66,7 +69,6 @@ public class VentanaLogin extends JFrame {
 
 	private JPasswordField contraseña;
 
-
 	/**
 	 * Label que contiene el boton si se olvida la contraseña
 	 */
@@ -76,7 +78,6 @@ public class VentanaLogin extends JFrame {
 	public VentanaLogin(Connection conexion, GestionBaseDeDatos base) {
 
 		// Incializamos el frame
-
 
 		setSize(new Dimension(900, 700));
 		setResizable(false);
@@ -401,23 +402,6 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 
-
-					if (listadeUsuarios==null||listadeUsuarios.size()!=1){
-						JOptionPane.showMessageDialog(getContentPane(), "Los datos introducidos son incorrectos", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-					}else{
-					Usuario jugador = listadeUsuarios.get(0);
-					VentanaMenu menu= new VentanaMenu(conexion,jugador,base);	
-					
-					JOptionPane.showMessageDialog(getContentPane(), bienvenida(jugador.getGenero())+jugador.getNombre()+" se te echaba de menos desde la ultima conexion "+jugador.getConexion().toString());
-					
-					gb.modificar(conexion, "USUARIO", "FECHAULTIMOLOGIN='"+System.currentTimeMillis()+"'", "NOMBREUSUARIO='"+jugador.getUsuario()+"'");
-					
-					dispose();	
-						
-					
-					
-					menu.setVisible(true);
-
 		registrar.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -467,7 +451,6 @@ public class VentanaLogin extends JFrame {
 						dispose();
 
 						menu.setVisible(true);
-
 					}
 				}
 
@@ -519,8 +502,56 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 
+		contraseña.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_ENTER){
+					ArrayList<Usuario> listadeUsuarios = new ArrayList<Usuario>();
+
+					if (usuario.getText().trim().length() == 0 || usuario.getText().equals("Usuario")) {
+						JOptionPane.showMessageDialog(getContentPane(),
+								"Debe rellenar el campo de nombre de usuario para poder acceder", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else if (obtenerContraseña(contraseña.getPassword()).trim().length() == 0
+							|| obtenerContraseña(contraseña.getPassword()).equals("Contraseña")) {
+						JOptionPane.showMessageDialog(getContentPane(),
+								"Debe rellenar el campo de la contraseña para poder acceder", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+
+						listadeUsuarios = gb.consultaATabla(conexion, "NOMBREUSUARIO='" + usuario.getText()
+								+ "' AND CONTRASEÑA='" + obtenerContraseña(contraseña.getPassword()) + "'");
+
+						if (listadeUsuarios == null || listadeUsuarios.size() != 1) {
+							JOptionPane.showMessageDialog(getContentPane(), "Los datos introducidos son incorrectos",
+									"Aviso", JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							Usuario jugador = listadeUsuarios.get(0);
+							VentanaMenu menu = new VentanaMenu(conexion, jugador, base);
+
+							JOptionPane.showMessageDialog(getContentPane(),
+									bienvenida(jugador.getGenero()) + jugador.getNombre()
+											+ " se te echaba de menos desde la ultima conexion "
+											+ jugador.getConexion().toString());
+
+							gb.modificar(conexion, "USUARIO", "FECHAULTIMOLOGIN='" + System.currentTimeMillis() + "'",
+									"NOMBREUSUARIO='" + jugador.getUsuario() + "'");
+
+							dispose();
+
+							menu.setVisible(true);
+						}
+					}
+					
+				}
+				
+			}
+		});
 	}
 
+	
+	
 	private String obtenerContraseña(char[] contraseña) {
 		String contraseñaTexto = "";
 
@@ -539,4 +570,5 @@ public class VentanaLogin extends JFrame {
 			return "Bienvenido ";
 		}
 	}
+
 }
