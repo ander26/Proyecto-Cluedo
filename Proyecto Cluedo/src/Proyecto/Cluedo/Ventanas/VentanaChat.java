@@ -636,8 +636,8 @@ public class VentanaChat extends JFrame {
 		
 		
 		
-		labelInfo.setToolTipText("<html><body>Este chat dispone de distintas caracteristicas: <br>"
-				+"Emoticonos : <br>:) Cara sonriente <br>:)) Carcajada <br>:( Cara triste<br> Este chat no acepta insultos y seran restringidos ");
+		labelInfo.setToolTipText("<html><body>Este chat dispone de las siguientes caracteristicas: <br>"
+				+"Emoticonos : <br>:) Cara sonriente <br>:)) Carcajada <br>:( Cara triste<br>>:( Enfado<br>(^^^) Tiburon<br> &lt 3 Corazon<br>0:) Angel<br>;) Cara Picara<br> Este chat no acepta insultos y seran restringidos ");
 		// ArrayList<String> listadeConectados=new ArrayList<String>();
 		//
 		// DefaultListModel modelo = new DefaultListModel();
@@ -865,5 +865,7 @@ public class VentanaChat extends JFrame {
 		 */
 
 	}
+
+	
 
 }

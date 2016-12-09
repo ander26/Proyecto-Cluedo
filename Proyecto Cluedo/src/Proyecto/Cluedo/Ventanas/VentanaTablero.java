@@ -248,7 +248,7 @@ public class VentanaTablero extends JFrame {
 		try {
 
 			imagen = new ImageIcon(
-					VentanaTablero.class.getResource("Imagenes/tablero - copia - copia.jpg").toURI().toURL());
+					VentanaTablero.class.getResource("Imagenes/definitivo.png").toURI().toURL());
 		} catch (Exception e) {
 
 			System.out.println("No se ha encontrado el archivo");
@@ -538,7 +538,13 @@ public class VentanaTablero extends JFrame {
 				imicon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
 		label.setIcon(icono);
 	}
+	
+	
+
 }
+
+
+
 
 
 //

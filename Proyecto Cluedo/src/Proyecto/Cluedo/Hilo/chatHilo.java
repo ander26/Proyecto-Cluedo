@@ -105,6 +105,17 @@ public class chatHilo extends Thread {
 			
 			tabla=tabla+"</body></html>";
 			
+			String imgsrc6 = chatHilo.class.getResource("Imagenes/angry.png").toString();
+			tabla=tabla.replaceAll(">:\\(", "<img src='" + imgsrc6 + "' width=30 height=30></img>");
+			
+			
+			String imgsrc8 = chatHilo.class.getResource("Imagenes/angel.png").toString();
+			tabla=tabla.replaceAll("0:\\)", "<img src='" + imgsrc8 + "' width=30 height=30></img>");
+			
+			
+			String imgsrc9 = chatHilo.class.getResource("Imagenes/pervert.png").toString();
+			tabla=tabla.replaceAll(";\\)", "<img src='" + imgsrc9 + "' width=30 height=30></img>");
+			
 			String imgsrc1 = chatHilo.class.getResource("Imagenes/laugh.png").toString();
 			tabla=tabla.replaceAll(":\\)\\)", "<img src='" + imgsrc1 + "' width=30 height=30></img>");
 
@@ -120,6 +131,20 @@ public class chatHilo extends Thread {
 			
 			String imgsrc4 = chatHilo.class.getResource("Imagenes/caca.png").toString();
 			tabla=tabla.replaceAll("mierda", "<img src='" + imgsrc4 + "' width=30 height=30></img>");
+			
+			
+			String imgsrc5 = chatHilo.class.getResource("Imagenes/heart.png").toString();
+			tabla=tabla.replaceAll("<3", "<img src='" + imgsrc5 + "' width=30 height=30></img>");
+			
+
+			String imgsrc7 = chatHilo.class.getResource("Imagenes/shark.png").toString();
+			tabla=tabla.replaceAll("\\(\\^\\^\\^\\)", "<img src='" + imgsrc7 + "' width=30 height=30></img>");
+			
+
+			
+		
+			
+			
 			
 			tabla=tabla.replaceAll("gilipollas", "INSULTO");
 			

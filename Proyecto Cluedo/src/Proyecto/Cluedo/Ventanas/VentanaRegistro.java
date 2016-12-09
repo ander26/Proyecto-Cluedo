@@ -40,6 +40,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -82,9 +83,9 @@ public class VentanaRegistro extends JFrame {
 	
 	private JTextField textoRespuesta;
 	
-	private JTextField textoContraseña;
+	private JPasswordField textoContraseña;
 
-	private JTextField textoContraseña2;
+	private JPasswordField textoContraseña2;
 	
 	private JDateChooser fechas;
 	
@@ -135,9 +136,9 @@ public class VentanaRegistro extends JFrame {
 		
 		textoApellido= new JTextField();
 		
-		textoContraseña= new JTextField();
+		textoContraseña= new JPasswordField();
 		
-		textoContraseña2= new JTextField();
+		textoContraseña2= new JPasswordField();
 		
 		textoEmail= new JTextField();
 		
@@ -445,7 +446,7 @@ public class VentanaRegistro extends JFrame {
 			boolean correccion= comprobacion();
 			
 			if (correccion){
-				Usuario u = new Usuario(textoNombre.getText(), textoApellido.getText(), textoUsuario.getText(), textoContraseña.getText(), obtenerGenero (), fechas.getDate(), textoRespuesta.getText(),listaPreguntas.getSelectedIndex(), textoEmail.getText(), imagenPerfil,0);
+				Usuario u = new Usuario(textoNombre.getText(), textoApellido.getText(), textoUsuario.getText(), obtenerContraseña(textoContraseña.getPassword()), obtenerGenero (), fechas.getDate(), textoRespuesta.getText(),listaPreguntas.getSelectedIndex(), textoEmail.getText(), imagenPerfil,0);
 				u.setConexion(new Date(System.currentTimeMillis()));
 				
 				if (gestion.insertarUsuario(conexion, u)){
@@ -482,16 +483,16 @@ public class VentanaRegistro extends JFrame {
 		}else if (textoEmail.getText().trim().length()==0){
 			texto= "No se ha introducido el e-mail, compruebelo de nuevo";
 			correcto=false;
-		}else if (textoContraseña.getText().trim().length()==0){
+		}else if (obtenerContraseña(textoContraseña.getPassword()).trim().length()==0){
 			texto= "No se ha introducido la contraseña, compruebelo de nuevo";
 			correcto=false;
-		}else if (textoContraseña2.getText().trim().length()==0){
+		}else if (obtenerContraseña(textoContraseña2.getPassword()).trim().length()==0){
 			texto= "No se ha introducido la verificacion de la contraseña, compruebelo de nuevo";
 			correcto=false;
 		}else if (textoRespuesta.getText().trim().length()==0){
 			texto= "No se ha introducido la respuesta a la pregunta de seguridad, compruebelo de nuevo";
 			correcto=false;
-		}else if (!(textoContraseña.getText().equals(textoContraseña2.getText()))){
+		}else if (!(obtenerContraseña(textoContraseña.getPassword()).equals(obtenerContraseña(textoContraseña2.getPassword())))){
 			texto="No coinciden las contraseñas compruebelo de nuevo";
 			correcto=false;
 		}else if (fechas.getDate()==null){
@@ -514,5 +515,15 @@ public class VentanaRegistro extends JFrame {
 		}else{
 			return Genero.MUJER;
 		}
+	}
+	
+	private String obtenerContraseña(char[] contraseña) {
+		String contraseñaTexto = "";
+
+		for (int i = 0; i < contraseña.length; i++) {
+			contraseñaTexto = contraseñaTexto + contraseña[i];
+		}
+
+		return contraseñaTexto;
 	}
 }
