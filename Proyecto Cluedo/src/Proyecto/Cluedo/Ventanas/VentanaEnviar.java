@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -11,6 +13,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Proyecto.Cluedo.Datos.Cartas;
+import Proyecto.Cluedo.Datos.Partida;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+import Proyecto.Cluedo.Logica.Jugador;
 
 public class VentanaEnviar extends JFrame {
 	private static JPanel pcsospechoso=new JPanel();
@@ -50,7 +57,7 @@ public class VentanaEnviar extends JFrame {
 	}
 	
 
-	public VentanaEnviar(){
+	public VentanaEnviar(GestionBaseDeDatos base,Connection conexion,Partida p,Jugador j){
 		
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );		
 		setSize( 1330, 730 );			
@@ -92,10 +99,8 @@ public class VentanaEnviar extends JFrame {
 		pprincipal.add(hueco2,BorderLayout.WEST);
 		getContentPane().add(pprincipal);
 		//meter las cartas
-		meterCartas(prop,2,pcsospechoso,labels);
-		//meterCartas(prop,1,pclugar,labell);
-		meterCartas(prop,0,pcarma,labela);
-		//meter botones
+		meterCartas(base,conexion,p,j);
+	
 		
 		
 		
@@ -107,27 +112,27 @@ public class VentanaEnviar extends JFrame {
 		
 		
 	}
-	public static void meterCartas(int panel){
-		ImageIcon imagefondo = new ImageIcon(ventana.class.getResource("Imagenes/baul-abierto.jpg"));
-		
-		panelrosa pan=new panelrosa();
-		pan.setLayout(new BorderLayout());
-		pan.setOpaque(false);
-		//coger de la base las cartas
-		//String ruta=p.getBaraja().get(panel).get(arposcartas[panel]).getRutaIcono();		
-		//System.out.println(ruta);
-		//ImageIcon iconocarta = new ImageIcon(ventana.class.getResource(ruta));		
-		//label.setSize(227,283);
-		//Icon icono = new ImageIcon(iconocarta.getImage().getScaledInstance(label.getWidth()	, label.getHeight(), Image.SCALE_DEFAULT));
-		//label.setIcon(icono);
-		
-		JLabel label=new JLabel();
-		label.setHorizontalAlignment(0);
-		pan.add(label,BorderLayout.CENTER);
-		paneldentropri.add(pan);
-		label.repaint();
-		pan.repaint();
-				
+	public static void meterCartas(GestionBaseDeDatos base,Connection conexion,Partida p,Jugador j){
+		ArrayList<Cartas> CartasRecibidas;
+		CartasRecibidas=base.obtenerCartasEnviadas(conexion,p.getCodigo(), j.getCodigo());
+		for(int i=0;i<CartasRecibidas.size();i++){
+			ImageIcon imagefondo = new ImageIcon(ventana.class.getResource("Imagenes/MaskX_1.png"));			
+			panelrosa pan=new panelrosa(imagefondo.getImage());
+			pan.setLayout(new BorderLayout());
+			pan.setOpaque(false);
+			JLabel label=new JLabel();
+			label.setHorizontalAlignment(0);
+			ImageIcon iconocarta = new ImageIcon(VentanaEnviar.class.getResource(CartasRecibidas.get(i).getRutaIcono()));		
+			label.setSize(227,283);
+			Icon icono = new ImageIcon(iconocarta.getImage().getScaledInstance(label.getWidth()	, label.getHeight(), Image.SCALE_DEFAULT));
+			label.setIcon(icono);
+			pan.add(label,BorderLayout.CENTER);
+			paneldentropri.add(pan);
+			label.repaint();
+			paneldentropri.repaint();
+			
+		}
+		base.modificarPanel(conexion, "El jugador"+j.getUsuario()+"ha recibido"+CartasRecibidas.size()+"cartas", p);			
 		
 	}
 	

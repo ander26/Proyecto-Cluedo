@@ -17,7 +17,8 @@ import javax.swing.JLabel;
 public class artilugio extends JLabel{
 	public boolean seleccionado;
 	public String ruta;
-	public String nombre;
+	private String nombre;
+	
 	public artilugio(String ruta,String nombre){
 		ImageIcon iconocarta = new ImageIcon(personaje.class.getResource(ruta));	
 		setSize(250,350);
@@ -29,6 +30,12 @@ public class artilugio extends JLabel{
 		this.ruta=ruta;
 		this.seleccionado=false;
 		this.nombre=nombre;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	public boolean isSeleccionado() {
 		return seleccionado;

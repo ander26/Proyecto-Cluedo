@@ -16,7 +16,11 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -41,6 +45,8 @@ public class VentanaCartas extends JFrame{
 	private JPanel pcentrar=new JPanel();
 	private int poscartas=0;
 	private int numCartas;
+	private static Logger logger = Logger.getLogger(VentanaCartas.class.getName());
+
 	
 	private ArrayList<CartasTorcidas> cartas=new ArrayList<CartasTorcidas>();
 //	private panelrosa psospechosos;
@@ -326,9 +332,21 @@ public class VentanaCartas extends JFrame{
 					}
 					
 				});
+				lsend.addMouseListener( new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent e) {
+						if(poscartas>=0 && poscartas<numCartas){
+							SubirAbaseCartaElegida(j,p,con,base);
+							
+						}
+					
+					}
+					
+				});
 		
 
 		}
+
 	public void meterCartas(GestionBaseDeDatos base,Connection con,Partida p, Jugador jugador){
 		ArrayList<String> cartassitios=base.obtenerCartasDeJugador(con, p.getCodigo(), jugador.getCodigo(), 0);
 		ArrayList<String> cartassospechosos=base.obtenerCartasDeJugador(con, p.getCodigo(), jugador.getCodigo(), 1);
@@ -382,7 +400,7 @@ public class VentanaCartas extends JFrame{
 			System.out.println(x+" "+y);
 			try {
 				System.out.println(ruta);
-				c = new CartasTorcidas(ruta,inclinacion);
+				c = new CartasTorcidas(ruta,inclinacion,cartasdepalo.get(i));
 				cartas.add(c);
 				//c.setBounds((int)x, (int)y, 20, 20);
 				pprincipal.add(c);
@@ -449,6 +467,27 @@ public class VentanaCartas extends JFrame{
 			}
 
 			beta=beta+alfa;
+		}
+	}
+public void SubirAbaseCartaElegida(Jugador j,Partida p,Connection conexion,GestionBaseDeDatos base){
+	//String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA text  ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
+//	
+			
+		
+		try {
+			int codigo=base.ObtenerCodigoJugadorTurno(conexion,p);
+			Statement statement = conexion.createStatement();
+			String sql = "INSERT INTO RECIBIRCARTAS VALUES ('" +cartas.get(poscartas).getNombre() + "'," + j.getCodigo() + "," +codigo+","+p.getCodigo()+","+
+					  ","+System.currentTimeMillis()+ ")";
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha añadido la carta en recibircartas: " + sql);
+
+			statement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

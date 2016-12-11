@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -11,6 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
 public class armas extends panelrosa{
 	public JPanel pbocata=new JPanel();
@@ -29,7 +32,11 @@ public class armas extends panelrosa{
 	public artilugio lsarten=new artilugio("Imagenes/sarten.png","Sarten");
 	public artilugio lpistola=new artilugio("Imagenes/revolver.png","Pistola");
 	public artilugio [] arrarmas=new artilugio[6];
+	private String arma=null;
 	
+	
+
+
 	public int apuntador=9;
 	
 	
@@ -94,6 +101,7 @@ public class armas extends panelrosa{
 					
 					arrarmas[0].setSeleccionado(true);
 					arrarmas[apuntador].setSeleccionado(false);
+					
 							
 					
 					
@@ -103,7 +111,7 @@ public class armas extends panelrosa{
 				
 				System.out.println(apuntador);
 				apuntador=0;
-				
+				arma=arrarmas[0].getNombre();
 				
 				repaint();
 				
@@ -120,6 +128,7 @@ public class armas extends panelrosa{
 				arrarmas[1].setSeleccionado(true);
 				
 				
+				
 			}
 			
 			
@@ -127,7 +136,8 @@ public class armas extends panelrosa{
 				
 				arrarmas[1].setSeleccionado(true);
 				arrarmas[apuntador].setSeleccionado(false);
-						
+				
+					
 				
 				
 				
@@ -136,6 +146,8 @@ public class armas extends panelrosa{
 			
 			System.out.println(apuntador);
 			apuntador=1;
+			arma=arrarmas[1].getNombre();
+			
 			
 			
 			
@@ -169,6 +181,8 @@ public class armas extends panelrosa{
 			
 			System.out.println(apuntador);
 			apuntador=2;
+			arma=arrarmas[2].getNombre();
+			
 			
 			
 			repaint();
@@ -201,6 +215,8 @@ public class armas extends panelrosa{
 			
 			System.out.println(apuntador);
 			apuntador=3;
+			arma=arrarmas[3].getNombre();
+			
 			
 			repaint();
 			
@@ -231,6 +247,7 @@ public class armas extends panelrosa{
 			
 			System.out.println(apuntador);
 			apuntador=4;
+			arma=arrarmas[4].getNombre();
 			
 			
 			repaint();
@@ -262,6 +279,7 @@ public class armas extends panelrosa{
 			
 			System.out.println(apuntador);
 			apuntador=5;
+			arma=arrarmas[5].getNombre();
 			
 			
 			repaint();
@@ -271,6 +289,14 @@ public class armas extends panelrosa{
 });
 	
 	
+	}
+	public String getArma() {
+		return arma;
+	}
+
+
+	public void setArma(String arma) {
+		this.arma = arma;
 	}
 
 	

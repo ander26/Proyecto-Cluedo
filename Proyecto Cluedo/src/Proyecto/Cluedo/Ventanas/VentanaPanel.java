@@ -20,7 +20,16 @@ public class VentanaPanel  extends JFrame{
 		ventana.setVisible(true);
 		
 	}
+	private JLabel mensaje=new JLabel();
 	
+	public String getMensaje() {
+		return mensaje.getText();
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje.setText(mensaje);
+	}
+
 	public VentanaPanel (){
 		
 		//Establecemos el formato
@@ -43,7 +52,7 @@ public class VentanaPanel  extends JFrame{
 		
 		ImageIcon imagen =new ImageIcon() ;
 		
-		JLabel mensaje = new JLabel("<html><body><DIV ALIGN=center><br>maideribarra<br> esta jugando</div></body><html>");
+		//JLabel mensaje = new JLabel("<html><body><DIV ALIGN=center><br>maideribarra<br> esta jugando</div></body><html>");
 		
 		
 		try{
@@ -80,4 +89,5 @@ public class VentanaPanel  extends JFrame{
 		
 		
 	}
+	
 }

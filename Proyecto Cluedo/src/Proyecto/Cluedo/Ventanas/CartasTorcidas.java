@@ -26,11 +26,11 @@ import com.sun.image.codec.*;
 public class CartasTorcidas extends JLabel {
 	double beta;
 	boolean oscuro=false;
-	
+	private String nombre;
 	String ruta;
 	
 	
-	public CartasTorcidas(String ruta,double beta) throws MalformedURLException, URISyntaxException{
+	public CartasTorcidas(String ruta,double beta,String nombre) throws MalformedURLException, URISyntaxException{
 		ImageIcon iconocarta = new ImageIcon(CartasTorcidas.class.getResource(ruta));	
 		setSize(850,650);
 		Icon icono = new ImageIcon(iconocarta.getImage().getScaledInstance(this.getWidth()	, this.getHeight(), Image.SCALE_DEFAULT));
@@ -39,7 +39,15 @@ public class CartasTorcidas extends JLabel {
 		// setBorder( BorderFactory.createLineBorder( Color.yellow, 4 ));
 		this.beta=beta;
 		this.ruta=ruta;
+		this.nombre=nombre;
 	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {		
 System.out.println("entro en paint componet");

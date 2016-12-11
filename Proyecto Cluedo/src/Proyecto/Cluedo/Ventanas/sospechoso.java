@@ -52,6 +52,8 @@ public class sospechoso extends panelrosa {
 	public JLabel lizquierda=new JLabel("          ");
 	public JLabel [] arrhueco=new JLabel[7];
 	public JPanel [] arrpaneles=new JPanel[7];
+	private String sospechoso=null;
+	
 	
 	public sospechoso(){
 	pabajo=meterfondo(pabajo,"mesalampara.png");
@@ -192,10 +194,11 @@ public class sospechoso extends panelrosa {
 				Icon icono = new ImageIcon(iicono.getImage().getScaledInstance(arrhueco[apuntador].getWidth()	, arrhueco[apuntador].getHeight(), Image.SCALE_DEFAULT));
 				arrhueco[apuntador].setIcon(icono);
 				arrpaneles[apuntador].add(arrhueco[apuntador]);
-				
+				sospechoso=arrsospechoso[0].getNombre();
 				psospechoso.repaint();
 				plampara.revalidate();
 				plampara.repaint();
+				
 				
 			}
 	});
@@ -231,6 +234,7 @@ public class sospechoso extends panelrosa {
 			Icon icono = new ImageIcon(iicono.getImage().getScaledInstance(arrhueco[apuntador].getWidth()	, arrhueco[apuntador].getHeight(), Image.SCALE_DEFAULT));
 			arrhueco[apuntador].setIcon(icono);
 			arrpaneles[apuntador].add(arrhueco[apuntador]);
+			sospechoso=arrsospechoso[1].getNombre();
 			
 			psospechoso.repaint();
 			plampara.revalidate();
@@ -270,6 +274,7 @@ public class sospechoso extends panelrosa {
 			Icon icono = new ImageIcon(iicono.getImage().getScaledInstance(arrhueco[apuntador].getWidth()	, arrhueco[apuntador].getHeight(), Image.SCALE_DEFAULT));
 			arrhueco[apuntador].setIcon(icono);
 			arrpaneles[apuntador].add(arrhueco[apuntador]);
+			sospechoso=arrsospechoso[2].getNombre();
 			
 			psospechoso.repaint();
 			plampara.revalidate();
@@ -309,6 +314,7 @@ public class sospechoso extends panelrosa {
 			Icon icono = new ImageIcon(iicono.getImage().getScaledInstance(arrhueco[apuntador].getWidth()	, arrhueco[apuntador].getHeight(), Image.SCALE_DEFAULT));
 			arrhueco[apuntador].setIcon(icono);
 			arrpaneles[apuntador].add(arrhueco[apuntador]);
+			sospechoso=arrsospechoso[3].getNombre();
 			
 			psospechoso.repaint();
 			plampara.revalidate();
@@ -348,6 +354,7 @@ public class sospechoso extends panelrosa {
 			Icon icono = new ImageIcon(iicono.getImage().getScaledInstance(arrhueco[apuntador].getWidth()	, arrhueco[apuntador].getHeight(), Image.SCALE_DEFAULT));
 			arrhueco[apuntador].setIcon(icono);
 			arrpaneles[apuntador].add(arrhueco[apuntador]);
+			sospechoso=arrsospechoso[4].getNombre();
 			
 			psospechoso.repaint();
 			plampara.revalidate();
@@ -387,6 +394,7 @@ public class sospechoso extends panelrosa {
 			Icon icono = new ImageIcon(iicono.getImage().getScaledInstance(arrhueco[apuntador].getWidth()	, arrhueco[apuntador].getHeight(), Image.SCALE_DEFAULT));
 			arrhueco[apuntador].setIcon(icono);
 			arrpaneles[apuntador].add(arrhueco[apuntador]);
+			sospechoso=arrsospechoso[5].getNombre();
 			
 			psospechoso.repaint();
 			plampara.revalidate();
@@ -426,6 +434,7 @@ public class sospechoso extends panelrosa {
 			Icon icono = new ImageIcon(iicono.getImage().getScaledInstance(arrhueco[apuntador].getWidth()	, arrhueco[apuntador].getHeight(), Image.SCALE_DEFAULT));
 			arrhueco[apuntador].setIcon(icono);
 			arrpaneles[apuntador].add(arrhueco[apuntador]);
+			sospechoso=arrsospechoso[6].getNombre();
 			
 			psospechoso.repaint();
 			plampara.revalidate();
@@ -434,6 +443,13 @@ public class sospechoso extends panelrosa {
 		}
 });
 	
+	}
+	
+	public String getSospechoso() {
+		return sospechoso;
+	}
+	public void setSospechoso(String sospechoso) {
+		this.sospechoso = sospechoso;
 	}
 	public panelrosa meterfondo(panelrosa panel,String foto){
 		ImageIcon imagefondo = new ImageIcon(sospechoso.class.getResource("Imagenes/"+foto));
@@ -465,6 +481,7 @@ public class sospechoso extends panelrosa {
 		
 			
 	}
+
 	
 
 }

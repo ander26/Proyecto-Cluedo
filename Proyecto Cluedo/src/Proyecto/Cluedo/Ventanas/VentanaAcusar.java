@@ -7,6 +7,11 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -16,11 +21,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import Proyecto.Cluedo.Datos.Partida;
+import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaAcusar extends JFrame {
 	
+	private static Logger logger = Logger.getLogger(GestionBaseDeDatos.class.getName());
 
 //	private static JPanel pcsospechoso=new JPanel();
 //	//private static JPanel pclugar=new JPanel();
@@ -263,7 +271,8 @@ public class VentanaAcusar extends JFrame {
 	public JPanel pbotonera=new JPanel();
 	public JLabel lbAcusar=new JLabel();
 	public JLabel lbResolver=new JLabel();
-	public VentanaAcusar(){
+	public String [] acusacion=new String[3];
+	public VentanaAcusar(GestionBaseDeDatos base,Connection con,Jugador j,Partida p){
 		//crear los iconos 
 		ImageIcon iconoarma = new ImageIcon(ventana.class.getResource("Imagenes/iconoarmas.png"));
 		ImageIcon iconosospechosos = new ImageIcon(ventana.class.getResource("Imagenes/iconosospechosos.png"));
@@ -340,9 +349,41 @@ public class VentanaAcusar extends JFrame {
 		pbotonera.add(lbResolver);
 		pprincipal.add(pbotonera,BorderLayout.WEST);
 		getContentPane().add(pprincipal);
-		
+		lbAcusar.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				acusacion[0]=base.lugarAcusacion(con, j);
+				acusacion[2]=psospechoso.getSospechoso();
+				acusacion[1]=parmas.getArma();
+				SubirAbaseAcusacion(j,p,con);
+				base.modificarPanel(con, "El jugador"+j.getUsuario()+"piensa que "+acusacion[2]+"cometio el crimen en"+acusacion[0]+"con el"+acusacion[1], p);
+				
+				
+				
+			}
+	});
 		
 	}
+	public void SubirAbaseAcusacion(Jugador j,Partida p,Connection conexion){
+			
+		
+		try {
+			Statement statement = conexion.createStatement();
+			String sql = "INSERT INTO SOSPECHA VALUES ('" +acusacion[0] + "','" + acusacion[1] + "','" +acusacion[2]+"',"+j.getCodigo()+","+
+					 p.getCodigo() + ","+System.currentTimeMillis()+ ")";
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha añadido la sospecha: " + sql);
+
+			statement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 	public static void main(String[] args) {
 	

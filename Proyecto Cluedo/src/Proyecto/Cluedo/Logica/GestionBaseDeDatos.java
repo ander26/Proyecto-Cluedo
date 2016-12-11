@@ -880,6 +880,68 @@ public class GestionBaseDeDatos {
 			return null;
 		}
 	}
+	public ArrayList<Jugador> ObtenerJugadoresDePartidaordenadosPorCodigo(Partida p,Connection conexion) {
+
+		ArrayList<Jugador> ret = new ArrayList<>();
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT * FROM JUGADOR WHERE COD_PATIDA="+p.getCodigo()+"ORDERBY COD_JUG";
+
+			
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+				Jugador j = new Jugador();
+
+				j.setCodigo(rs.getInt("COD_JUG"));
+				j.setLugar(rs.getInt("LUGAR"));
+				j.setFicha(rs.getString("MUÑECO"));
+				j.setPosicionMuñeco(rs.getDouble("POS_MUÑECO"));
+				j.setTurno(rs.getInt("TURNO"));
+				j.setUsuario(rs.getString("NOMBRE_USUARIO"));
+				j.setCodigoPartida(rs.getInt("COD_PARTIDA"));
+				
+				j.setEnLinea(rs.getBoolean("ENLINEA"));
+				
+				ret.add(j);
+			}
+			rs.close();
+			return ret;
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public int ObtenerCodigoJugadorTurno(Connection conexion,Partida p){
+		int codigo=100;
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sql = "SELECT COD_JUG FROM JUGADOR WHERE TURNO=" + 1+"AND COD_PARTIDA="+p.getCodigo();
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+				codigo = rs.getInt(0);
+				
+			}
+
+			rs.close();
+
+			statement.close();
+			return codigo;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 100;
+		}
+		
+	}
 
 	public ArrayList<Integer> obtenerCodigoPartidaJugador(Connection conexion, String usuario) {
 
@@ -1117,6 +1179,7 @@ public class GestionBaseDeDatos {
 			}
 
 			rs.close();
+			statement.close();
 
 			logger.log(Level.INFO, "Se han obtenido correctamente los mensajes");
 
@@ -1186,6 +1249,7 @@ public class GestionBaseDeDatos {
 				ret.add(c);
 			}
 			rs.close();
+			statement.close();
 			return ret;
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
@@ -1213,6 +1277,7 @@ public class GestionBaseDeDatos {
 				System.out.println(rs.getString("NOMBRECARTA"));
 			}
 			rs.close();
+			statement.close();
 			return ret;
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
@@ -1241,6 +1306,198 @@ public class GestionBaseDeDatos {
 			e.printStackTrace();
 		}
 
+	}
+	public String lugarAcusacion(Connection conexion, Jugador j){
+		String lugar;
+		int luugar=0;
+
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "SELECT LUGAR FROM JUGADOR WHERE COD_JUG=" + j.getCodigo() ;
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+				luugar = rs.getInt(0);
+				logger.log(Level.INFO, "el numero del lugar es" + luugar);
+			}
+
+			rs.close();
+
+			statement.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return CambioDeNumeroALugar(luugar);
+	}
+	public String CambioDeNumeroALugar(int num){
+		if(num==0){
+			return "Deusto";
+		}else if(num==1){
+			return "F. Ingenieria";
+		}else if(num==2){
+			return "La Comercial";
+		}else if(num==3){
+			return "la L";
+			
+		}else if(num==4){
+			return "La Capilla";
+		}else if(num==5){
+			return "Edificio centenario";
+		}else if(num==6){
+			return "Edificio de letras";
+		}else if(num==7){
+			return "Biblioteca";
+		}else{
+			return "Zubiarte";
+		}
+	}
+	public int CambioDeLugarANumero(String lugar){
+		if(lugar=="Deusto"){
+			return 0;
+		}else if(lugar=="F. Ingenieria"){
+			return 1;
+		}else if(lugar=="La Comercial"){
+			return 2 ;
+		}else if(lugar=="la L"){
+			return 3;
+			
+		}else if(lugar=="La Capilla"){
+			return 4;
+		}else if(lugar=="Edificio centenario"){
+			return 5;
+		}else if(lugar=="Edificio de letras"){
+			return 6;
+		}else if(lugar=="Biblioteca"){
+			return 7;
+		}else{
+			return 8;
+		}
+	}
+	public ArrayList<Cartas> obtenerCartasEnviadas(Connection conexion, int codpartidda, int codjugordestino) {
+		
+		ArrayList<String> ret = new ArrayList<>();
+		ArrayList<Cartas> arr;
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda +"AND CODJUGADORDESTINO=" + codjugordestino;
+				
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+
+				ret.add(rs.getString("NOMBRECARTA"));
+				System.out.println(rs.getString("NOMBRECARTA"));
+			}
+			
+			rs.close();
+			statement.close();
+			for(int i=0;i<ret.size();i++){
+				arr =consultaATablaCartas(conexion,"NOMBRECARTA ="+ret.get(i) );
+				
+			}
+			return arr;
+			
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+	public void modificarPanel(Connection conexion, String mensaje,Partida p) {
+//		String creacion = "CREATE TABLE PARTIDA (NOMBRE text, CODIGO int NOT NULL PRIMARY KEY, NUMEROJUGADORESMAXIMO int , NUMEROJUGADORESACTUAL int,POSICIONBARCO real,MENSAJECARTEL text)";
+		
+		String SQL = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			SQL = "UPDATE PARTIDA SET MENSAJECARTEL='" + mensaje + "' WHERE CODIGO=" + p.getCodigo();
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha modificado correctamente el mensaje del panel" + SQL);
+			statement.close();
+
+			
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha modificado correctamente");
+			e.printStackTrace();
+		}
+
+	}
+	public String ObtenerPanel(Connection conexion, Partida p) {
+
+		String ret="";
+		
+		String SQL = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			SQL = "SELECT MENSAJECARTEL FROM PARTIDA WHERE CODIGO=" + p.getCodigo();
+
+			ResultSet rs = statement.executeQuery(SQL);
+			
+			while (rs.next()) {
+				ret=rs.getString("MENSAJECARTEL");
+				
+			}
+			
+			rs.close();
+
+			
+
+			statement.close();
+			return ret;
+			
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha modificado correctamente");
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	public boolean borrarCartasEnviadas(Connection conexion ) {
+//		String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA text  ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
+
+
+		String sql = "";
+
+		try {
+
+			sql = "DELETE FROM RECIBIRCARTAS WHERE CODJUGADORORIGEN>0";
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha borrado correctamente:" + sql);
+
+			statement.close();
+			return true;
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "Ha habido un error a la hora de borrar a: " + sql);
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }
