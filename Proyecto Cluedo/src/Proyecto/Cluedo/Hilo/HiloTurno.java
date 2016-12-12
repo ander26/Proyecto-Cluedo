@@ -62,10 +62,11 @@ public class HiloTurno extends Thread {
 			
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
 			//al inicializar el progrma el jugador con menor codigo tiene el turno
-			System.out.println("es el turno de"+jugador.getUsuario());
 			if(CodigoJugadorConTurno==100){
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
 				base.modificarturno(con,arrjugadores.get(0).getCodigo(), 1);
+				System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
+				
 			}}
 			//esperamos a que cambie el panel
 			while(base.ObtenerPanel(con,partida).equals(mensajePanel)){
@@ -77,7 +78,7 @@ public class HiloTurno extends Thread {
 					e.printStackTrace();
 				}
 				mensajePanel=base.ObtenerPanel(con,partida);
-				
+				System.out.println(mensajePanel);				
 			}
 			System.out.println(mensajePanel+" "+base.ObtenerPanel(con,partida));
 			vpanel.setMensaje(mensajePanel);
