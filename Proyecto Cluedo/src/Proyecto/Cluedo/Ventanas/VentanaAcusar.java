@@ -22,9 +22,11 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import Proyecto.Cluedo.Datos.Partida;
+import Proyecto.Cluedo.Hilo.HiloTurno;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Logica.Propiedades;
+
 
 public class VentanaAcusar extends JFrame {
 	
@@ -272,7 +274,10 @@ public class VentanaAcusar extends JFrame {
 	public JLabel lbAcusar=new JLabel();
 	public JLabel lbResolver=new JLabel();
 	public String [] acusacion=new String[3];
+	
 	public VentanaAcusar(GestionBaseDeDatos base,Connection con,Jugador j,Partida p){
+		setSize( 1330, 730 );
+		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );	
 		//crear los iconos 
 		ImageIcon iconoarma = new ImageIcon(ventana.class.getResource("Imagenes/iconoarmas.png"));
 		ImageIcon iconosospechosos = new ImageIcon(ventana.class.getResource("Imagenes/iconosospechosos.png"));
@@ -353,7 +358,8 @@ public class VentanaAcusar extends JFrame {
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				acusacion[0]=base.lugarAcusacion(con, j);
+				//acusacion[0]=base.lugarAcusacion(con, j); para hacer pruebas
+				acusacion[0]="F. Ingenieria";
 				acusacion[2]=psospechoso.getSospechoso();
 				acusacion[1]=parmas.getArma();
 				SubirAbaseAcusacion(j,p,con);

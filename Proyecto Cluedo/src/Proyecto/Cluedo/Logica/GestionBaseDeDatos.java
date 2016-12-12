@@ -883,14 +883,15 @@ public class GestionBaseDeDatos {
 	public ArrayList<Jugador> ObtenerJugadoresDePartidaordenadosPorCodigo(Partida p,Connection conexion) {
 
 		ArrayList<Jugador> ret = new ArrayList<>();
-
+		
 		try {
 
 			Statement statement = conexion.createStatement();
 
-			String sentSQL = "SELECT * FROM JUGADOR WHERE COD_PATIDA="+p.getCodigo()+"ORDERBY COD_JUG";
+			String sentSQL = "SELECT * FROM JUGADOR WHERE COD_PARTIDA="+p.getCodigo()+"ORDER BY COD_JUG";
 
 			
+
 
 			ResultSet rs = statement.executeQuery(sentSQL);
 
@@ -937,6 +938,7 @@ public class GestionBaseDeDatos {
 			statement.close();
 			return codigo;
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 			return 100;
 		}
@@ -1383,7 +1385,7 @@ public class GestionBaseDeDatos {
 	public ArrayList<Cartas> obtenerCartasEnviadas(Connection conexion, int codpartidda, int codjugordestino) {
 		
 		ArrayList<String> ret = new ArrayList<>();
-		ArrayList<Cartas> arr;
+		ArrayList<Cartas> arr=new ArrayList<Cartas>();
 
 		try {
 
@@ -1498,6 +1500,30 @@ public class GestionBaseDeDatos {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void modificarturno(Connection conexion, int jugCod,int turno) {
+		
+		
+		String SQL = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			SQL = "UPDATE JUGADOR SET TURNO=" + turno + "' WHERE COD_JUG=" + jugCod;
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha modificado correctamente el turno" + SQL);
+
+			statement.close();
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha modificado correctamente");
+			e.printStackTrace();
+		}
+
 	}
 
 }

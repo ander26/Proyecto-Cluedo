@@ -61,7 +61,7 @@ public class Partida {
 		this.numeroJugadoresMaximo=numeroJugadoresMaximo;
 		this.numeroJugadoresActual=1;
 		this.posicionBarco=0;
-		this.mensajeCartel="";
+		this.mensajeCartel=null;
 		this.codigo=generadorCodigo(gestion.obtenerCodigoPartidas(conexion));
 	}
 

@@ -30,13 +30,16 @@ import javax.swing.border.Border;
 import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
+import Proyecto.Cluedo.Hilo.HiloTurno;
 import Proyecto.Cluedo.Logica.Animacion;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Logica.Propiedades;
 
-public class VentanaTablero extends JFrame {
 
+public class VentanaTablero extends JFrame {
+	
+	HiloTurno hTurno = null; 
 	private boolean mostradoI = true;
 
 	private boolean mostradoD = true;
@@ -45,7 +48,7 @@ public class VentanaTablero extends JFrame {
 	
 	private ImageIcon imagen = new ImageIcon();
 
-	private static int[][] mibaraja=new int[3][4];
+	//private static int[][] mibaraja=new int[3][4];
 	
 	// public static void main(String[] args) {
 	//
@@ -57,7 +60,13 @@ public class VentanaTablero extends JFrame {
 
 	public VentanaTablero(Connection conexion, Jugador j, Usuario u, GestionBaseDeDatos base, Partida p,
 			Propiedades prop) {
-
+		hTurno = new HiloTurno();
+		hTurno.setBase(base);
+		hTurno.setJugador(j);
+		hTurno.setPartida(p);
+		hTurno.setCon(conexion);
+		
+		hTurno.start();
 		// Establecemos el formato
 
 		this.setExtendedState(MAXIMIZED_BOTH);
@@ -453,7 +462,7 @@ public class VentanaTablero extends JFrame {
 				aimglug[6] = "Imagenes/zubiarte.jpg";
 				aimglug[7] = "Imagenes/zubiarte.jpg";
 
-				VentanaAcusar f = new VentanaAcusar(aimglug[a.getLugar()], prop);
+				VentanaAcusar f = new VentanaAcusar(base,conexion,j,p);
 				f.setVisible(true);
 			}
 
@@ -480,18 +489,7 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				mibaraja[0][0] = 5;
-				mibaraja[0][1] = 1;
-				mibaraja[0][2] = 2;
-				mibaraja[0][3] = 3;
-				mibaraja[1][0] = 4;
-				mibaraja[1][1] = 5;
-				mibaraja[1][2] = 1;
-				mibaraja[1][3] = 2;
-				mibaraja[2][0] = 3;
-				mibaraja[2][1] = 4;
-				mibaraja[2][2] = 5;
-				mibaraja[2][3] = 0;
+				
 
 				ventana g = new ventana(prop, base, conexion, j, p);
 				g.setVisible(true);
