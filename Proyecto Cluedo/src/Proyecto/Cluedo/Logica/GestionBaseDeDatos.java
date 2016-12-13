@@ -1383,7 +1383,7 @@ public class GestionBaseDeDatos {
 	public ArrayList<Cartas> obtenerCartasEnviadas(Connection conexion, int codpartidda, int codjugordestino) {
 		
 		ArrayList<String> ret = new ArrayList<>();
-		ArrayList<Cartas> arr;
+		ArrayList<Cartas> arr=new ArrayList<>();
 
 		try {
 
