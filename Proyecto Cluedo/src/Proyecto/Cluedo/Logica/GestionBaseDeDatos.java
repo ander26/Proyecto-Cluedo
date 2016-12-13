@@ -883,14 +883,15 @@ public class GestionBaseDeDatos {
 	public ArrayList<Jugador> ObtenerJugadoresDePartidaordenadosPorCodigo(Partida p,Connection conexion) {
 
 		ArrayList<Jugador> ret = new ArrayList<>();
-
+		
 		try {
 
 			Statement statement = conexion.createStatement();
 
-			String sentSQL = "SELECT * FROM JUGADOR WHERE COD_PATIDA="+p.getCodigo()+"ORDERBY COD_JUG";
+			String sentSQL = "SELECT * FROM JUGADOR WHERE COD_PARTIDA="+p.getCodigo()+"ORDER BY COD_JUG";
 
 			
+
 
 			ResultSet rs = statement.executeQuery(sentSQL);
 
@@ -928,7 +929,7 @@ public class GestionBaseDeDatos {
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {
-				codigo = rs.getInt(0);
+				codigo = rs.getInt(1);
 				
 			}
 
@@ -937,6 +938,7 @@ public class GestionBaseDeDatos {
 			statement.close();
 			return codigo;
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 			return 100;
 		}
@@ -1381,28 +1383,36 @@ public class GestionBaseDeDatos {
 		}
 	}
 	public ArrayList<Cartas> obtenerCartasEnviadas(Connection conexion, int codpartidda, int codjugordestino) {
-		
+		System.out.println("entro en obtener cartan enviadas");
 		ArrayList<String> ret = new ArrayList<>();
-		ArrayList<Cartas> arr=new ArrayList<>();
+
+		ArrayList<Cartas> arr=new ArrayList<Cartas>();
+//		String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA text  ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
+
+
 
 		try {
 
 			Statement statement = conexion.createStatement();
 
 			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda +"AND CODJUGADORDESTINO=" + codjugordestino;
+			logger.log(Level.INFO, sentSQL);
 				
 			ResultSet rs = statement.executeQuery(sentSQL);
 
 			while (rs.next()) {
-
+				logger.log(Level.INFO, "entro en el while de obtener cartas enviadas");
 				ret.add(rs.getString("NOMBRECARTA"));
-				System.out.println(rs.getString("NOMBRECARTA"));
+				System.out.println(rs.getString("NOMBRECARTA")+"obtenercartasenviadas");
+				
 			}
 			
 			rs.close();
 			statement.close();
 			for(int i=0;i<ret.size();i++){
-				arr =consultaATablaCartas(conexion,"NOMBRECARTA ="+ret.get(i) );
+				arr =consultaATablaCartas(conexion,"NOMBRE='"+ret.get(i)+"'" );
+				logger.log(Level.WARNING, "Construyo array Cartas");
+				
 				
 			}
 			return arr;
@@ -1498,6 +1508,30 @@ public class GestionBaseDeDatos {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void modificarturno(Connection conexion, int jugCod,int turno) {
+		
+		
+		String SQL = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			SQL = "UPDATE JUGADOR SET TURNO=" + turno + " WHERE COD_JUG=" + jugCod;
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha modificado correctamente el turno" + SQL);
+
+			statement.close();
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha modificado correctamente");
+			e.printStackTrace();
+		}
+
 	}
 
 }

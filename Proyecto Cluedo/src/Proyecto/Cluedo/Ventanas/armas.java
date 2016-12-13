@@ -147,7 +147,7 @@ public class armas extends panelrosa{
 			System.out.println(apuntador);
 			apuntador=1;
 			arma=arrarmas[1].getNombre();
-			
+			System.out.println(arma);
 			
 			
 			

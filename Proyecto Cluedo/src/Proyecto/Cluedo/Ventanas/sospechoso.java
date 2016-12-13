@@ -139,7 +139,7 @@ public class sospechoso extends panelrosa {
 	//add(pizquierdo,BorderLayout.WEST);
 	personaje Gadget=new personaje("Imagenes/InspectorGadget.png","Inspector Gadget");
 	personaje Paris=new personaje ("Imagenes/parisHilton.png","Paris Hilton");
-	personaje Bolt=new personaje ("Imagenes/usainbolt.png","Usain Bolt");
+	personaje Bolt=new personaje ("Imagenes/usainbolt.png","Usain  Bolt");
 	personaje Socrates=new personaje("Imagenes/Socrates.png","Socrates");
 	personaje Papa=new personaje("Imagenes/papaa.png","El Papa");
 	personaje Minerva=new personaje("Imagenes/Minerva.png","Minerva");

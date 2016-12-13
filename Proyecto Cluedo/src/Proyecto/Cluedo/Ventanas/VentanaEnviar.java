@@ -52,8 +52,8 @@ public class VentanaEnviar extends JFrame {
 		aimglug[6]="Imagenes/zubiarte.jpg";
 		aimglug[7]="Imagenes/zubiarte.jpg";
 																		
-		JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
-		f.setVisible(true);
+		//JFrame f=new VentanaAcusar(aimglug[a.getLugar()]);		
+		//f.setVisible(true);
 	}
 	
 
