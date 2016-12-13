@@ -929,7 +929,7 @@ public class GestionBaseDeDatos {
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {
-				codigo = rs.getInt(0);
+				codigo = rs.getInt(1);
 				
 			}
 
@@ -1511,7 +1511,7 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			SQL = "UPDATE JUGADOR SET TURNO=" + turno + "' WHERE COD_JUG=" + jugCod;
+			SQL = "UPDATE JUGADOR SET TURNO=" + turno + " WHERE COD_JUG=" + jugCod;
 
 			statement.executeUpdate(SQL);
 

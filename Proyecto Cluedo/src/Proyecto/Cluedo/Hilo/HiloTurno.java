@@ -49,8 +49,10 @@ public class HiloTurno extends Thread {
 	public int turno=0;
 	public int CodigoJugadorConTurno;
 	public Jugador jugador;
-	public ArrayList<Jugador> arrjugadores;
+	public ArrayList<Jugador> arrjugadores=new ArrayList<Jugador>();
 	public String mensajePanel;
+	
+	
 	public VentanaPanel vpanel=new VentanaPanel();
 	public Logger logger = Logger.getLogger(HiloTurno.class.getName());
 	@Override
@@ -77,16 +79,18 @@ public class HiloTurno extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				mensajePanel=base.ObtenerPanel(con,partida);
+				
 				System.out.println(mensajePanel);				
 			}
 			System.out.println(mensajePanel+" "+base.ObtenerPanel(con,partida));
+			mensajePanel=base.ObtenerPanel(con,partida);
 			vpanel.setMensaje(mensajePanel);
 			vpanel.setVisible(true);
 			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL");
-			mensajePanel=base.ObtenerPanel(con,partida);
+			
 			ArrayList<Cartas> arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
 			//esperamos a que todos los jugadores envien la carta o le den al boton de no enviar nada
+			
 			while(arrcartas.size()!=(arrjugadores.size()-1)){
 				try {
 					Thread.sleep( 30000 );
@@ -94,12 +98,14 @@ public class HiloTurno extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+				
 			}
 			if(CodigoJugadorConTurno==jugador.getCodigo()){
 				VentanaEnviar vcartasrecibidas=new VentanaEnviar(base, con, partida, jugador);
 			}
 			//esperamos un tiempo a que ventanaenviar modifique el mensaje
-			while(mensajePanel==base.ObtenerPanel(con,partida)){
+			while(base.ObtenerPanel(con,partida).equals(mensajePanel)){
 				try {
 					Thread.sleep( 30000 );
 				} catch (InterruptedException e) {
