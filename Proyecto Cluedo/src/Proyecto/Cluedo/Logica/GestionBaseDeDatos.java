@@ -1383,28 +1383,34 @@ public class GestionBaseDeDatos {
 		}
 	}
 	public ArrayList<Cartas> obtenerCartasEnviadas(Connection conexion, int codpartidda, int codjugordestino) {
-		
+		System.out.println("entro en obtener cartan enviadas");
 		ArrayList<String> ret = new ArrayList<>();
 		ArrayList<Cartas> arr=new ArrayList<Cartas>();
+//		String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA text  ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
+
 
 		try {
 
 			Statement statement = conexion.createStatement();
 
 			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda +"AND CODJUGADORDESTINO=" + codjugordestino;
+			logger.log(Level.INFO, sentSQL);
 				
 			ResultSet rs = statement.executeQuery(sentSQL);
 
 			while (rs.next()) {
-
+				logger.log(Level.INFO, "entro en el while de obtener cartas enviadas");
 				ret.add(rs.getString("NOMBRECARTA"));
-				System.out.println(rs.getString("NOMBRECARTA"));
+				System.out.println(rs.getString("NOMBRECARTA")+"obtenercartasenviadas");
+				
 			}
 			
 			rs.close();
 			statement.close();
 			for(int i=0;i<ret.size();i++){
-				arr =consultaATablaCartas(conexion,"NOMBRECARTA ="+ret.get(i) );
+				arr =consultaATablaCartas(conexion,"NOMBRE='"+ret.get(i)+"'" );
+				logger.log(Level.WARNING, "Construyo array Cartas");
+				
 				
 			}
 			return arr;

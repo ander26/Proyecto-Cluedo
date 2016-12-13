@@ -68,8 +68,15 @@ public class HiloTurno extends Thread {
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
 				base.modificarturno(con,arrjugadores.get(0).getCodigo(), 1);
 				System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
+				try {
+					Thread.sleep( 30000 );
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}}
+			
 			//esperamos a que cambie el panel
 			while(base.ObtenerPanel(con,partida).equals(mensajePanel)){
 				
@@ -87,11 +94,12 @@ public class HiloTurno extends Thread {
 			vpanel.setMensaje(mensajePanel);
 			vpanel.setVisible(true);
 			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL");
-			
+			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);			
 			ArrayList<Cartas> arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
 			//esperamos a que todos los jugadores envien la carta o le den al boton de no enviar nada
 			
 			while(arrcartas.size()!=(arrjugadores.size()-1)){
+				System.out.println( "arrcartas.size"+arrcartas.size()+"arrjugadores.size"+(arrjugadores.size()-1));
 				try {
 					Thread.sleep( 30000 );
 				} catch (InterruptedException e) {
@@ -100,6 +108,7 @@ public class HiloTurno extends Thread {
 				}
 				arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
 				
+				logger.log(Level.INFO, "compruebo si hay cartas");
 			}
 			if(CodigoJugadorConTurno==jugador.getCodigo()){
 				VentanaEnviar vcartasrecibidas=new VentanaEnviar(base, con, partida, jugador);
