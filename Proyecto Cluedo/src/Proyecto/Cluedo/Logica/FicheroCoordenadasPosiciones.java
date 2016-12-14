@@ -8,6 +8,7 @@ import java.sql.*;
 public class FicheroCoordenadasPosiciones {
 
 
+	
 	// Ver test JUnit para ejemplo de funcionamiento:
 	// TestEjemploFicheros (en este mismo paquete)
 

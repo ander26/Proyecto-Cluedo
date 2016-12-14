@@ -1508,6 +1508,7 @@ public class GestionBaseDeDatos {
 		}
 	}
 	
+	
 	public void modificarturno(Connection conexion, int jugCod,int turno) {
 		
 		

@@ -8,6 +8,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.ImageCapabilities;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -18,6 +19,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.Icon;
@@ -32,6 +34,7 @@ import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Hilo.HiloTurno;
 import Proyecto.Cluedo.Logica.Animacion;
+import Proyecto.Cluedo.Logica.FicheroCoordenadasPosiciones;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Logica.Propiedades;
@@ -47,6 +50,7 @@ public class VentanaTablero extends JFrame {
 	private Icon icono;
 	
 	private ImageIcon imagen = new ImageIcon();
+	private ArrayList<Point> arpunto=new ArrayList<Point>();
 
 	//private static int[][] mibaraja=new int[3][4];
 	
@@ -257,7 +261,7 @@ public class VentanaTablero extends JFrame {
 		try {
 
 			imagen = new ImageIcon(
-					VentanaTablero.class.getResource("Imagenes/definitivo.png").toURI().toURL());
+					VentanaTablero.class.getResource("Imagenes/fondoposicion.png").toURI().toURL());
 		} catch (Exception e) {
 
 			System.out.println("No se ha encontrado el archivo");
@@ -334,7 +338,7 @@ public class VentanaTablero extends JFrame {
 
 		fondo.setLayout(null);
 
-		fondo.add(semaforo);
+		//fondo.add(semaforo);
 		panelI.setLayout(null);
 		panelD.setLayout(null);
 
@@ -348,23 +352,46 @@ public class VentanaTablero extends JFrame {
 
 		panelI.add(cuadradoI);
 
-		fondo.add(panelI);
+		//fondo.add(panelI);
 
 		panelD.add(flechaD);
 
-		panelD.add(usuario);
+		//panelD.add(usuario);
 
-		panelD.add(labelChat);
+		//panelD.add(labelChat);
 
-		panelD.add(labelNotas);
+		//panelD.add(labelNotas);
 
-		panelD.add(labelCartas);
+		//panelD.add(labelCartas);
 
-		panelD.add(cuadradoD);
+		//panelD.add(cuadradoD);
 
-		fondo.add(panelD);
+		//fondo.add(panelD);
 
-		fondo.add(jugador1);
+		//fondo.add(jugador1);
+		fondo.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Point punto=new Point(e.getX(),e.getY());
+			if(punto.getX()==0){
+				FicheroCoordenadasPosiciones fcoor=new FicheroCoordenadasPosiciones();
+				fcoor.escribirAFicheroConBarras("cordeenadascirculos.txt", arpunto);
+			}
+			else{
+				if(punto!=null){
+					arpunto.add(punto);
+					System.out.println(punto);
+				}
+			}
+					
+					
+				
+				
+				
+				
+				}
+		});
 		
 		flechaI.addMouseListener(new MouseAdapter() {
 
