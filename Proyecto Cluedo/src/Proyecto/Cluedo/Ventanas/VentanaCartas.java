@@ -478,7 +478,7 @@ public void SubirAbaseCartaElegida(Jugador j,Partida p,Connection conexion,Gesti
 			int codigo=base.ObtenerCodigoJugadorTurno(conexion,p);
 			Statement statement = conexion.createStatement();
 			String sql = "INSERT INTO RECIBIRCARTAS VALUES ('" +cartas.get(poscartas).getNombre() + "'," + j.getCodigo() + "," +codigo+","+p.getCodigo()+","+
-					  ","+System.currentTimeMillis()+ ")";
+					  System.currentTimeMillis()+ ")";
 
 			statement.executeUpdate(sql);
 
