@@ -19,6 +19,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -39,7 +40,8 @@ import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaTablero extends JFrame {
 	
-	HiloTurno hTurno = null; 
+	private HiloTurno hTurno = null; 
+	
 	private boolean mostradoI = true;
 
 	private boolean mostradoD = true;
@@ -47,6 +49,9 @@ public class VentanaTablero extends JFrame {
 	private Icon icono;
 	
 	private ImageIcon imagen = new ImageIcon();
+	
+	private JLabel semaforo=new JLabel();
+	
 
 	//private static int[][] mibaraja=new int[3][4];
 	
@@ -60,13 +65,15 @@ public class VentanaTablero extends JFrame {
 
 	public VentanaTablero(Connection conexion, Jugador j, Usuario u, GestionBaseDeDatos base, Partida p,
 			Propiedades prop) {
+		
 		hTurno = new HiloTurno();
 		hTurno.setBase(base);
 		hTurno.setJugador(j);
 		hTurno.setPartida(p);
 		hTurno.setCon(conexion);
+		hTurno.setPulsado(false);
 		
-		hTurno.start();
+		
 		// Establecemos el formato
 
 		this.setExtendedState(MAXIMIZED_BOTH);
@@ -265,7 +272,7 @@ public class VentanaTablero extends JFrame {
 
 		panelrosa fondo = new panelrosa(imagen.getImage());
 
-		JLabel semaforo = new JLabel();
+		semaforo = new JLabel();
 
 		semaforo.setBounds((int) anchura / 2 - 90, 60, 220, 90);
 		try {
@@ -281,6 +288,9 @@ public class VentanaTablero extends JFrame {
 
 		semaforo.setIcon(icono);
 
+
+		
+		
 		JLabel cuadradoI = new JLabel();
 
 		JPanel panelI = new JPanel();
@@ -325,6 +335,10 @@ public class VentanaTablero extends JFrame {
 				imagen.getImage().getScaledInstance(cuadradoD.getWidth(), cuadradoD.getHeight(), Image.SCALE_DEFAULT));
 
 		cuadradoD.setIcon(icono);
+		
+		hTurno.setLabelSemaforo(semaforo);
+		
+		hTurno.start();
 
 		// Establecemos el formato
 
@@ -526,6 +540,63 @@ public class VentanaTablero extends JFrame {
 				ventana.setVisible(true);
 			}
 	
+		});
+		
+		labelDado.addMouseListener(new MouseAdapter() {
+		
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int turno = base.obtenerTurno(conexion, j);
+				
+				if (turno==1){
+					
+					if (!(hTurno.isPulsado())){
+						
+						Random r= new Random();
+						
+						int numero = r.nextInt(7);
+						
+						while (numero==0){
+							numero = r.nextInt(7);
+						}
+						
+						System.out.println(numero);
+
+						try {
+							
+							imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/"+numero+".png").toURI().toURL());
+							
+						}catch (Exception o){
+							
+							System.out.println("No se ha encontrado el archivo");
+						}
+						
+						
+						icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
+						
+						labelDado.setIcon(icono);
+						
+						hTurno.setPulsado(true);
+					}
+					
+				
+					
+				}
+				
+			}
+		});
+		
+		addWindowListener(new WindowAdapter() {
+			
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				hTurno.acaba();
+				
+			}
+			
 		});
 	}
 

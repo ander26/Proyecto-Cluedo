@@ -1534,4 +1534,36 @@ public class GestionBaseDeDatos {
 
 	}
 
+	public int obtenerTurno (Connection conexion, Jugador j){
+		
+		String SQL="";
+		
+		int numero =-1;
+		
+		try{
+			
+			SQL ="SELECT TURNO FROM JUGADOR WHERE COD_JUG="+j.getCodigo();
+			
+			Statement statement = conexion.createStatement();
+			ResultSet resultado = statement.executeQuery(SQL);
+			
+			
+			while (resultado.next()){
+				
+				numero=resultado.getInt(1);
+			}
+			
+		
+			logger.log(Level.INFO, "Se ha obtenido correctamente el turno del jugador: "+numero);
+			return numero;
+			
+		}catch (Exception e){
+			
+			logger.log(Level.SEVERE,"No se ha conseguido obtener el turno correctamente");
+			e.printStackTrace();
+			
+			return -1;
+			
+		}
+	}
 }
