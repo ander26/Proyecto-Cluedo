@@ -35,8 +35,29 @@ public class HiloTurno extends Thread {
 	private JLabel labelSemaforo;
 	
 	
+	private JLabel labelDado;
+	
+	private JLabel labelAcusar;
 	
 	
+	
+	
+	public JLabel getLabelDado() {
+		return labelDado;
+	}
+
+	public void setLabelDado(JLabel labelDado) {
+		this.labelDado = labelDado;
+	}
+
+	public JLabel getLabelAcusar() {
+		return labelAcusar;
+	}
+
+	public void setLabelAcusar(JLabel labelAcusar) {
+		this.labelAcusar = labelAcusar;
+	}
+
 	public boolean isPulsado() {
 		return pulsado;
 	}
@@ -150,6 +171,37 @@ public class HiloTurno extends Thread {
 				
 				labelSemaforo.repaint();
 				
+				try{
+					
+					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dado.gif").toURI().toURL());
+					
+				}catch (Exception e){
+					
+					System.out.println("No se ha encontrado al archivo");
+				}
+				
+				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
+			
+				labelDado.setIcon(icono);
+				
+				labelDado.repaint();
+				
+				try{
+					
+					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharriba.png").toURI().toURL());
+					
+				}catch (Exception e){
+					
+					System.out.println("No se ha encontrado al archivo");
+				}
+				
+				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
+			
+				labelAcusar.setIcon(icono);
+				
+				labelAcusar.repaint();
+				
+				
 			}else{
 				
 				ImageIcon imagen = new ImageIcon();
@@ -172,6 +224,36 @@ public class HiloTurno extends Thread {
 				labelSemaforo.repaint();
 				
 				
+				try{
+					
+					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dadoNegro.gif").toURI().toURL());
+					
+				}catch (Exception e){
+					
+					System.out.println("No se ha encontrado al archivo");
+				}
+				
+				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
+			
+				labelDado.setIcon(icono);
+				
+				labelDado.repaint();
+				
+				
+				try{
+					
+					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharribaNegro.png").toURI().toURL());
+					
+				}catch (Exception e){
+					
+					System.out.println("No se ha encontrado al archivo");
+				}
+				
+				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
+			
+				labelAcusar.setIcon(icono);
+				
+				labelAcusar.repaint();
 				
 			}
 			

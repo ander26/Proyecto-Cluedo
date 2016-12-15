@@ -636,7 +636,7 @@ public class GestionBaseDeDatos {
 
 	}
 
-	public ArrayList<Integer> obtenerCodigoPartidasSinCompletar(Connection conexion) {
+	public ArrayList<Integer> obtenerCodigoPartidasSinCompletar(Connection conexion,String usuario) {
 
 		ArrayList<Integer> listadeCodigos = new ArrayList<Integer>();
 
@@ -646,7 +646,7 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			sql = "SELECT CODIGO FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+			sql = "SELECT CODIGO FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO EXCEPT SELECT COD_PARTIDA FROM JUGADOR WHERE NOMBRE_USUARIO='"+usuario+"' ORDER BY 1";
 
 			ResultSet rs = statement.executeQuery(sql);
 
@@ -668,7 +668,7 @@ public class GestionBaseDeDatos {
 
 	}
 
-	public ArrayList<String> obtenerNombrePartidas(Connection conexion) {
+	public ArrayList<String> obtenerNombrePartidas(Connection conexion,String usuario) {
 
 		ArrayList<String> listadeNombre = new ArrayList<String>();
 
@@ -678,7 +678,8 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			sql = "SELECT NOMBRE FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+			sql = "SELECT NOMBRE FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO  EXCEPT SELECT NOMBRE FROM PARTIDA, JUGADOR WHERE"
+					+ " PARTIDA.CODIGO=JUGADOR.COD_PARTIDA AND JUGADOR.NOMBRE_USUARIO='"+usuario+"' ORDER BY 1";
 
 			ResultSet rs = statement.executeQuery(sql);
 
@@ -698,7 +699,7 @@ public class GestionBaseDeDatos {
 
 	}
 
-	public ArrayList<Integer> obtenerJugadoresPartidas(Connection conexion, String columna) {
+	public ArrayList<Integer> obtenerJugadoresPartidas(Connection conexion, String columna,ArrayList <Integer> listaCodigosSinCompletar) {
 
 		ArrayList<Integer> listadeJugadores = new ArrayList<Integer>();
 
@@ -709,8 +710,24 @@ public class GestionBaseDeDatos {
 			Statement statement = conexion.createStatement();
 
 			sql = "SELECT " + columna
-					+ " FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+					+ " FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO AND CODIGO IN (";
+			
+			int contador =0;
+			for (Integer i : listaCodigosSinCompletar){
+				sql=sql+i;
+				
+				if (contador==listaCodigosSinCompletar.size()-1){
+					
+				}else{
+					sql=sql+",";
+				}
+				contador++;
+				}
+			
+			
+			sql=sql	+ ")ORDER BY CODIGO ";
 
+			System.out.println(sql);
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {

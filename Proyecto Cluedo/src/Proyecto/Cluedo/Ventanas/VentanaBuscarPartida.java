@@ -72,13 +72,13 @@ public class VentanaBuscarPartida extends JFrame {
 
 		// Esto para partidas abiertas
 
-		ArrayList <Integer> listaCodigosSinCompletar = gestion.obtenerCodigoPartidasSinCompletar(conexion);
+		ArrayList <Integer> listaCodigosSinCompletar = gestion.obtenerCodigoPartidasSinCompletar(conexion,u.getUsuario());
 		
-		ArrayList<String> listaNombrePartidas = gestion.obtenerNombrePartidas(conexion);
+		ArrayList<String> listaNombrePartidas = gestion.obtenerNombrePartidas(conexion,u.getUsuario());
 
-		ArrayList<Integer> listaJugadoresActual = gestion.obtenerJugadoresPartidas(conexion, "NUMEROJUGADORESACTUAL");
+		ArrayList<Integer> listaJugadoresActual = gestion.obtenerJugadoresPartidas(conexion, "NUMEROJUGADORESACTUAL",listaCodigosSinCompletar);
 
-		ArrayList<Integer> listaJugadoresMaximo = gestion.obtenerJugadoresPartidas(conexion, "NUMEROJUGADORESMAXIMO");
+		ArrayList<Integer> listaJugadoresMaximo = gestion.obtenerJugadoresPartidas(conexion, "NUMEROJUGADORESMAXIMO",listaCodigosSinCompletar);
 
 		// Esto para partidas guardadas del usuario
 
@@ -326,6 +326,7 @@ public class VentanaBuscarPartida extends JFrame {
 		for (int i=0;i<listaNombrePartidas.size();i++){
 				  
 			String nombre = listaNombrePartidas.get(i);
+			System.out.println(listaNombrePartidas.get(i));
 			
 			int numeroA= listaJugadoresActual.get(i);
 			

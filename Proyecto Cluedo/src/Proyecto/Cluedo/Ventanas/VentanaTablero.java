@@ -338,6 +338,10 @@ public class VentanaTablero extends JFrame {
 		
 		hTurno.setLabelSemaforo(semaforo);
 		
+		hTurno.setLabelAcusar(labelAcusar);
+		
+		hTurno.setLabelDado(labelDado);
+		
 		hTurno.start();
 
 		// Establecemos el formato
