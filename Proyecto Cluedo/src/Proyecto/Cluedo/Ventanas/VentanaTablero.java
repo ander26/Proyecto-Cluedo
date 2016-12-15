@@ -598,7 +598,7 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				hTurno.acaba();
-				
+				System.out.println("Se ha cerrado la ventana");
 			}
 			
 		});

@@ -138,19 +138,24 @@ public class HiloTurno extends Thread {
 				
 					System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
 			
-					try {
-					
-						Thread.sleep( 30000 );
-				
-					} catch (InterruptedException e) {
-					
-					e.printStackTrace();
-				}
+//					try {
+//					
+//						Thread.sleep( 30000 );
+//				
+//					} catch (InterruptedException e) {
+//					
+//					e.printStackTrace();
+//				}
 				
 			}}
 			
+		
+			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
+			
 			
 			if (jugador.getCodigo()==CodigoJugadorConTurno){
+				
+				System.out.println("HACE");
 				
 				ImageIcon imagen = new ImageIcon();
 				
@@ -203,6 +208,8 @@ public class HiloTurno extends Thread {
 				
 				
 			}else{
+				
+				System.out.println("NO HACE");
 				
 				ImageIcon imagen = new ImageIcon();
 				

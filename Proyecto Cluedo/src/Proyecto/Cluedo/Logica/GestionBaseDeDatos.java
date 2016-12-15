@@ -706,6 +706,8 @@ public class GestionBaseDeDatos {
 		String sql = "";
 
 		try {
+			
+			if (listaCodigosSinCompletar.size()>0){
 
 			Statement statement = conexion.createStatement();
 
@@ -737,7 +739,7 @@ public class GestionBaseDeDatos {
 
 			rs.close();
 
-			statement.close();
+			statement.close();}
 			return listadeJugadores;
 		} catch (Exception e) {
 			e.printStackTrace();
