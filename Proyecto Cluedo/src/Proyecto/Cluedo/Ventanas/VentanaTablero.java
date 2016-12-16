@@ -21,6 +21,7 @@ import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -42,7 +43,8 @@ import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaTablero extends JFrame {
 	
-	HiloTurno hTurno = null; 
+	private HiloTurno hTurno = null; 
+	
 	private boolean mostradoI = true;
 
 	private boolean mostradoD = true;
@@ -50,8 +52,15 @@ public class VentanaTablero extends JFrame {
 	private Icon icono;
 	
 	private ImageIcon imagen = new ImageIcon();
+
 	private ArrayList<Point> arpunto=new ArrayList<Point>();
 	private Panelcirculos pposiciones=new Panelcirculos();
+
+	
+	private JLabel semaforo=new JLabel();
+	
+
+
 	//private static int[][] mibaraja=new int[3][4];
 	
 	// public static void main(String[] args) {
@@ -264,7 +273,7 @@ public class VentanaTablero extends JFrame {
 
 		panelrosa fondo = new panelrosa(imagen.getImage());
 
-		JLabel semaforo = new JLabel();
+		semaforo = new JLabel();
 
 		semaforo.setBounds((int) anchura / 2 - 90, 60, 220, 90);
 		try {
@@ -282,6 +291,9 @@ public class VentanaTablero extends JFrame {
 		
 		
 
+
+		
+		
 		JLabel cuadradoI = new JLabel();
 
 		JPanel panelI = new JPanel();
@@ -327,6 +339,7 @@ public class VentanaTablero extends JFrame {
 
 		cuadradoD.setIcon(icono);
 		
+
 		JLabel trainera = new JLabel();
 
 		trainera.setBounds(321, 518, 250, 100);
@@ -385,6 +398,15 @@ public class VentanaTablero extends JFrame {
 		LabelLugares capilla= new LabelLugares("Imagenes/capilla.png","capilla",1676,237,177,160);
 		LabelLugares crai= new LabelLugares("Imagenes/crai.png","crai",1384,596,259,248);
 		LabelLugares zubi= new LabelLugares("Imagenes/zubi.png","zubi",398,639,494,265);
+
+
+		hTurno.setLabelSemaforo(semaforo);
+		
+		hTurno.setLabelAcusar(labelAcusar);
+		
+		hTurno.setLabelDado(labelDado);
+		
+		hTurno.start();
 
 
 		// Establecemos el formato
@@ -650,6 +672,63 @@ public class VentanaTablero extends JFrame {
 				ventana.setVisible(true);
 			}
 	
+		});
+		
+		labelDado.addMouseListener(new MouseAdapter() {
+		
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int turno = base.obtenerTurno(conexion, j);
+				
+				if (turno==1){
+					
+					if (!(hTurno.isPulsado())){
+						
+						Random r= new Random();
+						
+						int numero = r.nextInt(7);
+						
+						while (numero==0){
+							numero = r.nextInt(7);
+						}
+						
+						System.out.println(numero);
+
+						try {
+							
+							imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/"+numero+".png").toURI().toURL());
+							
+						}catch (Exception o){
+							
+							System.out.println("No se ha encontrado el archivo");
+						}
+						
+						
+						icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
+						
+						labelDado.setIcon(icono);
+						
+						hTurno.setPulsado(true);
+					}
+					
+				
+					
+				}
+				
+			}
+		});
+		
+		addWindowListener(new WindowAdapter() {
+			
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				hTurno.acaba();
+				System.out.println("Se ha cerrado la ventana");
+			}
+			
 		});
 	}
 

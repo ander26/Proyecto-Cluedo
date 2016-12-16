@@ -372,56 +372,56 @@ public class GestionBaseDeDatos {
 
 	public ArrayList<Usuario> consultaATablaOrdenadoPuntuacion(Connection conexion) {
 
-				ArrayList<Usuario> ret = new ArrayList<>();
-		
-				try {
-		
-					Statement statement = conexion.createStatement();
-		
-					String sentSQL = "SELECT * FROM USUARIO ORDER BY PUNTUACION DESC";
-		
-					ResultSet rs = statement.executeQuery(sentSQL);
-		
-					while (rs.next()) {
-						Usuario u = new Usuario();
-		
-						u.setNombre(rs.getString("NOMBRE"));
-						u.setContraseña(rs.getString("CONTRASEÑA"));
-						u.setApellidos(rs.getString("APELLIDO"));
-						u.setUsuario(rs.getString("NOMBREUSUARIO"));
-						u.setEmail(rs.getString("EMAIL"));
-						u.setPregunta(rs.getInt("PREGUNTA"));
-						u.setRespuesta(rs.getString("RESPUESTA"));
-						if (rs.getString("GENERO").equals("HOMBRE")) {
-							u.setGenero(Genero.HOMBRE);
-						} else {
-							u.setGenero(Genero.MUJER);
-						}
-						u.setConexion(new Date(rs.getLong("FECHAULTIMOLOGIN")));
-						u.setFechaNacimeinto(new Date(rs.getLong("FECHANACIMIENTO")));
-		
-						ImageIcon imagen = new ImageIcon();
-						/**
-						 * Blob blob = rs.getBlob("IMAGENPERFIL"); byte[] data =
-						 * blob.getBytes(1, (int)blob.length()); img = ImageIO.read(new
-						 * ByteArrayInputStream(data)); try { img = ImageIO.read(new
-						 * ByteArrayInputStream(data)); } catch (IOException ex) {
-						 * 
-						 * }
-						 */
-		
-						byte[] imgBytes = rs.getBytes(11);
-		
-						BufferedImage img = null;
-						img = ImageIO.read(new ByteArrayInputStream(imgBytes));
-		
-						imagen.setImage(img);
-		
-						u.setImagenPerfil(imagen);
-		
-						u.setPuntuacion(rs.getLong("PUNTUACION"));
-		
-						ret.add(u);
+		ArrayList<Usuario> ret = new ArrayList<>();
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT * FROM USUARIO ORDER BY PUNTUACION DESC";
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+				Usuario u = new Usuario();
+
+				u.setNombre(rs.getString("NOMBRE"));
+				u.setContraseña(rs.getString("CONTRASEÑA"));
+				u.setApellidos(rs.getString("APELLIDO"));
+				u.setUsuario(rs.getString("NOMBREUSUARIO"));
+				u.setEmail(rs.getString("EMAIL"));
+				u.setPregunta(rs.getInt("PREGUNTA"));
+				u.setRespuesta(rs.getString("RESPUESTA"));
+				if (rs.getString("GENERO").equals("HOMBRE")) {
+					u.setGenero(Genero.HOMBRE);
+				} else {
+					u.setGenero(Genero.MUJER);
+				}
+				u.setConexion(new Date(rs.getLong("FECHAULTIMOLOGIN")));
+				u.setFechaNacimeinto(new Date(rs.getLong("FECHANACIMIENTO")));
+
+				ImageIcon imagen = new ImageIcon();
+				/**
+				 * Blob blob = rs.getBlob("IMAGENPERFIL"); byte[] data =
+				 * blob.getBytes(1, (int)blob.length()); img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); try { img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); } catch (IOException ex) {
+				 * 
+				 * }
+				 */
+
+				byte[] imgBytes = rs.getBytes(11);
+
+				BufferedImage img = null;
+				img = ImageIO.read(new ByteArrayInputStream(imgBytes));
+
+				imagen.setImage(img);
+
+				u.setImagenPerfil(imagen);
+
+				u.setPuntuacion(rs.getLong("PUNTUACION"));
+
+				ret.add(u);
 			}
 			rs.close();
 			return ret;
@@ -525,7 +525,7 @@ public class GestionBaseDeDatos {
 		}
 
 	}
-	
+
 	// TABLA PARTIDA
 
 	/**
@@ -636,7 +636,7 @@ public class GestionBaseDeDatos {
 
 	}
 
-	public ArrayList<Integer> obtenerCodigoPartidasSinCompletar(Connection conexion) {
+	public ArrayList<Integer> obtenerCodigoPartidasSinCompletar(Connection conexion, String usuario) {
 
 		ArrayList<Integer> listadeCodigos = new ArrayList<Integer>();
 
@@ -646,7 +646,8 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			sql = "SELECT CODIGO FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+			sql = "SELECT CODIGO FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO EXCEPT SELECT COD_PARTIDA FROM JUGADOR WHERE NOMBRE_USUARIO='"
+					+ usuario + "' ORDER BY 1";
 
 			ResultSet rs = statement.executeQuery(sql);
 
@@ -668,7 +669,7 @@ public class GestionBaseDeDatos {
 
 	}
 
-	public ArrayList<String> obtenerNombrePartidas(Connection conexion) {
+	public ArrayList<String> obtenerNombrePartidas(Connection conexion, String usuario) {
 
 		ArrayList<String> listadeNombre = new ArrayList<String>();
 
@@ -678,7 +679,8 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			sql = "SELECT NOMBRE FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+			sql = "SELECT NOMBRE FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO  EXCEPT SELECT NOMBRE FROM PARTIDA, JUGADOR WHERE"
+					+ " PARTIDA.CODIGO=JUGADOR.COD_PARTIDA AND JUGADOR.NOMBRE_USUARIO='" + usuario + "' ORDER BY 1";
 
 			ResultSet rs = statement.executeQuery(sql);
 
@@ -698,7 +700,8 @@ public class GestionBaseDeDatos {
 
 	}
 
-	public ArrayList<Integer> obtenerJugadoresPartidas(Connection conexion, String columna) {
+	public ArrayList<Integer> obtenerJugadoresPartidas(Connection conexion, String columna,
+			ArrayList<Integer> listaCodigosSinCompletar) {
 
 		ArrayList<Integer> listadeJugadores = new ArrayList<Integer>();
 
@@ -706,21 +709,39 @@ public class GestionBaseDeDatos {
 
 		try {
 
-			Statement statement = conexion.createStatement();
+			if (listaCodigosSinCompletar.size() > 0) {
 
-			sql = "SELECT " + columna
-					+ " FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO ORDER BY CODIGO";
+				Statement statement = conexion.createStatement();
 
-			ResultSet rs = statement.executeQuery(sql);
+				sql = "SELECT " + columna
+						+ " FROM PARTIDA WHERE NUMEROJUGADORESACTUAL<NUMEROJUGADORESMAXIMO AND CODIGO IN (";
 
-			while (rs.next()) {
-				int jugador = rs.getInt(1);
-				listadeJugadores.add(jugador);
+				int contador = 0;
+				for (Integer i : listaCodigosSinCompletar) {
+					sql = sql + i;
+
+					if (contador == listaCodigosSinCompletar.size() - 1) {
+
+					} else {
+						sql = sql + ",";
+					}
+					contador++;
+				}
+
+				sql = sql + ")ORDER BY CODIGO ";
+
+				System.out.println(sql);
+				ResultSet rs = statement.executeQuery(sql);
+
+				while (rs.next()) {
+					int jugador = rs.getInt(1);
+					listadeJugadores.add(jugador);
+				}
+
+				rs.close();
+
+				statement.close();
 			}
-
-			rs.close();
-
-			statement.close();
 			return listadeJugadores;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -867,9 +888,9 @@ public class GestionBaseDeDatos {
 				j.setTurno(rs.getInt("TURNO"));
 				j.setUsuario(rs.getString("NOMBRE_USUARIO"));
 				j.setCodigoPartida(rs.getInt("COD_PARTIDA"));
-				
+
 				j.setEnLinea(rs.getBoolean("ENLINEA"));
-				
+
 				ret.add(j);
 			}
 			rs.close();
@@ -880,18 +901,16 @@ public class GestionBaseDeDatos {
 			return null;
 		}
 	}
-	public ArrayList<Jugador> ObtenerJugadoresDePartidaordenadosPorCodigo(Partida p,Connection conexion) {
+
+	public ArrayList<Jugador> ObtenerJugadoresDePartidaordenadosPorCodigo(Partida p, Connection conexion) {
 
 		ArrayList<Jugador> ret = new ArrayList<>();
-		
+
 		try {
 
 			Statement statement = conexion.createStatement();
 
-			String sentSQL = "SELECT * FROM JUGADOR WHERE COD_PARTIDA="+p.getCodigo()+"ORDER BY COD_JUG";
-
-			
-
+			String sentSQL = "SELECT * FROM JUGADOR WHERE COD_PARTIDA=" + p.getCodigo() + "ORDER BY COD_JUG";
 
 			ResultSet rs = statement.executeQuery(sentSQL);
 
@@ -905,9 +924,9 @@ public class GestionBaseDeDatos {
 				j.setTurno(rs.getInt("TURNO"));
 				j.setUsuario(rs.getString("NOMBRE_USUARIO"));
 				j.setCodigoPartida(rs.getInt("COD_PARTIDA"));
-				
+
 				j.setEnLinea(rs.getBoolean("ENLINEA"));
-				
+
 				ret.add(j);
 			}
 			rs.close();
@@ -918,19 +937,20 @@ public class GestionBaseDeDatos {
 			return null;
 		}
 	}
-	public int ObtenerCodigoJugadorTurno(Connection conexion,Partida p){
-		int codigo=100;
+
+	public int ObtenerCodigoJugadorTurno(Connection conexion, Partida p) {
+		int codigo = 100;
 		try {
 
 			Statement statement = conexion.createStatement();
 
-			String sql = "SELECT COD_JUG FROM JUGADOR WHERE TURNO=" + 1+"AND COD_PARTIDA="+p.getCodigo();
+			String sql = "SELECT COD_JUG FROM JUGADOR WHERE TURNO=" + 1 + "AND COD_PARTIDA=" + p.getCodigo();
 
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {
 				codigo = rs.getInt(1);
-				
+
 			}
 
 			rs.close();
@@ -938,11 +958,11 @@ public class GestionBaseDeDatos {
 			statement.close();
 			return codigo;
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 			return 100;
 		}
-		
+
 	}
 
 	public ArrayList<Integer> obtenerCodigoPartidaJugador(Connection conexion, String usuario) {
@@ -1006,22 +1026,22 @@ public class GestionBaseDeDatos {
 		}
 
 	}
-	
-	public Jugador obtenerJu (Connection conexion, Partida p, Usuario u){
-		
-		
+
+	public Jugador obtenerJu(Connection conexion, Partida p, Usuario u) {
+
 		String SQL = "";
-		Jugador j= new Jugador();;
-		try{
-			
+		Jugador j = new Jugador();
+		;
+		try {
+
 			Statement statement = conexion.createStatement();
 
-			SQL = "SELECT * FROM JUGADOR WHERE COD_PARTIDA="+p.getCodigo()+" AND NOMBRE_USUARIO='"+u.getUsuario()+"'";
+			SQL = "SELECT * FROM JUGADOR WHERE COD_PARTIDA=" + p.getCodigo() + " AND NOMBRE_USUARIO='" + u.getUsuario()
+					+ "'";
 
 			ResultSet rs = statement.executeQuery(SQL);
 
 			while (rs.next()) {
-				
 
 				j.setCodigo(rs.getInt("COD_JUG"));
 				j.setLugar(rs.getInt("LUGAR"));
@@ -1030,29 +1050,24 @@ public class GestionBaseDeDatos {
 				j.setTurno(rs.getInt("TURNO"));
 				j.setUsuario(rs.getString("NOMBRE_USUARIO"));
 				j.setCodigoPartida(rs.getInt("COD_PARTIDA"));
-				
+
 				j.setEnLinea(rs.getBoolean("ENLINEA"));
 			}
 
 			rs.close();
 
-
 			statement.close();
 			return j;
-			
-			
-		}catch (Exception e){
-			
+
+		} catch (Exception e) {
+
 			logger.log(Level.SEVERE, "No se ha conseguido obtener el jugador a partir de de la partida y el usuario");
-			
+
 			e.printStackTrace();
-			
+
 			return null;
 		}
-		
-		
-		
-		
+
 	}
 
 	// cartas
@@ -1309,9 +1324,10 @@ public class GestionBaseDeDatos {
 		}
 
 	}
-	public String lugarAcusacion(Connection conexion, Jugador j){
+
+	public String lugarAcusacion(Connection conexion, Jugador j) {
 		String lugar;
-		int luugar=0;
+		int luugar = 0;
 
 		String sql = "";
 
@@ -1319,7 +1335,7 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			sql = "SELECT LUGAR FROM JUGADOR WHERE COD_JUG=" + j.getCodigo() ;
+			sql = "SELECT LUGAR FROM JUGADOR WHERE COD_JUG=" + j.getCodigo();
 
 			ResultSet rs = statement.executeQuery(sql);
 
@@ -1331,71 +1347,82 @@ public class GestionBaseDeDatos {
 			rs.close();
 
 			statement.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 		return CambioDeNumeroALugar(luugar);
 	}
-	public String CambioDeNumeroALugar(int num){
-		if(num==0){
+
+	public String CambioDeNumeroALugar(int num) {
+		if (num == 0) {
 			return "Deusto";
-		}else if(num==1){
+		} else if (num == 1) {
 			return "F. Ingenieria";
-		}else if(num==2){
+		} else if (num == 2) {
 			return "La Comercial";
-		}else if(num==3){
+		} else if (num == 3) {
 			return "la L";
-			
-		}else if(num==4){
+
+		} else if (num == 4) {
 			return "La Capilla";
-		}else if(num==5){
+		} else if (num == 5) {
 			return "Edificio centenario";
-		}else if(num==6){
+		} else if (num == 6) {
 			return "Edificio de letras";
-		}else if(num==7){
+		} else if (num == 7) {
 			return "Biblioteca";
-		}else{
+		} else {
 			return "Zubiarte";
 		}
 	}
-	public int CambioDeLugarANumero(String lugar){
-		if(lugar=="Deusto"){
+
+	public int CambioDeLugarANumero(String lugar) {
+		if (lugar == "Deusto") {
 			return 0;
-		}else if(lugar=="F. Ingenieria"){
+		} else if (lugar == "F. Ingenieria") {
 			return 1;
-		}else if(lugar=="La Comercial"){
-			return 2 ;
-		}else if(lugar=="la L"){
+		} else if (lugar == "La Comercial") {
+			return 2;
+		} else if (lugar == "la L") {
 			return 3;
-			
-		}else if(lugar=="La Capilla"){
+
+		} else if (lugar == "La Capilla") {
 			return 4;
-		}else if(lugar=="Edificio centenario"){
+		} else if (lugar == "Edificio centenario") {
 			return 5;
-		}else if(lugar=="Edificio de letras"){
+		} else if (lugar == "Edificio de letras") {
 			return 6;
-		}else if(lugar=="Biblioteca"){
+		} else if (lugar == "Biblioteca") {
 			return 7;
-		}else{
+		} else {
 			return 8;
 		}
 	}
+
 	public ArrayList<Cartas> obtenerCartasEnviadas(Connection conexion, int codpartidda, int codjugordestino) {
 		System.out.println("entro en obtener cartan enviadas");
 		ArrayList<String> ret = new ArrayList<>();
-		ArrayList<Cartas> arr=new ArrayList<Cartas>();
-//		String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA text  ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
-
+		ArrayList<Cartas> arr = new ArrayList<Cartas>();
+		// String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA
+		// text ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON
+		// DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR
+		// (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES
+		// PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY
+		// KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
 
 		try {
 
 			Statement statement = conexion.createStatement();
 
+
 			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda +"AND CODJUGADORDESTINO=" + codjugordestino;
 			logger.log(Level.INFO, sentSQL);
 				
+
+
+
 			ResultSet rs = statement.executeQuery(sentSQL);
 
 			while (rs.next()) {
@@ -1403,29 +1430,32 @@ public class GestionBaseDeDatos {
 				ret.add(rs.getString("NOMBRECARTA"));
 				System.out.println(rs.getString("NOMBRECARTA")+"obtenercartasenviadas");
 				
+
 			}
-			
+
 			rs.close();
 			statement.close();
+
 			for(int i=0;i<ret.size();i++){
 				arr =consultaATablaCartas(conexion,"NOMBRE='"+ret.get(i)+"'" );
 				logger.log(Level.WARNING, "Construyo array Cartas");
 				
-				
 			}
 			return arr;
-			
+
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
 			e.printStackTrace();
 			return null;
 		}
-		
-		
+
 	}
-	public void modificarPanel(Connection conexion, String mensaje,Partida p) {
-//		String creacion = "CREATE TABLE PARTIDA (NOMBRE text, CODIGO int NOT NULL PRIMARY KEY, NUMEROJUGADORESMAXIMO int , NUMEROJUGADORESACTUAL int,POSICIONBARCO real,MENSAJECARTEL text)";
-		
+
+	public void modificarPanel(Connection conexion, String mensaje, Partida p) {
+		// String creacion = "CREATE TABLE PARTIDA (NOMBRE text, CODIGO int NOT
+		// NULL PRIMARY KEY, NUMEROJUGADORESMAXIMO int , NUMEROJUGADORESACTUAL
+		// int,POSICIONBARCO real,MENSAJECARTEL text)";
+
 		String SQL = "";
 
 		try {
@@ -1439,18 +1469,17 @@ public class GestionBaseDeDatos {
 			logger.log(Level.INFO, "Se ha modificado correctamente el mensaje del panel" + SQL);
 			statement.close();
 
-			
-
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha modificado correctamente");
 			e.printStackTrace();
 		}
 
 	}
+
 	public String ObtenerPanel(Connection conexion, Partida p) {
 
-		String ret="";
-		
+		String ret = "";
+
 		String SQL = "";
 
 		try {
@@ -1460,19 +1489,16 @@ public class GestionBaseDeDatos {
 			SQL = "SELECT MENSAJECARTEL FROM PARTIDA WHERE CODIGO=" + p.getCodigo();
 
 			ResultSet rs = statement.executeQuery(SQL);
-			
-			while (rs.next()) {
-				ret=rs.getString("MENSAJECARTEL");
-				
-			}
-			
-			rs.close();
 
-			
+			while (rs.next()) {
+				ret = rs.getString("MENSAJECARTEL");
+
+			}
+
+			rs.close();
 
 			statement.close();
 			return ret;
-			
 
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha modificado correctamente");
@@ -1481,9 +1507,14 @@ public class GestionBaseDeDatos {
 		}
 
 	}
-	public boolean borrarCartasEnviadas(Connection conexion ) {
-//		String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA text  ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
 
+	public boolean borrarCartasEnviadas(Connection conexion) {
+		// String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA
+		// text ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON
+		// DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR
+		// (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES
+		// PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY
+		// KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
 
 		String sql = "";
 
@@ -1507,11 +1538,13 @@ public class GestionBaseDeDatos {
 			return false;
 		}
 	}
+
 	
 	
 	public void modificarturno(Connection conexion, int jugCod,int turno) {
 		
 		
+
 		String SQL = "";
 
 		try {
@@ -1529,6 +1562,109 @@ public class GestionBaseDeDatos {
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha modificado correctamente");
 			e.printStackTrace();
+		}
+
+	}
+
+	public int obtenerTurno(Connection conexion, Jugador j) {
+
+		String SQL = "";
+
+		int numero = -1;
+
+		try {
+
+			SQL = "SELECT TURNO FROM JUGADOR WHERE COD_JUG=" + j.getCodigo();
+
+			Statement statement = conexion.createStatement();
+			ResultSet resultado = statement.executeQuery(SQL);
+
+			while (resultado.next()) {
+
+				numero = resultado.getInt(1);
+			}
+
+			logger.log(Level.INFO, "Se ha obtenido correctamente el turno del jugador: " + numero);
+			return numero;
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha conseguido obtener el turno correctamente");
+			e.printStackTrace();
+
+			return -1;
+
+		}
+	}
+
+	public void insertarDibujoNotas(Connection conexion, Jugador j, BufferedImage imagen) {
+
+		String sql = "";
+
+		try {
+
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ImageIO.write(imagen, "jpeg", out);
+			byte[] buf = out.toByteArray();
+			ByteArrayInputStream inStream = new ByteArrayInputStream(buf);
+
+			Statement statement = conexion.createStatement();
+
+			PreparedStatement ps = conexion.prepareStatement("UPDATE JUGADOR SET DIBUJO=? WHERE COD_JUG=?");
+
+			ps.setBinaryStream(1, inStream, inStream.available());
+			ps.setInt(2, j.getCodigo());
+			ps.executeUpdate();
+			ps.close();
+
+			logger.log(Level.INFO, "Se ha modificado correctamente la foto" + sql);
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha podido cambiar la foto " + sql);
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public BufferedImage obtenerDibujoNotas (Connection conexion,Jugador j) {
+
+		BufferedImage imagen=null;
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT DIBUJO FROM JUGADOR WHERE COD_JUG="+j.getCodigo();
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+				
+				/**
+				 * Blob blob = rs.getBlob("IMAGENPERFIL"); byte[] data =
+				 * blob.getBytes(1, (int)blob.length()); img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); try { img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); } catch (IOException ex) {
+				 * 
+				 * }
+				 */
+
+				byte[] imgBytes = rs.getBytes(1);
+
+				
+				imagen = ImageIO.read(new ByteArrayInputStream(imgBytes));
+
+				
+			}
+			rs.close();
+			return imagen;
+
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
 		}
 
 	}

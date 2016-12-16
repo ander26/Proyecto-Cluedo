@@ -31,7 +31,7 @@ public class Main {
 //		gestion.crearTabla(creacion,conexion);
 		
 
-		
+//		
 //		try{
 //			Statement statament = conexion.createStatement();
 //			
