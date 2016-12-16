@@ -51,7 +51,7 @@ public class VentanaTablero extends JFrame {
 	
 	private ImageIcon imagen = new ImageIcon();
 	private ArrayList<Point> arpunto=new ArrayList<Point>();
-
+	private Panelcirculos pposiciones=new Panelcirculos();
 	//private static int[][] mibaraja=new int[3][4];
 	
 	// public static void main(String[] args) {
@@ -64,13 +64,8 @@ public class VentanaTablero extends JFrame {
 
 	public VentanaTablero(Connection conexion, Jugador j, Usuario u, GestionBaseDeDatos base, Partida p,
 			Propiedades prop) {
-		hTurno = new HiloTurno();
-		hTurno.setBase(base);
-		hTurno.setJugador(j);
-		hTurno.setPartida(p);
-		hTurno.setCon(conexion);
 		
-		hTurno.start();
+		
 		// Establecemos el formato
 
 		this.setExtendedState(MAXIMIZED_BOTH);
@@ -261,7 +256,7 @@ public class VentanaTablero extends JFrame {
 		try {
 
 			imagen = new ImageIcon(
-					VentanaTablero.class.getResource("Imagenes/fondoposicion.png").toURI().toURL());
+					VentanaTablero.class.getResource("Imagenes/definitivosinlugaresysinpuntos.jpg").toURI().toURL());
 		} catch (Exception e) {
 
 			System.out.println("No se ha encontrado el archivo");
@@ -284,6 +279,8 @@ public class VentanaTablero extends JFrame {
 				imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(), Image.SCALE_DEFAULT));
 
 		semaforo.setIcon(icono);
+		
+		
 
 		JLabel cuadradoI = new JLabel();
 
@@ -329,16 +326,99 @@ public class VentanaTablero extends JFrame {
 				imagen.getImage().getScaledInstance(cuadradoD.getWidth(), cuadradoD.getHeight(), Image.SCALE_DEFAULT));
 
 		cuadradoD.setIcon(icono);
+		
+		JLabel trainera = new JLabel();
+
+		trainera.setBounds(321, 518, 250, 100);
+
+		try {
+
+			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeusto.png").toURI().toURL());
+		} catch (Exception e) {
+
+			System.out.println("No se ha encontrado el archivo");
+		}
+
+		icono = new ImageIcon(
+				imagen.getImage().getScaledInstance(trainera.getWidth(), trainera.getHeight(), Image.SCALE_DEFAULT));
+
+		trainera.setIcon(icono);
+		
+		JLabel puentedeusto = new JLabel();
+
+		puentedeusto.setBounds(4, 380, 246, 268);
+		
+		try {
+
+			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/puentedeusto.png").toURI().toURL());
+		} catch (Exception e) {
+
+			System.out.println("No se ha encontrado el archivo");
+		}
+
+		icono = new ImageIcon(
+				imagen.getImage().getScaledInstance(puentedeusto.getWidth(), puentedeusto.getHeight(), Image.SCALE_DEFAULT));
+
+		puentedeusto.setIcon(icono);
+		
+		JLabel puentecrai = new JLabel();
+
+		puentecrai.setBounds(1198, 407, 246, 297);
+		
+		try {
+
+			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/puentecrai.png").toURI().toURL());
+		} catch (Exception e) {
+
+			System.out.println("No se ha encontrado el archivo");
+		}
+
+		icono = new ImageIcon(
+				imagen.getImage().getScaledInstance(puentecrai.getWidth(), puentecrai.getHeight(), Image.SCALE_DEFAULT));
+
+		puentecrai.setIcon(icono);
+		LabelLugares campo= new LabelLugares("Imagenes/campofutbol.png","campo",13,23,263,267);
+		LabelLugares ade= new LabelLugares("Imagenes/ade.png","ade",334,15,276,188);
+		LabelLugares l= new LabelLugares("Imagenes/la l.png","l",729,65,162,185);
+		LabelLugares centenario= new LabelLugares("Imagenes/centenario.png","centenario",1106,0,500,356);
+		LabelLugares deLetras= new LabelLugares("Imagenes/de letras.png","letras",1562,3,350,253);
+		LabelLugares capilla= new LabelLugares("Imagenes/capilla.png","capilla",1676,237,177,160);
+		LabelLugares crai= new LabelLugares("Imagenes/crai.png","crai",1384,596,259,248);
+		LabelLugares zubi= new LabelLugares("Imagenes/zubi.png","zubi",398,639,494,265);
+
 
 		// Establecemos el formato
+//		
+//		101.0/454.0
+//		129.0/491.0
+//		160.0/522.0
+//		174.0/554.0
+//		191.0/592.0
+//		1266.0/635.0
+//		1282.0/610.0
+//		1305.0/582.0
+//		1317.0/550.0
+//		1331.0/516.0
+//		1343.0/485.0
+//		1358.0/458.0
+//		1371.0/433.0
+//		1391.0/397.0
 
-		getContentPane().setLayout(new BorderLayout());
+		
 
-		getContentPane().add(fondo, BorderLayout.CENTER);
+		fondo.setLayout(new BorderLayout());
+		pposiciones.setLayout(null);
+		
 
-		fondo.setLayout(null);
-
-		//fondo.add(semaforo);
+		pposiciones.add(semaforo);
+		pposiciones.add(campo);
+		pposiciones.add(ade);
+		pposiciones.add(l);
+		pposiciones.add(centenario);
+		pposiciones.add(deLetras);
+		pposiciones.add(capilla);
+		pposiciones.add(crai);
+		pposiciones.add(zubi);
 		panelI.setLayout(null);
 		panelD.setLayout(null);
 
@@ -352,38 +432,55 @@ public class VentanaTablero extends JFrame {
 
 		panelI.add(cuadradoI);
 
-		//fondo.add(panelI);
+		pposiciones.add(panelI);
 
 		panelD.add(flechaD);
 
-		//panelD.add(usuario);
+		panelD.add(usuario);
 
-		//panelD.add(labelChat);
+		panelD.add(labelChat);
 
-		//panelD.add(labelNotas);
+		panelD.add(labelNotas);
 
-		//panelD.add(labelCartas);
+		panelD.add(labelCartas);
 
-		//panelD.add(cuadradoD);
+		panelD.add(cuadradoD);
 
-		//fondo.add(panelD);
+		pposiciones.add(panelD);
 
-		//fondo.add(jugador1);
-		fondo.addMouseListener(new MouseAdapter() {
+		pposiciones.add(jugador1);
+		pposiciones.add(trainera);
+		pposiciones.add(puentedeusto);
+		pposiciones.add(puentecrai);
+		fondo.add(pposiciones);
+		getContentPane().setLayout(new BorderLayout());
+
+		getContentPane().add(fondo, BorderLayout.CENTER);
+		System.out.println("llego aqui");
+		
+		hTurno = new HiloTurno();
+		hTurno.setBase(base);
+		hTurno.setJugador(j);
+		hTurno.setPartida(p);
+		hTurno.setCon(conexion);
+		hTurno.start();
+		
+		pposiciones.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Point punto=new Point(e.getX(),e.getY());
-			if(punto.getX()==0){
-				FicheroCoordenadasPosiciones fcoor=new FicheroCoordenadasPosiciones();
-				fcoor.escribirAFicheroConBarras("cordeenadascirculos.txt", arpunto);
-			}
-			else{
-				if(punto!=null){
-					arpunto.add(punto);
-					System.out.println(punto);
-				}
-			}
+//			Point punto=new Point(e.getX(),e.getY());
+//			System.out.println(punto.getX()+" "+punto.getY());
+//			if(punto.getX()==0){
+////				FicheroCoordenadasPosiciones fcoor=new FicheroCoordenadasPosiciones();
+////				fcoor.escribirAFicheroConBarras("cordeenadascirculos.txt", arpunto);
+//			}
+//			else{
+//				if(punto!=null){
+//					arpunto.add(punto);
+//					System.out.println(punto);
+//				}
+//			}
 					
 					
 				

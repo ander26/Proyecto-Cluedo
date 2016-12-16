@@ -14,11 +14,7 @@ public class FicheroCoordenadasPosiciones {
 
 
 		
-		/** Lee los usuarios de un fichero de datos separado por comas y los devuelve
-		 * @param nomFic	Nombre de fichero
-		 * @return	Lista de usuarios del fichero, sólo formada por los usuarios leídos correctamente
-		 */
-		public static ArrayList<Point> leerDeFicheroConComas( String nomFic ) {
+		public static ArrayList<Point> leerDeFicheroConBarras( String nomFic ) {
 			ArrayList<Point> ret = new ArrayList<Point>();
 			BufferedReader brFich = null;
 			try {
@@ -29,9 +25,9 @@ public class FicheroCoordenadasPosiciones {
 					// Proceso de línea
 					StringTokenizer st = new StringTokenizer( linea, "/" );
 					Point coor=new Point();
-					Object x=st.nextElement();
-					Object y=st.nextElement();
-					coor.setLocation((int)x,(int) y);
+					int x=(int)Double.parseDouble(st.nextToken());
+					int y=(int)Double.parseDouble(st.nextToken());
+					coor.setLocation(x,y);
 					ret.add( coor );
 					linea = brFich.readLine();
 				}
