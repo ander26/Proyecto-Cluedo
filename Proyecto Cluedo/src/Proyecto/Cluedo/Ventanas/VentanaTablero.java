@@ -43,6 +43,7 @@ import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaTablero extends JFrame {
 	
+	
 	private HiloTurno hTurno = null; 
 	
 	private boolean mostradoI = true;

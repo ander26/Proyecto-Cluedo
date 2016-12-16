@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class LabelLugares extends JLabel{
+	
 	public boolean seleccionado;
 	public String ruta;
 	private String nombre;

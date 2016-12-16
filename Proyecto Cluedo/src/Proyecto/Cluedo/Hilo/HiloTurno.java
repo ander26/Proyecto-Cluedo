@@ -262,6 +262,7 @@ public class HiloTurno extends Thread {
 			//esperamos a que todos los jugadores envien la carta o le den al boton de no enviar nada
 			
 			while(arrcartas.size()!=(arrjugadores.size()-1)){
+				
 				System.out.println( "arrcartas.size"+arrcartas.size()+"arrjugadores.size"+(arrjugadores.size()-1));
 				try {
 					Thread.sleep( 30000 );

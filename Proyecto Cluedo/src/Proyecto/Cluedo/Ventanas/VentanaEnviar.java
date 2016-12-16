@@ -34,6 +34,7 @@ public class VentanaEnviar extends JFrame {
 	private JLabel lbResolver=new JLabel();
 	private JPanel pbotonera=new JPanel();
 	private JPanel pantesbotonera=new JPanel();
+	private JPanel pcentrar=new JPanel();
 	
 
 	public static void main(String[] args) {
@@ -63,7 +64,7 @@ public class VentanaEnviar extends JFrame {
 		setSize( 1330, 730 );			
 		setMinimumSize(new Dimension(900,500));		
 		setResizable( true );
-		ImageIcon imagefondo = new ImageIcon(ventana.class.getResource("Imagenes/baul-abierto.jpg"));
+		ImageIcon imagefondo = new ImageIcon(ventana.class.getResource("Imagenes/cofre.jpg"));
 		pprincipal=new panelrosa(imagefondo.getImage());
 				
 		pprincipal.setLayout(new BorderLayout());
@@ -91,10 +92,11 @@ public class VentanaEnviar extends JFrame {
 		paneldentropri.setOpaque(false);
 		//añadir los componenetes
 		
-		paneldentropri.add(pcsospechoso);
+		//paneldentropri.add(pcsospechoso);
 		//paneldentropri.add(pclugar);
-		paneldentropri.add(pcarma);
-		pprincipal.add(paneldentropri,BorderLayout.CENTER);
+		//paneldentropri.add(pcarma);
+		pcentrar.add(paneldentropri);
+		pprincipal.add(pcentrar,BorderLayout.CENTER);
 		pprincipal.add(hueco,BorderLayout.EAST);
 		pprincipal.add(hueco2,BorderLayout.WEST);
 		getContentPane().add(pprincipal);
@@ -132,7 +134,7 @@ public class VentanaEnviar extends JFrame {
 			paneldentropri.repaint();
 			
 		}
-		base.modificarPanel(conexion, "El jugador"+j.getUsuario()+"ha recibido"+CartasRecibidas.size()+"cartas", p);			
+		base.modificarPanel(conexion, "El jugador "+j.getUsuario()+"\n ha recibido "+CartasRecibidas.size()+"\n cartas ", p);			
 		
 	}
 	

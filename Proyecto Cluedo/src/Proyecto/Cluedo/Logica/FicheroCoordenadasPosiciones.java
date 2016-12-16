@@ -18,6 +18,7 @@ public class FicheroCoordenadasPosiciones {
 			ArrayList<Point> ret = new ArrayList<Point>();
 			BufferedReader brFich = null;
 			try {
+				
 				brFich = new BufferedReader( new
 						InputStreamReader( new FileInputStream(nomFic) ) );
 				String linea = brFich.readLine();

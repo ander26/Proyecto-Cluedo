@@ -1655,6 +1655,7 @@ public class GestionBaseDeDatos {
 
 				
 				imagen = ImageIO.read(new ByteArrayInputStream(imgBytes));
+				
 
 				
 			}
