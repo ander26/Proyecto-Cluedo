@@ -135,6 +135,7 @@ public class GestionBaseDeDatos {
 				con.close();
 				logger.log(Level.INFO, "Se ha cerrado la conexion");
 			}
+			
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha podido realizar la operacion de cierre");
 		}
@@ -1660,5 +1661,95 @@ public class GestionBaseDeDatos {
 		}
 
 	}
+	
+	//TABLA NOTAS
+	
+	public void insertarNota (Connection conexion, Notas nota,Jugador j){
+		
+		String SQL="";
+		
+		try{
+			
+			SQL ="INSERT INTO NOTAS VALUES ('"+nota.getMensaje()+"',"+j.getCodigo()+","+nota.getLinea()+","+nota.getTabla()+")";
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha añadido correctamente la nota");
+			
+			
+		}catch (Exception e){
+		
+			logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de datos");
+			
+			e.printStackTrace();
+			
+			
+		
+		}
+	}
+	
+	public void borrarNotas (Connection conexion, Jugador j){
+		
+		String SQL = "";
+		
+		try{
+			
+			SQL = "DELETE FROM NOTAS WHERE COD_JUG="+j.getCodigo();
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha borrado correctamente");
+			
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha podido borrar las notas");
+		}
+	}
+		
+		public ArrayList <Notas> obtenerNotas (Connection conexion, Jugador j){
+			
+			String SQL = "";
+			ArrayList <Notas> listaNotas = new ArrayList<>();
+			
+			try{
+				
+				SQL = "SELECT * FROM NOTAS WHERE COD_JUG="+j.getCodigo();
+				
+				Statement statement = conexion.createStatement();
+				ResultSet resultado = statement.executeQuery(SQL);
+				
+				while (resultado.next()){
+					Notas n = new Notas();
+					
+					n.setLinea(resultado.getInt("LINEA"));
+					
+					n.setMensaje(resultado.getString("MENSAJE"));
+					
+					n.setTabla(resultado.getInt("TABLA"));
+					
+					listaNotas.add(n);
+				}
+				
+				logger.log(Level.INFO, "Se han obtenido correctamente las notas");
+				return listaNotas;
+			}catch (Exception e){
+			
+				
+				logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
+			
+				e.printStackTrace();
+				
+				return null;
+			}
+			
+			
+		}
+		
+		
+	}
 
-}
+

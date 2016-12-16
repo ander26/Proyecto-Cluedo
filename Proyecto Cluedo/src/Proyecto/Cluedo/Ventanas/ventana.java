@@ -34,6 +34,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import Proyecto.Cluedo.Datos.Cartas;
+import Proyecto.Cluedo.Datos.Notas;
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.panelPintar;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
@@ -45,18 +46,20 @@ public class ventana extends JFrame {
 
 	private Point coordenada;
 
-	private class cuadrado extends JPanel {
+//	private class cuadrado extends JPanel {
+//
+//		public cuadrado() {
+//			setLayout(new BorderLayout());
+//			add(new JLabel("."), BorderLayout.CENTER);
+//			setLocation(coordenada);
+//			setSize(5, 5);
+//			setBackground(Color.white);
+//		}
+//
+//	}
 
-		public cuadrado() {
-			setLayout(new BorderLayout());
-			add(new JLabel("."), BorderLayout.CENTER);
-			setLocation(coordenada);
-			setSize(5, 5);
-			setBackground(Color.white);
-		}
-
-	}
-
+	private ArrayList <Notas> notas = new ArrayList<>();
+	
 	private JPanel pventana = new JPanel();
 
 	private panelrosa pdibujar;
@@ -116,10 +119,12 @@ public class ventana extends JFrame {
 	// private static int[][] mibaraja=new int[3][4];
 
 	public ventana(Propiedades prop, GestionBaseDeDatos base, Connection con, Jugador j, Partida p) {
+		
 		System.out.println(base);
 		System.out.println(con);
 		System.out.println(j.getCodigo());
 		System.out.println(p.getCodigo());
+		
 		mibaraja.add(base.obtenerCartasDeJugador(con, p.getCodigo(), j.getCodigo(), 1));
 		mibaraja.add(base.obtenerCartasDeJugador(con, p.getCodigo(), j.getCodigo(), 0));
 		mibaraja.add(base.obtenerCartasDeJugador(con, p.getCodigo(), j.getCodigo(), 2));
@@ -171,7 +176,9 @@ public class ventana extends JFrame {
 		tabarmas.setSize(new Dimension(753, 700));
 		ptabarmas.add(tabarmas, BorderLayout.CENTER);
 		ponerCandado(tabarmas, 0);
+		
 		// tabla asesinos
+		
 		ptabla.setLayout(new BorderLayout());
 		ptabla.add(tabla.getTableHeader(), BorderLayout.NORTH);
 		tabla.getColumn("Notas").setPreferredWidth(300);
@@ -186,7 +193,9 @@ public class ventana extends JFrame {
 
 		ptabla.add(tabla, BorderLayout.CENTER);
 		ponerCandado(tabla, 2);
+		
 		// tabla lugares
+		
 		ptablugares.setLayout(new BorderLayout());
 		ptablugares.add(tablugares.getTableHeader(), BorderLayout.NORTH);
 		tablugares.getColumn("Notas").setPreferredWidth(300);
@@ -208,6 +217,7 @@ public class ventana extends JFrame {
 		ponerCandado(tablugares, 1);
 
 		// panel de fondo de la tabla
+		
 		ImageIcon imagehoja;
 
 		imagehoja = new ImageIcon(ventana.class.getResource("Imagenes/background.png"));
@@ -223,6 +233,7 @@ public class ventana extends JFrame {
 		ptabla.setOpaque(false);
 		ptablugares.setOpaque(false);
 		ptabarmas.setOpaque(false);
+		
 		DefaultTableCellRenderer rendererarmas = new DefaultTableCellRenderer();
 		rendererarmas.setOpaque(false);
 		tabarmas.setDefaultRenderer(Object.class, rendererarmas);
@@ -235,6 +246,7 @@ public class ventana extends JFrame {
 		phoja.add(ptablugares);
 		phoja.add(hueco);
 		phoja.setOpaque(false);
+		
 		phojap.setLayout(new BoxLayout(phojap, BoxLayout.X_AXIS));
 		phojap.add(phoja);
 
@@ -323,11 +335,37 @@ public class ventana extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				
+				ArrayList<Notas> listaNotas = base.obtenerNotas(con, j);
+				
+				
+				
+				for (Notas n: listaNotas){
+					if (n.getTabla()+1==1){
+						System.out.println(n.getMensaje());
+						tabla.getModel().setValueAt(n.getMensaje(), n.getLinea(), 3);
+					}else if (n.getTabla()+1==2){
+						System.out.println(n.getMensaje());
+						tablugares.getModel().setValueAt(n.getMensaje(), n.getLinea(), 3);
+					}else{
+						System.out.println(n.getMensaje());
+						tabarmas.getModel().setValueAt(n.getMensaje(), n.getLinea(), 3);
+					}
+				}
+				
+				tabla.repaint();
+				
+				tabarmas.repaint();
+				
+				tablugares.repaint();
+				
 				
 				BufferedImage imagen = base.obtenerDibujoNotas(con, j);
 				if (imagen!=null)
 				pintar.setImagen(imagen);
 				
+				pintar.repaint();
+			
+			
 			}
 			
 			
@@ -339,7 +377,62 @@ public class ventana extends JFrame {
 				
 				base.insertarDibujoNotas(con, j, imagen);
 				
-			}
+				base.borrarNotas(con, j);
+			
+				
+					System.out.println("TABLA");
+					System.out.println(0);
+					
+					for (int j=0;j<tabla.getModel().getRowCount();j++){
+						System.out.println("FILA");
+						System.out.println(j);
+						if (((String)tabla.getModel().getValueAt(j, 3)).trim().equals("")){
+							
+						}else{
+							System.out.println("OK 1");
+							Notas nota = new Notas(j, 0,(String) tabla.getModel().getValueAt(j, 3));
+							notas.add(nota);
+						}
+					}	
+				
+						
+							System.out.println("TABLA");
+							System.out.println(1);
+							
+							for (int j=0;j<tablugares.getModel().getRowCount();j++){
+								System.out.println("FILA");
+								System.out.println(j);
+								if (((String)tablugares.getModel().getValueAt(j, 3)).trim().equals("")){
+									
+								}else{
+									System.out.println("OK 2");
+									Notas nota = new Notas(j, 1,(String) tablugares.getModel().getValueAt(j, 3));
+									notas.add(nota);
+								}
+							}	
+							
+								System.out.println("TABLA");
+								System.out.println(2);
+								
+								for (int j=0;j<tabarmas.getModel().getRowCount();j++){
+									System.out.println("FILA");
+									System.out.println(j);
+									if (((String)tabarmas.getModel().getValueAt(j, 3)).trim().equals("")){
+										
+									}else{
+										System.out.println("OK 3");
+										Notas nota = new Notas(j, 2,(String) tabarmas.getModel().getValueAt(j, 3));
+										notas.add(nota);
+									}
+								}
+								
+					for (Notas n: notas){
+						base.insertarNota(con, n, j);
+					}
+					
+				}
+				
+			
 			
 		
 		});

@@ -31,11 +31,11 @@ public class Main {
 //		gestion.crearTabla(creacion,conexion);
 		
 
-//		
+		
 //		try{
 //			Statement statament = conexion.createStatement();
 //			
-//			statament.executeUpdate("DELETE FROM CHAT");
+//			statament.executeUpdate("DELETE FROM JUGADOR");
 //			
 //			System.out.println("Se ha borrado todo");
 //			
@@ -47,7 +47,7 @@ public class Main {
 //		}catch (Exception e){
 //			System.out.println("No se ha conseguido borrar");
 //		}
-//	
+	
 //		Statement statement;
 //		try {
 //			statement = conexion.createStatement();
@@ -121,6 +121,9 @@ public class Main {
 //		String crearsospecha = "CREATE TABLE SOSPECHA(NOMBRECARTALUGAR text NOT NULL REFERENCES CARTA (NOMBRE) ,NOMBRECARTAARMA text NOT NULL REFERENCES CARTA (NOMBRE),NOMBRECARTAASESINO text NOT NULL REFERENCES CARTA (NOMBRE),CODJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(NOMBRECARTALUGAR,NOMBRECARTAARMA,NOMBRECARTAASESINO,CODJUGADOR,CODPARTIDA,TIEMPO) )";
 //		gestion.crearTabla(crearecibircartas, conexion);
 //		gestion.crearTabla(crearsospecha, conexion);
+		
+//		String creacion = "CREATE TABLE NOTAS(MENSAJE text,COD_JUG int NOT NULL REFERENCES JUGADOR(COD_JUG) ON DELETE CASCADE,LINEA int, TABLA int ,PRIMARY KEY (TABLA,LINEA,COD_JUG))";
+//		gestion.crearTabla(creacion,conexion);
 		
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);
