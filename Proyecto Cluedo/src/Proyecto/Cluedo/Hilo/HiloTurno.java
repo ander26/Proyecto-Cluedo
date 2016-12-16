@@ -22,15 +22,11 @@ import Proyecto.Cluedo.Ventanas.VentanaPanel;
 
 public class HiloTurno extends Thread {
 	
-	public boolean jugando=true;
-	
-	public GestionBaseDeDatos base;
-	
-	public Partida partida;
-	
-	public Connection con;
-	
-	public boolean pulsado; 
+	private boolean jugando=true;
+	private GestionBaseDeDatos base;
+	private Partida partida;
+	private Connection con;
+	private boolean pulsado; 
 	
 	private JLabel labelSemaforo;
 	
@@ -77,7 +73,6 @@ public class HiloTurno extends Thread {
 	public GestionBaseDeDatos getBase() {
 		return base;
 	}
-	
 	public void setBase(GestionBaseDeDatos base) {
 		this.base = base;
 	}
@@ -99,57 +94,36 @@ public class HiloTurno extends Thread {
 	public void setJugador(Jugador jugador) {
 		this.jugador = jugador;
 	}
-	
 	public int turno=0;
-	
 	public int CodigoJugadorConTurno;
-	
 	public Jugador jugador;
-	
 	public ArrayList<Jugador> arrjugadores=new ArrayList<Jugador>();
-	
 	public String mensajePanel;
 	
 	
 	public VentanaPanel vpanel=new VentanaPanel();
 	public Logger logger = Logger.getLogger(HiloTurno.class.getName());
-	
 	@Override
-	
 	public void run() {
-		
-		
-		
-		while(jugando){
-			
+		// TODO Auto-generated method stub
+		while(jugando==true){
 			arrjugadores=base.ObtenerJugadoresDePartidaordenadosPorCodigo(partida, con);
-			
 			mensajePanel=base.ObtenerPanel(con,partida);
 			
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
-			
 			//al inicializar el progrma el jugador con menor codigo tiene el turno
-			
 			if(CodigoJugadorConTurno==100){
-			
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
-				
-					base.modificarturno(con,arrjugadores.get(0).getCodigo(), 1);
-				
-					System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
-			
-//					try {
-//					
-//						Thread.sleep( 30000 );
-//				
-//					} catch (InterruptedException e) {
-//					
-//					e.printStackTrace();
-//				}
+				base.modificarturno(con,arrjugadores.get(0).getCodigo(), 1);
+				System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
+				try {
+					Thread.sleep( 30000 );
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}}
-			
-		
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
 			
 			
@@ -264,8 +238,9 @@ public class HiloTurno extends Thread {
 				
 			}
 			
-			//esperamos a que cambie el panel
+
 			
+			//esperamos a que cambie el panel
 			while(base.ObtenerPanel(con,partida).equals(mensajePanel)){
 				
 				try {
@@ -277,23 +252,17 @@ public class HiloTurno extends Thread {
 				
 				System.out.println(mensajePanel);				
 			}
-			
 			System.out.println(mensajePanel+" "+base.ObtenerPanel(con,partida));
-			
 			mensajePanel=base.ObtenerPanel(con,partida);
-			
 			vpanel.setMensaje(mensajePanel);
 			vpanel.setVisible(true);
-			
-			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL");
-			
+			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL 1");
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);			
-			
 			ArrayList<Cartas> arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
-			
 			//esperamos a que todos los jugadores envien la carta o le den al boton de no enviar nada
 			
 			while(arrcartas.size()!=(arrjugadores.size()-1)){
+				
 				System.out.println( "arrcartas.size"+arrcartas.size()+"arrjugadores.size"+(arrjugadores.size()-1));
 				try {
 					Thread.sleep( 30000 );
@@ -305,13 +274,12 @@ public class HiloTurno extends Thread {
 				
 				logger.log(Level.INFO, "compruebo si hay cartas");
 			}
-			
 			if(CodigoJugadorConTurno==jugador.getCodigo()){
 				VentanaEnviar vcartasrecibidas=new VentanaEnviar(base, con, partida, jugador);
+				vcartasrecibidas.setVisible(true);
+				//borrar de la base las cartas enviadas
 			}
-			
 			//esperamos un tiempo a que ventanaenviar modifique el mensaje
-			
 			while(base.ObtenerPanel(con,partida).equals(mensajePanel)){
 				try {
 					Thread.sleep( 30000 );
@@ -320,15 +288,12 @@ public class HiloTurno extends Thread {
 					e.printStackTrace();
 				}
 			}
-			
 			vpanel.setMensaje(mensajePanel);
-			vpanel.repaint();
-			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL");
+			vpanel.setVisible(true);
+			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL 2");
 			
 			mensajePanel=base.ObtenerPanel(con,partida);
-			
 			//esperamos un tiempo y cambiamos de turno
-			
 			try {
 				Thread.sleep( 120000 );
 			} catch (InterruptedException e) {
@@ -347,22 +312,11 @@ public class HiloTurno extends Thread {
 			Thread.sleep( 40 );
 		} catch (Exception e) {
 		}
-		
-		
 		}
 	}
-	
-	
-	/**
-	 * Metodo que sirve para finalizar el hilo 
-	 */
-	
 	public void acaba() {
 		jugando = false;
 	}
-	
-	
-	
 	public void CambiarTurno(){
 		for(int i=0;i<arrjugadores.size();i++){
 			if(CodigoJugadorConTurno==arrjugadores.get(i).getCodigo()){

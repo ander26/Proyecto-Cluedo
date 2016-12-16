@@ -135,7 +135,6 @@ public class GestionBaseDeDatos {
 				con.close();
 				logger.log(Level.INFO, "Se ha cerrado la conexion");
 			}
-			
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha podido realizar la operacion de cierre");
 		}
@@ -1405,7 +1404,6 @@ public class GestionBaseDeDatos {
 	public ArrayList<Cartas> obtenerCartasEnviadas(Connection conexion, int codpartidda, int codjugordestino) {
 		System.out.println("entro en obtener cartan enviadas");
 		ArrayList<String> ret = new ArrayList<>();
-
 		ArrayList<Cartas> arr = new ArrayList<Cartas>();
 		// String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA
 		// text ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON
@@ -1418,25 +1416,30 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda
-					+ "AND CODJUGADORDESTINO=" + codjugordestino;
+
+			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda +"AND CODJUGADORDESTINO=" + codjugordestino;
 			logger.log(Level.INFO, sentSQL);
+				
+
+
 
 			ResultSet rs = statement.executeQuery(sentSQL);
 
 			while (rs.next()) {
 				logger.log(Level.INFO, "entro en el while de obtener cartas enviadas");
 				ret.add(rs.getString("NOMBRECARTA"));
-				System.out.println(rs.getString("NOMBRECARTA") + "obtenercartasenviadas");
+				System.out.println(rs.getString("NOMBRECARTA")+"obtenercartasenviadas");
+				
 
 			}
 
 			rs.close();
 			statement.close();
-			for (int i = 0; i < ret.size(); i++) {
-				arr = consultaATablaCartas(conexion, "NOMBRE='" + ret.get(i) + "'");
-				logger.log(Level.WARNING, "Construyo array Cartas");
 
+			for(int i=0;i<ret.size();i++){
+				arr =consultaATablaCartas(conexion,"NOMBRE='"+ret.get(i)+"'" );
+				logger.log(Level.WARNING, "Construyo array Cartas");
+				
 			}
 			return arr;
 
@@ -1536,7 +1539,11 @@ public class GestionBaseDeDatos {
 		}
 	}
 
-	public void modificarturno(Connection conexion, int jugCod, int turno) {
+	
+	
+	public void modificarturno(Connection conexion, int jugCod,int turno) {
+		
+		
 
 		String SQL = "";
 
@@ -1590,6 +1597,52 @@ public class GestionBaseDeDatos {
 		}
 	}
 
+
+
+	public BufferedImage obtenerDibujoNotas (Connection conexion,Jugador j) {
+
+		BufferedImage imagen=null;
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT DIBUJO FROM JUGADOR WHERE COD_JUG="+j.getCodigo();
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+				
+				/**
+				 * Blob blob = rs.getBlob("IMAGENPERFIL"); byte[] data =
+				 * blob.getBytes(1, (int)blob.length()); img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); try { img = ImageIO.read(new
+				 * ByteArrayInputStream(data)); } catch (IOException ex) {
+				 * 
+				 * }
+				 */
+
+				byte[] imgBytes = rs.getBytes(1);
+
+				
+				imagen = ImageIO.read(new ByteArrayInputStream(imgBytes));
+				
+
+				
+			}
+			rs.close();
+			return imagen;
+
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	
+
 	public void insertarDibujoNotas(Connection conexion, Jugador j, BufferedImage imagen) {
 
 		String sql = "";
@@ -1621,47 +1674,7 @@ public class GestionBaseDeDatos {
 
 	}
 
-	public BufferedImage obtenerDibujoNotas (Connection conexion,Jugador j) {
 
-		BufferedImage imagen=null;
-
-		try {
-
-			Statement statement = conexion.createStatement();
-
-			String sentSQL = "SELECT DIBUJO FROM JUGADOR WHERE COD_JUG="+j.getCodigo();
-
-			ResultSet rs = statement.executeQuery(sentSQL);
-
-			while (rs.next()) {
-				
-				/**
-				 * Blob blob = rs.getBlob("IMAGENPERFIL"); byte[] data =
-				 * blob.getBytes(1, (int)blob.length()); img = ImageIO.read(new
-				 * ByteArrayInputStream(data)); try { img = ImageIO.read(new
-				 * ByteArrayInputStream(data)); } catch (IOException ex) {
-				 * 
-				 * }
-				 */
-
-				byte[] imgBytes = rs.getBytes(1);
-
-				
-				imagen = ImageIO.read(new ByteArrayInputStream(imgBytes));
-
-				
-			}
-			rs.close();
-			return imagen;
-
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
-			e.printStackTrace();
-			return null;
-		}
-
-	}
-	
 	//TABLA NOTAS
 	
 	public void insertarNota (Connection conexion, Notas nota,Jugador j){
@@ -1749,7 +1762,5 @@ public class GestionBaseDeDatos {
 			
 		}
 		
-		
-	}
 
-
+}
