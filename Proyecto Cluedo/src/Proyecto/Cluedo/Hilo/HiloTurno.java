@@ -116,12 +116,12 @@ public class HiloTurno extends Thread {
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
 				base.modificarturno(con,arrjugadores.get(0).getCodigo(), 1);
 				System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
-				try {
-					Thread.sleep( 30000 );
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//				try {
+//					Thread.sleep( 30000 );
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 				
 			}}
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);

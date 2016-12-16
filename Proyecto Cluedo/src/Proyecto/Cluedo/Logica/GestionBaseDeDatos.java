@@ -1762,5 +1762,91 @@ public class GestionBaseDeDatos {
 			
 		}
 		
+		//TABLA TICKS
+		
+		public void insertarTICKS (Connection conexion, int linea,int tabla, Jugador j){
+			
+			String SQL="";
+			
+			try{
+				
+				SQL ="INSERT INTO TICKS VALUES ("+tabla+","+linea+","+j.getCodigo()+")";
+				
+				Statement statement = conexion.createStatement();
+				
+				statement.executeUpdate(SQL);
+				
+				logger.log(Level.INFO, "Se ha añadido correctamente la nota");
+				
+				
+			}catch (Exception e){
+			
+				logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de datos");
+				
+				e.printStackTrace();
+				
+				
+			
+			}
+		}
+		
+		public void borrarTicks (Connection conexion, Jugador j){
+			
+			String SQL = "";
+			
+			try{
+				
+				SQL = "DELETE FROM TICKS WHERE COD_JUG="+j.getCodigo();
+				
+				Statement statement = conexion.createStatement();
+				
+				statement.executeUpdate(SQL);
+				
+				logger.log(Level.INFO, "Se ha borrado correctamente");
+				
+				
+			}catch (Exception e){
+				logger.log(Level.SEVERE, "No se ha podido borrar las notas");
+			}
+		}
+			
+			public ArrayList <Integer[]> obtenerTicks (Connection conexion, Jugador j){
+				
+				String SQL = "";
+				ArrayList <Integer []> listaTicks = new ArrayList<>();
+				
+				try{
+					
+					SQL = "SELECT * FROM TICKS WHERE COD_JUG="+j.getCodigo();
+					
+					Statement statement = conexion.createStatement();
+					ResultSet resultado = statement.executeQuery(SQL);
+					
+					while (resultado.next()){
+						Integer [] array = new Integer[2];
+						
+						array[0]=resultado.getInt("LINEA");
+						
+						
+						array[1]=resultado.getInt("TABLA");
+						
+						listaTicks.add(array);
+					}
+					
+					logger.log(Level.INFO, "Se han obtenido correctamente las notas");
+					return listaTicks;
+				}catch (Exception e){
+				
+					
+					logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
+				
+					e.printStackTrace();
+					
+					return null;
+				}
+				
+				
+			}
+		
 
 }

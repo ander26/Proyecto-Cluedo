@@ -35,7 +35,7 @@ public class Main {
 //		try{
 //			Statement statament = conexion.createStatement();
 //			
-//			statament.executeUpdate("DELETE FROM CHAT");
+//			statament.executeUpdate("DELETE FROM PARTIDA");
 //			
 //			System.out.println("Se ha borrado todo");
 //			
@@ -60,11 +60,11 @@ public class Main {
 //		gestion.crearTabla(creacion, conexion);
 
 
-//		
+		
 //		try{
 //			Statement statament = conexion.createStatement();
 //			
-//			statament.executeUpdate("DELETE FROM CHAT");
+//			statament.executeUpdate("DELETE FROM NOTAS");
 //			
 //			System.out.println("Se ha borrado todo");
 //			
@@ -77,7 +77,7 @@ public class Main {
 //			System.out.println("No se ha conseguido borrar");
 //		}
 //	
-		
+//		
 //		String creacion = "CREATE TABLE CHAT(MENSAJE text,FECHAENVIO bigint NOT NULL,CODIGOPARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE, CODIGOJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG),NOMBREUSUARIO text,PRIMARY KEY (FECHAENVIO,CODIGOPARTIDA,CODIGOJUGADOR))";
 //		gestion.crearTabla(creacion,conexion);
 		

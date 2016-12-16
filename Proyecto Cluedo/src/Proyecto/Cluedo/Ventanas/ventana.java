@@ -337,7 +337,7 @@ public class ventana extends JFrame {
 				
 				ArrayList<Notas> listaNotas = base.obtenerNotas(con, j);
 				
-				
+				ArrayList<Integer[]> listaTicks = base.obtenerTicks(con, j);
 				
 				for (Notas n: listaNotas){
 					if (n.getTabla()+1==1){
@@ -350,6 +350,21 @@ public class ventana extends JFrame {
 						System.out.println(n.getMensaje());
 						tabarmas.getModel().setValueAt(n.getMensaje(), n.getLinea(), 3);
 					}
+				}
+				
+				for (Integer [] l : listaTicks){
+					if (l[1]+1==1){
+					
+						tabla.getModel().setValueAt(true, l[0], 2);
+					}else if (l[1]+1==2){
+						
+						tablugares.getModel().setValueAt(true, l[0], 2);
+					}else{
+
+						tabarmas.getModel().setValueAt(true, l[0], 2);
+					}
+					
+					
 				}
 				
 				tabla.repaint();
@@ -379,19 +394,24 @@ public class ventana extends JFrame {
 				
 				base.borrarNotas(con, j);
 			
+				base.borrarTicks(con, j);
 				
 					System.out.println("TABLA");
 					System.out.println(0);
 					
-					for (int j=0;j<tabla.getModel().getRowCount();j++){
+					for (int y=0;y<tabla.getModel().getRowCount();y++){
 						System.out.println("FILA");
 						System.out.println(j);
-						if (((String)tabla.getModel().getValueAt(j, 3)).trim().equals("")){
+						if (((String)tabla.getModel().getValueAt(y, 3)).trim().equals("")){
 							
 						}else{
 							System.out.println("OK 1");
-							Notas nota = new Notas(j, 0,(String) tabla.getModel().getValueAt(j, 3));
+							Notas nota = new Notas(y, 0,(String) tabla.getModel().getValueAt(y, 3));
 							notas.add(nota);
+						}
+						
+						if (((boolean)tabla.getModel().getValueAt(y, 2))){
+							base.insertarTICKS(con, y, 0, j);
 						}
 					}	
 				
@@ -399,30 +419,38 @@ public class ventana extends JFrame {
 							System.out.println("TABLA");
 							System.out.println(1);
 							
-							for (int j=0;j<tablugares.getModel().getRowCount();j++){
+							for (int y=0;y<tablugares.getModel().getRowCount();y++){
 								System.out.println("FILA");
 								System.out.println(j);
-								if (((String)tablugares.getModel().getValueAt(j, 3)).trim().equals("")){
+								if (((String)tablugares.getModel().getValueAt(y, 3)).trim().equals("")){
 									
 								}else{
 									System.out.println("OK 2");
-									Notas nota = new Notas(j, 1,(String) tablugares.getModel().getValueAt(j, 3));
+									Notas nota = new Notas(y, 1,(String) tablugares.getModel().getValueAt(y, 3));
 									notas.add(nota);
+								}
+								
+								if (((boolean)tablugares.getModel().getValueAt(y, 2))){
+									base.insertarTICKS(con, y, 1, j);
 								}
 							}	
 							
 								System.out.println("TABLA");
 								System.out.println(2);
 								
-								for (int j=0;j<tabarmas.getModel().getRowCount();j++){
+								for (int y=0;y<tabarmas.getModel().getRowCount();y++){
 									System.out.println("FILA");
 									System.out.println(j);
-									if (((String)tabarmas.getModel().getValueAt(j, 3)).trim().equals("")){
+									if (((String)tabarmas.getModel().getValueAt(y, 3)).trim().equals("")){
 										
 									}else{
 										System.out.println("OK 3");
-										Notas nota = new Notas(j, 2,(String) tabarmas.getModel().getValueAt(j, 3));
+										Notas nota = new Notas(y, 2,(String) tabarmas.getModel().getValueAt(y, 3));
 										notas.add(nota);
+									}
+									
+									if (((boolean)tabarmas.getModel().getValueAt(y, 2))){
+										base.insertarTICKS(con, y, 2, j);
 									}
 								}
 								
