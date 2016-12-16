@@ -130,6 +130,7 @@ public class Main {
 //		gestion.crearTabla(crearecibircartas, conexion);
 //		gestion.crearTabla(crearsospecha, conexion);
 		
+		
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);
 		
