@@ -939,7 +939,7 @@ public class GestionBaseDeDatos {
 	}
 
 	public int ObtenerCodigoJugadorTurno(Connection conexion, Partida p) {
-		int codigo = 100;
+		int codigo = -1;
 		try {
 
 			Statement statement = conexion.createStatement();
@@ -960,7 +960,7 @@ public class GestionBaseDeDatos {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			return 100;
+			return -1;
 		}
 
 	}

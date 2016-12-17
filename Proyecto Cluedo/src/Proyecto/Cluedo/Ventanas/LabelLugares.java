@@ -58,7 +58,7 @@ public class LabelLugares extends JLabel{
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		if(seleccionado==false){
-			System.out.println("entro");			
+//			System.out.println("entro");			
 			g2.drawImage( img, 0,0,getWidth() ,getHeight(), this );
 		}else{
 			

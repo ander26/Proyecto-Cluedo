@@ -28,31 +28,10 @@ public class HiloTurno extends Thread {
 	private Connection con;
 	private boolean pulsado; 
 	
-	private JLabel labelSemaforo;
-	
-	
-	private JLabel labelDado;
-	
-	private JLabel labelAcusar;
-	
-	
-	
-	
-	public JLabel getLabelDado() {
-		return labelDado;
-	}
 
-	public void setLabelDado(JLabel labelDado) {
-		this.labelDado = labelDado;
-	}
-
-	public JLabel getLabelAcusar() {
-		return labelAcusar;
-	}
-
-	public void setLabelAcusar(JLabel labelAcusar) {
-		this.labelAcusar = labelAcusar;
-	}
+	
+	
+	
 
 	public boolean isPulsado() {
 		return pulsado;
@@ -62,13 +41,7 @@ public class HiloTurno extends Thread {
 		this.pulsado = pulsado;
 	}
 
-	public JLabel getLabelSemaforo() {
-		return labelSemaforo;
-	}
 
-	public void setLabelSemaforo(JLabel labelSemaforo) {
-		this.labelSemaforo = labelSemaforo;
-	}
 
 	public GestionBaseDeDatos getBase() {
 		return base;
@@ -111,140 +84,28 @@ public class HiloTurno extends Thread {
 			mensajePanel=base.ObtenerPanel(con,partida);
 			
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
+			
 			//al inicializar el progrma el jugador con menor codigo tiene el turno
-			if(CodigoJugadorConTurno==100){
+			
+			if(CodigoJugadorConTurno==-1){
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
 				base.modificarturno(con,arrjugadores.get(0).getCodigo(), 1);
 				System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
 //				try {
-//					Thread.sleep( 30000 );
+//					Thread.sleep( 5000 );
 //				} catch (InterruptedException e) {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
 				
 			}}
-			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
-			
-			
-			if (jugador.getCodigo()==CodigoJugadorConTurno){
-				
-				System.out.println("HACE");
-				
-				ImageIcon imagen = new ImageIcon();
-				
-				Icon icono;
-			
-				try{
-					
-					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/semaforoverde.png").toURI().toURL());
-					
-				}catch (Exception e){
-					
-					System.out.println("No se ha encontrado al archivo");
-				}
-				
-				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelSemaforo.getWidth(), labelSemaforo.getHeight(), Image.SCALE_DEFAULT));
-			
-				labelSemaforo.setIcon(icono);
-				
-				labelSemaforo.repaint();
-				
-				try{
-					
-					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dado.gif").toURI().toURL());
-					
-				}catch (Exception e){
-					
-					System.out.println("No se ha encontrado al archivo");
-				}
-				
-				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
-			
-				labelDado.setIcon(icono);
-				
-				labelDado.repaint();
-				
-				try{
-					
-					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharriba.png").toURI().toURL());
-					
-				}catch (Exception e){
-					
-					System.out.println("No se ha encontrado al archivo");
-				}
-				
-				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
-			
-				labelAcusar.setIcon(icono);
-				
-				labelAcusar.repaint();
-				
-				
-			}else{
-				
-				System.out.println("NO HACE");
-				
-				ImageIcon imagen = new ImageIcon();
-				
-				Icon icono;
-			
-				try{
-					
-					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/semafororojot.png").toURI().toURL());
-					
-				}catch (Exception e){
-					
-					System.out.println("No se ha encontrado al archivo");
-				}
-				
-				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelSemaforo.getWidth(), labelSemaforo.getHeight(), Image.SCALE_DEFAULT));
-			
-				labelSemaforo.setIcon(icono);
-				
-				labelSemaforo.repaint();
-				
-				
-				try{
-					
-					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dadoNegro.gif").toURI().toURL());
-					
-				}catch (Exception e){
-					
-					System.out.println("No se ha encontrado al archivo");
-				}
-				
-				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
-			
-				labelDado.setIcon(icono);
-				
-				labelDado.repaint();
-				
-				
-				try{
-					
-					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharribaNegro.png").toURI().toURL());
-					
-				}catch (Exception e){
-					
-					System.out.println("No se ha encontrado al archivo");
-				}
-				
-				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
-			
-				labelAcusar.setIcon(icono);
-				
-				labelAcusar.repaint();
-				
-			}
-			
-
+		
 			
 			//esperamos a que cambie el panel
 			while(base.ObtenerPanel(con,partida).equals(mensajePanel)){
 				
 				try {
-					Thread.sleep( 30000 );
+					Thread.sleep( 5000 );
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -265,7 +126,7 @@ public class HiloTurno extends Thread {
 				
 				System.out.println( "arrcartas.size"+arrcartas.size()+"arrjugadores.size"+(arrjugadores.size()-1));
 				try {
-					Thread.sleep( 30000 );
+					Thread.sleep( 5000 );
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -282,7 +143,7 @@ public class HiloTurno extends Thread {
 			//esperamos un tiempo a que ventanaenviar modifique el mensaje
 			while(base.ObtenerPanel(con,partida).equals(mensajePanel)){
 				try {
-					Thread.sleep( 30000 );
+					Thread.sleep( 5000 );
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -295,7 +156,7 @@ public class HiloTurno extends Thread {
 			mensajePanel=base.ObtenerPanel(con,partida);
 			//esperamos un tiempo y cambiamos de turno
 			try {
-				Thread.sleep( 120000 );
+				Thread.sleep( 5000 );
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

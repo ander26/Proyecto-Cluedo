@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Hilo.HiloTurno;
+import Proyecto.Cluedo.Hilo.hiloPìntado;
 import Proyecto.Cluedo.Logica.Animacion;
 import Proyecto.Cluedo.Logica.FicheroCoordenadasPosiciones;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
@@ -60,7 +62,13 @@ public class VentanaTablero extends JFrame {
 	
 	private JLabel semaforo=new JLabel();
 	
+	
+	private static final int ANCHURA =1920;
+	
+	private static final int ALTURA=1040;
 
+	
+	
 
 	//private static int[][] mibaraja=new int[3][4];
 	
@@ -98,6 +106,10 @@ public class VentanaTablero extends JFrame {
 
 		final int altura = screenDimension.height - top - bottom;
 
+		System.out.println(altura);
+		
+		System.out.println(anchura);
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(900, 700);
 		setResizable(true);
@@ -343,7 +355,7 @@ public class VentanaTablero extends JFrame {
 
 		JLabel trainera = new JLabel();
 
-		trainera.setBounds(321, 518, 250, 100);
+		trainera.setBounds(reajustarAnchura(anchura,anchura),reajustarAltura( 510,altura), 250, 95);
 
 		try {
 
@@ -360,7 +372,8 @@ public class VentanaTablero extends JFrame {
 		
 		JLabel puentedeusto = new JLabel();
 
-		puentedeusto.setBounds(4, 380, 246, 268);
+		puentedeusto.setBounds(reajustarAnchura(15, anchura),reajustarAltura(460, altura) , 250, 200);
+		
 		
 		try {
 
@@ -377,7 +390,7 @@ public class VentanaTablero extends JFrame {
 		
 		JLabel puentecrai = new JLabel();
 
-		puentecrai.setBounds(1198, 407, 246, 297);
+		puentecrai.setBounds(reajustarAnchura(1198, anchura), reajustarAltura(455, altura), 246, 250);
 		
 		try {
 
@@ -391,19 +404,49 @@ public class VentanaTablero extends JFrame {
 				imagen.getImage().getScaledInstance(puentecrai.getWidth(), puentecrai.getHeight(), Image.SCALE_DEFAULT));
 
 		puentecrai.setIcon(icono);
-		LabelLugares campo= new LabelLugares("Imagenes/campofutbol.png","campo",13,23,263,267);
-		LabelLugares ade= new LabelLugares("Imagenes/ade.png","ade",334,15,276,188);
-		LabelLugares l= new LabelLugares("Imagenes/la l.png","l",729,65,162,185);
-		LabelLugares centenario= new LabelLugares("Imagenes/centenario.png","centenario",1106,0,500,356);
-		LabelLugares deLetras= new LabelLugares("Imagenes/de letras.png","letras",1562,3,350,253);
-		LabelLugares capilla= new LabelLugares("Imagenes/capilla.png","capilla",1676,237,177,160);
-		LabelLugares crai= new LabelLugares("Imagenes/crai.png","crai",1384,596,259,248);
-		LabelLugares zubi= new LabelLugares("Imagenes/zubi.png","zubi",398,639,494,265);
-
-
 		
+		LabelLugares campo= new LabelLugares("Imagenes/campofutbol.png","campo",reajustarAnchura(23, anchura),reajustarAltura(23, altura),263,267);
+		LabelLugares ade= new LabelLugares("Imagenes/ade.png","ade",reajustarAnchura(334, anchura),reajustarAltura(15, altura),276,188);
+		LabelLugares l= new LabelLugares("Imagenes/la l.png","l",reajustarAnchura(729, anchura),reajustarAltura(65, altura),162,185);
+		LabelLugares centenario= new LabelLugares("Imagenes/centenario.png","centenario",reajustarAnchura(1106, anchura),0,500,356);
+		LabelLugares deLetras= new LabelLugares("Imagenes/de letras.png","letras",reajustarAnchura(1562, anchura),reajustarAltura(3, altura),350,253);
+		LabelLugares capilla= new LabelLugares("Imagenes/capilla.png","capilla",reajustarAnchura(1676, anchura),reajustarAltura(237, altura),177,160);
+		LabelLugares crai= new LabelLugares("Imagenes/crai.png","crai",reajustarAnchura(anchura-540, anchura),reajustarAltura(altura-400, altura),260,250);
+		LabelLugares zubi= new LabelLugares("Imagenes/zubi.png","zubi",reajustarAnchura(398, anchura),reajustarAltura(altura-380, altura),494,265);
+
+		JLabel rio = new JLabel ();
+		
+		rio.setBounds(reajustarAnchura(1475, anchura),reajustarAltura(482, altura),250,118);
 
 
+		try{
+			
+			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/rioAzul.png").toURI().toURL());
+		}catch (Exception q){
+			
+		}
+		
+		icono= new ImageIcon(imagen.getImage().getScaledInstance(rio.getWidth(), rio.getHeight(), Image.SCALE_DEFAULT));
+		
+		rio.setIcon(icono);
+		
+		JLabel traineraUPV = new JLabel();
+
+		traineraUPV.setBounds(reajustarAnchura(anchura+500,anchura),reajustarAltura( 510,altura), 250, 100);
+
+		try {
+
+			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png").toURI().toURL());
+		} catch (Exception e) {
+
+			System.out.println("No se ha encontrado el archivo");
+		}
+
+		icono = new ImageIcon(
+				imagen.getImage().getScaledInstance(traineraUPV.getWidth(), traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+
+		traineraUPV.setIcon(icono);
+		
 		// Establecemos el formato
 //		
 //		101.0/454.0
@@ -425,8 +468,8 @@ public class VentanaTablero extends JFrame {
 
 		fondo.setLayout(new BorderLayout());
 		pposiciones.setLayout(null);
-		
-
+		pposiciones.add(panelI);
+		pposiciones.add(panelD);
 		pposiciones.add(semaforo);
 		pposiciones.add(campo);
 		pposiciones.add(ade);
@@ -449,7 +492,7 @@ public class VentanaTablero extends JFrame {
 
 		panelI.add(cuadradoI);
 
-		pposiciones.add(panelI);
+		
 
 		panelD.add(flechaD);
 
@@ -463,16 +506,25 @@ public class VentanaTablero extends JFrame {
 
 		panelD.add(cuadradoD);
 
-		pposiciones.add(panelD);
+		
 
 		pposiciones.add(jugador1);
-		pposiciones.add(trainera);
+		
 		pposiciones.add(puentedeusto);
 		pposiciones.add(puentecrai);
+		pposiciones.add(trainera);
+		pposiciones.add(traineraUPV);
+		pposiciones.add(rio);
 		fondo.add(pposiciones);
 		getContentPane().setLayout(new BorderLayout());
 
 		getContentPane().add(fondo, BorderLayout.CENTER);
+		
+		
+		
+
+		
+		
 		System.out.println("llego aqui");
 		
 		hTurno = new HiloTurno();
@@ -480,17 +532,17 @@ public class VentanaTablero extends JFrame {
 		hTurno.setJugador(j);
 		hTurno.setPartida(p);
 		hTurno.setCon(conexion);
-		hTurno.setLabelSemaforo(semaforo);
-		
-		hTurno.setLabelAcusar(labelAcusar);
-		
-		hTurno.setLabelDado(labelDado);
+
 		hTurno.start();
+
 		
 		pposiciones.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+//				System.out.println(e.getX());
+//				System.out.println(e.getY());
 //			Point punto=new Point(e.getX(),e.getY());
 //			System.out.println(punto.getX()+" "+punto.getY());
 //			if(punto.getX()==0){
@@ -720,12 +772,306 @@ public class VentanaTablero extends JFrame {
 			}
 		});
 		
-		addWindowListener(new WindowAdapter() {
+		hiloPìntado pintar = new hiloPìntado(semaforo, labelDado, labelAcusar, trainera, p, j, conexion,anchura,traineraUPV);
+		
+		pintar.start();
+		
+//		addWindowFocusListener(new WindowFocusListener() {
+//			
+//			@Override
+//			public void windowLostFocus(WindowEvent e) {
+//				
+//				
+//			}
+//			
+//			@Override
+//			public void windowGainedFocus(WindowEvent e) {
+//				
+//				int CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(conexion, p);
+//				
+//				
+//				if (j.getCodigo()==CodigoJugadorConTurno){
+//					
+//					System.out.println("HACE");
+//					
+//					ImageIcon imagen = new ImageIcon();
+//					
+//					Icon icono;
+//				
+//					try{
+//						
+//						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/semaforoverde.png").toURI().toURL());
+//						
+//					}catch (Exception p){
+//						
+//						System.out.println("No se ha encontrado al archivo");
+//					}
+//					
+//					icono = new ImageIcon(imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(), Image.SCALE_DEFAULT));
+//				
+//					semaforo.setIcon(icono);
+//					
+//					semaforo.repaint();
+//					
+//					semaforo.revalidate();
+//					
+//					try{
+//						
+//						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dado.gif").toURI().toURL());
+//						
+//					}catch (Exception p){
+//						
+//						System.out.println("No se ha encontrado al archivo");
+//					}
+//					
+//					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
+//				
+//					labelDado.setIcon(icono);
+//					
+//					labelDado.repaint();
+//					
+//					try{
+//						
+//						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharriba.png").toURI().toURL());
+//						
+//					}catch (Exception p){
+//						
+//						System.out.println("No se ha encontrado al archivo");
+//					}
+//					
+//					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
+//				
+//					labelAcusar.setIcon(icono);
+//					
+//					labelAcusar.repaint();
+//					
+//					
+//				}else{
+//					
+//					System.out.println("NO HACE");
+//					
+//					ImageIcon imagen = new ImageIcon();
+//					
+//					Icon icono;
+//				
+//					try{
+//						
+//						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/semafororojot.png").toURI().toURL());
+//						
+//					}catch (Exception p){
+//						
+//						System.out.println("No se ha encontrado al archivo");
+//					}
+//					
+//					icono = new ImageIcon(imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(), Image.SCALE_DEFAULT));
+//				
+//					semaforo.setIcon(icono);
+//					
+//					semaforo.repaint();
+//					
+//					semaforo.revalidate();
+//					
+//					
+//					try{
+//						
+//						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dadoNegro.gif").toURI().toURL());
+//						
+//					}catch (Exception p){
+//						
+//						System.out.println("No se ha encontrado al archivo");
+//					}
+//					
+//					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
+//				
+//					labelDado.setIcon(icono);
+//					
+//					labelDado.repaint();
+//					
+//					
+//					try{
+//						
+//						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharribaNegro.png").toURI().toURL());
+//						
+//					}catch (Exception p){
+//						
+//						System.out.println("No se ha encontrado al archivo");
+//					}
+//					
+//					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
+//				
+//					labelAcusar.setIcon(icono);
+//					
+//					labelAcusar.repaint();
+//					
+//				}
+//				
+//
+//				
+//			}
+//		});
+		
+		addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				int CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(conexion, p);
+				
+				
+				if (j.getCodigo()==CodigoJugadorConTurno){
+					
+					System.out.println("HACE");
+					
+					ImageIcon imagen = new ImageIcon();
+					
+					Icon icono;
+				
+					try{
+						
+						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/semaforoverde.png").toURI().toURL());
+						
+					}catch (Exception p){
+						
+						System.out.println("No se ha encontrado al archivo");
+					}
+					
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(), Image.SCALE_DEFAULT));
+				
+					semaforo.setIcon(icono);
+					
+					semaforo.repaint();
+					
+					semaforo.revalidate();
+					
+					try{
+						
+						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dado.gif").toURI().toURL());
+						
+					}catch (Exception p){
+						
+						System.out.println("No se ha encontrado al archivo");
+					}
+					
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
+				
+					labelDado.setIcon(icono);
+					
+					labelDado.repaint();
+					
+					try{
+						
+						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharriba.png").toURI().toURL());
+						
+					}catch (Exception p){
+						
+						System.out.println("No se ha encontrado al archivo");
+					}
+					
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
+				
+					labelAcusar.setIcon(icono);
+					
+					labelAcusar.repaint();
+					
+					
+				}else{
+					
+					System.out.println("NO HACE");
+					
+					ImageIcon imagen = new ImageIcon();
+					
+					Icon icono;
+				
+					try{
+						
+						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/semafororojot.png").toURI().toURL());
+						
+					}catch (Exception p){
+						
+						System.out.println("No se ha encontrado al archivo");
+					}
+					
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(), Image.SCALE_DEFAULT));
+				
+					semaforo.setIcon(icono);
+					
+					semaforo.repaint();
+					
+					semaforo.revalidate();
+					
+					
+					try{
+						
+						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dadoNegro.gif").toURI().toURL());
+						
+					}catch (Exception p){
+						
+						System.out.println("No se ha encontrado al archivo");
+					}
+					
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
+				
+					labelDado.setIcon(icono);
+					
+					labelDado.repaint();
+					
+					
+					try{
+						
+						imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharribaNegro.png").toURI().toURL());
+						
+					}catch (Exception p){
+						
+						System.out.println("No se ha encontrado al archivo");
+					}
+					
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
+				
+					labelAcusar.setIcon(icono);
+					
+					labelAcusar.repaint();
+					
+				}
+				
+				
+			}
+		
 			
 
 			@Override
 			public void windowClosed(WindowEvent e) {
 				hTurno.acaba();
+				pintar.acabar();
 				System.out.println("Se ha cerrado la ventana");
 			}
 			
@@ -740,6 +1086,22 @@ public class VentanaTablero extends JFrame {
 		label.setIcon(icono);
 	}
 	
+	public int reajustarAltura (int coordenada,int altura){
+	
+		double escala = altura / (double) ALTURA; 
+		
+		return (int) (coordenada*escala);
+		
+	}
+	
+	
+	public int reajustarAnchura (int coordenada,int anchura){
+		
+		double escala = anchura / (double) ANCHURA; 
+		
+		return (int) (coordenada*escala);
+		
+	}
 	
 
 }
