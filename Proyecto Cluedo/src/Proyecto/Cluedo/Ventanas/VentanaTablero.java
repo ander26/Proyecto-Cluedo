@@ -15,6 +15,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
@@ -60,12 +61,15 @@ public class VentanaTablero extends JFrame {
 	private Panelcirculos pposiciones=new Panelcirculos();
 
 	
-	private JLabel semaforo=new JLabel();
-	
+
 	
 	private static final int ANCHURA =1920;
 	
 	private static final int ALTURA=1040;
+	
+	private int barcoX=-20;
+	
+	
 
 	
 	
@@ -116,6 +120,8 @@ public class VentanaTablero extends JFrame {
 
 		// Generamos los compoenentes
 
+		JLabel semaforo;
+		 
 		JLabel flechaD = new JLabel();
 
 		JLabel flechaI = new JLabel();
@@ -136,8 +142,9 @@ public class VentanaTablero extends JFrame {
 		
 		JLabel jugador1 = new JLabel();
 		
+		JPanel panelSemaforo = new JPanel();
 		
-		jugador1.setBounds(170, 750, 80	, 80);
+		jugador1.setBounds(216-25, 637-2, 50	, 60);
 		
 		try {
 
@@ -288,7 +295,13 @@ public class VentanaTablero extends JFrame {
 
 		semaforo = new JLabel();
 
-		semaforo.setBounds((int) anchura / 2 - 90, 60, 220, 90);
+		panelSemaforo.setBounds((int) anchura / 2 - 90, 60, 220, 90);
+		
+		panelSemaforo.setOpaque(false);
+		
+		semaforo.setBounds(0, 0, 220, 90);
+		
+		
 		try {
 
 			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/semafororojot.png").toURI().toURL());
@@ -352,10 +365,11 @@ public class VentanaTablero extends JFrame {
 
 		cuadradoD.setIcon(icono);
 		
-
+		
+		
 		JLabel trainera = new JLabel();
 
-		trainera.setBounds(reajustarAnchura(anchura,anchura),reajustarAltura( 510,altura), 250, 95);
+		trainera.setBounds(reajustarAnchura(anchura,anchura),reajustarAltura( 510,altura), reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(95, altura));
 
 		try {
 
@@ -372,7 +386,7 @@ public class VentanaTablero extends JFrame {
 		
 		JLabel puentedeusto = new JLabel();
 
-		puentedeusto.setBounds(reajustarAnchura(15, anchura),reajustarAltura(460, altura) , 250, 200);
+		puentedeusto.setBounds(reajustarAnchura(15, anchura),reajustarAltura(460, altura) , reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(200, altura));
 		
 		
 		try {
@@ -390,7 +404,7 @@ public class VentanaTablero extends JFrame {
 		
 		JLabel puentecrai = new JLabel();
 
-		puentecrai.setBounds(reajustarAnchura(1198, anchura), reajustarAltura(455, altura), 246, 250);
+		puentecrai.setBounds(reajustarAnchura(1198, anchura), reajustarAltura(455, altura), reajustarTamañoAnch(246, anchura),reajustarTamañoAlt(250, altura));
 		
 		try {
 
@@ -405,18 +419,30 @@ public class VentanaTablero extends JFrame {
 
 		puentecrai.setIcon(icono);
 		
-		LabelLugares campo= new LabelLugares("Imagenes/campofutbol.png","campo",reajustarAnchura(23, anchura),reajustarAltura(23, altura),263,267);
-		LabelLugares ade= new LabelLugares("Imagenes/ade.png","ade",reajustarAnchura(334, anchura),reajustarAltura(15, altura),276,188);
-		LabelLugares l= new LabelLugares("Imagenes/la l.png","l",reajustarAnchura(729, anchura),reajustarAltura(65, altura),162,185);
-		LabelLugares centenario= new LabelLugares("Imagenes/centenario.png","centenario",reajustarAnchura(1106, anchura),0,500,356);
-		LabelLugares deLetras= new LabelLugares("Imagenes/de letras.png","letras",reajustarAnchura(1562, anchura),reajustarAltura(3, altura),350,253);
-		LabelLugares capilla= new LabelLugares("Imagenes/capilla.png","capilla",reajustarAnchura(1676, anchura),reajustarAltura(237, altura),177,160);
-		LabelLugares crai= new LabelLugares("Imagenes/crai.png","crai",reajustarAnchura(anchura-540, anchura),reajustarAltura(altura-400, altura),260,250);
-		LabelLugares zubi= new LabelLugares("Imagenes/zubi.png","zubi",reajustarAnchura(398, anchura),reajustarAltura(altura-380, altura),494,265);
+		LabelLugares campo= new LabelLugares("Imagenes/campofutbol.png","campo",reajustarAnchura(23, anchura),reajustarAltura(23, altura),reajustarTamañoAnch(263, anchura),reajustarTamañoAlt(267, altura));
+		LabelLugares ade= new LabelLugares("Imagenes/ade.png","ade",reajustarAnchura(334, anchura),reajustarAltura(15, altura),reajustarTamañoAnch(276, anchura),reajustarTamañoAlt(188, altura));
+		LabelLugares l= new LabelLugares("Imagenes/la l.png","l",reajustarAnchura(729, anchura),reajustarAltura(65, altura),reajustarTamañoAnch(162, anchura),reajustarTamañoAlt(185, altura));
+		LabelLugares centenario= new LabelLugares("Imagenes/centenario.png","centenario",reajustarAnchura(1106, anchura),0,reajustarTamañoAnch(500, anchura),reajustarTamañoAlt(356, altura));
+		LabelLugares deLetras= new LabelLugares("Imagenes/de letras.png","letras",reajustarAnchura(1562, anchura),reajustarAltura(3, altura),reajustarTamañoAnch(350, anchura),reajustarTamañoAlt(253, altura));
+		LabelLugares capilla= new LabelLugares("Imagenes/capilla.png","capilla",reajustarAnchura(1676, anchura),reajustarAltura(237, altura),reajustarTamañoAnch(177, anchura),reajustarTamañoAlt(160, altura));
+		LabelLugares crai= new LabelLugares("Imagenes/crai.png","crai",reajustarAnchura(anchura-540, anchura),reajustarAltura(altura-400, altura),reajustarTamañoAnch(260, anchura),reajustarTamañoAlt(250, altura));
+		LabelLugares zubi= new LabelLugares("Imagenes/zubi.png","zubi",reajustarAnchura(398, anchura),reajustarAltura(altura-380, altura),reajustarTamañoAnch(494, anchura),reajustarTamañoAlt(265, altura));
 
+		
+		campo.setToolTipText("Campo de futbol");
+		ade.setToolTipText("Edificio Business School");
+		l.setToolTipText("La L");
+		centenario.setToolTipText("Edificio Centenario");
+		deLetras.setToolTipText("Edificio de letras");
+		capilla.setToolTipText("La capilla");
+		crai.setToolTipText("CRAI");
+		zubi.setToolTipText("Zubiarte");
+		
+		
+		
 		JLabel rio = new JLabel ();
 		
-		rio.setBounds(reajustarAnchura(1475, anchura),reajustarAltura(482, altura),250,118);
+		rio.setBounds(reajustarAnchura(1475, anchura),reajustarAltura(482, altura),reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(118, altura));
 
 
 		try{
@@ -432,7 +458,7 @@ public class VentanaTablero extends JFrame {
 		
 		JLabel traineraUPV = new JLabel();
 
-		traineraUPV.setBounds(reajustarAnchura(anchura+500,anchura),reajustarAltura( 510,altura), 250, 100);
+		traineraUPV.setBounds(reajustarAnchura(anchura+500,anchura),reajustarAltura( 510,altura), reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
 
 		try {
 
@@ -470,7 +496,8 @@ public class VentanaTablero extends JFrame {
 		pposiciones.setLayout(null);
 		pposiciones.add(panelI);
 		pposiciones.add(panelD);
-		pposiciones.add(semaforo);
+		pposiciones.add(panelSemaforo);
+		panelSemaforo.add(semaforo);
 		pposiciones.add(campo);
 		pposiciones.add(ade);
 		pposiciones.add(l);
@@ -479,6 +506,9 @@ public class VentanaTablero extends JFrame {
 		pposiciones.add(capilla);
 		pposiciones.add(crai);
 		pposiciones.add(zubi);
+		
+		
+		
 		panelI.setLayout(null);
 		panelD.setLayout(null);
 
@@ -609,43 +639,47 @@ public class VentanaTablero extends JFrame {
 			}
 		});
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
+//		addComponentListener(new ComponentAdapter() {
+//			@Override
+//			public void componentResized(ComponentEvent e) {
+//
+//				double escalaX = getContentPane().getWidth() / (double) anchura; // Nueva
+//				// escala
+//				// X
+//				double escalaY = getContentPane().getHeight() / (double) altura; // Nueva
+//				// escala
+//				// Y
+//
+//				semaforo.setBounds((int) (((int) anchura / 2 - 90) * escalaX), (int) (60 * escalaY),
+////						(int) (220 * escalaX), (int) (90 * escalaY));
+////
+////				try {
+////
+////					imagen = new ImageIcon(
+////							VentanaTablero.class.getResource("Imagenes/semafororojot.png").toURI().toURL());
+////				} catch (Exception o) {
+////
+////					System.out.println("No se ha encontrado el archivo");
+////				}
+////
+////				icono = new ImageIcon(imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(),
+////						Image.SCALE_DEFAULT));
+////
+////				semaforo.setIcon(icono);
+////				
+////				
+////				fondo.repaint();
+//			}
 
-				double escalaX = getContentPane().getWidth() / (double) anchura; // Nueva
-				// escala
-				// X
-				double escalaY = getContentPane().getHeight() / (double) altura; // Nueva
-				// escala
-				// Y
-
-				semaforo.setBounds((int) (((int) anchura / 2 - 90) * escalaX), (int) (60 * escalaY),
-						(int) (220 * escalaX), (int) (90 * escalaY));
-
-				try {
-
-					imagen = new ImageIcon(
-							VentanaTablero.class.getResource("Imagenes/semafororojot.png").toURI().toURL());
-				} catch (Exception o) {
-
-					System.out.println("No se ha encontrado el archivo");
-				}
-
-				icono = new ImageIcon(imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(),
-						Image.SCALE_DEFAULT));
-
-				semaforo.setIcon(icono);
-				
-				
-				fondo.repaint();
-			}
-
-		});
+//		});
 
 		labelAcusar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				
+				if (hTurno.isPulsado()){
+					
+					
 //				meterImgEnlabel("Imagenes/pushbajo.png", labelAcusar, 100, 100);
 				Jugador a = new Jugador();
 				a.setLugar(2);
@@ -660,8 +694,11 @@ public class VentanaTablero extends JFrame {
 				aimglug[6] = "Imagenes/zubiarte.jpg";
 				aimglug[7] = "Imagenes/zubiarte.jpg";
 
-				VentanaAcusar f = new VentanaAcusar(base,conexion,j,p);
+				VentanaAcusar f = new VentanaAcusar(base,conexion,j,p,hTurno);
 				f.setVisible(true);
+				}
+				
+				
 			}
 
 //			public void mouseEntered(MouseEvent e) {
@@ -761,6 +798,10 @@ public class VentanaTablero extends JFrame {
 						icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
 						
 						labelDado.setIcon(icono);
+						
+						barcoX=trainera.getX();
+						
+					
 						
 						hTurno.setPulsado(true);
 					}
@@ -914,31 +955,31 @@ public class VentanaTablero extends JFrame {
 			
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
+			
 				
 			}
 			
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
@@ -1076,6 +1117,296 @@ public class VentanaTablero extends JFrame {
 			}
 			
 		});
+		
+		
+		labelDenunciar.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if (barcoX>-10 && barcoX<150){
+				if (jugador1.getX()==216.0-25 && jugador1.getY()==637-2){
+					
+					if (pintar.isOrientacion()){
+						
+						pintar.setFicha(jugador1);
+						
+						
+						
+						try{
+							
+							imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+						}catch (Exception p){
+						}
+						icono=new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(), trainera.getHeight(), Image.SCALE_DEFAULT));
+						
+						
+						
+						trainera.setIcon(icono);
+						
+						try{
+						
+							imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
+						}catch (Exception p){
+						}
+						icono=new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(), traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+						
+						traineraUPV.setIcon(icono);
+						
+						pintar.setOrientacion(false);
+						
+						pintar.setAnimacion1(true);
+					
+					
+				}else{
+					pintar.setFicha(jugador1);
+					pintar.setAnimacion1(true);
+				
+				}
+			}
+//				if (pintar.isOrientacion()){
+//					
+//					try{
+//						
+//						imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+//					}catch (Exception p){
+//					}
+//					icono=new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(), trainera.getHeight(), Image.SCALE_DEFAULT));
+//					
+//					
+//					
+//					trainera.setIcon(icono);
+//					
+//					try{
+//					
+//						imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
+//					}catch (Exception p){
+//					}
+//					icono=new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(), traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+//					
+//					traineraUPV.setIcon(icono);
+//					
+//					pintar.setOrientacion(false);
+//				}else{
+//					
+//					
+//					try{
+//						
+//						imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeusto.png"));
+//					}catch (Exception p){
+//					}
+//					icono=new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(), trainera.getHeight(), Image.SCALE_DEFAULT));
+//					
+//					
+//					
+//					trainera.setIcon(icono);
+//					
+//					try{
+//					
+//						imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
+//					}catch (Exception p){
+//					}
+//					icono=new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(), traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+//					
+//					traineraUPV.setIcon(icono);
+//					
+//					pintar.setOrientacion(true);
+//					
+//					
+//				}
+					}}}
+				
+			);
+		
+//		campo.addMouseListener(new MouseAdapter() {
+//
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				campo.setSeleccionado(false);
+//				campo.repaint();
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				campo.setSeleccionado(true);
+//				campo.setC1(0);
+//				campo.setC2(0);
+//				campo.setC3(255);
+//				campo.repaint();
+//				
+//			}
+//			
+//
+//		});
+//		
+//		ade.addMouseListener(new MouseAdapter() {
+//
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				ade.setSeleccionado(false);
+//				ade.repaint();
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				ade.setSeleccionado(true);
+//				ade.setC1(247);
+//				ade.setC2(191);
+//				ade.setC3(190);
+//				ade.repaint();
+//				
+//			}
+//			
+//
+//		});
+//		
+//		capilla.addMouseListener(new MouseAdapter() {
+//
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				capilla.setSeleccionado(false);
+//				capilla.repaint();
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				capilla.setSeleccionado(true);
+//				capilla.setC1(247);
+//				capilla.setC2(153);
+//				capilla.setC3(133);
+//				capilla.repaint();
+//				
+//			}
+//			
+//
+//		});
+//		
+//		l.addMouseListener(new MouseAdapter() {
+//
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				l.setSeleccionado(false);
+//				l.repaint();
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				l.setSeleccionado(true);
+//				l.setC1(179);
+//				l.setC2(223);
+//				l.setC3(83);
+//				l.repaint();
+//				
+//			}
+//			
+//
+//		});
+//
+//		deLetras.addMouseListener(new MouseAdapter() {
+//
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				deLetras.setSeleccionado(false);
+//				deLetras.repaint();
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				deLetras.setSeleccionado(true);
+//				deLetras.setC1(128);
+//				deLetras.setC2(128);
+//				deLetras.setC3(128);
+//				deLetras.repaint();
+//				
+//			}
+//			
+//
+//		});
+//		
+//		
+//		crai.addMouseListener(new MouseAdapter() {
+//
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				crai.setSeleccionado(false);
+//				crai.repaint();
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				crai.setSeleccionado(true);
+//				crai.setC1(22);
+//				crai.setC2(170);
+//				crai.setC3(76);
+//				crai.repaint();
+//				
+//			}
+//			
+//
+//		});
+//		
+//		centenario.addMouseListener(new MouseAdapter() {
+//
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				centenario.setSeleccionado(false);
+//				centenario.repaint();
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				centenario.setSeleccionado(true);
+//				centenario.setC1(102);
+//				centenario.setC2(15);
+//				centenario.setC3(130);
+//				centenario.repaint();
+//				
+//			}
+//			
+//
+//		});
+//		
+//		
+//		zubi.addMouseListener(new MouseAdapter() {
+//
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				zubi.setSeleccionado(false);
+//				zubi.repaint();
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				zubi.setSeleccionado(true);
+//				zubi.setC1(192);
+//				zubi.setC2(0);
+//				zubi.setC3(64);
+//				zubi.repaint();
+//				
+//			}
+//			
+//
+//		});
+		
+		
+	
+	
 	}
 
 	public void meterImgEnlabel(String ruta, JLabel label, int largo, int ancho) {
@@ -1100,6 +1431,23 @@ public class VentanaTablero extends JFrame {
 		double escala = anchura / (double) ANCHURA; 
 		
 		return (int) (coordenada*escala);
+		
+	}
+	
+	public int reajustarTamañoAlt (int tamañoY,int altura){
+		
+		double escala = altura / (double) ALTURA; 
+		
+		return (int) (tamañoY*escala);
+		
+	}
+	
+	
+	public int reajustarTamañoAnch (int tamañoX,int anchura){
+		
+		double escala = anchura / (double) ANCHURA; 
+		
+		return (int) (tamañoX*escala);
 		
 	}
 	

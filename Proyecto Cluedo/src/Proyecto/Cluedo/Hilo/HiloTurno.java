@@ -26,12 +26,20 @@ public class HiloTurno extends Thread {
 	private GestionBaseDeDatos base;
 	private Partida partida;
 	private Connection con;
-	private boolean pulsado; 
+	private boolean pulsado=false; 
+	
+	private boolean acusar=false;
+	
+	
 	
 
-	
-	
-	
+	public boolean isAcusar() {
+		return acusar;
+	}
+
+	public void setAcusar(boolean acusar) {
+		this.acusar = acusar;
+	}
 
 	public boolean isPulsado() {
 		return pulsado;
@@ -167,6 +175,7 @@ public class HiloTurno extends Thread {
 			if(CodigoJugadorConTurno==jugador.getCodigo()){
 				CambiarTurno();
 				pulsado=false;
+				acusar=false;
 			}
 					
 		try {

@@ -18,6 +18,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -275,7 +276,7 @@ public class VentanaAcusar extends JFrame {
 	public JLabel lbResolver=new JLabel();
 	public String [] acusacion=new String[3];
 	
-	public VentanaAcusar(GestionBaseDeDatos base,Connection con,Jugador j,Partida p){
+	public VentanaAcusar(GestionBaseDeDatos base,Connection con,Jugador j,Partida p,HiloTurno hTurno){
 		setSize( 1330, 730 );
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );	
 		//crear los iconos 
@@ -358,13 +359,19 @@ public class VentanaAcusar extends JFrame {
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
+				
+				if (!(hTurno.isAcusar())){
 				//acusacion[0]=base.lugarAcusacion(con, j); para hacer pruebas
 				acusacion[0]="F. Ingenieria";
 				acusacion[2]=psospechoso.getSospechoso();
 				acusacion[1]=parmas.getArma();
 				SubirAbaseAcusacion(j,p,con);
 				base.modificarPanel(con, "El jugador "+j.getUsuario()+"\n piensa que \n"+acusacion[2]+"cometio el crimen \n en"+acusacion[0]+"con  \n el"+acusacion[1], p);
+				hTurno.setAcusar(true);
 				
+				}else{
+					JOptionPane.showMessageDialog(getContentPane(), "Ya has acusado una vez, espera al sigueinte turno", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				}
 				
 				
 			}

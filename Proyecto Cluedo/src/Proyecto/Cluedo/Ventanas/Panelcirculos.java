@@ -68,7 +68,7 @@ public class Panelcirculos extends JPanel{
 			g3.fillOval((int)key.getX()-28,(int)key.getY()-16,55,32 );
 			}
 			g2.drawImage( imagen, 0,0, getWidth(), getHeight(), this );
-			revalidate();
+//			revalidate();
 		} catch (IOException e) {
 			 //TODO Auto-generated catch block
 			e.printStackTrace();
