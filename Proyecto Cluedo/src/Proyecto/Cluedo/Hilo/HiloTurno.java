@@ -30,8 +30,19 @@ public class HiloTurno extends Thread {
 	
 	private boolean acusar=false;
 	
+	private int dado=-1;
 	
 	
+	
+	
+
+	public int getDado() {
+		return dado;
+	}
+
+	public void setDado(int dado) {
+		this.dado = dado;
+	}
 
 	public boolean isAcusar() {
 		return acusar;
@@ -176,6 +187,7 @@ public class HiloTurno extends Thread {
 				CambiarTurno();
 				pulsado=false;
 				acusar=false;
+				dado=-1;
 			}
 					
 		try {

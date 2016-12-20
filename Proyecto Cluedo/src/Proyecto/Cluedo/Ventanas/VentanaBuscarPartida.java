@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -368,6 +369,8 @@ public class VentanaBuscarPartida extends JFrame {
 		        
 
 		       //TODO: Hay que hacer aqui para que elija la ficha
+		      
+		       
 		       
 		       	Jugador j= new Jugador("Barco", u.getUsuario(), p.getCodigo(), conexion);
 		       

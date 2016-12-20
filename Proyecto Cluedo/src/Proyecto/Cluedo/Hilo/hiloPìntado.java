@@ -42,10 +42,52 @@ public class hiloPìntado extends Thread {
 
 	private boolean animacion1 = false;
 
+	private boolean animacion2 = false;
+
+	private boolean animacion3 = false;
+
+	private boolean animacion4 = false;
+
+	private boolean seguir = true;
+
+	private boolean hecho = false;
+
+	private boolean hecho1 = false;
+
 	private JLabel ficha;
 
-	
-	
+	public boolean isAnimacion3() {
+		return animacion3;
+	}
+
+	public void setAnimacion3(boolean animacion3) {
+		this.animacion3 = animacion3;
+	}
+
+	public boolean isAnimacion4() {
+		return animacion4;
+	}
+
+	public void setAnimacion4(boolean animacion4) {
+		this.animacion4 = animacion4;
+	}
+
+	public boolean isAnimacion2() {
+		return animacion2;
+	}
+
+	public void setAnimacion2(boolean animacion2) {
+		this.animacion2 = animacion2;
+	}
+
+	public boolean isSeguir() {
+		return seguir;
+	}
+
+	public void setSeguir(boolean seguir) {
+		this.seguir = seguir;
+	}
+
 	public boolean isAnimacion1() {
 		return animacion1;
 	}
@@ -81,7 +123,6 @@ public class hiloPìntado extends Thread {
 		this.conexion = conexion;
 		this.anchura = anchura;
 		this.traineraUPV = traineraUPV;
-		
 
 		turno = -1;
 	}
@@ -216,77 +257,232 @@ public class hiloPìntado extends Thread {
 				}
 			}
 
-			if (!animacion1) {
-				if (orientacion) {
-					trainera.setBounds(trainera.getX() - 10, trainera.getY(), 250, 100);
+			if (seguir) {
+				if (animacion1) {
 
-					trainera.repaint();
+					if (ficha.getY() > 520) {
+						ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
+						ficha.repaint();
+					} else {
 
-					traineraUPV.setBounds(traineraUPV.getX() - 10, trainera.getY(), 250, 100);
-
-					traineraUPV.repaint();
-
-					if (trainera.getX() == -250) {
-						trainera.setLocation(anchura, trainera.getY());
-						trainera.repaint();
-					}
-
-					if (traineraUPV.getX() == -250) {
-						traineraUPV.setLocation(anchura, traineraUPV.getY());
-						traineraUPV.repaint();
-					}
-
-				} else {
-					trainera.setBounds(trainera.getX() + 10, trainera.getY(), 250, 100);
-
-					trainera.repaint();
-
-					traineraUPV.setBounds(traineraUPV.getX() + 10, trainera.getY(), 250, 100);
-
-					traineraUPV.repaint();
-
-					if (trainera.getX() == anchura) {
-						trainera.setLocation(-250, trainera.getY());
-						trainera.repaint();
-					}
-
-					if (traineraUPV.getX() == anchura) {
-						traineraUPV.setLocation(-250, traineraUPV.getY());
-						traineraUPV.repaint();
-					}
-
-				}
-			} else {
-
-				if (ficha.getY() > 520) {
-					ficha.setLocation(ficha.getX() - 3 , ficha.getY() - 5);
-					ficha.repaint();
-				} else {
-					
+						System.out.println(ficha.getX());
 						if (ficha.getX() < 1300) {
 							trainera.setLocation(trainera.getX() + 10, trainera.getY());
 
 							trainera.repaint();
-							
+
 							traineraUPV.setLocation(traineraUPV.getX() + 10, traineraUPV.getY());
 
 							traineraUPV.repaint();
-							
+
 							ficha.setLocation(ficha.getX() + 10, ficha.getY());
-							
+
 							ficha.repaint();
-						
+
 						} else {
-							if (ficha.getY() > 397 - 20) {
-								ficha.setLocation(ficha.getX()+3, ficha.getY() - 5);
-								
+							if (ficha.getY() > 397 - 5) {
+								ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
+
 								ficha.repaint();
-								
+
 							} else {
-								animacion1 = false;
+
+								if (ficha.getX() > 1391 - 25) {
+									ficha.setLocation(ficha.getX() - 1, ficha.getY());
+								} else {
+									animacion1 = false;
+									ficha.setLocation(1391 - 25, 397 - 5);
+									ficha.repaint();
+								}
 							}
 						}
+
+					}
+				} else if (animacion2) {
+
+					if (ficha.getX() < 1383 && !(hecho)) {
+						ficha.setLocation(ficha.getX() + 1, ficha.getY());
+						ficha.repaint();
+
+					} else {
+						hecho = true;
+						if (ficha.getY() < 520) {
+
+							ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
+							ficha.repaint();
+						} else {
+
+							if (ficha.getX() > 145 && !(hecho1)) {
+								trainera.setLocation(trainera.getX() - 10, trainera.getY());
+
+								trainera.repaint();
+
+								traineraUPV.setLocation(traineraUPV.getX() - 10, traineraUPV.getY());
+
+								traineraUPV.repaint();
+
+								ficha.setLocation(ficha.getX() - 10, ficha.getY());
+
+								ficha.repaint();
+
+							} else {
+
+								hecho1 = true;
+
+								if (ficha.getY() < 637 - 2) {
+									ficha.setLocation(ficha.getX() + 2, ficha.getY() + 5);
+									ficha.repaint();
+								} else {
+									animacion2 = false;
+									ficha.setLocation(216 - 25, 637 - 2);
+									ficha.repaint();
+								}
+							}
+
+						}
+					}
+
+				} else if (animacion3) {
+
+					if (ficha.getY() < 520) {
+						ficha.setLocation(ficha.getX() + 3, ficha.getY() + 5);
+						ficha.repaint();
+					} else {
+
+						
+						if (ficha.getX() < 1300 && (!hecho)) {
+							trainera.setLocation(trainera.getX() + 10, trainera.getY());
+
+							trainera.repaint();
+
+							traineraUPV.setLocation(traineraUPV.getX() + 10, traineraUPV.getY());
+
+							traineraUPV.repaint();
+
+							ficha.setLocation(ficha.getX() + 10, ficha.getY());
+
+							ficha.repaint();
+
+						} else {
+
+							hecho = true;
+
+							if (ficha.getY() < 673 - 5) {
+								ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
+
+								ficha.repaint();
+
+							} else {
+								
+								if (ficha.getX() < 1251 - 25) {
+									
+									ficha.setLocation(ficha.getX() + 1, ficha.getY());
+								} else {
+									animacion3 = false;
+									ficha.setLocation(1251 - 25, 673 - 5);
+									ficha.repaint();
+
+								}
+							}
+						}
+
+					}
+
+				} else if (animacion4) {
 					
+					if (ficha.getX() > 1220 && !(hecho)) {
+						ficha.setLocation(ficha.getX() -1 , ficha.getY());
+						ficha.repaint();
+
+					} else {
+						hecho = true;
+						if (ficha.getY() > 520) {
+
+							ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
+							ficha.repaint();
+						} else {
+
+							if (ficha.getX() > 145 && !(hecho1)) {
+								trainera.setLocation(trainera.getX() - 10, trainera.getY());
+
+								trainera.repaint();
+
+								traineraUPV.setLocation(traineraUPV.getX() - 10, traineraUPV.getY());
+
+								traineraUPV.repaint();
+
+								ficha.setLocation(ficha.getX() - 10, ficha.getY());
+
+								ficha.repaint();
+
+							} else {
+
+								hecho1 = true;
+
+								if (ficha.getY() > 414 - 5) {
+									ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
+									ficha.repaint();
+								} else {
+									
+									if (ficha.getX()>86-25){
+										ficha.setLocation(ficha.getX() - 1, ficha.getY());
+										ficha.repaint();
+									}else{
+									animacion4 = false;
+									ficha.setLocation(86 - 25, 414 - 5);
+									ficha.repaint();
+								}
+							}}
+
+						}
+					}
+
+				} else {
+
+					hecho = false;
+
+					hecho1 = false;
+
+					if (orientacion) {
+						trainera.setBounds(trainera.getX() - 10, trainera.getY(), 250, 100);
+
+						trainera.repaint();
+
+						traineraUPV.setBounds(traineraUPV.getX() - 10, trainera.getY(), 250, 100);
+
+						traineraUPV.repaint();
+
+						if (trainera.getX() == -250) {
+							trainera.setLocation(anchura, trainera.getY());
+							trainera.repaint();
+						}
+
+						if (traineraUPV.getX() == -250) {
+							traineraUPV.setLocation(anchura, traineraUPV.getY());
+							traineraUPV.repaint();
+						}
+
+					} else {
+						trainera.setBounds(trainera.getX() + 10, trainera.getY(), 250, 100);
+
+						trainera.repaint();
+
+						traineraUPV.setBounds(traineraUPV.getX() + 10, trainera.getY(), 250, 100);
+
+						traineraUPV.repaint();
+
+						if (trainera.getX() >= anchura) {
+							trainera.setLocation(-250, trainera.getY());
+							trainera.repaint();
+						}
+
+						if (traineraUPV.getX() >= anchura) {
+							traineraUPV.setLocation(-250, traineraUPV.getY());
+							traineraUPV.repaint();
+						}
+
+					}
+
 				}
 			}
 			//

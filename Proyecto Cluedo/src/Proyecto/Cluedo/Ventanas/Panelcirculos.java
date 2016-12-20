@@ -19,10 +19,16 @@ import Proyecto.Cluedo.Logica.FicheroCoordenadasPosiciones;
 
 public class Panelcirculos extends JPanel{
 	
-	public Point [] arrpuertas={new Point(1391,397),new Point(241,120),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1650,325),new Point(1846,174),new Point(1880,334),new Point(1320,770),new Point(573,876),new Point(855,261)};
+	public Point [] arrpuertas={new Point(241,120),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1650,325),new Point(1846,174),new Point(1880,334),new Point(1320,770),new Point(573,876),new Point(855,261)};
+	
+	
+	public Point [] puente = {new Point(216, 637),new Point(1391,397),new Point(86,414),new Point(1251,673)};
+	
 	private ArrayList<Point>arrpuntmarrones=new ArrayList<Point>();	
+	
 	private HashMap<Point,String> hm=new HashMap();
 
+	
 	public Panelcirculos(){
 		FicheroCoordenadasPosiciones fcoordenadas=new FicheroCoordenadasPosiciones();
 		arrpuntmarrones=fcoordenadas.leerDeFicheroConBarras("cordeenadascirculos.txt");
@@ -33,6 +39,10 @@ public class Panelcirculos extends JPanel{
 		}
 		for(int j=0;j<arrpuertas.length;j++){
 			hm.put(arrpuertas[j],"verde" );
+		}
+		
+		for (Point p: puente){
+			hm.put(p, "morado");
 		}
 	}
 	@Override
@@ -54,6 +64,12 @@ public class Panelcirculos extends JPanel{
 				g3.setColor(new Color(24,205,95,255));
 			
 				 
+				
+			}else if (color=="morado"){
+				
+			g3.setColor(new Color(102, 15,130 ,255));
+				
+				
 				
 			}else if(color=="rojo"){
 				g3.setColor(new Color(219,91,125,255));
