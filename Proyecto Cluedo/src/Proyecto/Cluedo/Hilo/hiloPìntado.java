@@ -345,7 +345,7 @@ public class hiloPìntado extends Thread {
 				} else if (animacion3) {
 
 					if (ficha.getY() < 520) {
-						ficha.setLocation(ficha.getX() + 3, ficha.getY() + 5);
+						ficha.setLocation(ficha.getX() + 4, ficha.getY() + 5);
 						ficha.repaint();
 					} else {
 

@@ -349,16 +349,21 @@ public class VentanaTablero extends JFrame {
 		cuadradoD.setIcon(icono);
 
 		JLabel trainera = new JLabel();
-		
+
 		int posicion = base.posicionBarco(conexion, p);
-		
-		if (posicion==-2000){
+		//
+		// if (posicion==-2000){
+		// trainera.setBounds(reajustarAnchura(anchura, anchura),
+		// reajustarAltura(510, altura),
+		// reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));
+		// }else{
+		// trainera.setBounds(reajustarAnchura(posicion, anchura),
+		// reajustarAltura(510, altura),
+		// reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));
+		// }
+
 		trainera.setBounds(reajustarAnchura(anchura, anchura), reajustarAltura(510, altura),
-				reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));	
-		}else{
-			trainera.setBounds(reajustarAnchura(posicion, anchura), reajustarAltura(510, altura),
-					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));
-		}
+				reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));
 		try {
 
 			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeusto.png").toURI().toURL());
@@ -750,56 +755,56 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-//				int turno = base.obtenerTurno(conexion, j);
-//
-//				if (turno == 1) {
-//
-//					if (!(hTurno.isPulsado())) {
+				 int turno = base.obtenerTurno(conexion, j);
+				
+				 if (turno == 1) {
+				
+				 if (!(hTurno.isPulsado())) {
 
-						Random r = new Random();
+				Random r = new Random();
 
-						hTurno.setDado(r.nextInt(7));
+				hTurno.setDado(r.nextInt(7));
 
-						while (hTurno.getDado() == 0) {
-							hTurno.setDado(r.nextInt(7));
-						}
+				while (hTurno.getDado() == 0) {
+					hTurno.setDado(r.nextInt(7));
+				}
 
-						System.out.println(hTurno.getDado());
+				System.out.println(hTurno.getDado());
 
-						try {
+				try {
 
-							imagen = new ImageIcon(VentanaTablero.class
-									.getResource("Imagenes/" + hTurno.getDado() + ".png").toURI().toURL());
+					imagen = new ImageIcon(
+							VentanaTablero.class.getResource("Imagenes/" + hTurno.getDado() + ".png").toURI().toURL());
 
-						} catch (Exception o) {
+				} catch (Exception o) {
 
-							System.out.println("No se ha encontrado el archivo");
-						}
+					System.out.println("No se ha encontrado el archivo");
+				}
 
-						icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(),
-								labelDado.getHeight(), Image.SCALE_DEFAULT));
+				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(),
+						Image.SCALE_DEFAULT));
 
-						labelDado.setIcon(icono);
+				labelDado.setIcon(icono);
 
-						barcoX = trainera.getX();
+				barcoX = trainera.getX();
 
-						hTurno.setPulsado(true);
-					}
+				hTurno.setPulsado(true);
+			}
 
-//				}
+			 }
 
-//			}
+			 }
 		});
 
 		hiloPìntado pintar = new hiloPìntado(semaforo, labelDado, labelAcusar, trainera, p, j, conexion, anchura,
 				traineraUPV);
 
-		if (base.obtenerOrientacion(conexion, p)){
-			pintar.setOrientacion(true);
-		}else{
-			pintar.setOrientacion(false);
-		}
-		
+		// if (base.obtenerOrientacion(conexion, p)){
+		// pintar.setOrientacion(true);
+		// }else{
+		// pintar.setOrientacion(false);
+		// }
+
 		pintar.start();
 
 		// addWindowFocusListener(new WindowFocusListener() {
@@ -1170,7 +1175,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(31,trainera.getY());
+								trainera.setLocation(31, trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1179,8 +1184,8 @@ public class VentanaTablero extends JFrame {
 								}
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-								
-								traineraUPV.setLocation(trainera.getX()+500,trainera.getY());
+
+								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1189,10 +1194,10 @@ public class VentanaTablero extends JFrame {
 								pintar.setAnimacion1(true);
 
 							} else {
-								
-								trainera.setLocation(31,trainera.getY());
+
+								trainera.setLocation(31, trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(trainera.getX()+500,trainera.getY());
+								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion1(true);
@@ -1201,8 +1206,7 @@ public class VentanaTablero extends JFrame {
 						} else {
 							pintar.setSeguir(true);
 						}
-					}else if (jugador1.getX() == 86 - 25 && jugador1.getY() == 414 - 5){
-						
+					} else if (jugador1.getX() == 86 - 25 && jugador1.getY() == 414 - 5) {
 
 						pintar.setSeguir(false);
 
@@ -1229,7 +1233,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(29,trainera.getY());
+								trainera.setLocation(29, trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1238,8 +1242,8 @@ public class VentanaTablero extends JFrame {
 								}
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-								
-								traineraUPV.setLocation(trainera.getX()+500,trainera.getY());
+
+								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1248,10 +1252,10 @@ public class VentanaTablero extends JFrame {
 								pintar.setAnimacion3(true);
 
 							} else {
-								
-								trainera.setLocation(29,trainera.getY());
+
+								trainera.setLocation(29, trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(trainera.getX()+500,trainera.getY());
+								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion3(true);
@@ -1260,11 +1264,7 @@ public class VentanaTablero extends JFrame {
 						} else {
 							pintar.setSeguir(true);
 						}
-						
-						
-						
-						
-						
+
 					}
 
 					// if (pintar.isOrientacion()){
@@ -1328,10 +1328,10 @@ public class VentanaTablero extends JFrame {
 					// pintar.setOrientacion(true);
 					//
 					//
-					// } 
-				}else if (barcoX>1190 && barcoX<1390){
-					
-					if (jugador1.getX() == 1391-25 && jugador1.getY() == 397 - 5) {
+					// }
+				} else if (barcoX > 1190 && barcoX < 1390) {
+
+					if (jugador1.getX() == 1391 - 25 && jugador1.getY() == 397 - 5) {
 
 						pintar.setSeguir(false);
 
@@ -1343,20 +1343,17 @@ public class VentanaTablero extends JFrame {
 
 							pintar.setSeguir(true);
 
-							if (pintar.isOrientacion()){
-							
-							trainera.setLocation(1250,trainera.getY());
-							trainera.repaint();
-							traineraUPV.setLocation(trainera.getX()+500,trainera.getY());
-							traineraUPV.repaint();
-							pintar.setFicha(jugador1);
-							pintar.setAnimacion2(true);
-							
-							
+							if (pintar.isOrientacion()) {
+
+								trainera.setLocation(1250, trainera.getY());
+								trainera.repaint();
+								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.repaint();
+								pintar.setFicha(jugador1);
+								pintar.setAnimacion2(true);
 
 							} else {
 
-								
 								pintar.setFicha(jugador1);
 
 								try {
@@ -1370,7 +1367,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(1250,trainera.getY());
+								trainera.setLocation(1250, trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1379,8 +1376,8 @@ public class VentanaTablero extends JFrame {
 								}
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-								
-								traineraUPV.setLocation(trainera.getX()+500,trainera.getY());
+
+								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1392,8 +1389,7 @@ public class VentanaTablero extends JFrame {
 						} else {
 							pintar.setSeguir(true);
 						}
-					}else if (jugador1.getX() == 1251-25 && jugador1.getY() == 673 - 5){
-						
+					} else if (jugador1.getX() == 1251 - 25 && jugador1.getY() == 673 - 5) {
 
 						pintar.setSeguir(false);
 
@@ -1405,20 +1401,17 @@ public class VentanaTablero extends JFrame {
 
 							pintar.setSeguir(true);
 
-							if (pintar.isOrientacion()){
-							
-							trainera.setLocation(1250,trainera.getY());
-							trainera.repaint();
-							traineraUPV.setLocation(trainera.getX()+500,trainera.getY());
-							traineraUPV.repaint();
-							pintar.setFicha(jugador1);
-							pintar.setAnimacion4(true);
-							
-							
+							if (pintar.isOrientacion()) {
+
+								trainera.setLocation(1250, trainera.getY());
+								trainera.repaint();
+								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.repaint();
+								pintar.setFicha(jugador1);
+								pintar.setAnimacion4(true);
 
 							} else {
 
-								
 								pintar.setFicha(jugador1);
 
 								try {
@@ -1432,7 +1425,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(1250,trainera.getY());
+								trainera.setLocation(1250, trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1441,8 +1434,8 @@ public class VentanaTablero extends JFrame {
 								}
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-								
-								traineraUPV.setLocation(trainera.getX()+500,trainera.getY());
+
+								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1454,12 +1447,7 @@ public class VentanaTablero extends JFrame {
 						} else {
 							pintar.setSeguir(true);
 						}
-						
-						
-						
-						
-						
-						
+
 					}
 				}
 			}
