@@ -20,7 +20,7 @@ public class Main {
 		
 //		try{
 //			Statement statement = conexion.createStatement();
-//			statement.executeUpdate("DROP TABLE IF EXISTS CHAT");
+//			statement.executeUpdate("DROP TABLE IF EXISTS PARTIDA");
 //		}catch (Exception e){
 //			
 //		}
@@ -30,8 +30,10 @@ public class Main {
 //		String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO real,LUGAR INT,TURNO int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
 //		gestion.crearTabla(creacion,conexion);
 		
+//		String creacion ="ALTER TABLE PARTIDA ADD ORIENTACION boolean";
+//		gestion.crearTabla(creacion, conexion);
 
-//		
+		
 //		try{
 //			Statement statament = conexion.createStatement();
 //			

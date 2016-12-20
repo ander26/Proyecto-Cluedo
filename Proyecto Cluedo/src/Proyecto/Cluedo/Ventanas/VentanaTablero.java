@@ -349,10 +349,16 @@ public class VentanaTablero extends JFrame {
 		cuadradoD.setIcon(icono);
 
 		JLabel trainera = new JLabel();
-
+		
+		int posicion = base.posicionBarco(conexion, p);
+		
+		if (posicion==-2000){
 		trainera.setBounds(reajustarAnchura(anchura, anchura), reajustarAltura(510, altura),
-				reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));
-
+				reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));	
+		}else{
+			trainera.setBounds(reajustarAnchura(posicion, anchura), reajustarAltura(510, altura),
+					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));
+		}
 		try {
 
 			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeusto.png").toURI().toURL());
@@ -788,6 +794,12 @@ public class VentanaTablero extends JFrame {
 		hiloPìntado pintar = new hiloPìntado(semaforo, labelDado, labelAcusar, trainera, p, j, conexion, anchura,
 				traineraUPV);
 
+		if (base.obtenerOrientacion(conexion, p)){
+			pintar.setOrientacion(true);
+		}else{
+			pintar.setOrientacion(false);
+		}
+		
 		pintar.start();
 
 		// addWindowFocusListener(new WindowFocusListener() {

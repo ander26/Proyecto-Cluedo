@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.IIOByteBuffer;
 import javax.imageio.stream.ImageInputStream;
+import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.ImageIcon;
 
 import Proyecto.Cluedo.Datos.*;
@@ -548,7 +549,7 @@ public class GestionBaseDeDatos {
 
 			sql = "INSERT INTO PARTIDA VALUES ('" + p.getNombre() + "'," + p.getCodigo() + ","
 					+ p.getNumeroJugadoresMaximo() + "," + p.getNumeroJugadoresActual() + "," + p.getPosicionBarco()
-					+ ",'" + p.getMensajeCartel() + "')";
+					+ ",'" + p.getMensajeCartel() + "'," + p.isOrientacion() + ")";
 
 			statement.executeUpdate(sql);
 
@@ -804,6 +805,8 @@ public class GestionBaseDeDatos {
 
 				double posicionBarco = resultado.getDouble("POSICIONBARCO");
 
+				boolean orientacion = resultado.getBoolean("ORIENTACION");
+
 				String texto = resultado.getString("MENSAJECARTEL");
 
 				p.setCodigo(CODIGO);
@@ -812,6 +815,7 @@ public class GestionBaseDeDatos {
 				p.setNumeroJugadoresActual(jugadorActual);
 				p.setNumeroJugadoresMaximo(jugadorMaximo);
 				p.setPosicionBarco(posicionBarco);
+				p.setOrientacion(orientacion);
 			}
 
 			resultado.close();
@@ -1416,30 +1420,26 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-
-			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda +"AND CODJUGADORDESTINO=" + codjugordestino;
+			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda
+					+ "AND CODJUGADORDESTINO=" + codjugordestino;
 			logger.log(Level.INFO, sentSQL);
-				
-
-
 
 			ResultSet rs = statement.executeQuery(sentSQL);
 
 			while (rs.next()) {
 				logger.log(Level.INFO, "entro en el while de obtener cartas enviadas");
 				ret.add(rs.getString("NOMBRECARTA"));
-				System.out.println(rs.getString("NOMBRECARTA")+"obtenercartasenviadas");
-				
+				System.out.println(rs.getString("NOMBRECARTA") + "obtenercartasenviadas");
 
 			}
 
 			rs.close();
 			statement.close();
 
-			for(int i=0;i<ret.size();i++){
-				arr =consultaATablaCartas(conexion,"NOMBRE='"+ret.get(i)+"'" );
+			for (int i = 0; i < ret.size(); i++) {
+				arr = consultaATablaCartas(conexion, "NOMBRE='" + ret.get(i) + "'");
 				logger.log(Level.WARNING, "Construyo array Cartas");
-				
+
 			}
 			return arr;
 
@@ -1539,11 +1539,7 @@ public class GestionBaseDeDatos {
 		}
 	}
 
-	
-	
-	public void modificarturno(Connection conexion, int jugCod,int turno) {
-		
-		
+	public void modificarturno(Connection conexion, int jugCod, int turno) {
 
 		String SQL = "";
 
@@ -1597,22 +1593,20 @@ public class GestionBaseDeDatos {
 		}
 	}
 
+	public BufferedImage obtenerDibujoNotas(Connection conexion, Jugador j) {
 
-
-	public BufferedImage obtenerDibujoNotas (Connection conexion,Jugador j) {
-
-		BufferedImage imagen=null;
+		BufferedImage imagen = null;
 
 		try {
 
 			Statement statement = conexion.createStatement();
 
-			String sentSQL = "SELECT DIBUJO FROM JUGADOR WHERE COD_JUG="+j.getCodigo();
+			String sentSQL = "SELECT DIBUJO FROM JUGADOR WHERE COD_JUG=" + j.getCodigo();
 
 			ResultSet rs = statement.executeQuery(sentSQL);
 
 			while (rs.next()) {
-				
+
 				/**
 				 * Blob blob = rs.getBlob("IMAGENPERFIL"); byte[] data =
 				 * blob.getBytes(1, (int)blob.length()); img = ImageIO.read(new
@@ -1624,11 +1618,8 @@ public class GestionBaseDeDatos {
 
 				byte[] imgBytes = rs.getBytes(1);
 
-				
 				imagen = ImageIO.read(new ByteArrayInputStream(imgBytes));
-				
 
-				
 			}
 			rs.close();
 			return imagen;
@@ -1640,8 +1631,6 @@ public class GestionBaseDeDatos {
 		}
 
 	}
-	
-	
 
 	public void insertarDibujoNotas(Connection conexion, Jugador j, BufferedImage imagen) {
 
@@ -1674,179 +1663,236 @@ public class GestionBaseDeDatos {
 
 	}
 
+	// TABLA NOTAS
 
-	//TABLA NOTAS
-	
-	public void insertarNota (Connection conexion, Notas nota,Jugador j){
-		
-		String SQL="";
-		
-		try{
-			
-			SQL ="INSERT INTO NOTAS VALUES ('"+nota.getMensaje()+"',"+j.getCodigo()+","+nota.getLinea()+","+nota.getTabla()+")";
-			
+	public void insertarNota(Connection conexion, Notas nota, Jugador j) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "INSERT INTO NOTAS VALUES ('" + nota.getMensaje() + "'," + j.getCodigo() + "," + nota.getLinea() + ","
+					+ nota.getTabla() + ")";
+
 			Statement statement = conexion.createStatement();
-			
+
 			statement.executeUpdate(SQL);
-			
+
 			logger.log(Level.INFO, "Se ha añadido correctamente la nota");
-			
-			
-		}catch (Exception e){
-		
-			logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de datos");
-			
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha podido insertar la nota en la base de datos");
+
 			e.printStackTrace();
-			
-			
-		
+
 		}
 	}
-	
-	public void borrarNotas (Connection conexion, Jugador j){
-		
+
+	public void borrarNotas(Connection conexion, Jugador j) {
+
 		String SQL = "";
-		
-		try{
-			
-			SQL = "DELETE FROM NOTAS WHERE COD_JUG="+j.getCodigo();
-			
+
+		try {
+
+			SQL = "DELETE FROM NOTAS WHERE COD_JUG=" + j.getCodigo();
+
 			Statement statement = conexion.createStatement();
-			
+
 			statement.executeUpdate(SQL);
-			
+
 			logger.log(Level.INFO, "Se ha borrado correctamente");
-			
-			
-		}catch (Exception e){
+
+		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha podido borrar las notas");
 		}
 	}
-		
-		public ArrayList <Notas> obtenerNotas (Connection conexion, Jugador j){
-			
-			String SQL = "";
-			ArrayList <Notas> listaNotas = new ArrayList<>();
-			
-			try{
-				
-				SQL = "SELECT * FROM NOTAS WHERE COD_JUG="+j.getCodigo();
-				
-				Statement statement = conexion.createStatement();
-				ResultSet resultado = statement.executeQuery(SQL);
-				
-				while (resultado.next()){
-					Notas n = new Notas();
-					
-					n.setLinea(resultado.getInt("LINEA"));
-					
-					n.setMensaje(resultado.getString("MENSAJE"));
-					
-					n.setTabla(resultado.getInt("TABLA"));
-					
-					listaNotas.add(n);
-				}
-				
-				logger.log(Level.INFO, "Se han obtenido correctamente las notas");
-				return listaNotas;
-			}catch (Exception e){
-			
-				
-				logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
-			
-				e.printStackTrace();
-				
-				return null;
+
+	public ArrayList<Notas> obtenerNotas(Connection conexion, Jugador j) {
+
+		String SQL = "";
+		ArrayList<Notas> listaNotas = new ArrayList<>();
+
+		try {
+
+			SQL = "SELECT * FROM NOTAS WHERE COD_JUG=" + j.getCodigo();
+
+			Statement statement = conexion.createStatement();
+			ResultSet resultado = statement.executeQuery(SQL);
+
+			while (resultado.next()) {
+				Notas n = new Notas();
+
+				n.setLinea(resultado.getInt("LINEA"));
+
+				n.setMensaje(resultado.getString("MENSAJE"));
+
+				n.setTabla(resultado.getInt("TABLA"));
+
+				listaNotas.add(n);
 			}
-			
-			
+
+			logger.log(Level.INFO, "Se han obtenido correctamente las notas");
+			return listaNotas;
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
+
+			e.printStackTrace();
+
+			return null;
 		}
-		
-		//TABLA TICKS
-		
-		public void insertarTICKS (Connection conexion, int linea,int tabla, Jugador j){
-			
-			String SQL="";
-			
-			try{
-				
-				SQL ="INSERT INTO TICKS VALUES ("+tabla+","+linea+","+j.getCodigo()+")";
-				
-				Statement statement = conexion.createStatement();
-				
-				statement.executeUpdate(SQL);
-				
-				logger.log(Level.INFO, "Se ha añadido correctamente la nota");
-				
-				
-			}catch (Exception e){
-			
-				logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de datos");
-				
-				e.printStackTrace();
-				
-				
-			
-			}
+
+	}
+
+	// TABLA TICKS
+
+	public void insertarTICKS(Connection conexion, int linea, int tabla, Jugador j) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "INSERT INTO TICKS VALUES (" + tabla + "," + linea + "," + j.getCodigo() + ")";
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha añadido correctamente la nota");
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha podido insertar la nota en la base de datos");
+
+			e.printStackTrace();
+
 		}
-		
-		public void borrarTicks (Connection conexion, Jugador j){
-			
-			String SQL = "";
-			
-			try{
-				
-				SQL = "DELETE FROM TICKS WHERE COD_JUG="+j.getCodigo();
-				
-				Statement statement = conexion.createStatement();
-				
-				statement.executeUpdate(SQL);
-				
-				logger.log(Level.INFO, "Se ha borrado correctamente");
-				
-				
-			}catch (Exception e){
-				logger.log(Level.SEVERE, "No se ha podido borrar las notas");
-			}
+	}
+
+	public void borrarTicks(Connection conexion, Jugador j) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "DELETE FROM TICKS WHERE COD_JUG=" + j.getCodigo();
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha borrado correctamente");
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha podido borrar las notas");
 		}
-			
-			public ArrayList <Integer[]> obtenerTicks (Connection conexion, Jugador j){
-				
-				String SQL = "";
-				ArrayList <Integer []> listaTicks = new ArrayList<>();
-				
-				try{
-					
-					SQL = "SELECT * FROM TICKS WHERE COD_JUG="+j.getCodigo();
-					
-					Statement statement = conexion.createStatement();
-					ResultSet resultado = statement.executeQuery(SQL);
-					
-					while (resultado.next()){
-						Integer [] array = new Integer[2];
-						
-						array[0]=resultado.getInt("LINEA");
-						
-						
-						array[1]=resultado.getInt("TABLA");
-						
-						listaTicks.add(array);
-					}
-					
-					logger.log(Level.INFO, "Se han obtenido correctamente las notas");
-					return listaTicks;
-				}catch (Exception e){
-				
-					
-					logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
-				
-					e.printStackTrace();
-					
-					return null;
-				}
-				
-				
+	}
+
+	public ArrayList<Integer[]> obtenerTicks(Connection conexion, Jugador j) {
+
+		String SQL = "";
+		ArrayList<Integer[]> listaTicks = new ArrayList<>();
+
+		try {
+
+			SQL = "SELECT * FROM TICKS WHERE COD_JUG=" + j.getCodigo();
+
+			Statement statement = conexion.createStatement();
+			ResultSet resultado = statement.executeQuery(SQL);
+
+			while (resultado.next()) {
+				Integer[] array = new Integer[2];
+
+				array[0] = resultado.getInt("LINEA");
+
+				array[1] = resultado.getInt("TABLA");
+
+				listaTicks.add(array);
 			}
+
+			logger.log(Level.INFO, "Se han obtenido correctamente las notas");
+			return listaTicks;
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
+
+			e.printStackTrace();
+
+			return null;
+		}
+
+	}
+
+	public int posicionBarco(Connection conexion, Partida p) {
+
+		String SQL = "";
+
+		try {
+
+			int numero = 0;
+
+			double numeroD = 0;
+
+			SQL = "SELECT POSICIONBARCO FROM PARTIDA WHERE CODIGO=" + p.getCodigo();
+
+			Statement statement = conexion.createStatement();
+
+			ResultSet resultado = statement.executeQuery(SQL);
+
+			while (resultado.next()) {
+
+				numeroD = resultado.getDouble("POSICIONBARCO");
+
+			}
+			numero = (int) numeroD;
+			logger.log(Level.INFO, "Se ha obtenido correctamente la posicion del barco " + numero);
+
+			return numero;
+
+		} catch (Exception n) {
+
+			logger.log(Level.SEVERE, "No se ha conseguido obtener la posicion del barco");
+
+			n.printStackTrace();
+
+			return 0;
+		}
+
+	}
+
+	public boolean obtenerOrientacion(Connection conexion, Partida p) {
+
+		String SQL = "";
+
+		boolean orientacion = false;
 		
+		try {
+
+			SQL = "SELECT ORIENTACION FROM PARTIDA WHERE CODIGO=" + p.getCodigo();
+
+			Statement statement = conexion.createStatement();
+
+			ResultSet resultado = statement.executeQuery(SQL);
+
+			while (resultado.next()) {
+
+				orientacion = resultado.getBoolean("ORIENTACION");
+
+			}
+			
+			logger.log(Level.INFO, "Se ha obtenido correctamente la orientacion del barco " + orientacion);
+
+			return orientacion;
+
+		} catch (Exception n) {
+
+			logger.log(Level.SEVERE, "No se ha conseguido obtener la posicion del barco");
+
+			n.printStackTrace();
+
+			return orientacion;
+		}
+	}
 
 }

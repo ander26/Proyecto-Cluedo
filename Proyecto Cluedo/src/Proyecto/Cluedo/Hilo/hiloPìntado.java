@@ -444,11 +444,11 @@ public class hiloPìntado extends Thread {
 					hecho1 = false;
 
 					if (orientacion) {
-						trainera.setBounds(trainera.getX() - 10, trainera.getY(), 250, 100);
+						trainera.setBounds(trainera.getX() - 1, trainera.getY(), 250, 100);
 
 						trainera.repaint();
 
-						traineraUPV.setBounds(traineraUPV.getX() - 10, trainera.getY(), 250, 100);
+						traineraUPV.setBounds(traineraUPV.getX() - 1, trainera.getY(), 250, 100);
 
 						traineraUPV.repaint();
 
@@ -463,11 +463,11 @@ public class hiloPìntado extends Thread {
 						}
 
 					} else {
-						trainera.setBounds(trainera.getX() + 10, trainera.getY(), 250, 100);
+						trainera.setBounds(trainera.getX() + 1, trainera.getY(), 250, 100);
 
 						trainera.repaint();
 
-						traineraUPV.setBounds(traineraUPV.getX() + 10, trainera.getY(), 250, 100);
+						traineraUPV.setBounds(traineraUPV.getX() + 1, trainera.getY(), 250, 100);
 
 						traineraUPV.repaint();
 
