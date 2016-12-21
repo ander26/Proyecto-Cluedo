@@ -370,9 +370,9 @@ public class HiloTurno extends Thread {
 				//borrar de la base las cartas enviadas
 				base.borrarCartas(con, partida,CodigoJugadorConTurno );
 				CambiarTurno();
-				pulsado=false;
-				acusar=false;
-				dado=-1;
+				
+				
+
 			}else{
 				while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
 					System.out.println("4 while");
@@ -414,6 +414,8 @@ public class HiloTurno extends Thread {
 					
 					
 				}
+				
+
 			}
 			}
 //		try {
@@ -436,7 +438,9 @@ public class HiloTurno extends Thread {
 					base.modificarturno(con,arrjugadores.get(i+1).getCodigo(), 1);
 					System.out.println("es el turno de"+arrjugadores.get(i+1).getUsuario());
 				}
-				
+				pulsado=false;
+				acusar=false;
+				dado=-1;
 				
 				
 			}

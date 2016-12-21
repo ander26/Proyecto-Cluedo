@@ -55,6 +55,10 @@ public class hiloPìntado extends Thread {
 	private boolean hecho1 = false;
 
 	private JLabel ficha;
+	
+	private static final int ANCHURA = 1920;
+
+	private static final int ALTURA = 1040;
 
 	public boolean isAnimacion3() {
 		return animacion3;
@@ -495,6 +499,22 @@ public class hiloPìntado extends Thread {
 			// }
 
 		}
+
+	}
+	
+	public int reajustarAltura(int coordenada, int altura) {
+
+		double escala = altura / (double) ALTURA;
+
+		return (int) (coordenada * escala);
+
+	}
+
+	public int reajustarAnchura(int coordenada, int anchura) {
+
+		double escala = anchura / (double) ANCHURA;
+
+		return (int) (coordenada * escala);
 
 	}
 

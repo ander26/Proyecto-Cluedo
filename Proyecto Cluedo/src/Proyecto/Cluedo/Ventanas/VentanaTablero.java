@@ -71,7 +71,9 @@ public class VentanaTablero extends JFrame {
 
 	private static final int ALTURA = 1040;
 
-	private int barcoX = -20;
+	private static final int ALTURAM = 1020;
+	
+	int barcoX = -20;
 
 	// private static int[][] mibaraja=new int[3][4];
 
@@ -91,8 +93,7 @@ public class VentanaTablero extends JFrame {
 		arrfichas[3]=Label4;
 		arrfichas[4]=Label5;
 		ArrayList<Jugador> arrjugadores=base.ObtenerJugadoresDePartidaordenadosPorCodigo(p, conexion);
-		meterFicha(arrjugadores);
-		colocarFichaInicio(arrjugadores);
+		
 		
 
 		// Establecemos el formato
@@ -116,6 +117,10 @@ public class VentanaTablero extends JFrame {
 		final int anchura = screenDimension.width - left - right;
 
 		final int altura = screenDimension.height - top - bottom;
+		
+		meterFicha(arrjugadores,anchura,altura);
+		colocarFichaInicio(arrjugadores,anchura,altura);
+		
 
 		System.out.println(altura);
 
@@ -151,7 +156,7 @@ public class VentanaTablero extends JFrame {
 
 		JPanel panelSemaforo = new JPanel();
 
-		jugador1.setBounds(86 - 25, 414 - 5, 50, 60);
+		jugador1.setBounds(reajustarAnchura(216-28, anchura),reajustarAlturaMaider(637-16, altura) , reajustarTamañoAnch(50, anchura),reajustarTamañoAltMaider(60, altura));
 
 		try {
 
@@ -166,7 +171,7 @@ public class VentanaTablero extends JFrame {
 
 		jugador1.setIcon(icono);
 
-		labelDado.setBounds(100, 130, 80, 80);
+		labelDado.setBounds(reajustarAnchura(100, anchura), reajustarAltura(130, altura), reajustarTamañoAnch(80, anchura),reajustarTamañoAlt(80, altura) );
 
 		try {
 
@@ -181,7 +186,7 @@ public class VentanaTablero extends JFrame {
 
 		labelDado.setIcon(icono);
 
-		labelAcusar.setBounds(100, 235, 80, 80);
+		labelAcusar.setBounds(reajustarAnchura(100, anchura),reajustarAltura(235, altura) ,reajustarTamañoAnch(80, anchura),reajustarTamañoAlt(80, altura));
 
 		try {
 
@@ -196,7 +201,7 @@ public class VentanaTablero extends JFrame {
 
 		labelAcusar.setIcon(icono);
 
-		labelDenunciar.setBounds(105, 345, 70, 70);
+		labelDenunciar.setBounds(reajustarAnchura(105, anchura),reajustarAltura(345, altura),reajustarTamañoAnch(70, anchura) ,reajustarTamañoAlt(70, altura));
 
 		try {
 
@@ -211,9 +216,9 @@ public class VentanaTablero extends JFrame {
 
 		labelDenunciar.setIcon(icono);
 
-		usuario = new LabelPerfil(u.getImagenPerfil(), 130, 80, 80, 80);
+		usuario = new LabelPerfil(u.getImagenPerfil(), reajustarAnchura(130, anchura), reajustarAltura(80, altura),reajustarTamañoAnch(80, anchura),reajustarTamañoAlt(80, altura) );
 
-		labelNotas.setBounds(260, 80, 80, 80);
+		labelNotas.setBounds(reajustarAnchura(260, anchura),reajustarAltura(80, altura),reajustarTamañoAnch(80, anchura) ,reajustarTamañoAlt(80, altura));
 
 		try {
 
@@ -228,7 +233,7 @@ public class VentanaTablero extends JFrame {
 
 		labelNotas.setIcon(icono);
 
-		labelChat.setBounds(390, 80, 80, 80);
+		labelChat.setBounds(reajustarAnchura(390, anchura),reajustarAltura(80, altura) ,reajustarTamañoAnch(80, anchura) ,reajustarTamañoAlt(80, altura));
 
 		try {
 
@@ -243,7 +248,7 @@ public class VentanaTablero extends JFrame {
 
 		labelChat.setIcon(icono);
 
-		labelCartas.setBounds(520, 80, 100, 80);
+		labelCartas.setBounds(reajustarAnchura(520, anchura),reajustarAltura(80, altura) ,reajustarTamañoAnch(100, anchura) ,reajustarTamañoAlt(80, altura));
 
 		try {
 
@@ -258,7 +263,7 @@ public class VentanaTablero extends JFrame {
 
 		labelCartas.setIcon(icono);
 
-		flechaI.setBounds(200, 550 / 2 - 25, 50, 50);
+		flechaI.setBounds(reajustarAnchura(200, anchura),reajustarAltura(550/2-25, altura),reajustarTamañoAnch(50, anchura) ,reajustarTamañoAlt(50, altura));
 
 		try {
 
@@ -273,7 +278,7 @@ public class VentanaTablero extends JFrame {
 
 		flechaI.setIcon(icono);
 
-		flechaD.setBounds(340, 10, 55, 55);
+		flechaD.setBounds(reajustarAnchura(340, anchura),reajustarAltura(10, altura) ,reajustarTamañoAnch(55, anchura) ,reajustarTamañoAlt(55, altura) );
 
 		try {
 
@@ -301,11 +306,11 @@ public class VentanaTablero extends JFrame {
 
 		semaforo = new JLabel();
 
-		panelSemaforo.setBounds((int) anchura / 2 - 90, 60, 220, 90);
+		panelSemaforo.setBounds(reajustarAnchura((int) 1920 / 2 - 90, anchura),reajustarAltura(60, altura) ,reajustarTamañoAnch(220, anchura),reajustarTamañoAlt(90, altura) );
 
 		panelSemaforo.setOpaque(false);
 
-		semaforo.setBounds(0, 0, 220, 90);
+		semaforo.setBounds(0, 0, reajustarTamañoAnch(220, anchura),reajustarTamañoAlt(90, altura));
 
 		try {
 
@@ -324,11 +329,11 @@ public class VentanaTablero extends JFrame {
 
 		JPanel panelI = new JPanel();
 
-		panelI.setBounds(-90, altura / 2 - 270, 250, 550);
+		panelI.setBounds(reajustarAnchura(-90, anchura),reajustarAltura(1040 / 2 - 270, altura) , reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(550, altura));
 
 		panelI.setOpaque(false);
 
-		cuadradoI.setBounds(0, 0, 250, 550);
+		cuadradoI.setBounds(0, 0, reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(550, altura));
 		try {
 
 			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/cuadrado.png").toURI().toURL());
@@ -344,13 +349,13 @@ public class VentanaTablero extends JFrame {
 
 		JPanel panelD = new JPanel();
 
-		panelD.setBounds(anchura / 2 - 320, altura - 200, 750, 300);
+		panelD.setBounds(reajustarAnchura(1920 / 2 - 320, anchura), reajustarAltura(1040 - 200, altura), reajustarTamañoAnch(750, anchura),reajustarTamañoAlt(300, altura));
 
 		panelD.setOpaque(false);
 
 		JLabel cuadradoD = new JLabel();
 
-		cuadradoD.setBounds(0, 0, 750, 300);
+		cuadradoD.setBounds(0, 0, reajustarTamañoAnch(750, anchura),reajustarTamañoAlt(300, altura));
 
 		try {
 
@@ -475,7 +480,7 @@ public class VentanaTablero extends JFrame {
 
 		JLabel traineraUPV = new JLabel();
 
-		traineraUPV.setBounds(reajustarAnchura(anchura + 500, anchura), reajustarAltura(510, altura),
+		traineraUPV.setBounds(reajustarAnchura(1920 + 500, anchura), reajustarAltura(510, altura),
 				reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
 
 		try {
@@ -623,10 +628,10 @@ public class VentanaTablero extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(1);
 
-				Dimension size = new Dimension(250, 550);
+				Dimension size = new Dimension(reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(550, altura) );
 
-				Rectangle from = new Rectangle(-90, altura / 2 - 270, size.width, size.height);
-				Rectangle to = new Rectangle(-200, altura / 2 - 270, size.width, size.height);
+				Rectangle from = new Rectangle(reajustarAnchura(-90, anchura), reajustarAltura((1040/2) - 270, altura), size.width, size.height);
+				Rectangle to = new Rectangle(reajustarAnchura(-200, anchura), reajustarAltura((1040 / 2) - 270, altura), size.width, size.height);
 				if (mostradoI) {
 					Animacion animate = new Animacion(panelI, from, to);
 					animate.start();
@@ -645,10 +650,10 @@ public class VentanaTablero extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(1);
 
-				Dimension size = new Dimension(750, 300);
+				Dimension size = new Dimension(reajustarTamañoAnch(750, anchura),reajustarTamañoAlt(300, altura));
 
-				Rectangle from = new Rectangle(anchura / 2 - 320, altura - 200, size.width, size.height);
-				Rectangle to = new Rectangle(anchura / 2 - 320, altura - 80, size.width, size.height);
+				Rectangle from = new Rectangle(reajustarAnchura((1920/2) - 320, anchura), reajustarAltura(1040 - 200, altura), size.width, size.height);
+				Rectangle to = new Rectangle(reajustarAnchura((1920 / 2) - 320, anchura), reajustarAltura(1040 - 80, altura), size.width, size.height);
 				if (mostradoD) {
 					Animacion animate = new Animacion(panelD, from, to);
 					animate.start();
@@ -1201,8 +1206,8 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				if (barcoX > -10 && barcoX < 150) {
-					if (jugador1.getX() == 216.0 - 25 && jugador1.getY() == 637 - 2) {
+				if (reajustarAnchura(barcoX, anchura) >reajustarAnchura(-10, anchura) && reajustarAnchura(barcoX, anchura) < reajustarAnchura(150, anchura)) {
+					if (reajustarAnchura(jugador1.getX(), anchura) == reajustarAnchura(216-28, anchura) && reajustarAltura(jugador1.getY(), altura) == reajustarAltura(637-16, altura)) {
 
 						pintar.setSeguir(false);
 
@@ -1229,7 +1234,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(31, trainera.getY());
+								trainera.setLocation(reajustarAnchura(31, anchura), trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1239,7 +1244,7 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.setLocation(reajustarAnchura(trainera.getX()+500, anchura), trainera.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1249,9 +1254,9 @@ public class VentanaTablero extends JFrame {
 
 							} else {
 
-								trainera.setLocation(31, trainera.getY());
+								trainera.setLocation(reajustarAnchura(31, anchura), trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.setLocation(reajustarAnchura(trainera.getX()+500, anchura), trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion1(true);
@@ -1260,7 +1265,7 @@ public class VentanaTablero extends JFrame {
 						} else {
 							pintar.setSeguir(true);
 						}
-					} else if (jugador1.getX() == 86 - 25 && jugador1.getY() == 414 - 5) {
+					} else if (reajustarAnchura(jugador1.getX(), anchura) == reajustarAnchura(86-28, anchura) && reajustarAltura(jugador1.getY(), altura) == reajustarAltura(414-16, altura)) {
 
 						pintar.setSeguir(false);
 
@@ -1287,7 +1292,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(29, trainera.getY());
+								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1297,7 +1302,7 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.setLocation(reajustarAnchura(trainera.getX()+500, anchura), trainera.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1307,9 +1312,9 @@ public class VentanaTablero extends JFrame {
 
 							} else {
 
-								trainera.setLocation(29, trainera.getY());
+								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.setLocation(reajustarAnchura(trainera.getX()+500, anchura), trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion3(true);
@@ -1383,9 +1388,9 @@ public class VentanaTablero extends JFrame {
 					//
 					//
 					// }
-				} else if (barcoX > 1190 && barcoX < 1390) {
+				} else if (reajustarAnchura(barcoX, anchura) >reajustarAnchura(1190, anchura) && reajustarAnchura(barcoX, anchura) < reajustarAnchura(1390, anchura)) {
 
-					if (jugador1.getX() == 1391 - 25 && jugador1.getY() == 397 - 5) {
+					if (reajustarAnchura(jugador1.getX(), anchura) == reajustarAnchura(1391-28, anchura) && reajustarAltura(jugador1.getY(), altura) == reajustarAltura(397-16, altura)) {
 
 						pintar.setSeguir(false);
 
@@ -1399,9 +1404,9 @@ public class VentanaTablero extends JFrame {
 
 							if (pintar.isOrientacion()) {
 
-								trainera.setLocation(1250, trainera.getY());
+								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.setLocation(reajustarAnchura(trainera.getX()+500, anchura), trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion2(true);
@@ -1421,7 +1426,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(1250, trainera.getY());
+								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1431,7 +1436,7 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.setLocation(reajustarAnchura(trainera.getX()+500, anchura), trainera.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1443,7 +1448,7 @@ public class VentanaTablero extends JFrame {
 						} else {
 							pintar.setSeguir(true);
 						}
-					} else if (jugador1.getX() == 1251 - 25 && jugador1.getY() == 673 - 5) {
+					} else if (reajustarAnchura(jugador1.getX(), anchura) == reajustarAnchura(1251-28, anchura) && reajustarAltura(jugador1.getY(), altura) == reajustarAltura(673-16, altura)) {
 
 						pintar.setSeguir(false);
 
@@ -1457,9 +1462,9 @@ public class VentanaTablero extends JFrame {
 
 							if (pintar.isOrientacion()) {
 
-								trainera.setLocation(1250, trainera.getY());
+								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.setLocation(reajustarAnchura(trainera.getX()+500, anchura), trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion4(true);
@@ -1479,7 +1484,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(1250, trainera.getY());
+								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1489,7 +1494,7 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								traineraUPV.setLocation(trainera.getX() + 500, trainera.getY());
+								traineraUPV.setLocation(reajustarAnchura(trainera.getX()+500, anchura), trainera.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1745,18 +1750,35 @@ public class VentanaTablero extends JFrame {
 		}return null;
 		
 	}
-	public void meterFicha(ArrayList<Jugador> arrjug){
+	
+	public int reajustarTamañoAltMaider(int tamañoY, int altura) {
+
+		double escala = altura / (double) ALTURAM;
+
+		return (int) (tamañoY * escala);
+
+	}
+	
+	public int reajustarAlturaMaider(int coordenada, int altura) {
+
+		double escala = altura / (double) ALTURAM;
+
+		return (int) (coordenada * escala);
+
+	}
+	
+	public void meterFicha(ArrayList<Jugador> arrjug,int anchura,int altura){
 		for(int i=0;i<arrjug.size();i++){
-			meterImgEnlabel(arrjug.get(i).getFicha(),arrfichas[i],50,60);
+			meterImgEnlabel(arrjug.get(i).getFicha(),arrfichas[i],reajustarTamañoAnch(50, anchura),reajustarTamañoAltMaider(60, altura));
 		}
 	}
-	public void colocarFichaInicio(ArrayList<Jugador> arrjug){
+	public void colocarFichaInicio(ArrayList<Jugador> arrjug,int anchura,int altura){
 		Point [] arr=new Point[5];
-		arr[0]=new Point(66,735);
-		arr[1]=new Point(66,785);
-		arr[2]=new Point(66,835);
-		arr[3]=new Point(116,735);
-		arr[4]=new Point(116,785);
+		arr[0]=new Point(reajustarAnchura(66, anchura),reajustarAlturaMaider(735, altura));
+		arr[1]=new Point(reajustarAnchura(66, anchura),reajustarAlturaMaider(785, altura));
+		arr[2]=new Point(reajustarAnchura(66, anchura),reajustarAlturaMaider(835, altura));
+		arr[3]=new Point(reajustarAnchura(116, anchura),reajustarAlturaMaider(735, altura));
+		arr[4]=new Point(reajustarAnchura(116, anchura),reajustarAlturaMaider(785, altura));
 		for(int i=0;i<arrjug.size();i++){
 			arrfichas[i].setLocation(arr[i]);
 		}
