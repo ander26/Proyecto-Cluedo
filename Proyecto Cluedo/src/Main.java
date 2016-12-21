@@ -20,22 +20,29 @@ public class Main {
 		
 //		try{
 //			Statement statement = conexion.createStatement();
-//			statement.executeUpdate("DROP TABLE IF EXISTS CHAT");
+//			statement.executeUpdate("DROP TABLE IF EXISTS PARTIDA");
 //		}catch (Exception e){
 //			
 //		}
 //	String creacion = "CREATE TABLE PARTIDA (NOMBRE text, CODIGO int NOT NULL PRIMARY KEY, NUMEROJUGADORESMAXIMO int , NUMEROJUGADORESACTUAL int,POSICIONBARCO real,MENSAJECARTEL text)";
 ////		
 //		gestion.crearTabla(creacion, conexion);
+
 //		String creacion2 = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO NUMERIC(8,4),LUGAR INT,TURNO int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
 //		gestion.crearTabla(creacion2,conexion);
-//		
+//
+//		String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO real,LUGAR INT,TURNO int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
+//		gestion.crearTabla(creacion,conexion);
+		
+//		String creacion ="ALTER TABLE PARTIDA ADD ORIENTACION boolean";
+//		gestion.crearTabla(creacion, conexion);
 
-//		
+
+		
 //		try{
 //			Statement statament = conexion.createStatement();
 //			
-//			statament.executeUpdate("DELETE FROM CHAT");
+//			statament.executeUpdate("DELETE FROM PARTIDA");
 //			
 //			System.out.println("Se ha borrado todo");
 //			
@@ -60,11 +67,11 @@ public class Main {
 //		gestion.crearTabla(creacion3, conexion);
 
 
-//		
+		
 //		try{
 //			Statement statament = conexion.createStatement();
 //			
-//			statament.executeUpdate("DELETE FROM CHAT");
+//			statament.executeUpdate("DELETE FROM NOTAS");
 //			
 //			System.out.println("Se ha borrado todo");
 //			
@@ -77,9 +84,14 @@ public class Main {
 //			System.out.println("No se ha conseguido borrar");
 //		}
 //	
+
 		
 //		String creacion4 = "CREATE TABLE CHAT(MENSAJE text,FECHAENVIO bigint NOT NULL,CODIGOPARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE, CODIGOJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG),NOMBREUSUARIO text,PRIMARY KEY (FECHAENVIO,CODIGOPARTIDA,CODIGOJUGADOR))";
 //		gestion.crearTabla(creacion4,conexion);
+//		
+//		String creacion = "CREATE TABLE CHAT(MENSAJE text,FECHAENVIO bigint NOT NULL,CODIGOPARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE, CODIGOJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG),NOMBREUSUARIO text,PRIMARY KEY (FECHAENVIO,CODIGOPARTIDA,CODIGOJUGADOR))";
+//		gestion.crearTabla(creacion,conexion);
+
 		
 //		
 //		Cartas a=new Cartas ("Inspector Gadget","Imagenes/casinspecGadget.png",false,TipoCarta.SOSPECHOSO);
@@ -118,9 +130,22 @@ public class Main {
 //		String creajuega = "CREATE TABLE JUEGA(NOMBRECARTA text NOT NULL REFERENCES CARTA (NOMBRE) ,TIPOCARTA int,CODJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,PRIMARY KEY(NOMBRECARTA,CODJUGADOR,CODPARTIDA) )";
 //	gestion.crearTabla(creajuega, conexion);
 //		String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA text  ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(CODJUGADORORIGEN,CODJUGADORDESTINO,CODPARTIDA,TIEMPO) )";
+
 //	String crearsospecha = "CREATE TABLE SOSPECHA(NOMBRECARTALUGAR text NOT NULL REFERENCES CARTA (NOMBRE) ,NOMBRECARTAARMA text NOT NULL REFERENCES CARTA (NOMBRE),NOMBRECARTAASESINO text NOT NULL REFERENCES CARTA (NOMBRE),CODJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(NOMBRECARTALUGAR,NOMBRECARTAARMA,NOMBRECARTAASESINO,CODJUGADOR,CODPARTIDA,TIEMPO) )";
+
+//		String crearsospecha = "CREATE TABLE SOSPECHA(NOMBRECARTALUGAR text NOT NULL REFERENCES CARTA (NOMBRE) ,NOMBRECARTAARMA text NOT NULL REFERENCES CARTA (NOMBRE),NOMBRECARTAASESINO text NOT NULL REFERENCES CARTA (NOMBRE),CODJUGADOR int NOT NULL REFERENCES JUGADOR (COD_JUG) ON DELETE CASCADE,CODPARTIDA int NOT NULL REFERENCES PARTIDA(CODIGO) ON DELETE CASCADE,TIEMPO bigint NOT NULL,PRIMARY KEY(NOMBRECARTALUGAR,NOMBRECARTAARMA,NOMBRECARTAASESINO,CODJUGADOR,CODPARTIDA,TIEMPO) )";
+
+//		String creacion = "CREATE TABLE NOTAS(MENSAJE text,COD_JUG int NOT NULL REFERENCES JUGADOR(COD_JUG) ON DELETE CASCADE,LINEA int, TABLA int ,PRIMARY KEY (TABLA,LINEA,COD_JUG))";
+//		gestion.crearTabla(creacion,conexion);
+		
+//		String creacion = "CREATE TABLE TICKS(TABLA int,LINEA int,COD_JUG int NOT NULL REFERENCES JUGADOR(COD_JUG) ON DELETE CASCADE,PRIMARY KEY (LINEA,TABLA,COD_JUG))";
+//		gestion.crearTabla(creacion,conexion);
+
+
+
 //		gestion.crearTabla(crearecibircartas, conexion);
 //		gestion.crearTabla(crearsospecha, conexion);
+
 //		try {
 //
 //			String sql = "DELETE FROM CHAT";
@@ -154,6 +179,9 @@ public class Main {
 //			System.out.println("No se ha conseguido borrar");
 //		}
 //	
+
+		
+		
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);
 		

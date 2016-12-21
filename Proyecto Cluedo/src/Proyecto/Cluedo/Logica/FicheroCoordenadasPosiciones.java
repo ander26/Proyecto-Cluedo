@@ -13,6 +13,7 @@ public class FicheroCoordenadasPosiciones {
 	// TestEjemploFicheros (en este mismo paquete)
 
 
+
 	public static ArrayList<ArrayList<Point>> leerDeFicheroConBarrasYa( String nomFic ) {
 		ArrayList<ArrayList<Point>> ret = new ArrayList<ArrayList<Point>>();
 		BufferedReader brFich = null;

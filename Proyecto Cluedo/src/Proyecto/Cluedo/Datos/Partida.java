@@ -48,6 +48,9 @@ public class Partida {
 	 */
 	
 	private String mensajeCartel;
+	
+	
+	private boolean orientacion;
 
 	
 	/**
@@ -60,10 +63,22 @@ public class Partida {
 		this.nombre=nombre;
 		this.numeroJugadoresMaximo=numeroJugadoresMaximo;
 		this.numeroJugadoresActual=1;
-		this.posicionBarco=0;
+		this.posicionBarco=-2000;
 		this.mensajeCartel=null;
 		this.codigo=generadorCodigo(gestion.obtenerCodigoPartidas(conexion));
+		this.orientacion=true;
 	}
+
+	
+	public boolean isOrientacion() {
+		return orientacion;
+	}
+
+
+	public void setOrientacion(boolean orientacion) {
+		this.orientacion = orientacion;
+	}
+
 
 	public Partida (){
 		

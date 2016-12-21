@@ -8,7 +8,9 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -30,6 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -91,6 +94,10 @@ public class ventana extends JFrame {
 	private JPanel phoja = new JPanel();
 
 	private ArrayList<ArrayList<String>> mibaraja = new ArrayList<ArrayList<String>>();
+	
+	private JPanel panelBorrador = new JPanel();
+	
+	
 
 	// private static int[][] mibaraja=new int[3][4];
 
@@ -289,8 +296,22 @@ public class ventana extends JFrame {
 
 		pdibujar.setLayout(new BorderLayout());
 
-		pdibujar.add(pintar);
+		pdibujar.add(pintar,BorderLayout.CENTER);
+		
+		pdibujar.add(panelBorrador,BorderLayout.SOUTH);
 
+		JLabel labelBorrador = new JLabel();
+		
+		ImageIcon borrador = new ImageIcon(ventana.class.getResource("Imagenes/borrador.png"));
+		labelBorrador.setSize(70, 40);
+		Icon iconoBorrador = new ImageIcon(
+				borrador.getImage().getScaledInstance(labelBorrador.getWidth(), labelBorrador.getHeight(), Image.SCALE_DEFAULT));
+		labelBorrador.setIcon(iconoBorrador);
+		
+		labelBorrador.setToolTipText("Borrador, borra todo el dibujo");
+		
+		panelBorrador.setOpaque(false);
+		panelBorrador.add(labelBorrador);
 		
 		pintar.setLayout(null);
 
@@ -463,6 +484,19 @@ public class ventana extends JFrame {
 			
 			
 		
+		});
+		
+		labelBorrador.addMouseListener(new MouseAdapter() {
+			
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				pintar.setImagen(new BufferedImage( 1500, 1500, BufferedImage.TYPE_INT_ARGB ));
+				
+				pintar.repaint();
+				
+			}
 		});
 
 	}

@@ -376,6 +376,7 @@ public class VentanaBuscarPartida extends JFrame {
 		        
 
 		       //TODO: Hay que hacer aqui para que elija la ficha
+
 		      ArrayList<Icon> arraymunyecos= meterImgEnlabel(listaDeFichas,100,100,conexion,p.getCodigo());
 		      Object [] arraymunyecosdos=arraymunyecos.toArray();
 		      Object elijo= JOptionPane.showInputDialog(null, "Elija su ficha", "Ficha", JOptionPane.QUESTION_MESSAGE, null, arraymunyecosdos,arraymunyecosdos[0]);
@@ -394,6 +395,11 @@ public class VentanaBuscarPartida extends JFrame {
 					
 			       	
 			        comprobador comp= new comprobador(p,conexion,j,u,gestion,prop);
+
+		      
+		       
+		       
+
 
 					
 					VentanaConectando ventana = new VentanaConectando();
