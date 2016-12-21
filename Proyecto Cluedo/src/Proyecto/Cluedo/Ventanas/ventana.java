@@ -97,6 +97,7 @@ public class ventana extends JFrame {
 	
 	private JPanel panelBorrador = new JPanel();
 	
+	private Point pAnt = null;
 	
 
 	// private static int[][] mibaraja=new int[3][4];
@@ -314,9 +315,21 @@ public class ventana extends JFrame {
 		panelBorrador.add(labelBorrador);
 		
 		pintar.setLayout(null);
-
+		
+	
+		
+		pintar.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				pAnt = null;
+				
+			}
+			
+			
+		});
 		pintar.addMouseMotionListener(new MouseMotionListener() {
-			private Point pAnt = null;
+			
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
@@ -331,7 +344,7 @@ public class ventana extends JFrame {
 					// pdibujar.add(new cuadrado()); // Añadimos el cuadrado
 					// pdibujar.validate(); // Validamos
 
-					pAnt = e.getPoint();
+					
 
 					Graphics2D g2 = (Graphics2D) pintar.getGraphics();
 					g2.setColor(Color.white);
@@ -340,6 +353,7 @@ public class ventana extends JFrame {
 						g2.drawLine(pAnt.x, pAnt.y, e.getX(), e.getY());
 					}
 					
+					pAnt = e.getPoint();
 					pintar.repaint();
 				}
 			}
