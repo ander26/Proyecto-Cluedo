@@ -95,6 +95,7 @@ public class VentanaEnviar extends JFrame {
 		//paneldentropri.add(pcsospechoso);
 		//paneldentropri.add(pclugar);
 		//paneldentropri.add(pcarma);
+		pcentrar.setOpaque(false);
 		pcentrar.add(paneldentropri);
 		pprincipal.add(pcentrar,BorderLayout.CENTER);
 		pprincipal.add(hueco,BorderLayout.EAST);
@@ -134,7 +135,7 @@ public class VentanaEnviar extends JFrame {
 			paneldentropri.repaint();
 			
 		}
-		base.modificarPanel(conexion, "El jugador "+j.getUsuario()+"\n ha recibido "+CartasRecibidas.size()+"\n cartas ", p);			
+		base.modificarPanel(conexion, "<html><body>El jugador "+j.getUsuario()+"<br> ha recibido "+CartasRecibidas.size()+"<br> cartas ", p);			
 		
 	}
 	

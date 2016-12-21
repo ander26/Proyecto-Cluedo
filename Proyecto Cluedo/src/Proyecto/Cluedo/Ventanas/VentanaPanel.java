@@ -66,7 +66,7 @@ public class VentanaPanel  extends JFrame{
 		panelrosa panel = new panelrosa(imagen.getImage());
 		
 		
-		mensaje.setFont(new Font("Calisto MT", Font.BOLD, 50));
+		mensaje.setFont(new Font("Calisto MT", Font.BOLD, 25));
 		
 		mensaje.setForeground(Color.WHITE);
 		

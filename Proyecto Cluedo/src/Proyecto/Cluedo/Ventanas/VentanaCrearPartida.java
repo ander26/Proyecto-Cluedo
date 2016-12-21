@@ -58,7 +58,8 @@ public class VentanaCrearPartida extends JFrame {
 	 * Parametro que contiene el nombre de las fichas 
 	 */
 	
-	private String [] listaTipos = {"Coche","Barco","Dedal","Sombrero","Perro","Zapato","Plancha","Carretilla"};
+	private String [] listaTipos = {"Imagenes/coche.png","Imagenes/barco.png","Imagenes/dedal.png","Imagenes/sombrero.png",
+			"Imagenes/perro.png","Imagenes/zapato.png","Imagenes/plancha.png","Imagenes/carretilla.png"};
 	
 	/**
 	 * Parametro que contiene la ficha seleccionada 

@@ -3,6 +3,7 @@ package Proyecto.Cluedo.Logica;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -861,7 +862,8 @@ public class GestionBaseDeDatos {
 			return false;
 		}
 	}
-
+	
+	
 	public ArrayList<Jugador> consultaATablaJugador(Connection conexion, String seleccion) {
 
 		ArrayList<Jugador> ret = new ArrayList<>();
@@ -1082,7 +1084,7 @@ public class GestionBaseDeDatos {
 			Statement statement = conexion.createStatement();
 
 			sql = "INSERT INTO CARTA VALUES ('" + c.getNombre() + "','" + c.getRutaIcono() + "'," + c.isCulpable()
-					+ "'," + c.getTipo() + "')";
+					+ "," + c.getTipo() + ")";
 
 			statement.executeUpdate(sql);
 
@@ -1324,6 +1326,87 @@ public class GestionBaseDeDatos {
 		}
 
 	}
+	public static double pasarxyAdecimal(int y,int x){
+		int res=y;
+		int k=0;
+		while (((int)res)>0){
+			k=k+1;
+			res=res/10;
+			
+		}
+		double numero=x+(y/(Math.pow(10,k)));
+		System.out.println(numero);
+		return numero;
+	}
+	public Point pasarDeDecimalAxy(double x){
+		int num=(int)x;
+		int k=0;
+		double numero=x;		
+		double decimal=numero-num;
+		System.out.println(decimal-(int)decimal);
+		while((decimal-(int)decimal)>0.000001){
+			k=k+1;
+			decimal=decimal*10;
+			
+		}
+		int y=(int)decimal;
+		System.out.println("punto"+num+" "+y);
+		Point p=new Point(num,y);
+		return p;
+	}
+	public void modificarCoordenada(Connection conexion, Jugador j,int x,int y) {
+		double numero=pasarxyAdecimal(y,x);
+		String SQL = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			SQL = "UPDATE JUGADOR SET POS_MUÑECO="+numero+ "WHERE COD_JUG=" + j.getCodigo();
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha modificado correctamente el estado" + SQL);
+
+			statement.close();
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha modificado correctamente");
+			e.printStackTrace();
+		}
+
+	}
+	public Point ObtenerCoordenada(Connection conexion, Jugador j) {
+		System.out.println("entro obtener coordenada");
+		double coor=99;
+		String sql = "";
+		Point punto=new Point();
+		
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "SELECT POS_MUÑECO FROM JUGADOR WHERE COD_JUG=" + j.getCodigo();
+
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				coor=rs.getDouble(1);
+				punto=pasarDeDecimalAxy(coor);
+				System.out.println(punto);
+				
+				logger.log(Level.INFO, "la coordenada es" + coor);
+			}
+
+			rs.close();
+
+			statement.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return punto ;
+	}
 
 	public String lugarAcusacion(Connection conexion, Jugador j) {
 		String lugar;
@@ -1538,6 +1621,35 @@ public class GestionBaseDeDatos {
 			return false;
 		}
 	}
+	
+	public boolean borrarJugadores(Connection conexion) {
+		//String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,
+		//COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,
+		//NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO real,LUGAR INT,
+		//TURNO int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
+
+		String sql = "";
+
+		try {
+
+			sql = "DELETE FROM JUGADOR WHERE COD_JUG>0";
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha borrado correctamente:" + sql);
+
+			statement.close();
+			return true;
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "Ha habido un error a la hora de borrar a: " + sql);
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	
 	
@@ -1597,37 +1709,33 @@ public class GestionBaseDeDatos {
 		}
 	}
 
-	public void insertarDibujoNotas(Connection conexion, Jugador j, BufferedImage imagen) {
+	
+	
+	public boolean borrarCartas(Connection conexion, Partida p,int codjugordestino) {
 
 		String sql = "";
 
 		try {
 
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ImageIO.write(imagen, "jpeg", out);
-			byte[] buf = out.toByteArray();
-			ByteArrayInputStream inStream = new ByteArrayInputStream(buf);
+			sql = "DELETE FROM RECIBIRCARTAS WHERE CODPARTIDA=" + p.getCodigo() +"AND CODJUGADORDESTINO=" + codjugordestino;
+			
 
 			Statement statement = conexion.createStatement();
 
-			PreparedStatement ps = conexion.prepareStatement("UPDATE JUGADOR SET DIBUJO=? WHERE COD_JUG=?");
+			statement.executeUpdate(sql);
 
-			ps.setBinaryStream(1, inStream, inStream.available());
-			ps.setInt(2, j.getCodigo());
-			ps.executeUpdate();
-			ps.close();
+			logger.log(Level.INFO, "Se ha borrado correctamente:" + sql);
 
-			logger.log(Level.INFO, "Se ha modificado correctamente la foto" + sql);
+			statement.close();
+			return true;
 
 		} catch (Exception e) {
 
-			logger.log(Level.SEVERE, "No se ha podido cambiar la foto " + sql);
-
+			logger.log(Level.SEVERE, "Ha habido un error a la hora de borrar a: " + sql);
 			e.printStackTrace();
+			return false;
 		}
-
 	}
-
 	public BufferedImage obtenerDibujoNotas (Connection conexion,Jugador j) {
 
 		BufferedImage imagen=null;
@@ -1669,5 +1777,214 @@ public class GestionBaseDeDatos {
 		}
 
 	}
+	
+	
+
+	public void insertarDibujoNotas(Connection conexion, Jugador j, BufferedImage imagen) {
+
+		String sql = "";
+
+		try {
+
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ImageIO.write(imagen, "jpeg", out);
+			byte[] buf = out.toByteArray();
+			ByteArrayInputStream inStream = new ByteArrayInputStream(buf);
+
+			Statement statement = conexion.createStatement();
+
+			PreparedStatement ps = conexion.prepareStatement("UPDATE JUGADOR SET DIBUJO=? WHERE COD_JUG=?");
+
+			ps.setBinaryStream(1, inStream, inStream.available());
+			ps.setInt(2, j.getCodigo());
+			ps.executeUpdate();
+			ps.close();
+
+			logger.log(Level.INFO, "Se ha modificado correctamente la foto" + sql);
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha podido cambiar la foto " + sql);
+
+			e.printStackTrace();
+		}
+
+	}
+
+
+	//TABLA NOTAS
+	
+	public void insertarNota (Connection conexion, Notas nota,Jugador j){
+		
+		String SQL="";
+		
+		try{
+			
+			SQL ="INSERT INTO NOTAS VALUES ('"+nota.getMensaje()+"',"+j.getCodigo()+","+nota.getLinea()+","+nota.getTabla()+")";
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha añadido correctamente la nota");
+			
+			
+		}catch (Exception e){
+		
+			logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de datos");
+			
+			e.printStackTrace();
+			
+			
+		
+		}
+	}
+	
+	public void borrarNotas (Connection conexion, Jugador j){
+		
+		String SQL = "";
+		
+		try{
+			
+			SQL = "DELETE FROM NOTAS WHERE COD_JUG="+j.getCodigo();
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha borrado correctamente");
+			
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha podido borrar las notas");
+		}
+	}
+		
+		public ArrayList <Notas> obtenerNotas (Connection conexion, Jugador j){
+			
+			String SQL = "";
+			ArrayList <Notas> listaNotas = new ArrayList<>();
+			
+			try{
+				
+				SQL = "SELECT * FROM NOTAS WHERE COD_JUG="+j.getCodigo();
+				
+				Statement statement = conexion.createStatement();
+				ResultSet resultado = statement.executeQuery(SQL);
+				
+				while (resultado.next()){
+					Notas n = new Notas();
+					
+					n.setLinea(resultado.getInt("LINEA"));
+					
+					n.setMensaje(resultado.getString("MENSAJE"));
+					
+					n.setTabla(resultado.getInt("TABLA"));
+					
+					listaNotas.add(n);
+				}
+				
+				logger.log(Level.INFO, "Se han obtenido correctamente las notas");
+				return listaNotas;
+			}catch (Exception e){
+			
+				
+				logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
+			
+				e.printStackTrace();
+				
+				return null;
+			}
+			
+			
+		}
+		
+		//TABLA TICKS
+		
+		public void insertarTICKS (Connection conexion, int linea,int tabla, Jugador j){
+			
+			String SQL="";
+			
+			try{
+				
+				SQL ="INSERT INTO TICKS VALUES ("+tabla+","+linea+","+j.getCodigo()+")";
+				
+				Statement statement = conexion.createStatement();
+				
+				statement.executeUpdate(SQL);
+				
+				logger.log(Level.INFO, "Se ha añadido correctamente la nota");
+				
+				
+			}catch (Exception e){
+			
+				logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de datos");
+				
+				e.printStackTrace();
+				
+				
+			
+			}
+		}
+		
+		public void borrarTicks (Connection conexion, Jugador j){
+			
+			String SQL = "";
+			
+			try{
+				
+				SQL = "DELETE FROM TICKS WHERE COD_JUG="+j.getCodigo();
+				
+				Statement statement = conexion.createStatement();
+				
+				statement.executeUpdate(SQL);
+				
+				logger.log(Level.INFO, "Se ha borrado correctamente");
+				
+				
+			}catch (Exception e){
+				logger.log(Level.SEVERE, "No se ha podido borrar las notas");
+			}
+		}
+			
+			public ArrayList <Integer[]> obtenerTicks (Connection conexion, Jugador j){
+				
+				String SQL = "";
+				ArrayList <Integer []> listaTicks = new ArrayList<>();
+				
+				try{
+					
+					SQL = "SELECT * FROM TICKS WHERE COD_JUG="+j.getCodigo();
+					
+					Statement statement = conexion.createStatement();
+					ResultSet resultado = statement.executeQuery(SQL);
+					
+					while (resultado.next()){
+						Integer [] array = new Integer[2];
+						
+						array[0]=resultado.getInt("LINEA");
+						
+						
+						array[1]=resultado.getInt("TABLA");
+						
+						listaTicks.add(array);
+					}
+					
+					logger.log(Level.INFO, "Se han obtenido correctamente las notas");
+					return listaTicks;
+				}catch (Exception e){
+				
+					
+					logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
+				
+					e.printStackTrace();
+					
+					return null;
+				}
+				
+				
+			}
+		
+
 
 }

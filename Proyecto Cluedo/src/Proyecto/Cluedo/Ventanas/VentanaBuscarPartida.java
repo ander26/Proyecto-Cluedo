@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -54,6 +55,13 @@ public class VentanaBuscarPartida extends JFrame {
 	private JLabel labelPGuardada = new JLabel("P.Guardada");
 
 	private JLabel labelPAbierta = new JLabel("P.Abierta");
+	
+	private ArrayList<String> ordenicon;
+	
+	private String [] listaDeFichas = {"Imagenes/coche.png","Imagenes/barco.png","Imagenes/dedal.png","Imagenes/sombrero.png",
+"Imagenes/perro.png","Imagenes/zapato.png","Imagenes/plancha.png","Imagenes/carretilla.png"};
+	
+	
 
 	public VentanaBuscarPartida(Connection conexion, Usuario u) {
 
@@ -358,47 +366,61 @@ public class VentanaBuscarPartida extends JFrame {
 		        
 		        int modelRow = Integer.valueOf( e.getActionCommand() );
 		        
-		        gestion.modificar(conexion, "PARTIDA", "NUMEROJUGADORESACTUAL=NUMEROJUGADORESACTUAL+1", "CODIGO="+listaCodigosSinCompletar.get(modelRow));
 		        
 		        for (Window window : Window.getWindows()) {
 				    window.dispose();
 				}
 		        
 		       Partida p=gestion.obtenerPartida(conexion, listaCodigosSinCompletar.get(modelRow));
+		       
 		        
 
 		       //TODO: Hay que hacer aqui para que elija la ficha
-		       
-		       	Jugador j= new Jugador("Barco", u.getUsuario(), p.getCodigo(), conexion);
-		       
-		       	gestion.insertarJugador(conexion, j, p, u);
-		       	
-		       	Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresActual(),conexion,gestion,p);
-				
-		       	
-		        comprobador comp= new comprobador(p,conexion,j,u,gestion,prop);
+		      ArrayList<Icon> arraymunyecos= meterImgEnlabel(listaDeFichas,100,100,conexion,p.getCodigo());
+		      Object [] arraymunyecosdos=arraymunyecos.toArray();
+		      Object elijo= JOptionPane.showInputDialog(null, "Elija su ficha", "Ficha", JOptionPane.QUESTION_MESSAGE, null, arraymunyecosdos,arraymunyecosdos[0]);
+		      if(elijo!=null){
+		    	  int num= pasarAstring((Icon)elijo,arraymunyecos); 
+			      String ficha=ordenicon.get(num);
+			       Jugador j= new Jugador(ficha, u.getUsuario(), p.getCodigo(), conexion);
+			       
+			       	gestion.insertarJugador(conexion, j, p, u);
+			       	
+			       	gestion.modificar(conexion, "PARTIDA", "NUMEROJUGADORESACTUAL=NUMEROJUGADORESACTUAL+1", "CODIGO="+listaCodigosSinCompletar.get(modelRow));
+			        
+			       	Partida q=gestion.obtenerPartida(conexion, listaCodigosSinCompletar.get(modelRow));
+				    
+			       	Propiedades prop=new Propiedades(6,8,7,q.getNumeroJugadoresActual(),conexion,gestion,q);
+					
+			       	
+			        comprobador comp= new comprobador(p,conexion,j,u,gestion,prop);
 
-				
-				VentanaConectando ventana = new VentanaConectando();
-				
-				comp.start();
-				
-				
-				
-				ventana.setVisible(true);
-				
-				
-				ventana.revalidate();
-				//int numJugadores=gestion.obtenerJugadoresJugando(conexion, listaCodigosSinCompletar.get(modelRow));
-				if(p.getNumeroJugadoresActual()==p.getNumeroJugadoresMaximo()){
-					ArrayList<Jugador> arrLjug=gestion.consultaATablaJugador(conexion,"COD_PARTIDA="+p.getCodigo());
-					Jugador [] arrJug=new Jugador[p.getNumeroJugadoresMaximo()];
-					for(int i=0;i<arrLjug.size();i++){
-						arrJug[i]=arrLjug.get(i);
+					
+					VentanaConectando ventana = new VentanaConectando();
+					
+					comp.start();
+					
+					
+					
+					ventana.setVisible(true);
+					
+					
+					ventana.revalidate();
+					   System.out.println("pq"+p.getCodigo()+" "+q.getCodigo());
+					//int numJugadores=gestion.obtenerJugadoresJugando(conexion, listaCodigosSinCompletar.get(modelRow));
+					if(q.getNumeroJugadoresActual()==p.getNumeroJugadoresMaximo()){
+						ArrayList<Jugador> arrLjug=gestion.consultaATablaJugador(conexion,"COD_PARTIDA="+p.getCodigo());
+						Jugador [] arrJug=new Jugador[p.getNumeroJugadoresMaximo()];
+						for(int i=0;i<arrLjug.size();i++){
+							arrJug[i]=arrLjug.get(i);
+						}
+						prop.RepartirCartas(arrJug,conexion);
+						System.out.println("size"+arrJug.length);
 					}
-					prop.RepartirCartas(arrJug,conexion);
-				}
-		    
+			    
+		    	  
+		      }
+		      
 		    }
 		};
 		 
@@ -494,6 +516,44 @@ public class VentanaBuscarPartida extends JFrame {
 
 		getContentPane().add(fondo);
 
+	}
+	public ArrayList<Icon> meterImgEnlabel(String [] ruta, int largo, int ancho,Connection con,int codp) {
+		ordenicon=new ArrayList<String>();
+		
+		ArrayList<Jugador> arrjugadores =gestion.consultaATablaJugador(con,"COD_PARTIDA="+codp);
+		ArrayList<Icon> array=new ArrayList<Icon>();
+		for(int i=0;i<ruta.length;i++){
+			int k=0;
+			for(int j=0;j<arrjugadores.size();j++){
+				if(arrjugadores.get(j).getFicha().equals(ruta[i])){
+					k=k+1;
+				}
+			}
+			
+			if(k==0){
+		JLabel label=new JLabel();
+		label.setSize(ancho,largo);
+		ImageIcon imicon = new ImageIcon(VentanaBuscarPartida.class.getResource(ruta[i]));
+		label.setSize(largo, ancho);
+		Icon icono = new ImageIcon(
+				imicon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+		label.setIcon(icono);
+		array.add(icono);
+		ordenicon.add(ruta[i]);
+			}
+			
+		}
+		
+			
+		return array;
+	}
+	public int pasarAstring(Icon icono,ArrayList<Icon> arricono){
+		for(int i=0;i<arricono.size();i++){
+			if(icono.equals(arricono.get(i))){
+				return i;
+			}
+		}return 10;
+		
 	}
 
 }

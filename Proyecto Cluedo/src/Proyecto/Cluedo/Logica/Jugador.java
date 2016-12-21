@@ -42,7 +42,7 @@ public class Jugador {
 		this.Ficha = null;
 		this.Turno = 0;
 		this.Lugar = -1;
-		this.PosicionMuñeco = -1;
+		this.PosicionMuñeco = 129.876;
 		this.Codigo = -1;
 		this.Usuario = "";
 		this.CodigoPartida = -1;
@@ -103,7 +103,7 @@ public class Jugador {
 		this.Turno = 0;
 
 		this.Lugar = -1;
-		this.PosicionMuñeco = -1;
+		this.PosicionMuñeco = 129.876;
 
 		dibujo = null;
 

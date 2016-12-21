@@ -39,9 +39,20 @@ import Proyecto.Cluedo.Logica.FicheroCoordenadasPosiciones;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Logica.Propiedades;
+import Proyecto.Cluedo.Logica.busquedaposicion;
 
 
 public class VentanaTablero extends JFrame {
+	
+	
+	private JLabel Label1=new JLabel();
+	private JLabel Label2=new JLabel();
+	private JLabel Label3=new JLabel();
+	private JLabel Label4=new JLabel();
+	private JLabel Label5=new JLabel();
+	private JLabel [] arrfichas=new JLabel[5];
+	private ArrayList<Point> fichasrojas;
+	
 	
 	
 	private HiloTurno hTurno = null; 
@@ -55,10 +66,14 @@ public class VentanaTablero extends JFrame {
 	private ImageIcon imagen = new ImageIcon();
 
 	private ArrayList<Point> arpunto=new ArrayList<Point>();
+	
 	private Panelcirculos pposiciones=new Panelcirculos();
 
 	
 	private JLabel semaforo=new JLabel();
+	private static final int ANCHURA = 1920;
+
+	private static final int ALTURA = 1040;
 	
 
 
@@ -74,7 +89,14 @@ public class VentanaTablero extends JFrame {
 
 	public VentanaTablero(Connection conexion, Jugador j, Usuario u, GestionBaseDeDatos base, Partida p,
 			Propiedades prop) {
-		
+		arrfichas[0]=Label1;
+		arrfichas[1]=Label2;
+		arrfichas[2]=Label3;
+		arrfichas[3]=Label4;
+		arrfichas[4]=Label5;
+		ArrayList<Jugador> arrjugadores=base.ObtenerJugadoresDePartidaordenadosPorCodigo(p, conexion);
+		meterFicha(arrjugadores);
+		colocarFichaInicio(arrjugadores);
 		
 		// Establecemos el formato
 
@@ -399,6 +421,13 @@ public class VentanaTablero extends JFrame {
 		LabelLugares capilla= new LabelLugares("Imagenes/capilla.png","capilla",1676,237,177,160);
 		LabelLugares crai= new LabelLugares("Imagenes/crai.png","crai",1384,596,259,248);
 		LabelLugares zubi= new LabelLugares("Imagenes/zubi.png","zubi",398,639,494,265);
+		
+		hTurno = new HiloTurno();
+		hTurno.setBase(base);
+		hTurno.setJugador(j);
+		hTurno.setPartida(p);
+		hTurno.setCon(conexion);
+		
 
 
 		hTurno.setLabelSemaforo(semaforo);
@@ -406,8 +435,8 @@ public class VentanaTablero extends JFrame {
 		hTurno.setLabelAcusar(labelAcusar);
 		
 		hTurno.setLabelDado(labelDado);
-		
 		hTurno.start();
+
 
 
 		// Establecemos el formato
@@ -442,6 +471,12 @@ public class VentanaTablero extends JFrame {
 		pposiciones.add(capilla);
 		pposiciones.add(crai);
 		pposiciones.add(zubi);
+		pposiciones.add(Label1);
+		pposiciones.add(Label2);
+		pposiciones.add(Label3);
+		pposiciones.add(Label4);
+		pposiciones.add(Label5);
+		
 		panelI.setLayout(null);
 		panelD.setLayout(null);
 
@@ -481,12 +516,7 @@ public class VentanaTablero extends JFrame {
 		getContentPane().add(fondo, BorderLayout.CENTER);
 		System.out.println("llego aqui");
 		
-		hTurno = new HiloTurno();
-		hTurno.setBase(base);
-		hTurno.setJugador(j);
-		hTurno.setPartida(p);
-		hTurno.setCon(conexion);
-		hTurno.start();
+		
 		
 		pposiciones.addMouseListener(new MouseAdapter() {
 
@@ -504,10 +534,19 @@ public class VentanaTablero extends JFrame {
 //					System.out.println(punto);
 //				}
 //			}
-					
-					
+				if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
+				Point puntoSeleccionado=BuscarPuntoPinchado(e.getX(),e.getY(),anchura,altura);
+				if(estaEn(puntoSeleccionado,fichasrojas)){
+					pposiciones.meterOcupado(puntoSeleccionado);
+					pposiciones.repaint();
+				}
+				fichasrojas=new ArrayList<Point>();
+				base.modificarCoordenada(conexion, j,(int)(puntoSeleccionado.getY()),((int)puntoSeleccionado.getX()));
+				ObtenerFichaDeJugador(arrjugadores, j).setLocation((int)(puntoSeleccionado.getX()-28),(int)(puntoSeleccionado.getY()-16));
+			
+				hTurno.CambiarTurno();
 				
-				
+				}
 				
 				
 				}
@@ -712,6 +751,23 @@ public class VentanaTablero extends JFrame {
 						labelDado.setIcon(icono);
 						
 						hTurno.setPulsado(true);
+						if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
+						busquedaposicion ponercircrojos=new busquedaposicion();
+						fichasrojas=new ArrayList<Point>();
+						ArrayList<Point> camino=new ArrayList();
+						System.out.println("voy a obtener coordenada");
+						Point coord=base.ObtenerCoordenada(conexion,j);
+						camino.add(coord);		
+						if(coord.equals(new Point(129,876))){
+							numero=numero-1;
+						}
+						ponercircrojos.MoverA(coord, numero, camino, fichasrojas);
+						System.out.println("ya he hecho mover a");
+						pposiciones.meterPosibilidades(fichasrojas);
+						System.out.println("pinto fichas azulessssssssssssssssssssssssssssss");
+						pposiciones.repaint();
+						
+					}
 					}
 					
 				
@@ -739,6 +795,66 @@ public class VentanaTablero extends JFrame {
 		Icon icono = new ImageIcon(
 				imicon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
 		label.setIcon(icono);
+	}
+	public JLabel ObtenerFichaDeJugador(ArrayList<Jugador> arrjug,Jugador j){
+		for(int i=0;i<arrjug.size();i++){
+			if(j.getCodigo()==arrjug.get(i).getCodigo()){
+				return arrfichas[i];
+					
+			}
+		}return null;
+		
+	}
+	public void meterFicha(ArrayList<Jugador> arrjug){
+		for(int i=0;i<arrjug.size();i++){
+			meterImgEnlabel(arrjug.get(i).getFicha(),arrfichas[i],50,60);
+		}
+	}
+	public void colocarFichaInicio(ArrayList<Jugador> arrjug){
+		Point [] arr=new Point[5];
+		arr[0]=new Point(66,735);
+		arr[1]=new Point(66,785);
+		arr[2]=new Point(66,835);
+		arr[3]=new Point(116,735);
+		arr[4]=new Point(116,785);
+		for(int i=0;i<arrjug.size();i++){
+			arrfichas[i].setLocation(arr[i]);
+		}
+	}
+	public int reajustarAltura(int coordenada, int altura) {
+
+		double escala = altura / (double) ALTURA;
+
+		return (int) (coordenada * escala);
+
+	}
+
+	public int reajustarAnchura(int coordenada, int anchura) {
+
+		double escala = anchura / (double) ANCHURA;
+
+		return (int) (coordenada * escala);
+
+	}
+	public Point BuscarPuntoPinchado(int x,int y,int anchura,int altura){
+		int yy=reajustarAltura(y,altura);
+		int xx=reajustarAnchura(x,anchura);
+		Point punto=new Point(xx,yy);
+		ArrayList<Point> puntos=pposiciones.arrayBuscar();
+		for(int i=0;i<puntos.size();i++){
+			double ak=Math.abs(puntos.get(i).getX()-xx);
+			double kk=Math.abs(puntos.get(i).getY()-yy);
+			if(Math.sqrt(Math.pow(ak,2)+Math.pow(kk, 2))<30){
+				return puntos.get(i);
+			}
+		}return new Point(0,0);
+	}
+	public boolean estaEn(Point punto,ArrayList<Point> array){
+		for(int i=0;i<array.size();i++){
+			if(punto.equals(array.get(i))){
+				return true;
+			}
+		}return false;
 	}
 	
 	
@@ -838,7 +954,7 @@ public class VentanaTablero extends JFrame {
 // meterImgEnlabel("Imagenes/cartel.png",lcartel,500,600);
 // meterImgEnlabel("Imagenes/semafororojot.png",lsemaforo,200,150);
 // meterImgEnlabel("Imagenes/pusharriba.png",lacusar,100,100);
-// meterImgEnlabel("Imagenes/dado.gif",ldado,100,100);
+// meterImgEnlabel("Imagenes/.gif",ldado,100,100);
 // meterImgEnlabel("Imagenes/chat.png",lchat,80,80);
 // meterImgEnlabel("Imagenes/cartel.png",lusuario,80,80);
 // meterImgEnlabel("Imagenes/notas.png",lnotas,80,80);
