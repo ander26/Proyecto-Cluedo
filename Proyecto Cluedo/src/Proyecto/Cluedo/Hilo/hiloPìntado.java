@@ -729,12 +729,12 @@ public class hiloPìntado extends Thread {
 
 						traineraUPV.repaint();
 
-						if (trainera.getX() == reajustarAnchura(-250, ANCHURA)) {
+						if (trainera.getX() <= reajustarAnchura(-250, ANCHURA)) {
 							trainera.setLocation(anchura, trainera.getY());
 							trainera.repaint();
 						}
 
-						if (traineraUPV.getX() == reajustarAnchura(-250, ANCHURA)) {
+						if (traineraUPV.getX() <= reajustarAnchura(-250, ANCHURA)) {
 							traineraUPV.setLocation(anchura, traineraUPV.getY());
 							traineraUPV.repaint();
 						}
