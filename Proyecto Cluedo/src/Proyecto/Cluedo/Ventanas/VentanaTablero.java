@@ -891,6 +891,31 @@ public class VentanaTablero extends JFrame {
 
 		} else {
 			pintar.setOrientacion(false);
+			
+			
+
+			try {
+
+				imagen = new ImageIcon(
+						VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+			} catch (Exception i) {
+			}
+			icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+					trainera.getHeight(), Image.SCALE_DEFAULT));
+
+			trainera.setIcon(icono);
+
+			try {
+
+				imagen = new ImageIcon(
+						VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
+			} catch (Exception i) {
+			}
+			icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+					traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+
+
+			traineraUPV.setIcon(icono);
 		}
 
 		// if (base.obtenerOrientacion(conexion, p)){

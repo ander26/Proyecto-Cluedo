@@ -289,7 +289,7 @@ public class hiloPìntado extends Thread {
 
 					if (orientacion) {
 						
-						if (ficha.getX() > reajustarAnchura(145, ANCHURA) ) {
+						while (trainera.getX() > reajustarAnchura(145, ANCHURA) ) {
 							trainera.setLocation(trainera.getX() - 10, trainera.getY());
 
 							trainera.repaint();
@@ -311,7 +311,7 @@ public class hiloPìntado extends Thread {
 						traineraUPV.setLocation(trainera.getX()+500, traineraUPV.getY());
 						
 					} else {
-						if ((ficha.getX() < reajustarAnchura(1300, ANCHURA))) {
+						while ((trainera.getX() < reajustarAnchura(1300, ANCHURA))) {
 							trainera.setLocation(trainera.getX() + 10, trainera.getY());
 
 							trainera.repaint();
