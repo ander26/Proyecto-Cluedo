@@ -550,7 +550,7 @@ public class GestionBaseDeDatos {
 
 			sql = "INSERT INTO PARTIDA VALUES ('" + p.getNombre() + "'," + p.getCodigo() + ","
 					+ p.getNumeroJugadoresMaximo() + "," + p.getNumeroJugadoresActual() + "," + p.getPosicionBarco()
-					+ ",'" + p.getMensajeCartel() + "'," + p.isOrientacion() + ")";
+					+ ",'" + p.getMensajeCartel() + "'," + p.isOrientacion() + "," + p.isAccion() + ")";
 
 			statement.executeUpdate(sql);
 
@@ -808,6 +808,8 @@ public class GestionBaseDeDatos {
 
 				boolean orientacion = resultado.getBoolean("ORIENTACION");
 
+				boolean accion = resultado.getBoolean("ACCION");
+
 				String texto = resultado.getString("MENSAJECARTEL");
 
 				p.setCodigo(CODIGO);
@@ -817,6 +819,9 @@ public class GestionBaseDeDatos {
 				p.setNumeroJugadoresMaximo(jugadorMaximo);
 				p.setPosicionBarco(posicionBarco);
 				p.setOrientacion(orientacion);
+
+				p.setAccion(accion);
+
 			}
 
 			resultado.close();
@@ -866,8 +871,7 @@ public class GestionBaseDeDatos {
 			return false;
 		}
 	}
-	
-	
+
 	public ArrayList<Jugador> consultaATablaJugador(Connection conexion, String seleccion) {
 
 		ArrayList<Jugador> ret = new ArrayList<>();
@@ -1087,8 +1091,8 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			sql = "INSERT INTO CARTA VALUES ('" + c.getNombre() + "','" + c.getRutaIcono() + "'," + c.isCulpable()
-					+ "," + c.getTipo() + ")";
+			sql = "INSERT INTO CARTA VALUES ('" + c.getNombre() + "','" + c.getRutaIcono() + "'," + c.isCulpable() + ","
+					+ c.getTipo() + ")";
 
 			statement.executeUpdate(sql);
 
@@ -1330,43 +1334,46 @@ public class GestionBaseDeDatos {
 		}
 
 	}
-	public static double pasarxyAdecimal(int y,int x){
-		int res=y;
-		int k=0;
-		while (((int)res)>0){
-			k=k+1;
-			res=res/10;
-			
+
+	public static double pasarxyAdecimal(int y, int x) {
+		int res = y;
+		int k = 0;
+		while (((int) res) > 0) {
+			k = k + 1;
+			res = res / 10;
+
 		}
-		double numero=x+(y/(Math.pow(10,k)));
+		double numero = x + (y / (Math.pow(10, k)));
 		System.out.println(numero);
 		return numero;
 	}
-	public Point pasarDeDecimalAxy(double x){
-		int num=(int)x;
-		int k=0;
-		double numero=x;		
-		double decimal=numero-num;
-		System.out.println(decimal-(int)decimal);
-		while((decimal-(int)decimal)>0.000001){
-			k=k+1;
-			decimal=decimal*10;
-			
+
+	public Point pasarDeDecimalAxy(double x) {
+		int num = (int) x;
+		int k = 0;
+		double numero = x;
+		double decimal = numero - num;
+		System.out.println(decimal - (int) decimal);
+		while ((decimal - (int) decimal) > 0.000001) {
+			k = k + 1;
+			decimal = decimal * 10;
+
 		}
-		int y=(int)decimal;
-		System.out.println("punto"+num+" "+y);
-		Point p=new Point(num,y);
+		int y = (int) decimal;
+		System.out.println("punto" + num + " " + y);
+		Point p = new Point(num, y);
 		return p;
 	}
-	public void modificarCoordenada(Connection conexion, Jugador j,int x,int y) {
-		double numero=pasarxyAdecimal(y,x);
+
+	public void modificarCoordenada(Connection conexion, Jugador j, int x, int y) {
+		double numero = pasarxyAdecimal(y, x);
 		String SQL = "";
 
 		try {
 
 			Statement statement = conexion.createStatement();
 
-			SQL = "UPDATE JUGADOR SET POS_MUÑECO="+numero+ "WHERE COD_JUG=" + j.getCodigo();
+			SQL = "UPDATE JUGADOR SET POS_MUÑECO=" + numero + "WHERE COD_JUG=" + j.getCodigo();
 
 			statement.executeUpdate(SQL);
 
@@ -1380,12 +1387,13 @@ public class GestionBaseDeDatos {
 		}
 
 	}
+
 	public Point ObtenerCoordenada(Connection conexion, Jugador j) {
 		System.out.println("entro obtener coordenada");
-		double coor=99;
+		double coor = 99;
 		String sql = "";
-		Point punto=new Point();
-		
+		Point punto = new Point();
+
 		try {
 
 			Statement statement = conexion.createStatement();
@@ -1394,10 +1402,10 @@ public class GestionBaseDeDatos {
 
 			ResultSet rs = statement.executeQuery(sql);
 			while (rs.next()) {
-				coor=rs.getDouble(1);
-				punto=pasarDeDecimalAxy(coor);
+				coor = rs.getDouble(1);
+				punto = pasarDeDecimalAxy(coor);
 				System.out.println(punto);
-				
+
 				logger.log(Level.INFO, "la coordenada es" + coor);
 			}
 
@@ -1409,7 +1417,7 @@ public class GestionBaseDeDatos {
 			e.printStackTrace();
 
 		}
-		return punto ;
+		return punto;
 	}
 
 	public String lugarAcusacion(Connection conexion, Jugador j) {
@@ -1503,32 +1511,27 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-
-			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda +"AND CODJUGADORDESTINO=" + codjugordestino;
+			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartidda
+					+ "AND CODJUGADORDESTINO=" + codjugordestino;
 			logger.log(Level.INFO, sentSQL);
-				
-
-
 
 			ResultSet rs = statement.executeQuery(sentSQL);
 
 			while (rs.next()) {
 				logger.log(Level.INFO, "entro en el while de obtener cartas enviadas");
 				ret.add(rs.getString("NOMBRECARTA"));
-				System.out.println(rs.getString("NOMBRECARTA")+"obtenercartasenviadas");
-				
+				System.out.println(rs.getString("NOMBRECARTA") + "obtenercartasenviadas");
 
 			}
 
 			rs.close();
 			statement.close();
 
-
-			for(int i=0;i<ret.size();i++){
-				arr =consultaATablaCartas(conexion,"NOMBRE='"+ret.get(i)+"'" );
+			for (int i = 0; i < ret.size(); i++) {
+				arr = consultaATablaCartas(conexion, "NOMBRE='" + ret.get(i) + "'");
 
 				logger.log(Level.WARNING, "Construyo array Cartas");
-				
+
 			}
 			return arr;
 
@@ -1627,12 +1630,15 @@ public class GestionBaseDeDatos {
 			return false;
 		}
 	}
-	
+
 	public boolean borrarJugadores(Connection conexion) {
-		//String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY KEY,
-		//COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE CASCADE,
-		//NOMBRE_USUARIO text NOT NULL REFERENCES USUARIO(NOMBREUSUARIO),POS_MUÑECO real,LUGAR INT,
-		//TURNO int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
+		// String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY
+		// KEY,
+		// COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE
+		// CASCADE,
+		// NOMBRE_USUARIO text NOT NULL REFERENCES
+		// USUARIO(NOMBREUSUARIO),POS_MUÑECO real,LUGAR INT,
+		// TURNO int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
 
 		String sql = "";
 
@@ -1657,11 +1663,7 @@ public class GestionBaseDeDatos {
 		}
 	}
 
-	
-	
-	public void modificarturno(Connection conexion, int jugCod,int turno) {
-		
-		
+	public void modificarturno(Connection conexion, int jugCod, int turno) {
 
 		String SQL = "";
 
@@ -1702,7 +1704,8 @@ public class GestionBaseDeDatos {
 				numero = resultado.getInt(1);
 			}
 
-			logger.log(Level.INFO, "Se ha obtenido correctamente el turno del jugador: " + numero);
+			// logger.log(Level.INFO, "Se ha obtenido correctamente el turno del
+			// jugador: " + numero);
 			return numero;
 
 		} catch (Exception e) {
@@ -1715,16 +1718,14 @@ public class GestionBaseDeDatos {
 		}
 	}
 
-	
-	
-	public boolean borrarCartas(Connection conexion, Partida p,int codjugordestino) {
+	public boolean borrarCartas(Connection conexion, Partida p, int codjugordestino) {
 
 		String sql = "";
 
 		try {
 
-			sql = "DELETE FROM RECIBIRCARTAS WHERE CODPARTIDA=" + p.getCodigo() +"AND CODJUGADORDESTINO=" + codjugordestino;
-			
+			sql = "DELETE FROM RECIBIRCARTAS WHERE CODPARTIDA=" + p.getCodigo() + "AND CODJUGADORDESTINO="
+					+ codjugordestino;
 
 			Statement statement = conexion.createStatement();
 
@@ -1742,7 +1743,7 @@ public class GestionBaseDeDatos {
 			return false;
 		}
 	}
-	
+
 	public BufferedImage obtenerDibujoNotas(Connection conexion, Jugador j) {
 
 		BufferedImage imagen = null;
@@ -1782,7 +1783,6 @@ public class GestionBaseDeDatos {
 
 	}
 
-
 	public void insertarDibujoNotas(Connection conexion, Jugador j, BufferedImage imagen) {
 
 		String sql = "";
@@ -1814,13 +1814,8 @@ public class GestionBaseDeDatos {
 
 	}
 
+	// TABLA NOTAS
 
-
-
-
-	//TABLA NOTAS
-	
-	
 	public void insertarNota(Connection conexion, Notas nota, Jugador j) {
 
 		String SQL = "";
@@ -1830,188 +1825,187 @@ public class GestionBaseDeDatos {
 			SQL = "INSERT INTO NOTAS VALUES ('" + nota.getMensaje() + "'," + j.getCodigo() + "," + nota.getLinea() + ","
 					+ nota.getTabla() + ")";
 
-
 			Statement statement = conexion.createStatement();
 
-			
 			statement.executeUpdate(SQL);
-			
+
 			logger.log(Level.INFO, "Se ha añadido correctamente la nota");
-			
-			
-		}catch (Exception e){
-		
-			logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de datos");
-			
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha podido insertar la nota en la base de datos");
+
 			e.printStackTrace();
-			
-			
-		
+
 		}
 	}
-	
-//	public void borrarNotas (Connection conexion, Jugador j){
-//		
-//		String SQL = "";
-//		
-//		try{
-//			
-//			SQL = "DELETE FROM NOTAS WHERE COD_JUG="+j.getCodigo();
-//			
-//			Statement statement = conexion.createStatement();
-//			
-//			statement.executeUpdate(SQL);
-//			
-//			logger.log(Level.INFO, "Se ha borrado correctamente");
-//			
-//			
-//		}catch (Exception e){
-//			logger.log(Level.SEVERE, "No se ha podido borrar las notas");
-//		}
-//	}
-//		
-//		public ArrayList <Notas> obtenerNotas (Connection conexion, Jugador j){
-//			
-//			String SQL = "";
-//			ArrayList <Notas> listaNotas = new ArrayList<>();
-//			
-//			try{
-//				
-//				SQL = "SELECT * FROM NOTAS WHERE COD_JUG="+j.getCodigo();
-//				
-//				Statement statement = conexion.createStatement();
-//				ResultSet resultado = statement.executeQuery(SQL);
-//				
-//				while (resultado.next()){
-//					Notas n = new Notas();
-//					
-//					n.setLinea(resultado.getInt("LINEA"));
-//					
-//					n.setMensaje(resultado.getString("MENSAJE"));
-//					
-//					n.setTabla(resultado.getInt("TABLA"));
-//					
-//					listaNotas.add(n);
-//				}
-//				
-//				logger.log(Level.INFO, "Se han obtenido correctamente las notas");
-//				return listaNotas;
-//			}catch (Exception e){
-//			
-//				
-//				logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
-//			
-//				e.printStackTrace();
-//				
-//				return null;
-//			}
-//			
-//			
-//		}
-//		
-		//TABLA TICKS
-		
-//		public void insertarTICKS (Connection conexion, int linea,int tabla, Jugador j){
-//			
-//			String SQL="";
-//			
-//			try{
-//				
-//				SQL ="INSERT INTO TICKS VALUES ("+tabla+","+linea+","+j.getCodigo()+")";
-//				
-//				Statement statement = conexion.createStatement();
-//				
-//				statement.executeUpdate(SQL);
-//				
-//				logger.log(Level.INFO, "Se ha añadido correctamente la nota");
-//				
-//				
-//			}catch (Exception e){
-//			
-//				logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de datos");
-//				
-//				e.printStackTrace();
-//				
-//				
-//			
-//			}
-//		}
-		
-//		public void borrarTicks (Connection conexion, Jugador j){
-//			
-//			String SQL = "";
-//			
-//			try{
-//				
-//				SQL = "DELETE FROM TICKS WHERE COD_JUG="+j.getCodigo();
-//				
-//				Statement statement = conexion.createStatement();
-//				
-//				statement.executeUpdate(SQL);
-//				
-//				logger.log(Level.INFO, "Se ha borrado correctamente");
-//				
-//				
-//			}catch (Exception e){
-//				logger.log(Level.SEVERE, "No se ha podido borrar las notas");
-//			}
-//		}
-			
-//			public ArrayList <Integer[]> obtenerTicks (Connection conexion, Jugador j){
-//				
-//				String SQL = "";
-//				ArrayList <Integer []> listaTicks = new ArrayList<>();
-//				
-//				try{
-//					
-//					SQL = "SELECT * FROM TICKS WHERE COD_JUG="+j.getCodigo();
-//					
-//					Statement statement = conexion.createStatement();
-//					ResultSet resultado = statement.executeQuery(SQL);
-//					
-//					while (resultado.next()){
-//						Integer [] array = new Integer[2];
-//						
-//						array[0]=resultado.getInt("LINEA");
-//						
-//						
-//						array[1]=resultado.getInt("TABLA");
-//						
-//						listaTicks.add(array);
-//					}
-//					
-//					logger.log(Level.INFO, "Se han obtenido correctamente las notas");
-//					return listaTicks;
-//				}catch (Exception e){
-//				
-//					
-//					logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
-//				
-//					e.printStackTrace();
-//					
-//					return null;
-//				}
-//				
-//				
-//			}
-		
-//=======
-//
-//			statement.executeUpdate(SQL);
-//
-//			logger.log(Level.INFO, "Se ha añadido correctamente la nota");
-//>>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
-//
-//<<<<<<< HEAD
-//=======
-//		} catch (Exception e) {
-//
-//			logger.log(Level.SEVERE, "No se ha podido insertar la nota en la base de datos");
-//
-//			e.printStackTrace();
-//
-//		}
-//	}
+
+	// public void borrarNotas (Connection conexion, Jugador j){
+	//
+	// String SQL = "";
+	//
+	// try{
+	//
+	// SQL = "DELETE FROM NOTAS WHERE COD_JUG="+j.getCodigo();
+	//
+	// Statement statement = conexion.createStatement();
+	//
+	// statement.executeUpdate(SQL);
+	//
+	// logger.log(Level.INFO, "Se ha borrado correctamente");
+	//
+	//
+	// }catch (Exception e){
+	// logger.log(Level.SEVERE, "No se ha podido borrar las notas");
+	// }
+	// }
+	//
+	// public ArrayList <Notas> obtenerNotas (Connection conexion, Jugador j){
+	//
+	// String SQL = "";
+	// ArrayList <Notas> listaNotas = new ArrayList<>();
+	//
+	// try{
+	//
+	// SQL = "SELECT * FROM NOTAS WHERE COD_JUG="+j.getCodigo();
+	//
+	// Statement statement = conexion.createStatement();
+	// ResultSet resultado = statement.executeQuery(SQL);
+	//
+	// while (resultado.next()){
+	// Notas n = new Notas();
+	//
+	// n.setLinea(resultado.getInt("LINEA"));
+	//
+	// n.setMensaje(resultado.getString("MENSAJE"));
+	//
+	// n.setTabla(resultado.getInt("TABLA"));
+	//
+	// listaNotas.add(n);
+	// }
+	//
+	// logger.log(Level.INFO, "Se han obtenido correctamente las notas");
+	// return listaNotas;
+	// }catch (Exception e){
+	//
+	//
+	// logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
+	//
+	// e.printStackTrace();
+	//
+	// return null;
+	// }
+	//
+	//
+	// }
+	//
+	// TABLA TICKS
+
+	// public void insertarTICKS (Connection conexion, int linea,int tabla,
+	// Jugador j){
+	//
+	// String SQL="";
+	//
+	// try{
+	//
+	// SQL ="INSERT INTO TICKS VALUES ("+tabla+","+linea+","+j.getCodigo()+")";
+	//
+	// Statement statement = conexion.createStatement();
+	//
+	// statement.executeUpdate(SQL);
+	//
+	// logger.log(Level.INFO, "Se ha añadido correctamente la nota");
+	//
+	//
+	// }catch (Exception e){
+	//
+	// logger.log(Level.SEVERE,"No se ha podido insertar la nota en la base de
+	// datos");
+	//
+	// e.printStackTrace();
+	//
+	//
+	//
+	// }
+	// }
+
+	// public void borrarTicks (Connection conexion, Jugador j){
+	//
+	// String SQL = "";
+	//
+	// try{
+	//
+	// SQL = "DELETE FROM TICKS WHERE COD_JUG="+j.getCodigo();
+	//
+	// Statement statement = conexion.createStatement();
+	//
+	// statement.executeUpdate(SQL);
+	//
+	// logger.log(Level.INFO, "Se ha borrado correctamente");
+	//
+	//
+	// }catch (Exception e){
+	// logger.log(Level.SEVERE, "No se ha podido borrar las notas");
+	// }
+	// }
+
+	// public ArrayList <Integer[]> obtenerTicks (Connection conexion, Jugador
+	// j){
+	//
+	// String SQL = "";
+	// ArrayList <Integer []> listaTicks = new ArrayList<>();
+	//
+	// try{
+	//
+	// SQL = "SELECT * FROM TICKS WHERE COD_JUG="+j.getCodigo();
+	//
+	// Statement statement = conexion.createStatement();
+	// ResultSet resultado = statement.executeQuery(SQL);
+	//
+	// while (resultado.next()){
+	// Integer [] array = new Integer[2];
+	//
+	// array[0]=resultado.getInt("LINEA");
+	//
+	//
+	// array[1]=resultado.getInt("TABLA");
+	//
+	// listaTicks.add(array);
+	// }
+	//
+	// logger.log(Level.INFO, "Se han obtenido correctamente las notas");
+	// return listaTicks;
+	// }catch (Exception e){
+	//
+	//
+	// logger.log(Level.SEVERE, "No ee ha conseguido obtener las notas");
+	//
+	// e.printStackTrace();
+	//
+	// return null;
+	// }
+	//
+	//
+	// }
+
+	// =======
+	//
+	// statement.executeUpdate(SQL);
+	//
+	// logger.log(Level.INFO, "Se ha añadido correctamente la nota");
+	// >>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
+	//
+	// <<<<<<< HEAD
+	// =======
+	// } catch (Exception e) {
+	//
+	// logger.log(Level.SEVERE, "No se ha podido insertar la nota en la base de
+	// datos");
+	//
+	// e.printStackTrace();
+	//
+	// }
+	// }
 
 	public void borrarNotas(Connection conexion, Jugador j) {
 
@@ -2068,7 +2062,6 @@ public class GestionBaseDeDatos {
 		}
 
 	}
-
 
 	// TABLA TICKS
 
@@ -2171,7 +2164,8 @@ public class GestionBaseDeDatos {
 
 			}
 			numero = (int) numeroD;
-			logger.log(Level.INFO, "Se ha obtenido correctamente la posicion del barco " + numero);
+			// logger.log(Level.INFO, "Se ha obtenido correctamente la posicion
+			// del barco " + numero);
 
 			return numero;
 
@@ -2191,7 +2185,7 @@ public class GestionBaseDeDatos {
 		String SQL = "";
 
 		boolean orientacion = false;
-		
+
 		try {
 
 			SQL = "SELECT ORIENTACION FROM PARTIDA WHERE CODIGO=" + p.getCodigo();
@@ -2205,8 +2199,9 @@ public class GestionBaseDeDatos {
 				orientacion = resultado.getBoolean("ORIENTACION");
 
 			}
-			
-			logger.log(Level.INFO, "Se ha obtenido correctamente la orientacion del barco " + orientacion);
+
+			// logger.log(Level.INFO, "Se ha obtenido correctamente la
+			// orientacion del barco " + orientacion);
 
 			return orientacion;
 
@@ -2220,4 +2215,104 @@ public class GestionBaseDeDatos {
 		}
 	}
 
+	public void modificarOrientacion(Connection conexion, Partida p, boolean orientacion) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "UPDATE PARTIDA SET ORIENTACION=" + orientacion;
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(SQL);
+
+			// logger.log(Level.INFO, "Se ha modificado correctamente la
+			// orientacion");
+
+		} catch (Exception q) {
+
+			logger.log(Level.SEVERE, "No se ha podido modificar la orientacion");
+		}
+
+	}
+
+	public boolean obtenerAccion(Connection conexion, Partida p) {
+
+		String SQL = "";
+
+		boolean accion = false;
+
+		try {
+
+			SQL = "SELECT ACCION FROM PARTIDA WHERE CODIGO=" + p.getCodigo();
+
+			Statement statement = conexion.createStatement();
+
+			ResultSet resultado = statement.executeQuery(SQL);
+
+			while (resultado.next()) {
+
+				accion = resultado.getBoolean("ACCION");
+
+			}
+
+			// logger.log(Level.INFO, "Se ha obtenido correctamente la
+			// orientacion del barco " + accion);
+
+			return accion;
+
+		} catch (Exception n) {
+
+			logger.log(Level.SEVERE, "No se ha conseguido obtener la posicion del barco");
+
+			n.printStackTrace();
+
+			return accion;
+		}
+	}
+
+	public void modificarBarco(Connection conexion, Partida p, int posicion) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "UPDATE PARTIDA SET POSICIONBARCO=" + posicion;
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(SQL);
+
+			// logger.log(Level.INFO, "Se ha modificado correctamente la
+			// orientacion");
+
+		} catch (Exception q) {
+
+			logger.log(Level.SEVERE, "No se ha podido modificar la orientacion");
+		}
+
+	}
+
+	public void modificarAccion(Connection conexion, Partida p, boolean accion) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "UPDATE PARTIDA SET ACCION=" + accion;
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(SQL);
+
+			// logger.log(Level.INFO, "Se ha modificado correctamente la
+			// orientacion");
+
+		} catch (Exception q) {
+
+			logger.log(Level.SEVERE, "No se ha podido modificar la orientacion");
+		}
+
+	}
 }

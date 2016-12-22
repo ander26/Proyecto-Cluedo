@@ -11,6 +11,7 @@ import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Ventanas.Panelcirculos;
+import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
 public class hiloPìntado extends Thread {
 
@@ -55,10 +56,14 @@ public class hiloPìntado extends Thread {
 	private boolean hecho1 = false;
 
 	private JLabel ficha;
-	
+
 	private static final int ANCHURA = 1920;
 
 	private static final int ALTURA = 1040;
+
+	private static final int ALTURAM = 1020;
+
+	private int altura;
 
 	public boolean isAnimacion3() {
 		return animacion3;
@@ -117,7 +122,7 @@ public class hiloPìntado extends Thread {
 	}
 
 	public hiloPìntado(JLabel semaforo, JLabel labelDado, JLabel labelAcusar, JLabel trainera, Partida p, Jugador j,
-			Connection conexion, int anchura, JLabel traineraUPV) {
+			Connection conexion, int anchura, JLabel traineraUPV, int altura) {
 		this.semaforo = semaforo;
 		this.labelDado = labelDado;
 		this.labelAcusar = labelAcusar;
@@ -128,12 +133,272 @@ public class hiloPìntado extends Thread {
 		this.anchura = anchura;
 		this.traineraUPV = traineraUPV;
 
+		this.altura = altura;
+
 		turno = -1;
 	}
 
 	public void run() {
 
+		if (base.obtenerAccion(conexion, p)) {
+
+			if (turno != base.ObtenerCodigoJugadorTurno(conexion, p)) {
+
+				turno = base.ObtenerCodigoJugadorTurno(conexion, p);
+
+				if (j.getCodigo() == turno) {
+
+					System.out.println("HACE");
+
+					ImageIcon imagen = new ImageIcon();
+
+					Icon icono;
+
+					try {
+
+						imagen = new ImageIcon(HiloTurno.class.getResource("Imagenes/dado.gif").toURI().toURL());
+
+					} catch (Exception e) {
+
+						System.out.println("No se ha encontrado al archivo");
+					}
+
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(),
+							labelDado.getHeight(), Image.SCALE_DEFAULT));
+
+					labelDado.setIcon(icono);
+
+					labelDado.repaint();
+
+					try {
+
+						imagen = new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharriba.png").toURI().toURL());
+
+					} catch (Exception e) {
+
+						System.out.println("No se ha encontrado al archivo");
+					}
+
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(),
+							labelAcusar.getHeight(), Image.SCALE_DEFAULT));
+
+					labelAcusar.setIcon(icono);
+
+					labelAcusar.repaint();
+
+					try {
+
+						imagen = new ImageIcon(
+								HiloTurno.class.getResource("Imagenes/semaforoverde.png").toURI().toURL());
+
+					} catch (Exception e) {
+
+						System.out.println("No se ha encontrado al archivo");
+					}
+
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(),
+							Image.SCALE_DEFAULT));
+
+					semaforo.setIcon(icono);
+
+					semaforo.repaint();
+
+				} else {
+
+					System.out.println("NO HACE");
+
+					ImageIcon imagen = new ImageIcon();
+
+					Icon icono;
+
+					try {
+
+						imagen = new ImageIcon(
+								HiloTurno.class.getResource("Imagenes/semafororojot.png").toURI().toURL());
+
+					} catch (Exception e) {
+
+						System.out.println("No se ha encontrado al archivo");
+					}
+
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(semaforo.getWidth(), semaforo.getHeight(),
+							Image.SCALE_DEFAULT));
+
+					semaforo.setIcon(icono);
+
+					semaforo.repaint();
+
+					try {
+
+						imagen = new ImageIcon(HiloTurno.class.getResource("Imagenes/dadoNegro.gif").toURI().toURL());
+
+					} catch (Exception e) {
+
+						System.out.println("No se ha encontrado al archivo");
+					}
+
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(),
+							labelDado.getHeight(), Image.SCALE_DEFAULT));
+
+					labelDado.setIcon(icono);
+
+					labelDado.repaint();
+
+					try {
+
+						imagen = new ImageIcon(
+								HiloTurno.class.getResource("Imagenes/pusharribaNegro.png").toURI().toURL());
+
+					} catch (Exception e) {
+
+						System.out.println("No se ha encontrado al archivo");
+					}
+
+					icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(),
+							labelAcusar.getHeight(), Image.SCALE_DEFAULT));
+
+					labelAcusar.setIcon(icono);
+
+					labelAcusar.repaint();
+
+				}
+			}
+
+			while (base.obtenerAccion(conexion, p)) {
+
+			}
+
+			int posicion = base.posicionBarco(conexion, p);
+
+			trainera.setBounds(posicion, reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
+					reajustarTamañoAlt(95, altura));
+
+			traineraUPV.setBounds(reajustarAnchura(1920 + 500, anchura), reajustarAltura(510, altura),
+					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
+		}
+
 		while (acabado) {
+
+			int entrada = base.obtenerTurno(conexion, j);
+
+			if (entrada == 0 && base.obtenerAccion(conexion, p)) {
+
+				boolean giro = base.obtenerOrientacion(conexion, p);
+
+				if (orientacion == giro) {
+
+					if (orientacion) {
+						
+						if (ficha.getX() > reajustarAnchura(145, ANCHURA) ) {
+							trainera.setLocation(trainera.getX() - 10, trainera.getY());
+
+							trainera.repaint();
+
+							traineraUPV.setLocation(traineraUPV.getX() - 10, traineraUPV.getY());
+
+							traineraUPV.repaint();
+						}
+						
+						try {
+							Thread.sleep(15000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						trainera.setLocation(base.posicionBarco(conexion, p), trainera.getY());
+						
+						traineraUPV.setLocation(trainera.getX()+500, traineraUPV.getY());
+						
+					} else {
+						if ((ficha.getX() < reajustarAnchura(1300, ANCHURA))) {
+							trainera.setLocation(trainera.getX() + 10, trainera.getY());
+
+							trainera.repaint();
+
+							traineraUPV.setLocation(traineraUPV.getX() + 10, traineraUPV.getY());
+
+							traineraUPV.repaint();
+						}
+						
+						try {
+							Thread.sleep(15000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						trainera.setLocation(base.posicionBarco(conexion, p), trainera.getY());
+						
+						traineraUPV.setLocation(trainera.getX()+500, traineraUPV.getY());
+					}
+
+				} else {
+
+					if (orientacion) {
+
+						ImageIcon imagen = new ImageIcon();
+						Icon icono;
+
+						try {
+
+							imagen = new ImageIcon(
+									VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+						} catch (Exception p) {
+						}
+						icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+								trainera.getHeight(), Image.SCALE_DEFAULT));
+
+						trainera.setIcon(icono);
+
+						trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
+						try {
+
+							imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
+						} catch (Exception p) {
+						}
+						icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+								traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+
+						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), trainera.getY());
+
+						traineraUPV.setIcon(icono);
+
+					} else {
+
+						ImageIcon imagen = new ImageIcon();
+						Icon icono;
+
+						try {
+
+							imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeusto.png"));
+						} catch (Exception p) {
+						}
+						icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+								trainera.getHeight(), Image.SCALE_DEFAULT));
+
+						trainera.setIcon(icono);
+
+						trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
+						try {
+
+							imagen = new ImageIcon(
+									VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
+						} catch (Exception p) {
+						}
+						icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+								traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+
+						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), trainera.getY());
+
+						traineraUPV.setIcon(icono);
+
+					}
+					orientacion = !orientacion;
+
+				}
+
+			}
 
 			// System.out.println(turno);
 			//
@@ -264,13 +529,13 @@ public class hiloPìntado extends Thread {
 			if (seguir) {
 				if (animacion1) {
 
-					if (ficha.getY() > 520) {
+					if (ficha.getY() > reajustarAltura(520, ALTURA)) {
 						ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
 						ficha.repaint();
 					} else {
 
 						System.out.println(ficha.getX());
-						if (ficha.getX() < 1300) {
+						if (ficha.getX() < reajustarAnchura(1300, ANCHURA)) {
 							trainera.setLocation(trainera.getX() + 10, trainera.getY());
 
 							trainera.repaint();
@@ -284,18 +549,20 @@ public class hiloPìntado extends Thread {
 							ficha.repaint();
 
 						} else {
-							if (ficha.getY() > 397 - 5) {
+							if (ficha.getY() > reajustarAlturaMaider(397 - 16, ALTURA)) {
 								ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
 
 								ficha.repaint();
 
 							} else {
 
-								if (ficha.getX() > 1391 - 25) {
+								if (ficha.getX() > reajustarAnchura(1391 - 25, ANCHURA)) {
 									ficha.setLocation(ficha.getX() - 1, ficha.getY());
 								} else {
 									animacion1 = false;
-									ficha.setLocation(1391 - 25, 397 - 5);
+									base.modificarAccion(conexion, p, false);
+									ficha.setLocation(reajustarAnchura(1391 - 28, ANCHURA),
+											reajustarAlturaMaider(397 - 16, ALTURA));
 									ficha.repaint();
 								}
 							}
@@ -304,19 +571,19 @@ public class hiloPìntado extends Thread {
 					}
 				} else if (animacion2) {
 
-					if (ficha.getX() < 1383 && !(hecho)) {
+					if (ficha.getX() < reajustarAnchura(1383, ANCHURA) && !(hecho)) {
 						ficha.setLocation(ficha.getX() + 1, ficha.getY());
 						ficha.repaint();
 
 					} else {
 						hecho = true;
-						if (ficha.getY() < 520) {
+						if (ficha.getY() < reajustarAltura(520, ALTURA)) {
 
 							ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
 							ficha.repaint();
 						} else {
 
-							if (ficha.getX() > 145 && !(hecho1)) {
+							if (ficha.getX() > reajustarAnchura(145, ANCHURA) && !(hecho1)) {
 								trainera.setLocation(trainera.getX() - 10, trainera.getY());
 
 								trainera.repaint();
@@ -333,12 +600,14 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() < 637 - 2) {
+								if (ficha.getY() < reajustarAlturaMaider(637 - 2, ALTURA)) {
 									ficha.setLocation(ficha.getX() + 2, ficha.getY() + 5);
 									ficha.repaint();
 								} else {
 									animacion2 = false;
-									ficha.setLocation(216 - 25, 637 - 2);
+									base.modificarAccion(conexion, p, false);
+									ficha.setLocation(reajustarAnchura(216 - 28, ANCHURA),
+											reajustarAlturaMaider(637 - 16, ALTURA));
 									ficha.repaint();
 								}
 							}
@@ -348,13 +617,12 @@ public class hiloPìntado extends Thread {
 
 				} else if (animacion3) {
 
-					if (ficha.getY() < 520) {
+					if (ficha.getY() < reajustarAltura(520, ALTURA)) {
 						ficha.setLocation(ficha.getX() + 4, ficha.getY() + 5);
 						ficha.repaint();
 					} else {
 
-						
-						if (ficha.getX() < 1300 && (!hecho)) {
+						if (ficha.getX() < reajustarAnchura(1300, ANCHURA) && (!hecho)) {
 							trainera.setLocation(trainera.getX() + 10, trainera.getY());
 
 							trainera.repaint();
@@ -371,19 +639,21 @@ public class hiloPìntado extends Thread {
 
 							hecho = true;
 
-							if (ficha.getY() < 673 - 5) {
+							if (ficha.getY() < reajustarAlturaMaider(673 - 16, ALTURA)) {
 								ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
 
 								ficha.repaint();
 
 							} else {
-								
-								if (ficha.getX() < 1251 - 25) {
-									
+
+								if (ficha.getX() < reajustarAnchura(1251 - 25, ANCHURA)) {
+
 									ficha.setLocation(ficha.getX() + 1, ficha.getY());
 								} else {
 									animacion3 = false;
-									ficha.setLocation(1251 - 25, 673 - 5);
+									base.modificarAccion(conexion, p, false);
+									ficha.setLocation(reajustarAnchura(1251 - 28, ANCHURA),
+											reajustarAlturaMaider(673 - 16, ALTURA));
 									ficha.repaint();
 
 								}
@@ -393,20 +663,20 @@ public class hiloPìntado extends Thread {
 					}
 
 				} else if (animacion4) {
-					
-					if (ficha.getX() > 1220 && !(hecho)) {
-						ficha.setLocation(ficha.getX() -1 , ficha.getY());
+
+					if (ficha.getX() > reajustarAnchura(1220, ANCHURA) && !(hecho)) {
+						ficha.setLocation(ficha.getX() - 1, ficha.getY());
 						ficha.repaint();
 
 					} else {
 						hecho = true;
-						if (ficha.getY() > 520) {
+						if (ficha.getY() > reajustarAltura(520, ALTURA)) {
 
 							ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
 							ficha.repaint();
 						} else {
 
-							if (ficha.getX() > 145 && !(hecho1)) {
+							if (ficha.getX() > reajustarAnchura(145, ANCHURA) && !(hecho1)) {
 								trainera.setLocation(trainera.getX() - 10, trainera.getY());
 
 								trainera.repaint();
@@ -423,20 +693,23 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() > 414 - 5) {
+								if (ficha.getY() > reajustarAlturaMaider(414 - 16, ALTURA)) {
 									ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
 									ficha.repaint();
 								} else {
-									
-									if (ficha.getX()>86-25){
+
+									if (ficha.getX() > reajustarAnchura(86 - 28, ANCHURA)) {
 										ficha.setLocation(ficha.getX() - 1, ficha.getY());
 										ficha.repaint();
-									}else{
-									animacion4 = false;
-									ficha.setLocation(86 - 25, 414 - 5);
-									ficha.repaint();
+									} else {
+										animacion4 = false;
+										base.modificarAccion(conexion, p, false);
+										ficha.setLocation(reajustarAnchura(86 - 28, ANCHURA),
+												reajustarAlturaMaider(414 - 16, ALTURA));
+										ficha.repaint();
+									}
 								}
-							}}
+							}
 
 						}
 					}
@@ -448,45 +721,46 @@ public class hiloPìntado extends Thread {
 					hecho1 = false;
 
 					if (orientacion) {
-						trainera.setBounds(trainera.getX() - 1, trainera.getY(), 250, 100);
+						trainera.setLocation(trainera.getX() - 10, trainera.getY());
 
 						trainera.repaint();
 
-						traineraUPV.setBounds(traineraUPV.getX() - 1, trainera.getY(), 250, 100);
+						traineraUPV.setLocation(traineraUPV.getX() - 10, trainera.getY());
 
 						traineraUPV.repaint();
 
-						if (trainera.getX() == -250) {
+						if (trainera.getX() == reajustarAnchura(-250, ANCHURA)) {
 							trainera.setLocation(anchura, trainera.getY());
 							trainera.repaint();
 						}
 
-						if (traineraUPV.getX() == -250) {
+						if (traineraUPV.getX() == reajustarAnchura(-250, ANCHURA)) {
 							traineraUPV.setLocation(anchura, traineraUPV.getY());
 							traineraUPV.repaint();
 						}
 
 					} else {
-						trainera.setBounds(trainera.getX() + 1, trainera.getY(), 250, 100);
+						trainera.setLocation(trainera.getX() + 10, trainera.getY());
 
 						trainera.repaint();
 
-						traineraUPV.setBounds(traineraUPV.getX() + 1, trainera.getY(), 250, 100);
+						traineraUPV.setLocation(traineraUPV.getX() + 10, trainera.getY());
 
 						traineraUPV.repaint();
 
 						if (trainera.getX() >= anchura) {
-							trainera.setLocation(-250, trainera.getY());
+							trainera.setLocation(reajustarAnchura(-250, ANCHURA), trainera.getY());
 							trainera.repaint();
 						}
 
 						if (traineraUPV.getX() >= anchura) {
-							traineraUPV.setLocation(-250, traineraUPV.getY());
+							traineraUPV.setLocation(reajustarAnchura(-250, ANCHURA), traineraUPV.getY());
 							traineraUPV.repaint();
 						}
 
 					}
 
+					base.modificarBarco(conexion, p, trainera.getX());
 				}
 			}
 			//
@@ -501,7 +775,7 @@ public class hiloPìntado extends Thread {
 		}
 
 	}
-	
+
 	public int reajustarAltura(int coordenada, int altura) {
 
 		double escala = altura / (double) ALTURA;
@@ -515,6 +789,30 @@ public class hiloPìntado extends Thread {
 		double escala = anchura / (double) ANCHURA;
 
 		return (int) (coordenada * escala);
+
+	}
+
+	public int reajustarAlturaMaider(int coordenada, int altura) {
+
+		double escala = altura / (double) ALTURAM;
+
+		return (int) (coordenada * escala);
+
+	}
+
+	public int reajustarTamañoAlt(int tamañoY, int altura) {
+
+		double escala = altura / (double) ALTURA;
+
+		return (int) (tamañoY * escala);
+
+	}
+
+	public int reajustarTamañoAnch(int tamañoX, int anchura) {
+
+		double escala = anchura / (double) ANCHURA;
+
+		return (int) (tamañoX * escala);
 
 	}
 

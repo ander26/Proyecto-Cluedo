@@ -61,6 +61,9 @@ public class VentanaCrearPartida extends JFrame {
 	private String [] listaTipos = {"Imagenes/coche.png","Imagenes/barco.png","Imagenes/dedal.png","Imagenes/sombrero.png",
 			"Imagenes/perro.png","Imagenes/zapato.png","Imagenes/plancha.png","Imagenes/carretilla.png"};
 	
+	
+	private String [] fichas = {"Coche","Barco","Dedal","Sombrero","Perro","Zapato","Plancha","Carretilla"};
+	
 	/**
 	 * Parametro que contiene la ficha seleccionada 
 	 */
@@ -247,7 +250,7 @@ public class VentanaCrearPartida extends JFrame {
 		
 		
 		
-		labelTipo.setText(listaTipos[contador]);
+		labelTipo.setText(fichas[contador]);
 		
 		labelTipo.setForeground(Color.white);
 		
@@ -392,7 +395,7 @@ public class VentanaCrearPartida extends JFrame {
 				labelSeleccionado.setIcon(iconoSeleccionado);
 				
 				
-				labelTipo.setText(listaTipos[contador]);
+				labelTipo.setText(fichas[contador]);
 				
 			}
 		});
@@ -422,7 +425,7 @@ public class VentanaCrearPartida extends JFrame {
 				labelSeleccionado.setIcon(iconoSeleccionado);
 				
 				
-				labelTipo.setText(listaTipos[contador]);
+				labelTipo.setText(fichas[contador]);
 				
 			}
 		});

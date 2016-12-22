@@ -51,6 +51,8 @@ public class Partida {
 	
 	
 	private boolean orientacion;
+	
+	private boolean accion;
 
 	
 	/**
@@ -67,9 +69,23 @@ public class Partida {
 		this.mensajeCartel=null;
 		this.codigo=generadorCodigo(gestion.obtenerCodigoPartidas(conexion));
 		this.orientacion=true;
+		accion=false;
 	}
 
 	
+	
+	public boolean isAccion() {
+		return accion;
+	}
+
+
+
+	public void setAccion(boolean accion) {
+		this.accion = accion;
+	}
+
+
+
 	public boolean isOrientacion() {
 		return orientacion;
 	}

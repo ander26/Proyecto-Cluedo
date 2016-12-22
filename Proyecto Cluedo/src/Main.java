@@ -42,24 +42,27 @@ public class Main {
 		// text,DIBUJO bytea,ENLINEA boolean)";
 		// gestion.crearTabla(creacion,conexion);
 
-		// String creacion ="ALTER TABLE PARTIDA ADD ORIENTACION boolean";
-		// gestion.crearTabla(creacion, conexion);
+//		 String creacion ="ALTER TABLE PARTIDA ADD ORIENTACION boolean";
+//		 gestion.crearTabla(creacion, conexion);
+		 
+//		 String creacion ="ALTER TABLE PARTIDA ADD ACCION boolean";
+//		 gestion.crearTabla(creacion, conexion);
 
-		// try{
-		// Statement statament = conexion.createStatement();
-		//
-		// statament.executeUpdate("DELETE FROM PARTIDA");
-		//
-		// System.out.println("Se ha borrado todo");
-		//
-		// ArrayList <Integer> lista=gestion.obtenerCodigoPartidas(conexion);
-		//
-		// for (Integer i: lista){
-		// System.out.println(i);
-		// }
-		// }catch (Exception e){
-		// System.out.println("No se ha conseguido borrar");
-		// }
+//		 try{
+//		 Statement statament = conexion.createStatement();
+//		
+//		 statament.executeUpdate("DELETE FROM CHAT");
+//		
+//		 System.out.println("Se ha borrado todo");
+//		
+//		 ArrayList <Integer> lista=gestion.obtenerCodigoPartidas(conexion);
+//		
+//		 for (Integer i: lista){
+//		 System.out.println(i);
+//		 }
+//		 }catch (Exception e){
+//		 System.out.println("No se ha conseguido borrar");
+//		 }
 		//
 		// Statement statement;
 		// try {
