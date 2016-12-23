@@ -1338,6 +1338,9 @@ public class GestionBaseDeDatos {
 			res=res/10;
 			
 		}
+		while(k<4){
+			k=k+1;
+		}
 		double numero=x+(y/(Math.pow(10,k)));
 		System.out.println(numero);
 		return numero;
@@ -1347,12 +1350,21 @@ public class GestionBaseDeDatos {
 		int k=0;
 		double numero=x;		
 		double decimal=numero-num;
+		
 		System.out.println(decimal-(int)decimal);
-		while((decimal-(int)decimal)>0.000001){
+		while((decimal-(int)decimal)>0.000001 && k<4){
 			k=k+1;
 			decimal=decimal*10;
-			
+			if(k==4){
+				if((decimal-(int)decimal)>0.8){
+					decimal=decimal+1;
+				}
+			}
 		}
+		
+		int numeroP = Integer.parseInt("3");
+		String numeroPO=""+numeroP;
+		
 		int y=(int)decimal;
 		System.out.println("punto"+num+" "+y);
 		Point p=new Point(num,y);

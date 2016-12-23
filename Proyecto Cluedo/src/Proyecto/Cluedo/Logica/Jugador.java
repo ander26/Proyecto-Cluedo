@@ -103,7 +103,7 @@ public class Jugador {
 		this.Turno = 0;
 
 		this.Lugar = -1;
-		this.PosicionMuñeco = 129.876;
+		this.PosicionMuñeco = 129.0876;
 
 		dibujo = null;
 

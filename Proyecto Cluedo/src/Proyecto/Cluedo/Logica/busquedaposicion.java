@@ -111,6 +111,7 @@ public class busquedaposicion {
 		if(dado==0){
 			resultado.add(posicion);
 		}else{
+			System.out.println("posicion"+posicion);
 			for(int i=0;i<hm.get(posicion).size();i++){
 				//System.out.println(hm.get(posicion).get(i));
 				if(estaEn(hm.get(posicion).get(i),camino)==false){

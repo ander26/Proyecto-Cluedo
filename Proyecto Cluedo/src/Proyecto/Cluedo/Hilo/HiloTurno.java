@@ -31,13 +31,7 @@ public class HiloTurno extends Thread {
 	private boolean acusar=false;
 	private int dado=-1;
 	
-	private JLabel labelSemaforo;
-	
-	
-	private JLabel labelDado;
-	
-	private JLabel labelAcusar;
-	
+		
 	private Point [] arrpuertas={new Point(1391,397),new Point(241,120),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1650,325),new Point(1846,174),new Point(1880,334),new Point(1320,771),new Point(573,876),new Point(855,261)};
 	
 	private int CodigoJugadorConTurnoAntiguo;
@@ -71,21 +65,9 @@ public class HiloTurno extends Thread {
 		MonigoteMovida = monigoteMovida;
 	}
 
-	public JLabel getLabelDado() {
-		return labelDado;
-	}
+	
 
-	public void setLabelDado(JLabel labelDado) {
-		this.labelDado = labelDado;
-	}
-
-	public JLabel getLabelAcusar() {
-		return labelAcusar;
-	}
-
-	public void setLabelAcusar(JLabel labelAcusar) {
-		this.labelAcusar = labelAcusar;
-	}
+	
 
 	public boolean isPulsado() {
 		return pulsado;
@@ -95,13 +77,7 @@ public class HiloTurno extends Thread {
 		this.pulsado = pulsado;
 	}
 
-	public JLabel getLabelSemaforo() {
-		return labelSemaforo;
-	}
-
-	public void setLabelSemaforo(JLabel labelSemaforo) {
-		this.labelSemaforo = labelSemaforo;
-	}
+	
 
 	public GestionBaseDeDatos getBase() {
 		return base;
@@ -149,9 +125,11 @@ public class HiloTurno extends Thread {
 		// TODO Auto-generated method stub
 		while(jugando==true){
 			arrjugadores=base.ObtenerJugadoresDePartidaordenadosPorCodigo(partida, con);
+			System.out.println("tamaño"+arrjugadores.size());
 			mensajePanel=base.ObtenerPanel(con,partida);
 			
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
+			System.out.println(CodigoJugadorConTurno+"CodigoJugadorConTurno");
 			//al inicializar el progrma el jugador con menor codigo tiene el turno
 			if(CodigoJugadorConTurno==-1){
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
@@ -164,125 +142,15 @@ public class HiloTurno extends Thread {
 //					e.printStackTrace();
 //				}
 				
-			}}
+			}}else{
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
 			CodigoJugadorConTurnoAntiguo=CodigoJugadorConTurno;
 			
 			System.out.println(CodigoJugadorConTurno);
 			
 			
-//			if (jugador.getCodigo()==CodigoJugadorConTurno){
-//				
-//				System.out.println("HACE");
-//				
-//				ImageIcon imagen = new ImageIcon();
-//				
-//				Icon icono;
-//			
-//				try{
-//					
-//					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/semaforoverde.png").toURI().toURL());
-//					
-//				}catch (Exception e){
-//					
-//					System.out.println("No se ha encontrado al archivo");
-//				}
-//				
-//				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelSemaforo.getWidth(), labelSemaforo.getHeight(), Image.SCALE_DEFAULT));
-//			
-//				labelSemaforo.setIcon(icono);
-//				
-//				labelSemaforo.repaint();
-//				
-//				try{
-//					
-//					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dado.gif").toURI().toURL());
-//					
-//				}catch (Exception e){
-//					
-//					System.out.println("No se ha encontrado al archivo");
-//				}
-//				
-//				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
-//			
-//				labelDado.setIcon(icono);
-//				
-//				labelDado.repaint();
-//				
-//				try{
-//					
-//					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharriba.png").toURI().toURL());
-//					
-//				}catch (Exception e){
-//					
-//					System.out.println("No se ha encontrado al archivo");
-//				}
-//				
-//				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
-//			
-//				labelAcusar.setIcon(icono);
-//				
-//				labelAcusar.repaint();
-//				
-//				
-//			}else{
-//				
-//				System.out.println("NO HACE");
-//				
-//				ImageIcon imagen = new ImageIcon();
-//				
-//				Icon icono;
-//			
-//				try{
-//					
-//					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/semafororojot.png").toURI().toURL());
-//					
-//				}catch (Exception e){
-//					
-//					System.out.println("No se ha encontrado al archivo");
-//				}
-//				
-//				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelSemaforo.getWidth(), labelSemaforo.getHeight(), Image.SCALE_DEFAULT));
-//			
-//				labelSemaforo.setIcon(icono);
-//				
-//				labelSemaforo.repaint();
-//				
-//				
-//				try{
-//					
-//					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/dadoNegro.gif").toURI().toURL());
-//					
-//				}catch (Exception e){
-//					
-//					System.out.println("No se ha encontrado al archivo");
-//				}
-//				
-//				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelDado.getWidth(), labelDado.getHeight(), Image.SCALE_DEFAULT));
-//			
-////				labelDado.setIcon(icono);
-////				
-////				labelDado.repaint();
-////				
-//				
-//				try{
-//					
-//					imagen=new ImageIcon(HiloTurno.class.getResource("Imagenes/pusharribaNegro.png").toURI().toURL());
-//					
-//				}catch (Exception e){
-//					
-//					System.out.println("No se ha encontrado al archivo");
-//				}
-//				
-//				icono = new ImageIcon(imagen.getImage().getScaledInstance(labelAcusar.getWidth(), labelAcusar.getHeight(), Image.SCALE_DEFAULT));
-//			
-//				labelAcusar.setIcon(icono);
-//				
-//				labelAcusar.repaint();
-//				
-//			}
 			
-//cambio de turno si el jugador va a acusar
+			//cambio de turno si el jugador va a acusar
 			Jugador jug=BusacarJugadorConCodigo(CodigoJugadorConTurno,arrjugadores);
 			Point punto= base.ObtenerCoordenada(con, jug);
 			if(estaEn(punto,arrpuertas)){
@@ -367,6 +235,7 @@ public class HiloTurno extends Thread {
 			
 			int CodigoJugadorConTurnoAntiguo=CodigoJugadorConTurno;
 			if(CodigoJugadorConTurno==jugador.getCodigo()){
+				System.out.println(CodigoJugadorConTurno);
 				//borrar de la base las cartas enviadas
 				base.borrarCartas(con, partida,CodigoJugadorConTurno );
 				CambiarTurno();
@@ -405,6 +274,7 @@ public class HiloTurno extends Thread {
 			else{
 				while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
 					System.out.println("6 while");
+					
 					try {
 						Thread.sleep( 8000 );
 					} catch (InterruptedException e) {
@@ -416,6 +286,7 @@ public class HiloTurno extends Thread {
 				}
 			}
 			}
+		}
 //		try {
 //			Thread.sleep( 40 );
 //		} catch (Exception e) {
@@ -436,6 +307,9 @@ public class HiloTurno extends Thread {
 					base.modificarturno(con,arrjugadores.get(i+1).getCodigo(), 1);
 					System.out.println("es el turno de"+arrjugadores.get(i+1).getUsuario());
 				}
+				pulsado=false;
+				acusar=false;
+				dado=-1;
 				
 				
 				

@@ -1,7 +1,9 @@
 package Proyecto.Cluedo.Hilo;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -55,6 +57,16 @@ public class hiloPìntado extends Thread {
 	private boolean hecho1 = false;
 
 	private JLabel ficha;
+	
+	private ArrayList<Jugador> arrjug;
+	
+	private JLabel [] arrfich;
+	
+	private int ancho;
+	
+	private int alto;
+	
+	private Panelcirculos panel;
 
 	public boolean isAnimacion3() {
 		return animacion3;
@@ -113,7 +125,7 @@ public class hiloPìntado extends Thread {
 	}
 
 	public hiloPìntado(JLabel semaforo, JLabel labelDado, JLabel labelAcusar, JLabel trainera, Partida p, Jugador j,
-			Connection conexion, int anchura, JLabel traineraUPV) {
+			Connection conexion, int anchura, JLabel traineraUPV,ArrayList<Jugador> arrjug,JLabel [] arrfich,int ancho,int alto,Panelcirculos panel) {
 		this.semaforo = semaforo;
 		this.labelDado = labelDado;
 		this.labelAcusar = labelAcusar;
@@ -123,6 +135,11 @@ public class hiloPìntado extends Thread {
 		this.conexion = conexion;
 		this.anchura = anchura;
 		this.traineraUPV = traineraUPV;
+		this.arrfich=arrfich;
+		this.arrjug=arrjug;
+		this.ancho=ancho;
+		this.alto=alto;
+		this.panel=panel;
 
 		turno = -1;
 	}
@@ -136,6 +153,8 @@ public class hiloPìntado extends Thread {
 			// System.out.println(base.ObtenerCodigoJugadorTurno(conexion, p));
 
 			if (turno != base.ObtenerCodigoJugadorTurno(conexion, p)) {
+				colocarFicha(arrjug,arrfich);
+				panel.repaint();
 
 				turno = base.ObtenerCodigoJugadorTurno(conexion, p);
 
@@ -502,5 +521,30 @@ public class hiloPìntado extends Thread {
 
 		acabado = false;
 
+	}
+	public int reajustarAlturaFicha(int coordenada, int altura) {
+
+		double escala = (double)altura / (double)1020;
+
+		return (int) (coordenada * escala);
+
+	}
+	public int reajustarAnchuraFicha(int coordenada, int anchura) {
+
+		double escala = (double)anchura / (double)1920;
+
+		return (int) (coordenada * escala);
+
+	}
+	public void colocarFicha(ArrayList<Jugador> arrjug,JLabel [] arrfich){
+		Point [] arr=new Point[arrjug.size()];
+		
+		for(int i=0;i<arrjug.size();i++){
+			arr[i]=base.ObtenerCoordenada(conexion, arrjug.get(i));
+		}
+		for(int j=0;j<arrjug.size();j++){
+			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),ancho)-28,reajustarAlturaFicha((int)arr[j].getY(),alto)-16);
+			arrfich[j].setLocation(punto);
+		}
 	}
 }

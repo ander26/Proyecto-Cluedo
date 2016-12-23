@@ -72,6 +72,7 @@ public class VentanaTablero extends JFrame {
 	private static final int ALTURA = 1040;
 
 	private int barcoX = -20;
+	private ArrayList<Jugador> arrjugadores;
 
 	// private static int[][] mibaraja=new int[3][4];
 
@@ -90,7 +91,7 @@ public class VentanaTablero extends JFrame {
 		arrfichas[2]=Label3;
 		arrfichas[3]=Label4;
 		arrfichas[4]=Label5;
-		ArrayList<Jugador> arrjugadores=base.ObtenerJugadoresDePartidaordenadosPorCodigo(p, conexion);
+		arrjugadores=base.ObtenerJugadoresDePartidaordenadosPorCodigo(p, conexion);
 		meterFicha(arrjugadores);
 		colocarFichaInicio(arrjugadores);
 		
@@ -116,13 +117,14 @@ public class VentanaTablero extends JFrame {
 		final int anchura = screenDimension.width - left - right;
 
 		final int altura = screenDimension.height - top - bottom;
+		
+		System.out.println("altura"+altura);
 
-		System.out.println(altura);
+		System.out.println("anchura"+anchura);
 
-		System.out.println(anchura);
-
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(900, 700);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);		
+		//setUndecorated(true);
+		setSize(1920, 1020);
 		setResizable(true);
 
 		// Generamos los compoenentes
@@ -597,14 +599,17 @@ public class VentanaTablero extends JFrame {
 				// System.out.println(punto);
 				// }
 				// }
+				System.out.println("entro en el mouse clicked");
 				if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
+					System.out.println("entro en el if del pposiciones mouse click");
 					Point puntoSeleccionado=BuscarPuntoPinchado(e.getX(),e.getY(),anchura,altura);
 					if(estaEn(puntoSeleccionado,fichasrojas)){
+						pposiciones.volverAColorOriginal(fichasrojas);
 						pposiciones.meterOcupado(puntoSeleccionado);
 						pposiciones.repaint();
 					}
 					fichasrojas=new ArrayList<Point>();
-					base.modificarCoordenada(conexion, j,(int)(puntoSeleccionado.getY()),((int)puntoSeleccionado.getX()));
+					base.modificarCoordenada(conexion, j,(int)(puntoSeleccionado.getX()),((int)puntoSeleccionado.getY()));
 					ObtenerFichaDeJugador(arrjugadores, j).setLocation((int)(puntoSeleccionado.getX()-28),(int)(puntoSeleccionado.getY()-16));
 				
 					hTurno.CambiarTurno();
@@ -801,13 +806,14 @@ public class VentanaTablero extends JFrame {
 				 if (!(hTurno.isPulsado())) {
 
 				Random r = new Random();
+				
 				numero=r.nextInt(7);
 				hTurno.setDado(numero);
 
 				while (hTurno.getDado() == 0) {
 					hTurno.setDado(r.nextInt(7));
 				}
-
+				numero=hTurno.getDado();
 				System.out.println(hTurno.getDado());
 
 				try {
@@ -829,6 +835,7 @@ public class VentanaTablero extends JFrame {
 
 				hTurno.setPulsado(true);
 				if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
+					System.out.println("codigoturno"+hTurno.getCodigoJugadorConTurno()+" "+j.getCodigo());
 					busquedaposicion ponercircrojos=new busquedaposicion();
 					fichasrojas=new ArrayList<Point>();
 					ArrayList<Point> camino=new ArrayList();
@@ -843,7 +850,9 @@ public class VentanaTablero extends JFrame {
 					pposiciones.meterPosibilidades(fichasrojas);
 					System.out.println("pinto fichas azulessssssssssssssssssssssssssssss");
 					pposiciones.repaint();
-			}
+					System.out.println("acaba repaint");
+			
+				 }
 				 }
 			 }
 
@@ -851,7 +860,7 @@ public class VentanaTablero extends JFrame {
 		});
 
 		hiloPìntado pintar = new hiloPìntado(semaforo, labelDado, labelAcusar, trainera, p, j, conexion, anchura,
-				traineraUPV);
+				traineraUPV,arrjugadores,arrfichas,anchura,altura,pposiciones);
 
 		// if (base.obtenerOrientacion(conexion, p)){
 		// pintar.setOrientacion(true);
@@ -1712,6 +1721,22 @@ public class VentanaTablero extends JFrame {
 		return (int) (coordenada * escala);
 
 	}
+	
+	public int reajustarAlturaPunto(int coordenada,int altura) {
+
+		double escala = pposiciones.getBounds().getHeight()/ 1020;
+		System.out.println(pposiciones.getBounds().getHeight()+"pposiciones.getBounds().getHeight()");
+
+		return (int) (coordenada * escala);
+
+	}
+	public int reajustarAnchuraPunto(int coordenada) {
+
+		double escala = pposiciones.getBounds().getWidth() / 1920;
+
+		return (int) (coordenada * escala);
+
+	}
 
 	public int reajustarAnchura(int coordenada, int anchura) {
 
@@ -1762,15 +1787,26 @@ public class VentanaTablero extends JFrame {
 		}
 	}
 	public Point BuscarPuntoPinchado(int x,int y,int anchura,int altura){
-		int yy=reajustarAltura(y,altura);
-		int xx=reajustarAnchura(x,anchura);
+		System.out.println("xy"+x+" "+y);
+		int yy=reajustarAlturaPunto(y,altura);
+		int xx=reajustarAnchuraPunto(x);
+		System.out.println("xy ajustado"+xx+" "+yy);
+		
 		Point punto=new Point(xx,yy);
-		ArrayList<Point> puntos=pposiciones.arrayBuscar();
+		//ArrayList<Point> puntos=pposiciones.arrayBuscar();
+		ArrayList<Point> puntos=fichasrojas;		
 		for(int i=0;i<puntos.size();i++){
 			double ak=Math.abs(puntos.get(i).getX()-xx);
 			double kk=Math.abs(puntos.get(i).getY()-yy);
-			if(Math.sqrt(Math.pow(ak,2)+Math.pow(kk, 2))<30){
+			System.out.println("ak"+ak+" "+"kk"+kk);
+			
+//			if(Math.sqrt(Math.pow(ak,2)+Math.pow(kk, 2))<28){
+//				return puntos.get(i);
+//			}
+			if(ak<28 && kk<16){
+				System.out.println("punto del array"+puntos.get(i));
 				return puntos.get(i);
+				
 			}
 		}return new Point(0,0);
 	}

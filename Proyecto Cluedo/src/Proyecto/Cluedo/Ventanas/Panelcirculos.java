@@ -49,13 +49,13 @@ public class Panelcirculos extends JPanel{
 			imagen = ImageIO.read(getClass().getResource("Imagenes/fondocirculos.png"));
 			
 			Graphics g3=imagen.getGraphics();
-			//Graphics2D g2 = (Graphics2D) g;  
+			Graphics2D g2 = (Graphics2D) g;  
 			
 			for(Point key:hm.keySet()){
 			   String color=hm.get(key);
 			 if(color=="marron"){
 				 g3.setColor(new Color(170,158,117,255));//Color marron
-				 System.out.println("marron");
+				 //System.out.println("marron");
 				 
 			}else if(color=="verde"){
 				g3.setColor(new Color(24,205,95,255));
@@ -80,7 +80,7 @@ public class Panelcirculos extends JPanel{
 			g3.fillOval((int)key.getX()-28,(int)key.getY()-16,55,32 );
 			}
 			//g2.drawImage( imagen, 0,0, getWidth(), getHeight(), this );
-			g.drawImage( imagen, 0,0, getWidth(), getHeight(), this );
+			g2.drawImage( imagen, 0,0, getWidth(), getHeight(), this );
 			revalidate();
 		} catch (IOException e) {
 			 //TODO Auto-generated catch block
@@ -98,6 +98,27 @@ public class Panelcirculos extends JPanel{
 	public void meterPosibilidades(ArrayList<Point> p){
 		for(int i=0;i<p.size();i++){
 			hm.put(p.get(i),"azul" );
+		}
+		
+	}
+	public boolean estaEn(Point punto,Point [] array){
+		for(int i=0;i<array.length;i++){
+			if(punto.equals(array[i])){
+				return true;
+			}
+		}return false;
+	}
+	public void volverAColorOriginal(ArrayList<Point> p){
+		for(int i=0;i<p.size();i++){
+			if(estaEn(p.get(i),arrpuertas)){
+				hm.put(p.get(i),"verde" );
+			}
+			else if(estaEn(p.get(i), puente)){
+				hm.put(p.get(i),"morado" );
+			}else{
+				hm.put(p.get(i),"marron" );
+			}
+			
 		}
 		
 	}
