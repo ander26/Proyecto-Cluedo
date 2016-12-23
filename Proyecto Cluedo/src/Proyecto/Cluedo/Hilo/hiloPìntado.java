@@ -738,6 +738,8 @@ public class hiloPìntado extends Thread {
 
 					hecho1 = false;
 
+					base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
+					
 					if (orientacion) {
 						
 //						if (anchura<ANCHURA){
@@ -750,11 +752,13 @@ public class hiloPìntado extends Thread {
 //						traineraUPV.repaint();
 //						}else{
 							
-							trainera.setLocation(trainera.getX() - 1, trainera.getY());
+						int posi = base.posicionBarco(conexion, p);
+						
+							trainera.setLocation(posi - 1, trainera.getY());
 
 							trainera.repaint();
 
-							traineraUPV.setLocation(traineraUPV.getX() - 1, trainera.getY());
+							traineraUPV.setLocation((posi+2*traineraUPV.getWidth()) - 1, trainera.getY());
 
 							traineraUPV.repaint();
 								
@@ -783,12 +787,12 @@ public class hiloPìntado extends Thread {
 //						traineraUPV.repaint();
 //
 //						}else{
-							
-							trainera.setLocation(trainera.getX() + 1, trainera.getY());
+							int posi = base.posicionBarco(conexion, p);
+							trainera.setLocation(posi + 1, trainera.getY());
 
 							trainera.repaint();
 
-							traineraUPV.setLocation(traineraUPV.getX() + 1, trainera.getY());
+							traineraUPV.setLocation((posi+2*traineraUPV.getWidth()) + 1, trainera.getY());
 
 							traineraUPV.repaint();
 							
@@ -806,13 +810,10 @@ public class hiloPìntado extends Thread {
 
 					}
 
-					if (contador > 50) {
+					
 
-						base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
-					} else {
-
-						contador++;
-					}
+						
+					
 				}
 			}
 			//
