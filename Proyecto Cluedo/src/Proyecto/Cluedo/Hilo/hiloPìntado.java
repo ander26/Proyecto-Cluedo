@@ -273,7 +273,7 @@ public class hiloPìntado extends Thread {
 			trainera.setBounds(posicion, reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
 					reajustarTamañoAlt(95, altura));
 
-			traineraUPV.setBounds(reajustarAnchura(1920 + 500, anchura), reajustarAltura(510, altura),
+			traineraUPV.setBounds(reajustarAnchura(posicion + 500, anchura), reajustarAltura(510, altura),
 					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
 		}
 
@@ -297,10 +297,17 @@ public class hiloPìntado extends Thread {
 							traineraUPV.setLocation(traineraUPV.getX() - 10, traineraUPV.getY());
 
 							traineraUPV.repaint();
+							
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						
 						try {
-							Thread.sleep(15000);
+							Thread.sleep(5000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -309,6 +316,8 @@ public class hiloPìntado extends Thread {
 						trainera.setLocation(base.posicionBarco(conexion, p), trainera.getY());
 						
 						traineraUPV.setLocation(trainera.getX()+500, traineraUPV.getY());
+						
+						seguir=true;
 						
 					} else {
 						while ((trainera.getX() < reajustarAnchura(1300, ANCHURA))) {
@@ -319,6 +328,13 @@ public class hiloPìntado extends Thread {
 							traineraUPV.setLocation(traineraUPV.getX() + 10, traineraUPV.getY());
 
 							traineraUPV.repaint();
+							
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						
 						try {
@@ -363,6 +379,8 @@ public class hiloPìntado extends Thread {
 						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), trainera.getY());
 
 						traineraUPV.setIcon(icono);
+						
+						seguir=false;
 
 					} else {
 
@@ -392,9 +410,11 @@ public class hiloPìntado extends Thread {
 						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), trainera.getY());
 
 						traineraUPV.setIcon(icono);
+						
+						seguir=false;
 
 					}
-					orientacion = !orientacion;
+					orientacion = !(orientacion);
 
 				}
 
