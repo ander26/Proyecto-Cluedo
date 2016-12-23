@@ -23,6 +23,7 @@ public class armas extends panelrosa{
 	public JPanel columna2=new JPanel();
 	public JPanel columna3=new JPanel();
 	public JPanel centrar1=new JPanel();
+
 	public JPanel centrar2=new JPanel();
 	public JLabel lseparador=new JLabel("                           ");
 	public artilugio lbocata=new artilugio("Imagenes/bocadillo.png","Bocata envenenado");

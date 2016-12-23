@@ -20,6 +20,7 @@ import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 
 public class VentanaEnviar extends JFrame {
+	
 	private static JPanel pcsospechoso=new JPanel();
 	//private static JPanel pclugar=new JPanel();
 	private static JPanel pcarma=new JPanel();

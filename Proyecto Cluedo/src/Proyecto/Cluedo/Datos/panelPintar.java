@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+
 public class panelPintar extends JPanel{
 
 	private BufferedImage imagen;

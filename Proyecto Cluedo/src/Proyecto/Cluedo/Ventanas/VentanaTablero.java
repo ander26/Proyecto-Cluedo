@@ -1810,6 +1810,7 @@ public class VentanaTablero extends JFrame {
 
 	}
 
+	
 	public void meterImgEnlabel(String ruta, JLabel label, int largo, int ancho) {
 		ImageIcon imicon = new ImageIcon(ventana.class.getResource(ruta));
 		label.setSize(largo, ancho);

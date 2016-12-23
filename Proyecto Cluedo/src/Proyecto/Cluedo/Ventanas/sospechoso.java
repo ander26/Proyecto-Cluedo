@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class sospechoso extends panelrosa {
+	
 	public panelrosa pabajo;
 	public int apuntador=9;
 	public panelrosa pventana;

@@ -22,6 +22,8 @@ public class panelrosa extends JPanel{
 	    public panelrosa(){
 	    	
 	    }
+	    
+	    
 	 
 	    public panelrosa(Image imagen) {
 		

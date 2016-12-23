@@ -47,6 +47,7 @@ import Proyecto.Cluedo.Ventanas.panelrosa;
 
 public class ventana extends JFrame {
 
+	
 	private Point coordenada;
 
 //	private class cuadrado extends JPanel {

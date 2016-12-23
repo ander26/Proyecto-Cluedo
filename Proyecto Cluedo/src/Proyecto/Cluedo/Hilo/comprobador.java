@@ -16,6 +16,7 @@ import Proyecto.Cluedo.Ventanas.VentanaTablero;
 public class comprobador extends Thread {
 
 	
+	
 	public GestionBaseDeDatos base;
 
 	public Partida p;

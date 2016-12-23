@@ -111,6 +111,7 @@ public class VentanaBuscarPartida extends JFrame {
 		JLabel labelTitulo2 = new JLabel();
 
 
+		
 
 		JLabel label = new JLabel("Adentrate en un mundo misterioso");
 

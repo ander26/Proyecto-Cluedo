@@ -31,6 +31,7 @@ import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaAcusar extends JFrame {
 	
+	
 	private static Logger logger = Logger.getLogger(GestionBaseDeDatos.class.getName());
 
 //	private static JPanel pcsospechoso=new JPanel();

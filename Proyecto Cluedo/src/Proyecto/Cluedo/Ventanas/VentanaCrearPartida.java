@@ -134,6 +134,8 @@ public class VentanaCrearPartida extends JFrame {
 		
 		Icon iconoCrear;
 		
+		
+		
 		JLabel labelCancelar = new JLabel();
 		
 		Icon iconoCancelar;

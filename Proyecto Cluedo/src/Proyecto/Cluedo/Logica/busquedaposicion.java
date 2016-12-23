@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class busquedaposicion {
+	
 	private FicheroCoordenadasPosiciones fichero=new FicheroCoordenadasPosiciones();
 	private ArrayList<ArrayList<Point>> array=fichero.leerDeFicheroConBarrasYa("corordenadascambiocolor");
 	private static HashMap<Point,ArrayList<Point>> hm=new HashMap();

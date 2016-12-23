@@ -16,6 +16,7 @@ public class Main {
 		GestionBaseDeDatos gestion = new GestionBaseDeDatos();
 		Connection conexion = gestion.inicializarLaBase();
 
+		
 		// try{
 		// Statement statement = conexion.createStatement();
 		// statement.executeUpdate("DROP TABLE IF EXISTS PARTIDA");

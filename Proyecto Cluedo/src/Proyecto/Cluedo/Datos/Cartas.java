@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 
+
 public class Cartas {
 	
 	//Generamos las variables 

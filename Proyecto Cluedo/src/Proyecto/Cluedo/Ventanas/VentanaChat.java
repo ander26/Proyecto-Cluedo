@@ -56,6 +56,7 @@ import Proyecto.Cluedo.Logica.Jugador;
 
 public class VentanaChat extends JFrame {
 
+	
 	private JLabel usuariosLinea;
 
 	private int contadorUsuarios = 0;

@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Chat {
 
+	
 	private String mensaje;
 	
 	private Date fechaEnvio;

@@ -74,6 +74,7 @@ public class Partida {
 
 	
 	
+	
 	public boolean isAccion() {
 		return accion;
 	}

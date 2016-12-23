@@ -1,5 +1,6 @@
 package Proyecto.Cluedo.Datos;
 
+
 public class Notas {
 
 	private int linea;

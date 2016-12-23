@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 public class VentanaLogo extends JFrame {
 
+	
 	private ImageIcon imagenLogo;
 	
 	public static void main (String [] args){

@@ -11,6 +11,7 @@ import javax.swing.Timer;
 
 public class Animacion {
 
+	
 	public static final int TIEMPO = 1200;
 
 	private JPanel panel;

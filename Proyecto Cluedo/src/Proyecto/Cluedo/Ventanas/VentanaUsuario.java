@@ -38,6 +38,7 @@ import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
 public class VentanaUsuario extends JFrame {
 
+	
 	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
 
 	private LabelPerfil labelPerfil;

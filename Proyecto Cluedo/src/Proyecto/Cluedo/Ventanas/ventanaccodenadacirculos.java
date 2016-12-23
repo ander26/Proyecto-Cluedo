@@ -46,6 +46,7 @@ public class ventanaccodenadacirculos extends JFrame {
 			p.add(a);
 
 		}
+
 		
 		for (int j = 0; j < arrpuertas.length; j++) {
 			JLabel b = new JLabel();

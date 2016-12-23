@@ -24,6 +24,7 @@ import com.sun.image.codec.*;
 
 
 public class CartasTorcidas extends JLabel {
+	
 	double beta;
 	boolean oscuro=false;
 	private String nombre;

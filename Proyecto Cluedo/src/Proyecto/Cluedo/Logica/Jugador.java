@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+
 public class Jugador {
 
 	private ArrayList<ArrayList<String>> MisCartas;

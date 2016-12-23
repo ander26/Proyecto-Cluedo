@@ -42,6 +42,8 @@ public class Panelcirculos extends JPanel{
 			hm.put(p, "morado");
 		}
 	}
+	
+	
 	@Override
 	public void paint(Graphics g) {
 		BufferedImage imagen;
