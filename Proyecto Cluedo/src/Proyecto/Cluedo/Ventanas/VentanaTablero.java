@@ -500,7 +500,7 @@ public class VentanaTablero extends JFrame {
 			if (base.obtenerAccion(conexion, p)) {
 
 			} else {
-				traineraUPV.setLocation(reajustarAnchura(posicion+500,anchura), reajustarAltura(510, altura));
+				traineraUPV.setLocation((reajustarAnchura(posicion,anchura)+2*traineraUPV.getWidth()), reajustarAltura(510, altura));
 			}
 		}
 		
@@ -1316,7 +1316,7 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura),
+								traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())),
 										trainera.getY());
 
 								traineraUPV.setIcon(icono);
@@ -1333,7 +1333,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setLocation(reajustarAnchura(31, anchura), trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura),
+								traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())),
 										trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
@@ -1383,7 +1383,7 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura),
+								traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())),
 										trainera.getY());
 
 								traineraUPV.setIcon(icono);
@@ -1400,7 +1400,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura),
+								traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())),
 										trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
@@ -1496,7 +1496,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura),
+								traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())),
 										trainera.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
@@ -1529,8 +1529,8 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura),
-										trainera.getY());
+								traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())),
+										traineraUPV.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1563,8 +1563,8 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
 								trainera.repaint();
-								traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura),
-										trainera.getY());
+								traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())),
+										traineraUPV.getY());
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion4(true);
@@ -1587,6 +1587,7 @@ public class VentanaTablero extends JFrame {
 								trainera.setIcon(icono);
 
 								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
+								
 								try {
 
 									imagen = new ImageIcon(
@@ -1596,8 +1597,8 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura),
-										trainera.getY());
+								traineraUPV.setLocation((trainera.getX() +(2*traineraUPV.getWidth())),
+										traineraUPV.getY());
 
 								traineraUPV.setIcon(icono);
 
@@ -1819,7 +1820,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarAltura(int coordenada, int altura) {
 
-		double escala = altura / (double) ALTURA;
+		double escala =(double) altura / (double) ALTURA;
 
 		return (int) (coordenada * escala);
 
@@ -1827,7 +1828,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarAnchura(int coordenada, int anchura) {
 
-		double escala = anchura / (double) ANCHURA;
+		double escala = (double)anchura / (double) ANCHURA;
 
 		return (int) (coordenada * escala);
 
@@ -1835,7 +1836,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarTamañoAlt(int tamañoY, int altura) {
 
-		double escala = altura / (double) ALTURA;
+		double escala = (double)altura / (double) ALTURA;
 
 		return (int) (tamañoY * escala);
 
@@ -1843,7 +1844,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarTamañoAnch(int tamañoX, int anchura) {
 
-		double escala = anchura / (double) ANCHURA;
+		double escala = (double)anchura / (double) ANCHURA;
 
 		return (int) (tamañoX * escala);
 
@@ -1870,7 +1871,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarTamañoAltMaider(int tamañoY, int altura) {
 
-		double escala = altura / (double) ALTURAM;
+		double escala = (double)altura / (double) ALTURAM;
 
 		return (int) (tamañoY * escala);
 
@@ -1878,7 +1879,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarAlturaMaider(int coordenada, int altura) {
 
-		double escala = altura / (double) ALTURAM;
+		double escala = (double)altura / (double) ALTURAM;
 
 		return (int) (coordenada * escala);
 

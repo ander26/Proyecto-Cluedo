@@ -272,10 +272,10 @@ public class hiloPìntado extends Thread {
 
 			int posicion = base.posicionBarco(conexion, p);
 
-			trainera.setBounds(posicion, reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
+			trainera.setBounds(reajustarAnchura(posicion, anchura), reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
 					reajustarTamañoAlt(95, altura));
 
-			traineraUPV.setBounds(reajustarAnchura(posicion + 500, anchura), reajustarAltura(510, altura),
+			traineraUPV.setBounds((reajustarAnchura(posicion,anchura)+2*traineraUPV.getWidth()), reajustarAltura(510, altura),
 					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
 		}
 
@@ -301,25 +301,20 @@ public class hiloPìntado extends Thread {
 							traineraUPV.repaint();
 
 							try {
-								Thread.sleep(10);
+								Thread.sleep(100);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 
-						try {
-							Thread.sleep(20);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+
 
 						int posicion = base.posicionBarco(conexion, p);
 
-						trainera.setLocation(posicion, trainera.getY());
+						trainera.setLocation(reajustarAnchura(posicion, anchura), trainera.getY());
 
-						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, entrada), traineraUPV.getY());
+						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())), traineraUPV.getY());
 
 						seguir = true;
 
@@ -334,25 +329,20 @@ public class hiloPìntado extends Thread {
 							traineraUPV.repaint();
 
 							try {
-								Thread.sleep(10);
+								Thread.sleep(100);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 
-						try {
-							Thread.sleep(20);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						
 
 						int posicion = base.posicionBarco(conexion, p);
 
-						trainera.setLocation(posicion, trainera.getY());
+						trainera.setLocation(reajustarAnchura(posicion, anchura), trainera.getY());
 
-						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), traineraUPV.getY());
+						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())) , traineraUPV.getY());
 
 						seguir = true;
 					}
@@ -384,7 +374,7 @@ public class hiloPìntado extends Thread {
 						icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 								traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), trainera.getY());
+						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())), trainera.getY());
 
 						traineraUPV.setIcon(icono);
 
@@ -415,7 +405,7 @@ public class hiloPìntado extends Thread {
 						icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 								traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), trainera.getY());
+						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())), trainera.getY());
 
 						traineraUPV.setIcon(icono);
 
@@ -749,13 +739,27 @@ public class hiloPìntado extends Thread {
 					hecho1 = false;
 
 					if (orientacion) {
-						trainera.setLocation(trainera.getX() - 10, trainera.getY());
+						
+						if (anchura<ANCHURA){
+						trainera.setLocation(trainera.getX() - 1, trainera.getY());
 
 						trainera.repaint();
 
-						traineraUPV.setLocation(traineraUPV.getX() - 10, trainera.getY());
+						traineraUPV.setLocation(traineraUPV.getX() - 1, trainera.getY());
 
 						traineraUPV.repaint();
+						}else{
+							
+							trainera.setLocation(trainera.getX() - 2, trainera.getY());
+
+							trainera.repaint();
+
+							traineraUPV.setLocation(traineraUPV.getX() - 2, trainera.getY());
+
+							traineraUPV.repaint();
+								
+							
+						}
 
 						if (trainera.getX() <= reajustarAnchura(-250, anchura)) {
 							trainera.setLocation(anchura, trainera.getY());
@@ -768,14 +772,28 @@ public class hiloPìntado extends Thread {
 						}
 
 					} else {
-						trainera.setLocation(trainera.getX() + 10, trainera.getY());
+						
+						if (anchura<ANCHURA){
+						trainera.setLocation(trainera.getX() + 1, trainera.getY());
 
 						trainera.repaint();
 
-						traineraUPV.setLocation(traineraUPV.getX() + 10, trainera.getY());
+						traineraUPV.setLocation(traineraUPV.getX() + 1, trainera.getY());
 
 						traineraUPV.repaint();
 
+						}else{
+							
+							trainera.setLocation(trainera.getX() + 2, trainera.getY());
+
+							trainera.repaint();
+
+							traineraUPV.setLocation(traineraUPV.getX() + 2, trainera.getY());
+
+							traineraUPV.repaint();
+							
+							
+						}
 						if (trainera.getX() >= anchura) {
 							trainera.setLocation(reajustarAnchura(-250, anchura), trainera.getY());
 							trainera.repaint();
@@ -812,7 +830,7 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarAltura(int coordenada, int altura) {
 
-		double escala = altura / (double) ALTURA;
+		double escala = (double)altura / (double) ALTURA;
 
 		return (int) (coordenada * escala);
 
@@ -828,7 +846,7 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarAlturaMaider(int coordenada, int altura) {
 
-		double escala = altura / (double) ALTURAM;
+		double escala = (double)altura / (double) ALTURAM;
 
 		return (int) (coordenada * escala);
 
@@ -836,7 +854,7 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarTamañoAlt(int tamañoY, int altura) {
 
-		double escala = altura / (double) ALTURA;
+		double escala = (double)altura / (double) ALTURA;
 
 		return (int) (tamañoY * escala);
 
@@ -844,7 +862,7 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarTamañoAnch(int tamañoX, int anchura) {
 
-		double escala = anchura / (double) ANCHURA;
+		double escala = (double)anchura / (double) ANCHURA;
 
 		return (int) (tamañoX * escala);
 
