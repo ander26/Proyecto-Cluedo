@@ -425,6 +425,9 @@ public class VentanaBuscarPartida extends JFrame {
 					}
 			    
 		    	  
+		      }else{
+		    	  VentanaBuscarPartida ventana = new VentanaBuscarPartida(conexion, u);
+		    	  ventana.setVisible(true);
 		      }
 		      
 		    }

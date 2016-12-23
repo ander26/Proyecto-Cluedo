@@ -385,16 +385,16 @@ public class VentanaTablero extends JFrame {
 		JLabel trainera = new JLabel();
 
 		int posicion = base.posicionBarco(conexion, p);
+		
+		trainera.setSize(reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(95, altura));
 
 		if (posicion == -2000) {
-			trainera.setBounds(anchura, reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
-					reajustarTamañoAlt(95, altura));
+			trainera.setLocation(anchura, reajustarAltura(510, altura));
 		} else {
 			if (base.obtenerAccion(conexion, p)) {
 
 			} else {
-				trainera.setBounds(reajustarAnchura(posicion, anchura), reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
-						reajustarTamañoAlt(95, altura));
+				trainera.setLocation(reajustarAnchura(posicion, anchura), reajustarAltura(510, altura));
 			}
 		}
 
@@ -491,16 +491,16 @@ public class VentanaTablero extends JFrame {
 		rio.setIcon(icono);
 
 		JLabel traineraUPV = new JLabel();
+		
+		traineraUPV.setSize(reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(95, altura));
 
 		if (posicion == -2000) {
-			traineraUPV.setBounds(anchura+reajustarTamañoAnch(500, altura), reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
-					reajustarTamañoAlt(95, altura));
+			traineraUPV.setLocation(anchura+reajustarTamañoAnch(500, altura), reajustarAltura(510, altura));
 		} else {
 			if (base.obtenerAccion(conexion, p)) {
 
 			} else {
-				trainera.setBounds(reajustarAnchura(posicion, anchura)+reajustarTamañoAnch(500, anchura), reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
-						reajustarTamañoAlt(95, altura));
+				traineraUPV.setLocation(reajustarAnchura(posicion, anchura)+reajustarTamañoAnch(500, anchura), reajustarAltura(510, altura));
 			}
 		}
 		
