@@ -495,7 +495,7 @@ public class VentanaTablero extends JFrame {
 		traineraUPV.setSize(reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(95, altura));
 
 		if (posicion == -2000) {
-			traineraUPV.setLocation(anchura+500, reajustarAltura(510, altura));
+			traineraUPV.setLocation(anchura+(2*traineraUPV.getWidth()), reajustarAltura(510, altura));
 		} else {
 			if (base.obtenerAccion(conexion, p)) {
 
