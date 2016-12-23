@@ -155,7 +155,7 @@ public class VentanaTablero extends JFrame {
 
 		JPanel panelSemaforo = new JPanel();
 
-		jugador1.setBounds(reajustarAnchura(216 - 28, anchura), reajustarAlturaMaider(637 - 16, altura),
+		jugador1.setBounds(reajustarAnchura(86 - 28, anchura), reajustarAlturaMaider(414 - 16, altura),
 				reajustarTamañoAnch(50, anchura), reajustarTamañoAltMaider(60, altura));
 
 		try {
@@ -495,12 +495,12 @@ public class VentanaTablero extends JFrame {
 		traineraUPV.setSize(reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(95, altura));
 
 		if (posicion == -2000) {
-			traineraUPV.setLocation(anchura+reajustarTamañoAnch(500, altura), reajustarAltura(510, altura));
+			traineraUPV.setLocation(anchura+500, reajustarAltura(510, altura));
 		} else {
 			if (base.obtenerAccion(conexion, p)) {
 
 			} else {
-				traineraUPV.setLocation(reajustarAnchura(posicion, anchura)+reajustarTamañoAnch(500, anchura), reajustarAltura(510, altura));
+				traineraUPV.setLocation(reajustarAnchura(posicion+500,anchura), reajustarAltura(510, altura));
 			}
 		}
 		
@@ -1277,7 +1277,7 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				if (barcoX > reajustarAnchura(-10, anchura) && barcoX < reajustarAnchura(150, anchura)) {
+				if (barcoX > reajustarAnchura(-110, anchura) && barcoX < reajustarAnchura(250, anchura)) {
 					if (jugador1.getX() == reajustarAnchura(216 - 28, anchura)
 							&& jugador1.getY() == reajustarAlturaMaider(637 - 16, altura)) {
 
@@ -1477,7 +1477,7 @@ public class VentanaTablero extends JFrame {
 					//
 					//
 					// }
-				} else if (barcoX > reajustarAnchura(1190, anchura) && barcoX < reajustarAnchura(1390, anchura)) {
+				} else if (barcoX > reajustarAnchura(1090, anchura) && barcoX < reajustarAnchura(1490, anchura)) {
 
 					if (jugador1.getX() == reajustarAnchura(1391 - 28, anchura)
 							&& jugador1.getY() == reajustarAlturaMaider(397 - 16, altura)) {

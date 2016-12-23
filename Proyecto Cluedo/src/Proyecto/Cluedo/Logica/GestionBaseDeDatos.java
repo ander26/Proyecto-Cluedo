@@ -2284,8 +2284,7 @@ public class GestionBaseDeDatos {
 
 			statement.executeUpdate(SQL);
 
-			// logger.log(Level.INFO, "Se ha modificado correctamente la
-			// orientacion");
+			 logger.log(Level.INFO, "Se ha modificado correctamente la orientacion"+posicion);
 
 		} catch (Exception q) {
 

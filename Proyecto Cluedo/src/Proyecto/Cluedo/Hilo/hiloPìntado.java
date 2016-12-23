@@ -14,8 +14,8 @@ import Proyecto.Cluedo.Ventanas.Panelcirculos;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
 public class hiloPìntado extends Thread {
-	
-	private int contador =0;
+
+	private int contador = 0;
 
 	private boolean acabado = true;
 
@@ -290,8 +290,8 @@ public class hiloPìntado extends Thread {
 				if (orientacion == giro) {
 
 					if (orientacion) {
-						
-						while (trainera.getX() > reajustarAnchura(145, anchura) ) {
+
+						while (trainera.getX() > reajustarAnchura(145, anchura)) {
 							trainera.setLocation(trainera.getX() - 10, trainera.getY());
 
 							trainera.repaint();
@@ -299,7 +299,7 @@ public class hiloPìntado extends Thread {
 							traineraUPV.setLocation(traineraUPV.getX() - 10, traineraUPV.getY());
 
 							traineraUPV.repaint();
-							
+
 							try {
 								Thread.sleep(10);
 							} catch (InterruptedException e) {
@@ -307,20 +307,22 @@ public class hiloPìntado extends Thread {
 								e.printStackTrace();
 							}
 						}
-						
+
 						try {
-							Thread.sleep(5000);
+							Thread.sleep(20);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
-						trainera.setLocation(base.posicionBarco(conexion, p), trainera.getY());
-						
-						traineraUPV.setLocation(trainera.getX()+500, traineraUPV.getY());
-						
-						seguir=true;
-						
+
+						int posicion = base.posicionBarco(conexion, p);
+
+						trainera.setLocation(posicion, trainera.getY());
+
+						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, entrada), traineraUPV.getY());
+
+						seguir = true;
+
 					} else {
 						while ((trainera.getX() < reajustarAnchura(1300, anchura))) {
 							trainera.setLocation(trainera.getX() + 10, trainera.getY());
@@ -330,7 +332,7 @@ public class hiloPìntado extends Thread {
 							traineraUPV.setLocation(traineraUPV.getX() + 10, traineraUPV.getY());
 
 							traineraUPV.repaint();
-							
+
 							try {
 								Thread.sleep(10);
 							} catch (InterruptedException e) {
@@ -338,18 +340,21 @@ public class hiloPìntado extends Thread {
 								e.printStackTrace();
 							}
 						}
-						
+
 						try {
 							Thread.sleep(20);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
-						
-						trainera.setLocation(base.posicionBarco(conexion, p), trainera.getY());
-						
-						traineraUPV.setLocation(trainera.getX()+500, traineraUPV.getY());
+
+						int posicion = base.posicionBarco(conexion, p);
+
+						trainera.setLocation(posicion, trainera.getY());
+
+						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), traineraUPV.getY());
+
+						seguir = true;
 					}
 
 				} else {
@@ -382,8 +387,8 @@ public class hiloPìntado extends Thread {
 						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), trainera.getY());
 
 						traineraUPV.setIcon(icono);
-						
-						seguir=false;
+
+						seguir = false;
 
 					} else {
 
@@ -413,8 +418,8 @@ public class hiloPìntado extends Thread {
 						traineraUPV.setLocation(reajustarAnchura(trainera.getX() + 500, anchura), trainera.getY());
 
 						traineraUPV.setIcon(icono);
-						
-						seguir=false;
+
+						seguir = false;
 
 					}
 					orientacion = !(orientacion);
@@ -782,15 +787,15 @@ public class hiloPìntado extends Thread {
 						}
 
 					}
-					
-					
-					if (contador ==20){
 
-					base.modificarBarco(conexion, p, desajustarX(trainera.getX(), entrada));
-				}
-					
-					contador++;
+					if (contador > 50) {
+
+						base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
+					} else {
+
+						contador++;
 					}
+				}
 			}
 			//
 			// try{
@@ -844,12 +849,12 @@ public class hiloPìntado extends Thread {
 		return (int) (tamañoX * escala);
 
 	}
-	
-	public int desajustarX (int coordenada, int anchura){
-		
-		double escala= ANCHURA/(double) anchura;
-		
-		return (int) (coordenada*escala);
+
+	public int desajustarX(int coordenada, int anchura) {
+
+		double escala = (double)ANCHURA /(double)  anchura;
+
+		return (int) (coordenada * escala);
 	}
 
 	public void acabar() {
