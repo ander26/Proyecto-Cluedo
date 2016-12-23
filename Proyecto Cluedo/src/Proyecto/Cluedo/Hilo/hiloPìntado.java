@@ -291,7 +291,7 @@ public class hiloPìntado extends Thread {
 
 					if (orientacion) {
 						
-						while (trainera.getX() > reajustarAnchura(145, ANCHURA) ) {
+						while (trainera.getX() > reajustarAnchura(145, anchura) ) {
 							trainera.setLocation(trainera.getX() - 10, trainera.getY());
 
 							trainera.repaint();
@@ -322,7 +322,7 @@ public class hiloPìntado extends Thread {
 						seguir=true;
 						
 					} else {
-						while ((trainera.getX() < reajustarAnchura(1300, ANCHURA))) {
+						while ((trainera.getX() < reajustarAnchura(1300, anchura))) {
 							trainera.setLocation(trainera.getX() + 10, trainera.getY());
 
 							trainera.repaint();
@@ -340,11 +340,12 @@ public class hiloPìntado extends Thread {
 						}
 						
 						try {
-							Thread.sleep(15000);
+							Thread.sleep(20);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						
 						
 						trainera.setLocation(base.posicionBarco(conexion, p), trainera.getY());
 						
@@ -551,13 +552,13 @@ public class hiloPìntado extends Thread {
 			if (seguir) {
 				if (animacion1) {
 
-					if (ficha.getY() > reajustarAltura(520, ALTURA)) {
+					if (ficha.getY() > reajustarAltura(520, altura)) {
 						ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
 						ficha.repaint();
 					} else {
 
 						System.out.println(ficha.getX());
-						if (ficha.getX() < reajustarAnchura(1300, ANCHURA)) {
+						if (ficha.getX() < reajustarAnchura(1300, anchura)) {
 							trainera.setLocation(trainera.getX() + 10, trainera.getY());
 
 							trainera.repaint();
@@ -571,20 +572,20 @@ public class hiloPìntado extends Thread {
 							ficha.repaint();
 
 						} else {
-							if (ficha.getY() > reajustarAlturaMaider(397 - 16, ALTURA)) {
+							if (ficha.getY() > reajustarAlturaMaider(397 - 16, altura)) {
 								ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
 
 								ficha.repaint();
 
 							} else {
 
-								if (ficha.getX() > reajustarAnchura(1391 - 25, ANCHURA)) {
+								if (ficha.getX() > reajustarAnchura(1391 - 25, anchura)) {
 									ficha.setLocation(ficha.getX() - 1, ficha.getY());
 								} else {
 									animacion1 = false;
 									base.modificarAccion(conexion, p, false);
-									ficha.setLocation(reajustarAnchura(1391 - 28, ANCHURA),
-											reajustarAlturaMaider(397 - 16, ALTURA));
+									ficha.setLocation(reajustarAnchura(1391 - 28, anchura),
+											reajustarAlturaMaider(397 - 16, altura));
 									ficha.repaint();
 								}
 							}
@@ -593,19 +594,19 @@ public class hiloPìntado extends Thread {
 					}
 				} else if (animacion2) {
 
-					if (ficha.getX() < reajustarAnchura(1383, ANCHURA) && !(hecho)) {
+					if (ficha.getX() < reajustarAnchura(1383, anchura) && !(hecho)) {
 						ficha.setLocation(ficha.getX() + 1, ficha.getY());
 						ficha.repaint();
 
 					} else {
 						hecho = true;
-						if (ficha.getY() < reajustarAltura(520, ALTURA)) {
+						if (ficha.getY() < reajustarAltura(520, altura)) {
 
 							ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
 							ficha.repaint();
 						} else {
 
-							if (ficha.getX() > reajustarAnchura(145, ANCHURA) && !(hecho1)) {
+							if (ficha.getX() > reajustarAnchura(145, anchura) && !(hecho1)) {
 								trainera.setLocation(trainera.getX() - 10, trainera.getY());
 
 								trainera.repaint();
@@ -622,14 +623,14 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() < reajustarAlturaMaider(637 - 2, ALTURA)) {
+								if (ficha.getY() < reajustarAlturaMaider(637 - 2, altura)) {
 									ficha.setLocation(ficha.getX() + 2, ficha.getY() + 5);
 									ficha.repaint();
 								} else {
 									animacion2 = false;
 									base.modificarAccion(conexion, p, false);
-									ficha.setLocation(reajustarAnchura(216 - 28, ANCHURA),
-											reajustarAlturaMaider(637 - 16, ALTURA));
+									ficha.setLocation(reajustarAnchura(216 - 28, anchura),
+											reajustarAlturaMaider(637 - 16, altura));
 									ficha.repaint();
 								}
 							}
@@ -639,12 +640,12 @@ public class hiloPìntado extends Thread {
 
 				} else if (animacion3) {
 
-					if (ficha.getY() < reajustarAltura(520, ALTURA)) {
+					if (ficha.getY() < reajustarAltura(520, altura)) {
 						ficha.setLocation(ficha.getX() + 4, ficha.getY() + 5);
 						ficha.repaint();
 					} else {
 
-						if (ficha.getX() < reajustarAnchura(1300, ANCHURA) && (!hecho)) {
+						if (ficha.getX() < reajustarAnchura(1300, anchura) && (!hecho)) {
 							trainera.setLocation(trainera.getX() + 10, trainera.getY());
 
 							trainera.repaint();
@@ -661,21 +662,21 @@ public class hiloPìntado extends Thread {
 
 							hecho = true;
 
-							if (ficha.getY() < reajustarAlturaMaider(673 - 16, ALTURA)) {
+							if (ficha.getY() < reajustarAlturaMaider(673 - 16, altura)) {
 								ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
 
 								ficha.repaint();
 
 							} else {
 
-								if (ficha.getX() < reajustarAnchura(1251 - 25, ANCHURA)) {
+								if (ficha.getX() < reajustarAnchura(1251 - 25, anchura)) {
 
 									ficha.setLocation(ficha.getX() + 1, ficha.getY());
 								} else {
 									animacion3 = false;
 									base.modificarAccion(conexion, p, false);
-									ficha.setLocation(reajustarAnchura(1251 - 28, ANCHURA),
-											reajustarAlturaMaider(673 - 16, ALTURA));
+									ficha.setLocation(reajustarAnchura(1251 - 28, anchura),
+											reajustarAlturaMaider(673 - 16, altura));
 									ficha.repaint();
 
 								}
@@ -686,19 +687,19 @@ public class hiloPìntado extends Thread {
 
 				} else if (animacion4) {
 
-					if (ficha.getX() > reajustarAnchura(1220, ANCHURA) && !(hecho)) {
+					if (ficha.getX() > reajustarAnchura(1220, anchura) && !(hecho)) {
 						ficha.setLocation(ficha.getX() - 1, ficha.getY());
 						ficha.repaint();
 
 					} else {
 						hecho = true;
-						if (ficha.getY() > reajustarAltura(520, ALTURA)) {
+						if (ficha.getY() > reajustarAltura(520, altura)) {
 
 							ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
 							ficha.repaint();
 						} else {
 
-							if (ficha.getX() > reajustarAnchura(145, ANCHURA) && !(hecho1)) {
+							if (ficha.getX() > reajustarAnchura(145, anchura) && !(hecho1)) {
 								trainera.setLocation(trainera.getX() - 10, trainera.getY());
 
 								trainera.repaint();
@@ -715,19 +716,19 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() > reajustarAlturaMaider(414 - 16, ALTURA)) {
+								if (ficha.getY() > reajustarAlturaMaider(414 - 16, altura)) {
 									ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
 									ficha.repaint();
 								} else {
 
-									if (ficha.getX() > reajustarAnchura(86 - 28, ANCHURA)) {
+									if (ficha.getX() > reajustarAnchura(86 - 28, anchura)) {
 										ficha.setLocation(ficha.getX() - 1, ficha.getY());
 										ficha.repaint();
 									} else {
 										animacion4 = false;
 										base.modificarAccion(conexion, p, false);
-										ficha.setLocation(reajustarAnchura(86 - 28, ANCHURA),
-												reajustarAlturaMaider(414 - 16, ALTURA));
+										ficha.setLocation(reajustarAnchura(86 - 28, anchura),
+												reajustarAlturaMaider(414 - 16, altura));
 										ficha.repaint();
 									}
 								}
@@ -751,12 +752,12 @@ public class hiloPìntado extends Thread {
 
 						traineraUPV.repaint();
 
-						if (trainera.getX() <= reajustarAnchura(-250, ANCHURA)) {
+						if (trainera.getX() <= reajustarAnchura(-250, anchura)) {
 							trainera.setLocation(anchura, trainera.getY());
 							trainera.repaint();
 						}
 
-						if (traineraUPV.getX() <= reajustarAnchura(-250, ANCHURA)) {
+						if (traineraUPV.getX() <= reajustarAnchura(-250, anchura)) {
 							traineraUPV.setLocation(anchura, traineraUPV.getY());
 							traineraUPV.repaint();
 						}
@@ -771,12 +772,12 @@ public class hiloPìntado extends Thread {
 						traineraUPV.repaint();
 
 						if (trainera.getX() >= anchura) {
-							trainera.setLocation(reajustarAnchura(-250, ANCHURA), trainera.getY());
+							trainera.setLocation(reajustarAnchura(-250, anchura), trainera.getY());
 							trainera.repaint();
 						}
 
 						if (traineraUPV.getX() >= anchura) {
-							traineraUPV.setLocation(reajustarAnchura(-250, ANCHURA), traineraUPV.getY());
+							traineraUPV.setLocation(reajustarAnchura(-250, anchura), traineraUPV.getY());
 							traineraUPV.repaint();
 						}
 
@@ -814,7 +815,7 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarAnchura(int coordenada, int anchura) {
 
-		double escala = anchura / (double) ANCHURA;
+		double escala = (double) anchura / (double) ANCHURA;
 
 		return (int) (coordenada * escala);
 
