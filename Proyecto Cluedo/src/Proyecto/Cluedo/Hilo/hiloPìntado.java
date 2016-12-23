@@ -14,6 +14,8 @@ import Proyecto.Cluedo.Ventanas.Panelcirculos;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
 public class hiloPìntado extends Thread {
+	
+	private int contador =0;
 
 	private boolean acabado = true;
 
@@ -779,9 +781,15 @@ public class hiloPìntado extends Thread {
 						}
 
 					}
+					
+					
+					if (contador ==20){
 
-					base.modificarBarco(conexion, p, trainera.getX());
+					base.modificarBarco(conexion, p, desajustarX(trainera.getX(), entrada));
 				}
+					
+					contador++;
+					}
 			}
 			//
 			// try{
@@ -834,6 +842,13 @@ public class hiloPìntado extends Thread {
 
 		return (int) (tamañoX * escala);
 
+	}
+	
+	public int desajustarX (int coordenada, int anchura){
+		
+		double escala= ANCHURA/(double) anchura;
+		
+		return (int) (coordenada*escala);
 	}
 
 	public void acabar() {

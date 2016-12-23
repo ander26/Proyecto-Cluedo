@@ -393,7 +393,7 @@ public class VentanaTablero extends JFrame {
 			if (base.obtenerAccion(conexion, p)) {
 
 			} else {
-				trainera.setBounds(posicion, reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
+				trainera.setBounds(reajustarAnchura(posicion, anchura), reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
 						reajustarTamañoAlt(95, altura));
 			}
 		}
@@ -492,12 +492,18 @@ public class VentanaTablero extends JFrame {
 
 		JLabel traineraUPV = new JLabel();
 
-		if (base.obtenerAccion(conexion, p)) {
-
+		if (posicion == -2000) {
+			traineraUPV.setBounds(anchura+reajustarTamañoAnch(500, altura), reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
+					reajustarTamañoAlt(95, altura));
 		} else {
-			traineraUPV.setBounds(reajustarAnchura(trainera.getX() + 500, anchura), reajustarAltura(510, altura),
-					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
+			if (base.obtenerAccion(conexion, p)) {
+
+			} else {
+				trainera.setBounds(reajustarAnchura(posicion, anchura)+reajustarTamañoAnch(500, anchura), reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
+						reajustarTamañoAlt(95, altura));
+			}
 		}
+		
 	
 
 		try {
@@ -859,7 +865,12 @@ public class VentanaTablero extends JFrame {
 
 				barcoX = trainera.getX();
 
+				System.out.println(barcoX);
+				
 				hTurno.setPulsado(true);
+				
+				
+				
 				// if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
 				// busquedaposicion ponercircrojos=new busquedaposicion();
 				// fichasrojas=new ArrayList<Point>();

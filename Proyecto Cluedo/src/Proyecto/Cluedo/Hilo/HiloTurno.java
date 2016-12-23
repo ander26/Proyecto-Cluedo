@@ -23,6 +23,8 @@ import Proyecto.Cluedo.Ventanas.VentanaPanel;
 
 public class HiloTurno extends Thread {
 	
+
+	
 	private boolean jugando=true;
 	private GestionBaseDeDatos base;
 	private Partida partida;
