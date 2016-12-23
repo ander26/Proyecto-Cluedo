@@ -23,6 +23,9 @@ import Proyecto.Cluedo.Ventanas.VentanaPanel;
 
 public class HiloTurno extends Thread {
 	
+
+	
+	
 	private boolean jugando=true;
 	private GestionBaseDeDatos base;
 	private Partida partida;
@@ -239,9 +242,9 @@ public class HiloTurno extends Thread {
 				//borrar de la base las cartas enviadas
 				base.borrarCartas(con, partida,CodigoJugadorConTurno );
 				CambiarTurno();
-				pulsado=false;
-				acusar=false;
-				dado=-1;
+				
+				
+
 			}else{
 				while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
 					System.out.println("4 while");
@@ -284,6 +287,8 @@ public class HiloTurno extends Thread {
 					
 					
 				}
+				
+
 			}
 			}
 		}
@@ -310,7 +315,7 @@ public class HiloTurno extends Thread {
 				pulsado=false;
 				acusar=false;
 				dado=-1;
-				
+
 				
 				
 			}

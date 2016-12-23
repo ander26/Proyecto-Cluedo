@@ -6,4 +6,5 @@ public enum TipoCarta {
 	SOSPECHOSO,
 	COMODIN
 	
+	
 }

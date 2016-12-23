@@ -15,6 +15,7 @@ import Proyecto.Cluedo.Ventanas.VentanaCartas;
 public class Propiedades {
 	
 	
+	
 	private static int numTotArmas;
 	private static int numTotLugares;
 	private static int numTotSospechosos;

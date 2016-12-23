@@ -42,11 +42,17 @@ public class Panelcirculos extends JPanel{
 			hm.put(p, "morado");
 		}
 	}
+	
+	
 	@Override
 	public void paint(Graphics g) {
 		BufferedImage imagen;
 		try {
 			imagen = ImageIO.read(getClass().getResource("Imagenes/fondocirculos.png"));
+			
+//			System.out.println(imagen.getWidth());
+//			
+//			System.out.println(imagen.getHeight());
 			
 			Graphics g3=imagen.getGraphics();
 			Graphics2D g2 = (Graphics2D) g;  
@@ -55,7 +61,7 @@ public class Panelcirculos extends JPanel{
 			   String color=hm.get(key);
 			 if(color=="marron"){
 				 g3.setColor(new Color(170,158,117,255));//Color marron
-				 //System.out.println("marron");
+
 				 
 			}else if(color=="verde"){
 				g3.setColor(new Color(24,205,95,255));

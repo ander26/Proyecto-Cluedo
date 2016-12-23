@@ -21,6 +21,7 @@ import Proyecto.Cluedo.Logica.Jugador;
 
 public class chatHilo extends Thread {
 	
+	
 	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
 	
 	private Connection conexion;

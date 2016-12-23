@@ -11,6 +11,7 @@ public class Usuario implements Logineable {
 	
 	//Generamos las variables
 	
+	
 	/**
 	 * Array que contiene las preguntas de seguridad 
 	 */

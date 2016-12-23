@@ -19,6 +19,7 @@ public class artilugio extends JLabel{
 	public String ruta;
 	private String nombre;
 	
+
 	public artilugio(String ruta,String nombre){
 		ImageIcon iconocarta = new ImageIcon(personaje.class.getResource(ruta));	
 		setSize(250,350);

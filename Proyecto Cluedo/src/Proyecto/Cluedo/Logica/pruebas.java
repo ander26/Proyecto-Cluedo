@@ -7,6 +7,7 @@ import java.util.logging.Level;
 
 public class pruebas {
 	public static Point pasarDeDecimalAxy(double x){
+		
 		int num=(int)x;
 		int k=0;
 		double numero=x;		

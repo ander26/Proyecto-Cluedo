@@ -43,6 +43,7 @@ import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 
 public class VentanaLogin extends JFrame {
 
+	
 	private GestionBaseDeDatos gb = new GestionBaseDeDatos();
 
 	/**

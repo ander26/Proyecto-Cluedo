@@ -26,6 +26,7 @@ import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaMenu extends JFrame{
 
+	
 	public VentanaMenu(Connection conexion, Usuario u,GestionBaseDeDatos base){
 		
 		//Inicializamos el frame 

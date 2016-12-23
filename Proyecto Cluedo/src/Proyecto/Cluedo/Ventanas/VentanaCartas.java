@@ -38,6 +38,7 @@ import Proyecto.Cluedo.Logica.Propiedades;
 
 public class VentanaCartas extends JFrame{
 
+	
 //	private JTabbedPane ptabbed=new JTabbedPane();
 	private JPanel pprincipal=new JPanel();
 	private int r=50;

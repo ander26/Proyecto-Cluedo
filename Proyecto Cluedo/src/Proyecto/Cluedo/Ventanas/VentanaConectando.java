@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 
 public class VentanaConectando extends JFrame {
 
+	
 	/**
 	 * Label que contiene la imagen de deusto
 	 */

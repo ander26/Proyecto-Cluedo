@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class VentanaPanel  extends JFrame{
 
 	
+	
 	public static void main (String [] args){
 		
 		

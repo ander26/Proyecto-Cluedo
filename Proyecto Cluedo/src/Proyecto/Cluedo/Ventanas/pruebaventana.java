@@ -8,6 +8,7 @@ import javax.swing.JLayeredPane;
 
 public class pruebaventana extends JFrame{
 
+	
 	public pruebaventana(){
 		
 		setSize(100,100);
