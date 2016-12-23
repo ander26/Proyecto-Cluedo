@@ -52,6 +52,7 @@ public class VentanaUsuario extends JFrame {
 	private static final int ANCHURA = 500;
 
 	private static final int ALTURA = 420;
+	
 
 	private static final int ANCHURALABEL = 235;
 
