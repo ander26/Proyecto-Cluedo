@@ -1420,6 +1420,8 @@ public class VentanaTablero extends JFrame {
 								trainera.setIcon(icono);
 
 								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
+								
+								System.out.println(reajustarAnchura(29,anchura));
 								try {
 
 									imagen = new ImageIcon(
@@ -1875,7 +1877,8 @@ public class VentanaTablero extends JFrame {
 	
 	public int reajustarAlturaPunto(int coordenada,int altura) {
 
-		double escala = pposiciones.getBounds().getHeight()/ 1020;
+		double escala =953/  pposiciones.getBounds().getHeight();
+		
 		System.out.println(pposiciones.getBounds().getHeight()+"pposiciones.getBounds().getHeight()");
 
 		return (int) (coordenada * escala);
@@ -1883,7 +1886,7 @@ public class VentanaTablero extends JFrame {
 	}
 	public int reajustarAnchuraPunto(int coordenada) {
 
-		double escala = pposiciones.getBounds().getWidth() / 1920;
+		double escala = 1920/ pposiciones.getBounds().getWidth() ;
 
 		return (int) (coordenada * escala);
 
