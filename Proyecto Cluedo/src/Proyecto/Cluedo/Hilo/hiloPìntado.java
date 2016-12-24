@@ -601,6 +601,7 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(reajustarAnchura(1391 - 28, anchura),
 											reajustarAlturaMaider(397 - 16, altura));
 									ficha.repaint();
+									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 								}
 							}
 						}
@@ -646,6 +647,7 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(reajustarAnchura(216 - 28, anchura),
 											reajustarAlturaMaider(637 - 16, altura));
 									ficha.repaint();
+									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 								}
 							}
 
@@ -692,6 +694,7 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(reajustarAnchura(1251 - 28, anchura),
 											reajustarAlturaMaider(673 - 16, altura));
 									ficha.repaint();
+									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 
 								}
 							}
@@ -744,6 +747,7 @@ public class hiloPìntado extends Thread {
 										ficha.setLocation(reajustarAnchura(86 - 28, anchura),
 												reajustarAlturaMaider(414 - 16, altura));
 										ficha.repaint();
+										base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 									}
 								}
 							}
