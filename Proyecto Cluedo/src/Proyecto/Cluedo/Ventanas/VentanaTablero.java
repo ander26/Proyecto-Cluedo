@@ -171,9 +171,8 @@ public class VentanaTablero extends JFrame {
 		JLabel jugador1 = new JLabel();
 
 		JPanel panelSemaforo = new JPanel();
-
-		jugador1.setBounds(reajustarAnchura(86 - 28, anchura), reajustarAlturaMaider(414 - 16, altura),
-				reajustarTamañoAnch(50, anchura), reajustarTamañoAltMaider(60, altura));
+		
+		jugador1.setSize(reajustarTamañoAnch(50, anchura), reajustarTamañoAltMaider(60, altura));
 
 		try {
 
@@ -185,9 +184,12 @@ public class VentanaTablero extends JFrame {
 
 		icono = new ImageIcon(
 				imagen.getImage().getScaledInstance(jugador1.getWidth(), jugador1.getHeight(), Image.SCALE_DEFAULT));
+		
+		
 
 		jugador1.setIcon(icono);
 
+		
 		labelDado.setBounds(reajustarAnchura(100, anchura), reajustarAltura(130, altura),
 				reajustarTamañoAnch(80, anchura), reajustarTamañoAlt(80, altura));
 
@@ -518,7 +520,7 @@ public class VentanaTablero extends JFrame {
 			if (base.obtenerAccion(conexion, p)) {
 
 			} else {
-				traineraUPV.setLocation((reajustarAnchura(posicion,anchura)+2*traineraUPV.getWidth()), reajustarAltura(510, altura));
+				traineraUPV.setLocation((reajustarAnchura(posicion,anchura)+(2*traineraUPV.getWidth())), reajustarAltura(510, altura));
 			}
 		}
 		
@@ -537,6 +539,10 @@ public class VentanaTablero extends JFrame {
 				Image.SCALE_DEFAULT));
 
 		traineraUPV.setIcon(icono);
+		
+		
+
+
 
 		// Establecemos el formato
 		//
@@ -655,7 +661,7 @@ public class VentanaTablero extends JFrame {
 					}
 					fichasrojas=new ArrayList<Point>();
 					base.modificarCoordenada(conexion, j,((int)puntoSeleccionado.getX()),((int)puntoSeleccionado.getY()));
-					ObtenerFichaDeJugador(arrjugadores, j).setLocation(reajustarAnchura((int)puntoSeleccionado.getX()-28, anchura),reajustarAlturaMaider((int)puntoSeleccionado.getY()-16,altura));
+					ObtenerFichaDeJugador(arrjugadores, j).setLocation(reajustarAnchuraFicha((int)puntoSeleccionado.getX()-28, anchura),reajustarAlturaFicha((int)puntoSeleccionado.getY()-32,pposiciones.getHeight()));
 				
 					hTurno.CambiarTurno();
 					
@@ -1325,7 +1331,7 @@ public class VentanaTablero extends JFrame {
 
 				if (barcoX > reajustarAnchura(-110, anchura) && barcoX < reajustarAnchura(250, anchura)) {
 					if (jugador1.getX() == reajustarAnchura(216 - 28, anchura)
-							&& jugador1.getY() == reajustarAlturaMaider(637 - 16, altura)) {
+							&& jugador1.getY() == reajustarAlturaFicha(637 - 32, pposiciones.getHeight())) {
 
 						pintar.setSeguir(false);
 
@@ -1392,7 +1398,7 @@ public class VentanaTablero extends JFrame {
 							pintar.setSeguir(true);
 						}
 					} else if (jugador1.getX() == reajustarAnchura(86 - 28, anchura)
-							&& jugador1.getY() == reajustarAlturaMaider(414 - 16, altura)) {
+							&& jugador1.getY() == reajustarAlturaFicha(414 - 32, pposiciones.getHeight())) {
 
 						pintar.setSeguir(false);
 
@@ -1528,7 +1534,7 @@ public class VentanaTablero extends JFrame {
 				} else if (barcoX > reajustarAnchura(1090, anchura) && barcoX < reajustarAnchura(1490, anchura)) {
 
 					if (jugador1.getX() == reajustarAnchura(1391 - 28, anchura)
-							&& jugador1.getY() == reajustarAlturaMaider(397 - 16, altura)) {
+							&& jugador1.getY() == reajustarAlturaFicha(397 - 32, pposiciones.getHeight())) {
 
 						pintar.setSeguir(false);
 
@@ -1595,7 +1601,7 @@ public class VentanaTablero extends JFrame {
 							pintar.setSeguir(true);
 						}
 					} else if (jugador1.getX() == reajustarAnchura(1251 - 28, anchura)
-							&& jugador1.getY() == reajustarAlturaMaider(673 - 16, altura)) {
+							&& jugador1.getY() == reajustarAlturaFicha(673 - 32, pposiciones.getHeight())) {
 
 						pintar.setSeguir(false);
 
@@ -1877,7 +1883,7 @@ public class VentanaTablero extends JFrame {
 	
 	public int reajustarAlturaPunto(int coordenada,int altura) {
 
-		double escala =953/  pposiciones.getBounds().getHeight();
+		double escala =953 /  pposiciones.getBounds().getHeight();
 		
 		System.out.println(pposiciones.getBounds().getHeight()+"pposiciones.getBounds().getHeight()");
 
@@ -1886,7 +1892,7 @@ public class VentanaTablero extends JFrame {
 	}
 	public int reajustarAnchuraPunto(int coordenada) {
 
-		double escala = 1920/ pposiciones.getBounds().getWidth() ;
+		double escala = 1920 / pposiciones.getBounds().getWidth() ;
 
 		return (int) (coordenada * escala);
 
@@ -1894,7 +1900,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarAnchura(int coordenada, int anchura) {
 
-		double escala = (double)anchura / (double) ANCHURA;
+		double escala = (double) anchura / (double) ANCHURA;
 
 		return (int) (coordenada * escala);
 
@@ -1902,7 +1908,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarTamañoAlt(int tamañoY, int altura) {
 
-		double escala = (double)altura / (double) ALTURA;
+		double escala = (double) altura / (double) ALTURA;
 
 		return (int) (tamañoY * escala);
 
@@ -1910,7 +1916,7 @@ public class VentanaTablero extends JFrame {
 
 	public int reajustarTamañoAnch(int tamañoX, int anchura) {
 
-		double escala = (double)anchura / (double) ANCHURA;
+		double escala = (double) anchura / (double) ANCHURA;
 
 		return (int) (tamañoX * escala);
 
@@ -1968,6 +1974,8 @@ public class VentanaTablero extends JFrame {
 		for (int i = 0; i < arrjug.size(); i++) {
 			arrfichas[i].setLocation(arr[i]);
 		}
+		
+	
 	}
 
 	public Point BuscarPuntoPinchado(int x,int y,int anchura,int altura){
@@ -2006,18 +2014,19 @@ public class VentanaTablero extends JFrame {
 		return false;
 	}
 	
-	public int desajustarX(int coordenada, int anchura) {
+	public int reajustarAlturaFicha(int coordenada, int altura) {
 
-		double escala = (double)ANCHURA /(double)  anchura;
+		double escala = altura / (double) 953;
 
 		return (int) (coordenada * escala);
+
 	}
-	
-	public int desajustarY(int coordenada, int altura) {
+	public int reajustarAnchuraFicha(int coordenada, int anchura) {
 
-		double escala = (double)ALTURAM /(double)  altura;
+		double escala = anchura / (double) 1920;
 
 		return (int) (coordenada * escala);
+
 	}
 
 }
