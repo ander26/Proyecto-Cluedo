@@ -72,7 +72,7 @@ public class VentanaTablero extends JFrame {
 	private static final int ALTURA = 1040;
 
 
-	private int barcoX = -20;
+	private int barcoX = -20000;
 	private ArrayList<Jugador> arrjugadores;
 
 	private static final int ALTURAM = 1020;
@@ -1329,6 +1329,7 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
+				jugador1.setLocation(reajustarAnchura(86 - 28, anchura), reajustarAlturaFicha(414 - 32, pposiciones.getHeight()));
 				if (barcoX > reajustarAnchura(-110, anchura) && barcoX < reajustarAnchura(250, anchura)) {
 					if (jugador1.getX() == reajustarAnchura(216 - 28, anchura)
 							&& jugador1.getY() == reajustarAlturaFicha(637 - 32, pposiciones.getHeight())) {

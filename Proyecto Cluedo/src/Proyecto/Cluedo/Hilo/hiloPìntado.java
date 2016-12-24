@@ -300,7 +300,7 @@ public class hiloPìntado extends Thread {
 					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
 		}
 
-		ficha.setLocation(reajustarAnchura(86 - 28, anchura), reajustarAlturaFicha(414 - 32, panel.getHeight()));
+	
 		
 		while (acabado) {
 
