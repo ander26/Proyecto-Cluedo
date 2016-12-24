@@ -79,6 +79,8 @@ public class hiloPìntado extends Thread {
 	private int altura;
 
 
+	
+	
 	public boolean isAnimacion3() {
 		return animacion3;
 	}
@@ -153,6 +155,8 @@ public class hiloPìntado extends Thread {
 		this.panel=panel;
 
 		this.altura = altura;
+		
+	
 
 		turno = -1;
 	}
@@ -779,7 +783,7 @@ public class hiloPìntado extends Thread {
 
 							trainera.repaint();
 
-							traineraUPV.setLocation(((reajustarAnchura(posi, anchura)+(2*traineraUPV.getWidth())) - 1), trainera.getY());
+							traineraUPV.setLocation(traineraUPV.getX()-1, trainera.getY());
 
 							traineraUPV.repaint();
 								
@@ -815,7 +819,7 @@ public class hiloPìntado extends Thread {
 
 							trainera.repaint();
 
-							traineraUPV.setLocation(((reajustarAnchura(posi2, anchura)+(2*traineraUPV.getWidth())) + 1), trainera.getY());
+							traineraUPV.setLocation(traineraUPV.getX()+1 ,trainera.getY());
 
 							traineraUPV.repaint();
 							
@@ -908,14 +912,14 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarAlturaFicha(int coordenada, int altura) {
 
-		double escala = (double)altura / (double)1020;
+		double escala = altura / (double) 953;
 
 		return (int) (coordenada * escala);
 
 	}
 	public int reajustarAnchuraFicha(int coordenada, int anchura) {
 
-		double escala = (double)anchura / (double)1920;
+		double escala = anchura / (double) 1920;
 
 		return (int) (coordenada * escala);
 
@@ -927,7 +931,7 @@ public class hiloPìntado extends Thread {
 			arr[i]=base.ObtenerCoordenada(conexion, arrjug.get(i));
 		}
 		for(int j=0;j<arrjug.size();j++){
-			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),anchura)-28,reajustarAlturaFicha((int)arr[j].getY(),altura)-16);
+			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX()-28,anchura),reajustarAlturaFicha((int)(arr[j].getY()-32),panel.getHeight()));
 			arrfich[j].setLocation(punto);
 		}
 	}

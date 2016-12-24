@@ -1335,7 +1335,7 @@ public class GestionBaseDeDatos {
 
 	}
 
-	public static double pasarxyAdecimal(int y, int x) {
+	public double pasarxyAdecimal(int y, int x) {
 		int res = y;
 		int k = 0;
 		while (((int) res) > 0) {
