@@ -406,6 +406,7 @@ public class VentanaTablero extends JFrame {
 		trainera.setSize(reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(95, altura));
 
 		if (posicion == -2000) {
+			base.modificarBarco(conexion, p, 1920);
 			trainera.setLocation(anchura, reajustarAltura(510, altura));
 		} else {
 			if (base.obtenerAccion(conexion, p)) {
@@ -937,7 +938,7 @@ public class VentanaTablero extends JFrame {
 
 		hiloPìntado pintar = new hiloPìntado(semaforo, labelDado, labelAcusar, trainera, p, j, conexion, anchura,
 
-				traineraUPV,arrjugadores,arrfichas,anchura,altura,pposiciones);
+				traineraUPV,arrjugadores,arrfichas,altura,pposiciones);
 
 			
 

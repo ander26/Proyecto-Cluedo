@@ -60,15 +60,12 @@ public class hiloPìntado extends Thread {
 	private boolean hecho1 = false;
 
 	private JLabel ficha;
-<<<<<<< HEAD
+
 	
 	private ArrayList<Jugador> arrjug;
 	
 	private JLabel [] arrfich;
 	
-	private int ancho;
-	
-	private int alto;
 	
 	private Panelcirculos panel;
 
@@ -140,7 +137,7 @@ public class hiloPìntado extends Thread {
 
 	public hiloPìntado(JLabel semaforo, JLabel labelDado, JLabel labelAcusar, JLabel trainera, Partida p, Jugador j,
 
-			Connection conexion, int anchura, JLabel traineraUPV,ArrayList<Jugador> arrjug,JLabel [] arrfich,int ancho,int alto,Panelcirculos panel) {
+			Connection conexion, int anchura, JLabel traineraUPV,ArrayList<Jugador> arrjug,JLabel [] arrfich,int altura,Panelcirculos panel) {
 
 		this.semaforo = semaforo;
 		this.labelDado = labelDado;
@@ -153,8 +150,6 @@ public class hiloPìntado extends Thread {
 		this.traineraUPV = traineraUPV;
 		this.arrfich=arrfich;
 		this.arrjug=arrjug;
-		this.ancho=ancho;
-		this.alto=alto;
 		this.panel=panel;
 
 		this.altura = altura;
@@ -773,12 +768,14 @@ public class hiloPìntado extends Thread {
 //
 //						traineraUPV.repaint();
 //						}else{
+						
+						int posi= base.posicionBarco(conexion, p);
 							
-							trainera.setLocation(trainera.getX() - 1, trainera.getY());
+							trainera.setLocation((reajustarAnchura(posi, anchura) - 1), trainera.getY());
 
 							trainera.repaint();
 
-							traineraUPV.setLocation(traineraUPV.getX() - 1, trainera.getY());
+							traineraUPV.setLocation(((reajustarAnchura(posi, anchura)+(2*traineraUPV.getWidth())) - 1), trainera.getY());
 
 							traineraUPV.repaint();
 								
@@ -808,11 +805,13 @@ public class hiloPìntado extends Thread {
 //
 //						}else{
 							
-							trainera.setLocation(trainera.getX() + 1, trainera.getY());
+						int posi2 = base.posicionBarco(conexion, p);
+						
+							trainera.setLocation((reajustarAnchura(posi2, anchura) + 1), trainera.getY());
 
 							trainera.repaint();
 
-							traineraUPV.setLocation(traineraUPV.getX() + 1, trainera.getY());
+							traineraUPV.setLocation(((reajustarAnchura(posi2, anchura)+(2*traineraUPV.getWidth())) + 1), trainera.getY());
 
 							traineraUPV.repaint();
 							
@@ -830,13 +829,10 @@ public class hiloPìntado extends Thread {
 
 					}
 
-					if (contador > 50) {
+					
 
 						base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
-					} else {
-
-						contador++;
-					}
+				
 				}
 			}
 			//
@@ -927,7 +923,7 @@ public class hiloPìntado extends Thread {
 			arr[i]=base.ObtenerCoordenada(conexion, arrjug.get(i));
 		}
 		for(int j=0;j<arrjug.size();j++){
-			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),ancho)-28,reajustarAlturaFicha((int)arr[j].getY(),alto)-16);
+			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),anchura)-28,reajustarAlturaFicha((int)arr[j].getY(),altura)-16);
 			arrfich[j].setLocation(punto);
 		}
 	}
