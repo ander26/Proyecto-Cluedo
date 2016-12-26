@@ -603,7 +603,7 @@ public class hiloPìntado extends Thread {
 							ficha.repaint();
 
 						} else {
-							if (ficha.getY() > reajustarAlturaFicha(397 - 32, panel.getHeight())) {
+							if (ficha.getY() > reajustarAlturaMaider(397 - 16, panel.getHeight())) {
 								ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
 
 								ficha.repaint();
@@ -655,7 +655,7 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() < reajustarAlturaFicha(637 - 32, panel.getHeight())) {
+								if (ficha.getY() < reajustarAlturaMaider(637 - 16, panel.getHeight())) {
 									ficha.setLocation(ficha.getX() + 2, ficha.getY() + 5);
 									ficha.repaint();
 								} else {
@@ -695,7 +695,7 @@ public class hiloPìntado extends Thread {
 
 							hecho = true;
 
-							if (ficha.getY() < reajustarAlturaFicha(673 - 32, panel.getHeight())) {
+							if (ficha.getY() < reajustarAlturaMaider(673 - 16, panel.getHeight())) {
 								ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
 
 								ficha.repaint();
@@ -750,7 +750,7 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() > reajustarAlturaFicha(414 - 32, panel.getHeight())) {
+								if (ficha.getY() > reajustarAlturaMaider(414 - 16, panel.getHeight())) {
 									ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
 									ficha.repaint();
 								} else {

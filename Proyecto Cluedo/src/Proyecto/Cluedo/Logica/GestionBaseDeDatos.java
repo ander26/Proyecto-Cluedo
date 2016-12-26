@@ -2300,8 +2300,8 @@ public class GestionBaseDeDatos {
 			Statement statement = conexion.createStatement();
 
 			statement.executeUpdate(SQL);
-
-			 logger.log(Level.INFO, "Se ha modificado correctamente la orientacion"+posicion);
+//
+//			 logger.log(Level.INFO, "Se ha modificado correctamente la orientacion"+posicion);
 
 		} catch (Exception q) {
 
