@@ -515,12 +515,12 @@ public class VentanaTablero extends JFrame {
 		traineraUPV.setSize(reajustarTamañoAnch(250, anchura),reajustarTamañoAlt(95, altura));
 
 		if (posicion == -2000) {
-			traineraUPV.setLocation(anchura+(2*traineraUPV.getWidth()), reajustarAltura(510, altura));
+			traineraUPV.setLocation(anchura+(2*trainera.getWidth()), reajustarAltura(510, altura));
 		} else {
 			if (base.obtenerAccion(conexion, p)) {
 
 			} else {
-				traineraUPV.setLocation((reajustarAnchura(posicion,anchura)+(2*traineraUPV.getWidth())), reajustarAltura(510, altura));
+				traineraUPV.setLocation((reajustarAnchura(posicion,anchura)+(2*trainera.getWidth())), reajustarAltura(510, altura));
 			}
 		}
 		
@@ -1359,7 +1359,7 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								trainera.setLocation(reajustarAnchura(31, anchura), trainera.getY());
+								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
 								try {
 
 									imagen = new ImageIcon(
@@ -1384,7 +1384,7 @@ public class VentanaTablero extends JFrame {
 								
 							} else {
 
-								trainera.setLocation(reajustarAnchura(31, anchura), trainera.getY());
+								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
 								trainera.repaint();
 								traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())),
 										trainera.getY());
