@@ -785,12 +785,12 @@ public class hiloPìntado extends Thread {
 							trainera.setLocation((reajustarAnchura(posi, anchura) - 1), trainera.getY());
 
 							trainera.repaint();
-							if (posi<(anchura-(2*reajustarAnchura(250, anchura)))){
+							if (reajustarAnchura(posi,anchura)<(anchura-(2*reajustarAnchura(250, anchura)))){
 							traineraUPV.setLocation(((reajustarAnchura(posi, anchura)+(2*traineraUPV.getWidth())) - 1), trainera.getY());
 
 							traineraUPV.repaint();
 					}else{
-							traineraUPV.setLocation(traineraUPV.getX()-1, trainera.getY());
+							traineraUPV.setLocation(traineraUPV.getX()-2, trainera.getY());
 
 							traineraUPV.repaint();}
 								
@@ -826,11 +826,11 @@ public class hiloPìntado extends Thread {
 
 							trainera.repaint();
 
-							if (posi2<anchura-2*reajustarAnchura(250, anchura)){
+							if (reajustarAnchura(posi2, anchura)<anchura-2*reajustarAnchura(250, anchura)){
 							traineraUPV.setLocation(((reajustarAnchura(posi2, anchura)+(2*traineraUPV.getWidth())) + 1), trainera.getY());
 
 							traineraUPV.repaint();}else{
-								traineraUPV.setLocation(traineraUPV.getX()+1, trainera.getY());
+								traineraUPV.setLocation(traineraUPV.getX()+2, trainera.getY());
 
 								traineraUPV.repaint();
 							}
