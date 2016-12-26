@@ -90,7 +90,7 @@ public class VentanaTablero extends JFrame {
 	// }
 
 	public VentanaTablero(Connection conexion, Jugador j, Usuario u, GestionBaseDeDatos base, Partida p,
-			Propiedades prop) {
+			Propiedades prop,boolean inicio) {
 
 		arrfichas[0]=Label1;
 		arrfichas[1]=Label2;
@@ -980,6 +980,8 @@ public class VentanaTablero extends JFrame {
 			traineraUPV.setIcon(icono);
 		}
 
+		pintar.setInicio(inicio);
+		
 
 		// if (base.obtenerOrientacion(conexion, p)){
 		// pintar.setOrientacion(true);

@@ -73,7 +73,7 @@ public class comprobador extends Thread {
 			    window.dispose();
 			}
 		
-		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop);
+		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop,true);
 		 tablero.setVisible(true);
 		
 	}

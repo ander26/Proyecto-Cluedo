@@ -285,7 +285,7 @@ public class VentanaBuscarPartida extends JFrame {
 		       
 		      Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresActual(),conexion,gestion,p);
 				
-		      VentanaTablero ventana = new VentanaTablero(conexion, j, u, gestion, p, prop);
+		      VentanaTablero ventana = new VentanaTablero(conexion, j, u, gestion, p, prop,false);
 		      
 		      ventana.setVisible(true);
 		      
