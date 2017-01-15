@@ -20,11 +20,15 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -1359,6 +1363,21 @@ public class VentanaTablero extends JFrame {
 										trainera.getY());
 
 								pintar.setAnimacion1(true);
+
+								try {
+									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+													.getAbsoluteFile());
+									Clip clip = AudioSystem.getClip();
+									clip.open(audioInputStream);
+									clip.start();
+									pintar.setClip(clip);
+
+								} catch (Exception ex) {
+									System.out.println("Error with playing sound.");
+									ex.printStackTrace();
+								}
+
 							} else {
 								base.modificarAccion(conexion, p, true);
 								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
@@ -1369,7 +1388,19 @@ public class VentanaTablero extends JFrame {
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion1(true);
 
-								
+								try {
+									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+													.getAbsoluteFile());
+									Clip clip = AudioSystem.getClip();
+									clip.open(audioInputStream);
+									clip.start();
+									pintar.setClip(clip);
+
+								} catch (Exception ex) {
+									System.out.println("Error with playing sound.");
+									ex.printStackTrace();
+								}
 
 							}
 						} else {
@@ -1424,6 +1455,18 @@ public class VentanaTablero extends JFrame {
 								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
 										trainera.getY());
 								pintar.setAnimacion3(true);
+
+								try {
+									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
+								       Clip clip = AudioSystem.getClip();
+									clip.open(audioInputStream);
+									clip.start();
+									pintar.setClip(clip);
+
+								} catch (Exception ex) {
+									System.out.println("Error with playing sound.");
+									ex.printStackTrace();
+								}
 							} else {
 								base.modificarAccion(conexion, p, true);
 								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
@@ -1434,7 +1477,18 @@ public class VentanaTablero extends JFrame {
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion3(true);
 
-								
+								try {
+									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
+								       
+									Clip clip = AudioSystem.getClip();
+									clip.open(audioInputStream);
+									clip.start();
+									pintar.setClip(clip);
+
+								} catch (Exception ex) {
+									System.out.println("Error with playing sound.");
+									ex.printStackTrace();
+								}
 
 							}
 						} else {
@@ -1530,7 +1584,18 @@ public class VentanaTablero extends JFrame {
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion2(true);
 
-								
+								try {
+									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
+								       
+									Clip clip = AudioSystem.getClip();
+									clip.open(audioInputStream);
+									clip.start();
+
+									pintar.setClip(clip);
+								} catch (Exception ex) {
+									System.out.println("Error with playing sound.");
+									ex.printStackTrace();
+								}
 
 							} else {
 
@@ -1547,7 +1612,6 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								
 								try {
 
 									imagen = new ImageIcon(
@@ -1557,24 +1621,32 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								
-
 								traineraUPV.setIcon(icono);
 
 								base.modificarOrientacion(conexion, p, true);
 
 								pintar.setOrientacion(true);
 
-								
-
 								base.modificarAccion(conexion, p, true);
-								
+
 								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
-								
+
 								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
 										traineraUPV.getY());
-								
+
 								pintar.setAnimacion2(true);
+
+								try {
+									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
+								       
+									Clip clip = AudioSystem.getClip();
+									clip.open(audioInputStream);
+									clip.start();
+									pintar.setClip(clip);
+								} catch (Exception ex) {
+									System.out.println("Error with playing sound.");
+									ex.printStackTrace();
+								}
 
 							}
 						} else {
@@ -1595,7 +1667,7 @@ public class VentanaTablero extends JFrame {
 
 							if (pintar.isOrientacion()) {
 								base.modificarAccion(conexion, p, true);
-								
+
 								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
 								trainera.repaint();
 								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
@@ -1604,7 +1676,19 @@ public class VentanaTablero extends JFrame {
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion4(true);
 
-								
+								try {
+									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+													.getAbsoluteFile());
+									Clip clip = AudioSystem.getClip();
+									clip.open(audioInputStream);
+									clip.start();
+
+									pintar.setClip(clip);
+								} catch (Exception ex) {
+									System.out.println("Error with playing sound.");
+									ex.printStackTrace();
+								}
 
 							} else {
 
@@ -1621,8 +1705,6 @@ public class VentanaTablero extends JFrame {
 
 								trainera.setIcon(icono);
 
-								
-
 								try {
 
 									imagen = new ImageIcon(
@@ -1632,24 +1714,32 @@ public class VentanaTablero extends JFrame {
 								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-								
 								traineraUPV.setIcon(icono);
 
 								base.modificarOrientacion(conexion, p, true);
 
 								pintar.setOrientacion(true);
 
-								
-
 								base.modificarAccion(conexion, p, true);
-								
+
 								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
-								
+
 								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
 										traineraUPV.getY());
-								
+
 								pintar.setAnimacion4(true);
 
+								try {
+									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
+								       
+									Clip clip = AudioSystem.getClip();
+									clip.open(audioInputStream);
+									clip.start();
+
+								} catch (Exception ex) {
+									System.out.println("Error with playing sound.");
+									ex.printStackTrace();
+								}
 
 							}
 						} else {

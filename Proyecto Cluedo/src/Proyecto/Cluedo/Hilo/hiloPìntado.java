@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import javax.sound.sampled.Clip;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,6 +19,8 @@ import Proyecto.Cluedo.Ventanas.VentanaTablero;
 public class hiloPìntado extends Thread {
 
 	private int contador = 0;
+	
+	private Clip clip;
 
 	private boolean acabado = true;
 
@@ -83,6 +86,15 @@ public class hiloPìntado extends Thread {
 
 	
 	
+	
+	public Clip getClip() {
+		return clip;
+	}
+
+	public void setClip(Clip clip) {
+		this.clip = clip;
+	}
+
 	public boolean isInicio() {
 		return inicio;
 	}
@@ -614,7 +626,7 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(ficha.getX() - 1, ficha.getY());
 								} else {
 									animacion1 = false;
-									
+									clip.stop();
 									ficha.setLocation(reajustarAnchura(1391 - 28, anchura),
 											reajustarAlturaFicha(397 - 32, panel.getHeight()));
 									ficha.repaint();
@@ -661,7 +673,7 @@ public class hiloPìntado extends Thread {
 									ficha.repaint();
 								} else {
 									animacion2 = false;
-									
+									clip.stop();
 									ficha.setLocation(reajustarAnchura(216 - 28, anchura),
 											reajustarAlturaFicha(637 - 32, panel.getHeight()));
 									ficha.repaint();
@@ -709,7 +721,7 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(ficha.getX() + 1, ficha.getY());
 								} else {
 									animacion3 = false;
-									
+									clip.stop();
 									ficha.setLocation(reajustarAnchura(1251 - 28, anchura),
 											reajustarAlturaFicha(673-32, panel.getHeight()));
 									ficha.repaint();
@@ -763,7 +775,7 @@ public class hiloPìntado extends Thread {
 										ficha.repaint();
 									} else {
 										animacion4 = false;
-									
+										clip.stop();
 										ficha.setLocation(reajustarAnchura(86 - 28, anchura),
 												reajustarAlturaFicha(414 - 32, panel.getHeight()));
 										ficha.repaint();
