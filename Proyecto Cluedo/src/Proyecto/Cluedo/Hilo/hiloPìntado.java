@@ -603,7 +603,7 @@ public class hiloPìntado extends Thread {
 							ficha.repaint();
 
 						} else {
-							if (ficha.getY() > reajustarAlturaMaider(397 - 16, panel.getHeight())) {
+							if (ficha.getY() > reajustarAlturaFicha(397 - 32, panel.getHeight())) {
 								ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
 
 								ficha.repaint();
@@ -614,11 +614,12 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(ficha.getX() - 1, ficha.getY());
 								} else {
 									animacion1 = false;
-									base.modificarAccion(conexion, p, false);
+									
 									ficha.setLocation(reajustarAnchura(1391 - 28, anchura),
 											reajustarAlturaFicha(397 - 32, panel.getHeight()));
 									ficha.repaint();
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
+									base.modificarAccion(conexion, p, false);
 								}
 							}
 						}
@@ -655,16 +656,17 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() < reajustarAlturaMaider(637 - 16, panel.getHeight())) {
+								if (ficha.getY() < reajustarAlturaFicha(637 - 32, panel.getHeight())) {
 									ficha.setLocation(ficha.getX() + 2, ficha.getY() + 5);
 									ficha.repaint();
 								} else {
 									animacion2 = false;
-									base.modificarAccion(conexion, p, false);
+									
 									ficha.setLocation(reajustarAnchura(216 - 28, anchura),
 											reajustarAlturaFicha(637 - 32, panel.getHeight()));
 									ficha.repaint();
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
+									base.modificarAccion(conexion, p, false);
 								}
 							}
 
@@ -695,7 +697,7 @@ public class hiloPìntado extends Thread {
 
 							hecho = true;
 
-							if (ficha.getY() < reajustarAlturaMaider(673 - 16, panel.getHeight())) {
+							if (ficha.getY() < reajustarAlturaFicha(673 - 32, panel.getHeight())) {
 								ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
 
 								ficha.repaint();
@@ -707,10 +709,11 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(ficha.getX() + 1, ficha.getY());
 								} else {
 									animacion3 = false;
-									base.modificarAccion(conexion, p, false);
+									
 									ficha.setLocation(reajustarAnchura(1251 - 28, anchura),
 											reajustarAlturaFicha(673-32, panel.getHeight()));
 									ficha.repaint();
+									base.modificarAccion(conexion, p, false);
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 
 								}
@@ -750,7 +753,7 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() > reajustarAlturaMaider(414 - 16, panel.getHeight())) {
+								if (ficha.getY() > reajustarAlturaFicha(414 - 32, panel.getHeight())) {
 									ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
 									ficha.repaint();
 								} else {
@@ -760,10 +763,11 @@ public class hiloPìntado extends Thread {
 										ficha.repaint();
 									} else {
 										animacion4 = false;
-										base.modificarAccion(conexion, p, false);
+									
 										ficha.setLocation(reajustarAnchura(86 - 28, anchura),
-												reajustarAlturaMaider(414 - 32, panel.getHeight()));
+												reajustarAlturaFicha(414 - 32, panel.getHeight()));
 										ficha.repaint();
+										base.modificarAccion(conexion, p, false);
 										base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 									}
 								}
