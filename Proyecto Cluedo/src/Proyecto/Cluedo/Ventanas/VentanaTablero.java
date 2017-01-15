@@ -623,6 +623,7 @@ public class VentanaTablero extends JFrame {
 
 				System.out.println(reajustarAnchura(e.getX(), anchura));
 				System.out.println(reajustarImagen(e.getY(), altura));
+				
 				// Point punto=new Point(e.getX(),e.getY());
 				// System.out.println(punto.getX()+" "+punto.getY());
 				// if(punto.getX()==0){
