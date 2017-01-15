@@ -100,6 +100,21 @@ public class busquedaposicion {
 		ArrayList<Point> arr89= new ArrayList<Point>();
 		arr89.add(new Point(1476,386));
 		hm.put(new Point(1391,397), arr89);
+		ArrayList<Point> arrinicio1= new ArrayList<Point>();
+		arrinicio1.add(new Point(129,876));
+		hm.put(new Point(66,735), arrinicio1);
+		ArrayList<Point> arrinicio2= new ArrayList<Point>();
+		arrinicio2.add(new Point(129,876));
+		hm.put(new Point(66,785), arrinicio2);
+		ArrayList<Point> arrinicio3= new ArrayList<Point>();
+		arrinicio3.add(new Point(129,876));
+		hm.put(new Point(66,835), arrinicio3);
+		ArrayList<Point> arrinicio4= new ArrayList<Point>();
+		arrinicio4.add(new Point(129,876));
+		hm.put(new Point(116,735), arrinicio4);
+		ArrayList<Point> arrinicio5= new ArrayList<Point>();
+		arrinicio5.add(new Point(129,876));
+		hm.put(new Point(116,785), arrinicio5);
 	}
 	public boolean estaEn(Point punto,ArrayList<Point> array){
 		for(int i=0;i<array.size();i++){

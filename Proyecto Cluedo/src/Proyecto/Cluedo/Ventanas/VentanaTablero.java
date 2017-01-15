@@ -135,7 +135,7 @@ public class VentanaTablero extends JFrame {
 		
 
 		meterFicha(arrjugadores, anchura, altura);
-		colocarFichaInicio(arrjugadores, anchura, altura);
+		//colocarFichaInicio(arrjugadores, anchura, altura);
 
 		// System.out.println(altura);
 		//
@@ -917,9 +917,9 @@ public class VentanaTablero extends JFrame {
 					System.out.println("voy a obtener coordenada");
 					Point coord=base.ObtenerCoordenada(conexion,j);
 					camino.add(coord);		
-					if(coord.equals(new Point(129,876))){
-						numero=numero-1;
-					}
+//					if(coord.equals(new Point(129,876))){
+//						numero=numero-1;
+//					}
 					ponercircrojos.MoverA(coord, numero, camino, fichasrojas);
 					System.out.println("ya he hecho mover a");
 					pposiciones.meterPosibilidades(fichasrojas);
@@ -1946,6 +1946,20 @@ public class VentanaTablero extends JFrame {
 		return (int) (coordenada * escala);
 
 	}
+	public int reajustarAlturaFicha(int coordenada, int altura) {
+
+		double escala = (double)altura / (double)1020;
+
+		return (int) (coordenada * escala);
+
+	}
+	public int reajustarAnchuraFicha(int coordenada, int anchura) {
+
+		double escala = (double)anchura / (double)1920;
+
+		return (int) (coordenada * escala);
+
+	}
 
 	public void meterFicha(ArrayList<Jugador> arrjug, int anchura, int altura) {
 		for (int i = 0; i < arrjug.size(); i++) {
@@ -2000,6 +2014,17 @@ public class VentanaTablero extends JFrame {
 			}
 		}
 		return false;
+	}
+	public void colocarFicha(ArrayList<Jugador> arrjug,JLabel [] arrfich,GestionBaseDeDatos base,Connection con,int ancho,int alto){
+		Point [] arr=new Point[arrjug.size()];
+		
+		for(int i=0;i<arrjug.size();i++){
+			arr[i]=base.ObtenerCoordenada(con, arrjug.get(i));
+		}
+		for(int j=0;j<arrjug.size();j++){
+			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),ancho)-28,reajustarAlturaFicha((int)arr[j].getY(),alto)-16);
+			arrfich[j].setLocation(punto);
+		}
 	}
 
 }

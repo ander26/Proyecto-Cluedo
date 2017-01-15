@@ -60,7 +60,7 @@ public class hiloPìntado extends Thread {
 	private boolean hecho1 = false;
 
 	private JLabel ficha;
-<<<<<<< HEAD
+
 	
 	private ArrayList<Jugador> arrjug;
 	
@@ -163,8 +163,16 @@ public class hiloPìntado extends Thread {
 	}
 
 	public void run() {
+		if(base.ObtenerCodigoJugadorTurno(conexion, p)==-1){
+			System.out.println("entro");
+			//meterFicha(arrjug, anchura, altura);
+			System.out.println("tamaño"+arrjug.size());
+			colocarFichaInicio(arrjug, ancho, alto);
+			panel.repaint();
+		}
 
 		if (base.obtenerAccion(conexion, p)) {
+			
 
 			if (turno != base.ObtenerCodigoJugadorTurno(conexion, p)) {
 
@@ -851,6 +859,20 @@ public class hiloPìntado extends Thread {
 		}
 
 	}
+	
+	public void colocarFichaInicio(ArrayList<Jugador> arrjug, int anchura, int altura) {
+		Point[] arr = new Point[5];
+		arr[0] = new Point(66,735);
+		arr[1] = new Point(66,785);
+		arr[2] = new Point(66,835);
+		arr[3] = new Point(116,735);
+		arr[4] = new Point(116,785);
+		for (int i = 0; i < arrjug.size(); i++) {
+			arrfich[i].setLocation(arr[i]);
+			System.out.println(i);
+			base.modificarCoordenada(conexion, arrjug.get(i), (int)(arr[i].getX()), (int)(arr[i].getY()));
+		}
+	}
 
 	public int reajustarAltura(int coordenada, int altura) {
 
@@ -920,6 +942,15 @@ public class hiloPìntado extends Thread {
 		return (int) (coordenada * escala);
 
 	}
+	public int reajustarTamañoAltMaider(int tamañoY, int altura) {
+
+		double escala = (double)altura / (double) ALTURAM;
+
+		return (int) (tamañoY * escala);
+
+	}
+
+	
 	public void colocarFicha(ArrayList<Jugador> arrjug,JLabel [] arrfich){
 		Point [] arr=new Point[arrjug.size()];
 		

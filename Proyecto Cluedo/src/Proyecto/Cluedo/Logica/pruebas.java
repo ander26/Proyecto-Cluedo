@@ -25,22 +25,39 @@ public class pruebas {
 		Point p=new Point(num,y);
 		return p;
 	}
-	public static double pasarxyAdecimal(int y,int x){
-		int res=y;
-		int k=0;
-		while (((int)res)>0){
-			k=k+1;
-			res=res/10;
-			
+//	public static double pasarxyAdecimal(int y,int x){
+//		int res=y;
+//		int k=0;
+//		while (((int)res)>0){
+//			k=k+1;
+//			res=res/10;
+//			
+//		}
+//		System.out.println("decimal"+x+(y/10^(k-1)));
+//		return (x+(y/(Math.pow(10,k))));
+//	}
+	public static double pasarxyAdecimal(int y, int x) {
+		int res = y;
+		int k = 0;
+		while (((int) res) > 0) {
+			k = k + 1;
+			res = res / 10;
+
 		}
-		System.out.println("decimal"+x+(y/10^(k-1)));
-		return (x+(y/(Math.pow(10,k))));
+
+		while(k<4){
+			k=k+1;
+		}
+		double numero=x+(y/(Math.pow(10,k)));
+
+		System.out.println(numero);
+		return numero;
 	}
 	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(pasarxyAdecimal(123,89));
+		System.out.println(pasarxyAdecimal(735,66));
 	}
 
 }
