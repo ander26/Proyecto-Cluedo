@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import javax.sound.sampled.Clip;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,6 +19,8 @@ import Proyecto.Cluedo.Ventanas.VentanaTablero;
 public class hiloPìntado extends Thread {
 
 	private int contador = 0;
+	
+	private Clip clip;
 
 	private boolean acabado = true;
 
@@ -59,6 +62,8 @@ public class hiloPìntado extends Thread {
 
 	private boolean hecho1 = false;
 
+	private boolean inicio;
+	
 	private JLabel ficha;
 
 	
@@ -66,9 +71,6 @@ public class hiloPìntado extends Thread {
 	
 	private JLabel [] arrfich;
 	
-	private int ancho;
-	
-	private int alto;
 	
 	private Panelcirculos panel;
 
@@ -81,6 +83,25 @@ public class hiloPìntado extends Thread {
 
 	private int altura;
 
+
+	
+	
+	
+	public Clip getClip() {
+		return clip;
+	}
+
+	public void setClip(Clip clip) {
+		this.clip = clip;
+	}
+
+	public boolean isInicio() {
+		return inicio;
+	}
+
+	public void setInicio(boolean inicio) {
+		this.inicio = inicio;
+	}
 
 	public boolean isAnimacion3() {
 		return animacion3;
@@ -140,7 +161,7 @@ public class hiloPìntado extends Thread {
 
 	public hiloPìntado(JLabel semaforo, JLabel labelDado, JLabel labelAcusar, JLabel trainera, Partida p, Jugador j,
 
-			Connection conexion, int anchura, JLabel traineraUPV,ArrayList<Jugador> arrjug,JLabel [] arrfich,int ancho,int alto,Panelcirculos panel) {
+			Connection conexion, int anchura, JLabel traineraUPV,ArrayList<Jugador> arrjug,JLabel [] arrfich,int altura,Panelcirculos panel) {
 
 		this.semaforo = semaforo;
 		this.labelDado = labelDado;
@@ -153,11 +174,11 @@ public class hiloPìntado extends Thread {
 		this.traineraUPV = traineraUPV;
 		this.arrfich=arrfich;
 		this.arrjug=arrjug;
-		this.ancho=ancho;
-		this.alto=alto;
 		this.panel=panel;
 
 		this.altura = altura;
+		
+	
 
 		turno = -1;
 	}
@@ -167,7 +188,7 @@ public class hiloPìntado extends Thread {
 			System.out.println("entro");
 			//meterFicha(arrjug, anchura, altura);
 			System.out.println("tamaño"+arrjug.size());
-			colocarFichaInicio(arrjug, ancho, alto);
+			colocarFichaInicio(arrjug, anchura, altura);
 			panel.repaint();
 		}
 
@@ -309,6 +330,8 @@ public class hiloPìntado extends Thread {
 					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
 		}
 
+	
+		
 		while (acabado) {
 
 			int entrada = base.obtenerTurno(conexion, j);
@@ -331,7 +354,7 @@ public class hiloPìntado extends Thread {
 							traineraUPV.repaint();
 
 							try {
-								Thread.sleep(100);
+								Thread.sleep(200);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -359,7 +382,7 @@ public class hiloPìntado extends Thread {
 							traineraUPV.repaint();
 
 							try {
-								Thread.sleep(100);
+								Thread.sleep(200);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -435,6 +458,7 @@ public class hiloPìntado extends Thread {
 						icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 								traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
+						
 						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())), trainera.getY());
 
 						traineraUPV.setIcon(icono);
@@ -599,7 +623,7 @@ public class hiloPìntado extends Thread {
 							ficha.repaint();
 
 						} else {
-							if (ficha.getY() > reajustarAlturaMaider(397 - 16, altura)) {
+							if (ficha.getY() > reajustarAlturaFicha(397 - 32, panel.getHeight())) {
 								ficha.setLocation(ficha.getX() + 3, ficha.getY() - 5);
 
 								ficha.repaint();
@@ -610,10 +634,12 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(ficha.getX() - 1, ficha.getY());
 								} else {
 									animacion1 = false;
-									base.modificarAccion(conexion, p, false);
+									clip.stop();
 									ficha.setLocation(reajustarAnchura(1391 - 28, anchura),
-											reajustarAlturaMaider(397 - 16, altura));
+											reajustarAlturaFicha(397 - 32, panel.getHeight()));
 									ficha.repaint();
+									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
+									base.modificarAccion(conexion, p, false);
 								}
 							}
 						}
@@ -650,15 +676,17 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() < reajustarAlturaMaider(637 - 2, altura)) {
+								if (ficha.getY() < reajustarAlturaFicha(637 - 32, panel.getHeight())) {
 									ficha.setLocation(ficha.getX() + 2, ficha.getY() + 5);
 									ficha.repaint();
 								} else {
 									animacion2 = false;
-									base.modificarAccion(conexion, p, false);
+									clip.stop();
 									ficha.setLocation(reajustarAnchura(216 - 28, anchura),
-											reajustarAlturaMaider(637 - 16, altura));
+											reajustarAlturaFicha(637 - 32, panel.getHeight()));
 									ficha.repaint();
+									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
+									base.modificarAccion(conexion, p, false);
 								}
 							}
 
@@ -689,7 +717,7 @@ public class hiloPìntado extends Thread {
 
 							hecho = true;
 
-							if (ficha.getY() < reajustarAlturaMaider(673 - 16, altura)) {
+							if (ficha.getY() < reajustarAlturaFicha(673 - 32, panel.getHeight())) {
 								ficha.setLocation(ficha.getX() - 3, ficha.getY() + 5);
 
 								ficha.repaint();
@@ -701,10 +729,12 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(ficha.getX() + 1, ficha.getY());
 								} else {
 									animacion3 = false;
-									base.modificarAccion(conexion, p, false);
+									clip.stop();
 									ficha.setLocation(reajustarAnchura(1251 - 28, anchura),
-											reajustarAlturaMaider(673 - 16, altura));
+											reajustarAlturaFicha(673-32, panel.getHeight()));
 									ficha.repaint();
+									base.modificarAccion(conexion, p, false);
+									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 
 								}
 							}
@@ -743,7 +773,7 @@ public class hiloPìntado extends Thread {
 
 								hecho1 = true;
 
-								if (ficha.getY() > reajustarAlturaMaider(414 - 16, altura)) {
+								if (ficha.getY() > reajustarAlturaFicha(414 - 32, panel.getHeight())) {
 									ficha.setLocation(ficha.getX() - 2, ficha.getY() - 5);
 									ficha.repaint();
 								} else {
@@ -753,10 +783,12 @@ public class hiloPìntado extends Thread {
 										ficha.repaint();
 									} else {
 										animacion4 = false;
-										base.modificarAccion(conexion, p, false);
+										clip.stop();
 										ficha.setLocation(reajustarAnchura(86 - 28, anchura),
-												reajustarAlturaMaider(414 - 16, altura));
+												reajustarAlturaFicha(414 - 32, panel.getHeight()));
 										ficha.repaint();
+										base.modificarAccion(conexion, p, false);
+										base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 									}
 								}
 							}
@@ -781,14 +813,27 @@ public class hiloPìntado extends Thread {
 //
 //						traineraUPV.repaint();
 //						}else{
+						
+						int posi= base.posicionBarco(conexion, p);
 							
-							trainera.setLocation(trainera.getX() - 1, trainera.getY());
+							trainera.setLocation((reajustarAnchura(posi, anchura) - 1), trainera.getY());
 
 							trainera.repaint();
-
-							traineraUPV.setLocation(traineraUPV.getX() - 1, trainera.getY());
+							if (reajustarAnchura(posi,anchura)<(anchura-(2*reajustarAnchura(250, anchura)))||inicio){
+								
+								if (reajustarAnchura(posi,anchura)<(anchura-(2*reajustarAnchura(250, anchura)))){
+									inicio=false;
+								}
+								
+								
+								
+							traineraUPV.setLocation(((reajustarAnchura(posi, anchura)+(2*traineraUPV.getWidth())) - 1), trainera.getY());
 
 							traineraUPV.repaint();
+					}else{
+							traineraUPV.setLocation(reajustarAnchura(250, anchura)-(anchura-reajustarAnchura(posi, anchura)), trainera.getY());
+
+							traineraUPV.repaint();}
 								
 							
 //						}
@@ -816,13 +861,23 @@ public class hiloPìntado extends Thread {
 //
 //						}else{
 							
-							trainera.setLocation(trainera.getX() + 1, trainera.getY());
+						int posi2 = base.posicionBarco(conexion, p);
+						
+							trainera.setLocation((reajustarAnchura(posi2, anchura) + 1), trainera.getY());
 
 							trainera.repaint();
 
-							traineraUPV.setLocation(traineraUPV.getX() + 1, trainera.getY());
+							if (reajustarAnchura(posi2, anchura)<anchura-2*reajustarAnchura(250, anchura)){
+								
+								
+							traineraUPV.setLocation(((reajustarAnchura(posi2, anchura)+(2*traineraUPV.getWidth())) + 1), trainera.getY());
 
-							traineraUPV.repaint();
+							traineraUPV.repaint();}else{
+								traineraUPV.setLocation(reajustarAnchura(250, anchura)-(anchura-reajustarAnchura(posi2, anchura)), trainera.getY());
+
+								traineraUPV.repaint();
+							}
+							
 							
 							
 //						}
@@ -838,13 +893,10 @@ public class hiloPìntado extends Thread {
 
 					}
 
-					if (contador > 50) {
+					
 
 						base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
-					} else {
-
-						contador++;
-					}
+				
 				}
 			}
 			//
@@ -930,14 +982,14 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarAlturaFicha(int coordenada, int altura) {
 
-		double escala = (double)altura / (double)1020;
+		double escala = altura / (double) 953;
 
 		return (int) (coordenada * escala);
 
 	}
 	public int reajustarAnchuraFicha(int coordenada, int anchura) {
 
-		double escala = (double)anchura / (double)1920;
+		double escala = anchura / (double) 1920;
 
 		return (int) (coordenada * escala);
 
@@ -958,7 +1010,7 @@ public class hiloPìntado extends Thread {
 			arr[i]=base.ObtenerCoordenada(conexion, arrjug.get(i));
 		}
 		for(int j=0;j<arrjug.size();j++){
-			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),ancho)-28,reajustarAlturaFicha((int)arr[j].getY(),alto)-16);
+			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX()-28,anchura),reajustarAlturaFicha((int)(arr[j].getY()-32),panel.getHeight()));
 			arrfich[j].setLocation(punto);
 		}
 	}

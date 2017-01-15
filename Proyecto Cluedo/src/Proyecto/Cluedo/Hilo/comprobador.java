@@ -6,12 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
 import Proyecto.Cluedo.Logica.Propiedades;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
+import Proyecto.Cluedo.Ventanas.VideoPlayer;
+import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 
 public class comprobador extends Thread {
 
@@ -73,9 +77,31 @@ public class comprobador extends Thread {
 			    window.dispose();
 			}
 		
-		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop);
-		 tablero.setVisible(true);
+		 int respuesta=JOptionPane.showConfirmDialog(null, "¿Desea visualizar un video introductorio?","Visualizacion del video",JOptionPane.YES_NO_OPTION);
 		
+		 if (respuesta==JOptionPane.YES_OPTION){
+			
+			// Inicializar VLC.
+				// Probar con el buscador nativo...
+				boolean found = new NativeDiscovery().discover();
+				// System.out.println( LibVlc.INSTANCE.libvlc_get_version() ); //
+				// Visualiza versiï¿½n de VLC encontrada
+				// Si no se encuentra probar otras opciones:
+				if (!found) {
+					// Buscar vlc como variable de entorno
+					String vlcPath = System.getenv().get("vlc");
+					if (vlcPath == null) { // Poner VLC a mano
+						System.setProperty("jna.library.path", "c:\\Program Files\\videolan\\VLC");
+					} else { // Poner VLC desde la variable de entorno
+						System.setProperty("jna.library.path", vlcPath);
+					}
+				}
+			 VideoPlayer player = new VideoPlayer(conexion, j, u, base, p, prop, true); 
+			player.setVisible(true);
+		 }else{
+		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop,true);
+		 tablero.setVisible(true);
+		 }
 	}
 
 	public void setJ(Jugador j) {
