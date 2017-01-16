@@ -2370,4 +2370,222 @@ public class GestionBaseDeDatos {
 		}
 
 	}
+	
+	
+	//Tabla sospechoso
+	
+	public String [] obtenerSospechosos (Connection conexion, int codigo){
+		
+		String [] resolucion = new String [3];
+		
+		String SQL ="";
+		try{
+			
+			SQL = "SELECT ASESINO,LUGAR,ARMA FROM SOSPECHOSO WHERE CODPARTIDA= "+codigo;
+			
+			Statement statement = conexion.createStatement();
+			
+			ResultSet resultado = statement.executeQuery(SQL);
+			
+			while (resultado.next()){
+				
+				resolucion[2]=resultado.getString("ASESINO");
+				resolucion[0]=resultado.getString("LUGAR");
+				resolucion[1]=resultado.getString("ARMA");
+				
+				
+			}
+			
+			
+			logger.log(Level.INFO, "Se han obtendo correctamente los sospechosos");
+			return resolucion;
+			
+			
+			
+		}catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha conseguido obtener a los sospechosos");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	//Para modificar la puntuacion del usuario
+	
+	public void modificarPuntuacion (Connection conexion, String nombreUsuario,int cantidad,String operacion){
+		
+		String SQL ="";
+		
+		try{
+			
+			
+			SQL = "UPDATE USUARIO SET PUNTUACION=PUNTUACION"+operacion+cantidad+" WHERE NOMBREUSUARIO='"+nombreUsuario+"'";
+			
+			Statement statement  =conexion.createStatement();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha modificado correctamente la puntuacion");
+			
+		}catch (Exception e){
+			
+			logger.log(Level.SEVERE, "No se ha modificado la puntuacion");
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
+	//Para el borrado final
+	public void borradoFinal (Connection conexion, int codigo){
+		
+		String SQL ="";
+		
+		try{
+
+			SQL =" DELETE FROM PARTIDA WHERE CODIGO="+codigo;
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(SQL);
+			
+			SQL =" DELETE FROM JUGADOR WHERE COD_PARTIDA="+codigo;
+			
+			statement.executeUpdate(SQL);
+			
+			SQL =" DELETE FROM CHAT WHERE CODIGOPARTIDA="+codigo;
+			
+			statement.executeUpdate(SQL);
+			
+			SQL =" DELETE FROM SOSPECHOSO WHERE CODPARTIDA="+codigo;
+			
+			statement.executeUpdate(SQL);
+			
+			SQL =" DELETE FROM RECIBIRCARTAS WHERE CODPARTIDA="+codigo;
+			
+			statement.executeUpdate(SQL);
+			
+			SQL =" DELETE FROM JUEGA WHERE CODPARTIDA="+codigo;
+			
+			statement.executeUpdate(SQL);
+			
+			
+			SQL =" DELETE FROM SOSPECHA WHERE CODPARTIDA="+codigo;
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha realizado el borrado completo correctamente");
+			
+			
+		}catch (Exception e){
+			
+			logger.log(Level.SEVERE, "No se ha conseguido realizar el borrado completo");
+			
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public void insertarGanador (Connection conexion, String usuario,int ganar,int partida){
+		
+		String SQL = "";
+		
+		try{
+			
+			SQL ="INSERT INTO GANADOR VALUES ("+partida+",'"+usuario+"',"+ganar+")";
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha insertado correctamente al ganador");
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha podido modificar al ganador");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void modificarGanador (Connection conexion, String usuario,int ganar,int partida){
+		
+		String SQL = "";
+		
+		try{
+			
+			SQL ="UPDATE GANADOR SET VALUES USUARIO='"+usuario+"',GANAR="+ganar+" WHERE CODPARTIDA="+partida;
+			
+			Statement statement = conexion.createStatement();
+			
+			statement.executeUpdate(SQL);
+			
+			logger.log(Level.INFO, "Se ha insertado correctamente al ganador");
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha podido modificar al ganador");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public int obtenerGanador (Connection conexion, int partida){
+		
+		String SQL = "";
+		
+		int seleccion=-1;
+		
+		try{
+			
+			SQL ="SELECT GANAR FROM GANADOR WHERE CODPARTIDA="+partida;
+			
+			Statement statement = conexion.createStatement();
+			
+			ResultSet resultado=statement.executeQuery(SQL);
+			
+			while (resultado.next()){
+				 seleccion=resultado.getInt("GANAR");
+			}
+			logger.log(Level.INFO, "Se ha insertado correctamente al ganador");
+			return seleccion;
+			
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha podido modificar al ganador");
+			e.printStackTrace();
+			return seleccion;
+		}
+		
+	}
+	
+	public String obtenerUsuarioGanador (Connection conexion, int partida){
+		
+		String SQL = "";
+		
+		String seleccion="";
+		
+		try{
+			
+			SQL ="SELECT USUARIO FROM GANADOR WHERE CODPARTIDA="+partida;
+			
+			Statement statement = conexion.createStatement();
+			
+			ResultSet resultado=statement.executeQuery(SQL);
+			
+			while (resultado.next()){
+				 seleccion=resultado.getString("USUARIO");
+			}
+			logger.log(Level.INFO, "Se ha insertado correctamente al ganador");
+			return seleccion;
+			
+			
+		}catch (Exception e){
+			logger.log(Level.SEVERE, "No se ha podido modificar al ganador");
+			e.printStackTrace();
+			return seleccion;
+		}
+		
+	}
+	
+	
+	
 }

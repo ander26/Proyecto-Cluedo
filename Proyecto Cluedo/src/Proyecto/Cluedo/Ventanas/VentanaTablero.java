@@ -42,6 +42,7 @@ import Proyecto.Cluedo.Datos.LabelPerfil;
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Hilo.HiloTurno;
+import Proyecto.Cluedo.Hilo.hiloFinalizado;
 import Proyecto.Cluedo.Hilo.hiloPìntado;
 import Proyecto.Cluedo.Logica.Animacion;
 import Proyecto.Cluedo.Logica.FicheroCoordenadasPosiciones;
@@ -63,6 +64,8 @@ public class VentanaTablero extends JFrame {
 	private ArrayList<Point> arrlpuerta;
 
 
+	private hiloFinalizado hiloFin;
+	
 	private boolean mostradoI = true;
 
 	private boolean mostradoD = true;
@@ -611,6 +614,8 @@ public class VentanaTablero extends JFrame {
 
 		System.out.println("llego aqui");
 
+		hiloFin= new hiloFinalizado(conexion, this, p.getCodigo(), u);
+		
 		hTurno = new HiloTurno();
 		hTurno.setBase(base);
 		hTurno.setJugador(j);
@@ -1793,7 +1798,7 @@ public class VentanaTablero extends JFrame {
 			}
 		}
 
-		);
+);
 
 		// campo.addMouseListener(new MouseAdapter() {
 		//
@@ -2077,7 +2082,7 @@ public class VentanaTablero extends JFrame {
 	}
 	public int reajustarAlturaFicha(int coordenada, int altura) {
 
-		double escala = (double)altura / (double)1020;
+		double escala = (double)altura / (double)953;
 
 		return (int) (coordenada * escala);
 
