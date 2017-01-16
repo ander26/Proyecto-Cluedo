@@ -35,11 +35,17 @@ public class HiloTurno extends Thread {
 	private int dado=-1;
 	
 		
-	private Point [] arrpuertas={new Point(1391,397),new Point(241,120),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1650,325),new Point(1846,174),new Point(1880,334),new Point(1320,771),new Point(573,876),new Point(855,261)};
-	
+	private Point [] arrpuertas={new Point(1391,397),new Point(241,120),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1650,325),new Point(1846,174),new Point(1880,334),new Point(1320,771),new Point(573,876),new Point(855,261),new Point(295,104)};
+		
 	private int CodigoJugadorConTurnoAntiguo;
 	private boolean MonigoteMovida=false;
 	
+	public Point[] getArrpuertas() {
+		return arrpuertas;
+	}
+
+	
+
 	public int getDado() {
 		return dado;
 	}
@@ -133,6 +139,7 @@ public class HiloTurno extends Thread {
 			
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
 			System.out.println(CodigoJugadorConTurno+"CodigoJugadorConTurno");
+			
 			//al inicializar el progrma el jugador con menor codigo tiene el turno
 			if(CodigoJugadorConTurno==-1){
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
@@ -144,19 +151,29 @@ public class HiloTurno extends Thread {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
-				
+//				
 			}}else{
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
 			CodigoJugadorConTurnoAntiguo=CodigoJugadorConTurno;
 			
 			System.out.println(CodigoJugadorConTurno);
 			
-			
+			//El codigo hasta aqui solo lo tiene que hacer una vez al cambiar el turno.
 			
 			//cambio de turno si el jugador va a acusar
 			Jugador jug=BusacarJugadorConCodigo(CodigoJugadorConTurno,arrjugadores);
 			Point punto= base.ObtenerCoordenada(con, jug);
-			if(estaEn(punto,arrpuertas)){
+			
+			while(base.ObtenerPanel(con,partida).equals(mensajePanel) && CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
+			while(punto==base.ObtenerCoordenada(con, jug)){
+				try {
+					Thread.sleep( 3000 );
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+				if(estaEn(punto,arrpuertas)){
 			//esperamos a que cambie el panel
 			while(base.ObtenerPanel(con,partida).equals(mensajePanel)){
 				System.out.println("primer while");
@@ -172,7 +189,9 @@ public class HiloTurno extends Thread {
 			System.out.println(mensajePanel+" "+base.ObtenerPanel(con,partida));
 			mensajePanel=base.ObtenerPanel(con,partida);
 			vpanel.setMensaje(mensajePanel);
+			if (jugador.getCodigo()!=CodigoJugadorConTurno){
 			vpanel.setVisible(true);
+			}
 			vpanel.repaint();
 			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL 1");
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);			
@@ -274,29 +293,37 @@ public class HiloTurno extends Thread {
 			}
 			//cambio de turno si el jugador no va a acusar
 			//se hace en el tablero mediante getters y setters, el hilo tiene que esperar a que pase ese cambio
-			else{
-				while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
-					System.out.println("6 while");
-					
-					try {
-						Thread.sleep( 8000 );
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					
-				}
-				
-
+//			else{
+//				while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
+//					System.out.println("6 while");
+//					
+//					try {
+//						Thread.sleep( 8000 );
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					
+//					
+//				}
+//				
+//
+//			}
+			try {
+			Thread.sleep( 8000 );
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			}
 			}
+		}
 		}
 //		try {
 //			Thread.sleep( 40 );
 //		} catch (Exception e) {
 //		}
-		}
+		
 	
 	public void acaba() {
 		jugando = false;

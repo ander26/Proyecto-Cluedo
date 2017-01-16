@@ -871,6 +871,36 @@ public class GestionBaseDeDatos {
 			return false;
 		}
 	}
+	public boolean insertarJugadorLugar(Connection conexion, Jugador j, Partida p, int lugar) {
+		// String creacion2 = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY
+				// KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE
+				// CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES
+				// USUARIO(NOMBREUSUARIO),POS_MUÑECO NUMERIC(8,4),LUGAR INT,TURNO
+				// int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
+				// gestion.crearTabla(creacion2,conexion);
+				//
+		String sql = "";
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			sql = "UPDATE JUGADOR SET LUGAR="+lugar+"WHERE COD_JUG="+j.getCodigo();
+
+			statement.executeUpdate(sql);
+
+			logger.log(Level.INFO, "Se ha añadido el jugador: " + sql);
+
+			statement.close();
+
+			return true;
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Erro el insertar el jugador : " + sql);
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	public ArrayList<Jugador> consultaATablaJugador(Connection conexion, String seleccion) {
 
@@ -1485,8 +1515,12 @@ public class GestionBaseDeDatos {
 			return "Edificio de letras";
 		} else if (num == 7) {
 			return "Biblioteca";
-		} else {
+		} else if (num == 8) {
+			return "Campo";
+		} else if (num == 9) {
 			return "Zubiarte";
+		} else {
+			return "";
 		}
 	}
 
@@ -1508,8 +1542,12 @@ public class GestionBaseDeDatos {
 			return 6;
 		} else if (lugar == "Biblioteca") {
 			return 7;
-		} else {
+		} else if (lugar == "Campo") {
 			return 8;
+		} else if (lugar == "Zubiarte") {
+			return 9;
+		} else {
+			return 10;
 		}
 	}
 

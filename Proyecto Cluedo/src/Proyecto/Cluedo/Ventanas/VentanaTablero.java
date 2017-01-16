@@ -23,6 +23,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -57,8 +58,10 @@ public class VentanaTablero extends JFrame {
 	private JLabel Label5 = new JLabel();
 	private JLabel[] arrfichas = new JLabel[5];
 	private ArrayList<Point> fichasrojas;
-
+	
 	private HiloTurno hTurno = null;
+	private ArrayList<Point> arrlpuerta;
+
 
 	private boolean mostradoI = true;
 
@@ -615,6 +618,7 @@ public class VentanaTablero extends JFrame {
 		hTurno.setCon(conexion);
 
 		hTurno.start();
+		arrlpuerta=(ArrayList<Point>) Arrays.asList(hTurno.getArrpuertas());
 
 		pposiciones.addMouseListener(new MouseAdapter() {
 
@@ -643,20 +647,55 @@ public class VentanaTablero extends JFrame {
 				if (hTurno.getCodigoJugadorConTurno() == j.getCodigo()) {
 					System.out.println("entro en el if del pposiciones mouse click");
 					Point puntoSeleccionado = BuscarPuntoPinchado(e.getX(), e.getY(), anchura, altura);
-					if (estaEn(puntoSeleccionado, fichasrojas)) {
+					if (estaEn(puntoSeleccionado, fichasrojas) && puntoSeleccionado.equals(new Point(0,0))==false) {
 						pposiciones.volverAColorOriginal(fichasrojas);
 						pposiciones.meterOcupado(puntoSeleccionado);
 						pposiciones.repaint();
+						fichasrojas = new ArrayList<Point>();
+						base.modificarCoordenada(conexion, j, ((int) puntoSeleccionado.getX()),
+								((int) puntoSeleccionado.getY()));
+						ObtenerFichaDeJugador(arrjugadores, j).setLocation(
+								reajustarAnchuraFicha((int) puntoSeleccionado.getX() - 28, anchura),
+								reajustarAlturaFicha((int) puntoSeleccionado.getY() - 32, pposiciones.getHeight()));
+						
+						if(estaEn(puntoSeleccionado,arrlpuerta)==false){
+							hTurno.CambiarTurno();
+
+						}else{
+							if(puntoSeleccionado.equals(new Point(241,120)) || puntoSeleccionado.equals(new Point(209,255))){
+								base.insertarJugadorLugar(conexion, j, p, 8);//campo
+							}
+							else if(puntoSeleccionado.equals(new Point(295,104)) || puntoSeleccionado.equals(new Point(629,113))){
+								base.insertarJugadorLugar(conexion, j, p, 1);//ingenieria
+							}
+							else if(puntoSeleccionado.equals(new Point(504,196)) ){
+								base.insertarJugadorLugar(conexion, j, p, 2);//ade
+							}
+							else if(puntoSeleccionado.equals(new Point(1097,289)) || puntoSeleccionado.equals(new Point(1621,185)) ){
+								base.insertarJugadorLugar(conexion, j, p, 5);//centenario
+							}
+							else if(puntoSeleccionado.equals(new Point(1650,325)) || puntoSeleccionado.equals(new Point(1880,334)) ){
+								base.insertarJugadorLugar(conexion, j, p, 4);//capilla
+							}
+							else if(puntoSeleccionado.equals(new Point(1876,174)) ){
+								base.insertarJugadorLugar(conexion, j, p, 6);//letras
+							}
+							else if(puntoSeleccionado.equals(new Point(573,876)) ){
+								base.insertarJugadorLugar(conexion, j, p, 9);//zubiarte
+							}
+							else if(puntoSeleccionado.equals(new Point(1320,771)) ){
+								base.insertarJugadorLugar(conexion, j, p, 7);//crai
+							}
+							else if(puntoSeleccionado.equals(new Point(855,261)) ){
+								base.insertarJugadorLugar(conexion, j, p, 3);//L
+							}
+							
+							
+							
+						}
+						
 					}
-					fichasrojas = new ArrayList<Point>();
-					base.modificarCoordenada(conexion, j, ((int) puntoSeleccionado.getX()),
-							((int) puntoSeleccionado.getY()));
-					ObtenerFichaDeJugador(arrjugadores, j).setLocation(
-							reajustarAnchuraFicha((int) puntoSeleccionado.getX() - 28, anchura),
-							reajustarAlturaFicha((int) puntoSeleccionado.getY() - 32, pposiciones.getHeight()));
-
-					hTurno.CambiarTurno();
-
+					
 				}
 
 			}
@@ -2106,6 +2145,7 @@ public class VentanaTablero extends JFrame {
 		}
 		return false;
 	}
+	
 	public void colocarFicha(ArrayList<Jugador> arrjug,JLabel [] arrfich,GestionBaseDeDatos base,Connection con,int ancho,int alto){
 		Point [] arr=new Point[arrjug.size()];
 		

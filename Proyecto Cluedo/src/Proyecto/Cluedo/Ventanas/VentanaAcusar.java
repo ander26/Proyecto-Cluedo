@@ -362,8 +362,8 @@ public class VentanaAcusar extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				
 				if (!(hTurno.isAcusar())){
-				//acusacion[0]=base.lugarAcusacion(con, j); para hacer pruebas
-				acusacion[0]="F. Ingenieria";
+				acusacion[0]=base.lugarAcusacion(con, j); //para hacer pruebas
+				//acusacion[0]="F. Ingenieria";
 				acusacion[2]=psospechoso.getSospechoso();
 				acusacion[1]=parmas.getArma();
 				SubirAbaseAcusacion(j,p,con);

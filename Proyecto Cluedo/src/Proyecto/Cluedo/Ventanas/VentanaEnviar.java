@@ -21,16 +21,16 @@ import Proyecto.Cluedo.Logica.Jugador;
 
 public class VentanaEnviar extends JFrame {
 	
-	private static JPanel pcsospechoso=new JPanel();
+	private  JPanel pcsospechoso=new JPanel();
 	//private static JPanel pclugar=new JPanel();
-	private static JPanel pcarma=new JPanel();
-	private static panelrosa pprincipal;
+	private  JPanel pcarma=new JPanel();
+	private  panelrosa pprincipal;
 	//private static Propiedades prop =new Propiedades(6,8,7,2);
-	private static int [] arposcartas=new int[3];
-	private static JLabel labels=new JLabel();
+	private  int [] arposcartas=new int[3];
+	private  JLabel labels=new JLabel();
 	//private static JLabel labell=new JLabel();
-	private static JLabel labela=new JLabel();
-	private static JPanel paneldentropri=new JPanel();
+	private  JLabel labela=new JLabel();
+	private  JPanel paneldentropri=new JPanel();
 	private JLabel lbAcusar=new JLabel();
 	private JLabel lbResolver=new JLabel();
 	private JPanel pbotonera=new JPanel();
@@ -119,7 +119,7 @@ public class VentanaEnviar extends JFrame {
 		
 		
 	}
-	public static void meterCartas(GestionBaseDeDatos base,Connection conexion,Partida p,Jugador j){
+	public void meterCartas(GestionBaseDeDatos base,Connection conexion,Partida p,Jugador j){
 		ArrayList<Cartas> CartasRecibidas;
 		CartasRecibidas=base.obtenerCartasEnviadas(conexion,p.getCodigo(), j.getCodigo());
 		for(int i=0;i<CartasRecibidas.size();i++){
