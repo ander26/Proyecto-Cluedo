@@ -244,8 +244,9 @@ public class Main {
 		// }
 		//
 
-		 String creacion = "CREATE TABLE GANADOR(CODPARTIDA int NOT NULL PRIMARY KEY,USUARIO text,GANAR int)";
-		 gestion.crearTabla(creacion,conexion);
+		// String creacion = "CREATE TABLE GANADOR(CODPARTIDA int NOT NULL
+		// PRIMARY KEY,USUARIO text,GANAR int)";
+		// gestion.crearTabla(creacion,conexion);
 
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);

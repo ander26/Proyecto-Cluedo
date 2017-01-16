@@ -1759,7 +1759,7 @@ public class VentanaTablero extends JFrame {
 			}
 		}
 
-		);
+);
 
 		// campo.addMouseListener(new MouseAdapter() {
 		//
