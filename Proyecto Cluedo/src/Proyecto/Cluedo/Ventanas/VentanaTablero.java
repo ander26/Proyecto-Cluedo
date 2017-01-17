@@ -915,6 +915,8 @@ public class VentanaTablero extends JFrame {
 
 					VentanaAcusar f = new VentanaAcusar(base, conexion, j, p, hTurno);
 					f.setVisible(true);
+					}else{
+						JOptionPane.showMessageDialog(getContentPane(), "No se puede acusar si no estas en una verde", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 
