@@ -614,7 +614,8 @@ public class VentanaTablero extends JFrame {
 
 		System.out.println("llego aqui");
 
-		hiloFin= new hiloFinalizado(conexion, this, p.getCodigo(), u);
+		hiloFin= new hiloFinalizado(conexion, p.getCodigo());
+		hiloFin.start();
 		
 		hTurno = new HiloTurno();
 		hTurno.setBase(base);
@@ -623,7 +624,7 @@ public class VentanaTablero extends JFrame {
 		hTurno.setCon(conexion);
 
 		hTurno.start();
-		arrlpuerta=(ArrayList<Point>) Arrays.asList(hTurno.getArrpuertas());
+		arrlpuerta=new ArrayList( Arrays.asList(hTurno.getArrpuertas()));
 
 		pposiciones.addMouseListener(new MouseAdapter() {
 
@@ -898,6 +899,8 @@ public class VentanaTablero extends JFrame {
 			public void windowClosed(WindowEvent arg0) {
 				VentanaMenu ventana = new VentanaMenu(conexion, u, base);
 				ventana.setVisible(true);
+				
+				
 			}
 
 		});
@@ -1346,6 +1349,7 @@ public class VentanaTablero extends JFrame {
 			public void windowClosed(WindowEvent e) {
 				hTurno.acaba();
 				pintar.acabar();
+				hiloFin.acabar();
 				System.out.println("Se ha cerrado la ventana");
 			}
 

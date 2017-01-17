@@ -1,62 +1,76 @@
 package Proyecto.Cluedo.Hilo;
 
+import java.awt.Window;
 import java.sql.Connection;
 
 import javax.swing.JOptionPane;
 
 import Proyecto.Cluedo.Datos.Usuario;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
+import Proyecto.Cluedo.Ventanas.VentanaAcusar;
 import Proyecto.Cluedo.Ventanas.VentanaMenu;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
-public class hiloFinalizado extends Thread{
+public class hiloFinalizado extends Thread {
+
+	public boolean acabado = true;
 
 	
 	
-	public boolean acabado=true;
-	
-	public VentanaTablero ventana;
-	
-	private GestionBaseDeDatos gestion= new GestionBaseDeDatos();
-	
+
+	private GestionBaseDeDatos gestion = new GestionBaseDeDatos();
+
 	private Connection conexion;
-	
+
 	private int codigo;
+
 	
-	private Usuario u;
-	
-	public hiloFinalizado(Connection conexion,VentanaTablero ventana,int codigo,Usuario u){
-		this.conexion=conexion;
-		this.ventana=ventana;
-		this.codigo=codigo;
-		this.u=u;
-	}
-	
-	public void run (){
+
+	public hiloFinalizado(Connection conexion, int codigo) {
+		this.conexion = conexion;
 		
-		while (acabado){
-			
-			
-			
-			if (gestion.obtenerGanador(conexion, codigo)==1){
-				
-				ventana.dispose();
-				
-				JOptionPane.showMessageDialog(null, "Ha ganado "+gestion.obtenerUsuarioGanador(conexion, codigo)+"la partida", "Ganador", JOptionPane.INFORMATION_MESSAGE);
-				
-				VentanaMenu ventana = new VentanaMenu(conexion, u, gestion);
-				
-				ventana.setVisible(true);
-				
+		this.codigo = codigo;
+		
+		
+	}
+
+	public void run() {
+
+		while (acabado) {
+
+			if (gestion.obtenerGanador(conexion, codigo) == 1) {
+
+				for (Window window : Window.getWindows()) {
+				    window.dispose();
+				}
+		        
+
+				JOptionPane.showMessageDialog(null,
+						"Ha ganado " + gestion.obtenerUsuarioGanador(conexion, codigo) + " la partida", "Ganador",
+						JOptionPane.INFORMATION_MESSAGE);
+
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				System.out.println("Se ha producido un error con la espera");
 			}
 		}
-		
+
+		try {
+			Thread.sleep(5000);
+		} catch (Exception e) {
+			System.out.println("Se ha producido un error con la espera");
+		}
+
+		gestion.borrarGanador(conexion, codigo);
+
 	}
-	
-	public void acabar (){
-		
-		this.acabado=false;
-		
+
+	public void acabar() {
+
+		this.acabado = false;
+
 	}
-	
+
 }
