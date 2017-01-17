@@ -474,6 +474,8 @@ public class VentanaAcusar extends JFrame {
 					
 					resolver[0] = base.lugarAcusacion(con, j);
 
+//					resolver[0] ="Edificio de letras";
+					
 					resolver[2] = psospechoso.getSospechoso();
 
 					resolver[1] = parmas.getArma();
