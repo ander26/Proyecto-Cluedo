@@ -58,7 +58,7 @@ public class hiloFinalizado extends Thread {
 		}
 
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (Exception e) {
 			System.out.println("Se ha producido un error con la espera");
 		}
