@@ -2162,7 +2162,7 @@ public class VentanaTablero extends JFrame {
 			arr[i]=base.ObtenerCoordenada(con, arrjug.get(i));
 		}
 		for(int j=0;j<arrjug.size();j++){
-			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),ancho)-28,reajustarAlturaFicha((int)arr[j].getY(),alto)-16);
+			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),ancho)-28,reajustarAlturaFicha((int)arr[j].getY(),alto)-32);
 			arrfich[j].setLocation(punto);
 		}
 	}

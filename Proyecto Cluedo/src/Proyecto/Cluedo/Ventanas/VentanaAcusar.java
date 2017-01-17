@@ -436,16 +436,20 @@ public class VentanaAcusar extends JFrame {
 
 					acusacion[1] = parmas.getArma();
 
+					if (acusacion[0]==null||acusacion[1]==null||acusacion[3]==null){
+						JOptionPane.showMessageDialog(null, "Debe introducir algun valor antes de continuar", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+					}else{
+					
 					SubirAbaseAcusacion(j, p, con);
 
 					base.modificarPanel(con, "<html><body>El jugador " + j.getUsuario() + "<br> piensa que <br>"
 							+ acusacion[2] + "cometio el crimen <br> en" + acusacion[0] + "con  <br> el" + acusacion[1],
 							p);
 
-					base.modificarPanel(con, "El jugador " + j.getUsuario() + "\n piensa que \n" + acusacion[2]
-							+ "cometio el crimen \n en" + acusacion[0] + "con  \n el" + acusacion[1], p);
+//					base.modificarPanel(con, "El jugador " + j.getUsuario() + "<br> piensa que \n" + acusacion[2]
+//							+ "cometio el crimen \n en" + acusacion[0] + "con  \n el" + acusacion[1], p);
 					hTurno.setAcusar(true);
-
+					}
 				} else {
 					JOptionPane.showMessageDialog(getContentPane(), "Ya has acusado una vez, espera al sigueinte turno",
 							"Aviso", JOptionPane.INFORMATION_MESSAGE);
