@@ -772,7 +772,7 @@ public class VentanaTablero extends JFrame {
 							}
 
 							base.modificarPuntuacion(conexion, j.getUsuario(), 10, "+");
-
+							hTurno.setVentana(true);
 						}
 
 					}
@@ -895,8 +895,9 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
+				
 				if (hTurno.isPulsado()) {
-
+					if (hTurno.isVentana()){
 					// meterImgEnlabel("Imagenes/pushbajo.png", labelAcusar,
 					// 100, 100);
 					Jugador a = new Jugador();
@@ -914,6 +915,7 @@ public class VentanaTablero extends JFrame {
 
 					VentanaAcusar f = new VentanaAcusar(base, conexion, j, p, hTurno);
 					f.setVisible(true);
+					}
 				}
 
 			}

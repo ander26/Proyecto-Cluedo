@@ -25,7 +25,7 @@ import Proyecto.Cluedo.Ventanas.VentanaPanel;
 public class HiloTurno extends Thread {
 	
 
-	
+	private boolean ventana =false;
 	
 	private boolean jugando=true;
 	private GestionBaseDeDatos base;
@@ -43,6 +43,16 @@ public class HiloTurno extends Thread {
 	
 	private LabelLugares lugar;
 	
+	
+	
+	public boolean isVentana() {
+		return ventana;
+	}
+
+	public void setVentana(boolean ventana) {
+		this.ventana = ventana;
+	}
+
 	public LabelLugares getLugar() {
 		return lugar;
 	}
@@ -352,6 +362,8 @@ public class HiloTurno extends Thread {
 				}
 				pulsado=false;
 				acusar=false;
+				
+				ventana=false;
 				dado=-1;
 
 				lugar.setSeleccionado(false);
