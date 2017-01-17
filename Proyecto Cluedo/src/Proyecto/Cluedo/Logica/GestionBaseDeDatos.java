@@ -1482,7 +1482,7 @@ public class GestionBaseDeDatos {
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {
-				luugar = rs.getInt(0);
+				luugar = rs.getInt(1);
 				logger.log(Level.INFO, "el numero del lugar es" + luugar);
 			}
 
@@ -1525,26 +1525,26 @@ public class GestionBaseDeDatos {
 	}
 
 	public int CambioDeLugarANumero(String lugar) {
-		if (lugar == "Deusto") {
+		if (lugar.equals("Deusto")) {
 			return 0;
-		} else if (lugar == "F. Ingenieria") {
+		} else if (lugar.equals("F. Ingenieria")) {
 			return 1;
-		} else if (lugar == "La Comercial") {
+		} else if (lugar.equals("La Comercial")) {
 			return 2;
-		} else if (lugar == "la L") {
+		} else if (lugar.equals("la L")) {
 			return 3;
 
-		} else if (lugar == "La Capilla") {
+		} else if (lugar.equals("La Capilla")) {
 			return 4;
-		} else if (lugar == "Edificio centenario") {
+		} else if (lugar.equals("Edificio centenario")) {
 			return 5;
-		} else if (lugar == "Edificio de letras") {
+		} else if (lugar.equals("Edificio de letras")) {
 			return 6;
-		} else if (lugar == "Biblioteca") {
+		} else if (lugar.equals("Biblioteca")) {
 			return 7;
-		} else if (lugar == "Campo") {
+		} else if (lugar.equals("Campo")) {
 			return 8;
-		} else if (lugar == "Zubiarte") {
+		} else if (lugar.equals("Zubiarte")) {
 			return 9;
 		} else {
 			return 10;

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Ventanas.LabelLugares;
 import Proyecto.Cluedo.Ventanas.Panelcirculos;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
@@ -67,6 +68,7 @@ public class hiloPìntado extends Thread {
 	private JLabel ficha;
 
 	
+	
 	private ArrayList<Jugador> arrjug;
 	
 	private JLabel [] arrfich;
@@ -87,6 +89,8 @@ public class hiloPìntado extends Thread {
 	
 	
 	
+
+
 	public Clip getClip() {
 		return clip;
 	}

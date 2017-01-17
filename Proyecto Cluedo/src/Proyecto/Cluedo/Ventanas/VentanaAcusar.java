@@ -427,6 +427,7 @@ public class VentanaAcusar extends JFrame {
 
 
 				if (!(hTurno.isAcusar())) {
+					System.out.println(base.lugarAcusacion(con, j));
 					acusacion[0]=base.lugarAcusacion(con, j);
 					// pruebas
 
@@ -436,7 +437,7 @@ public class VentanaAcusar extends JFrame {
 
 					acusacion[1] = parmas.getArma();
 
-					if (acusacion[0]==null||acusacion[1]==null||acusacion[3]==null){
+					if (acusacion[0]==null||acusacion[1]==null||acusacion[2]==null){
 						JOptionPane.showMessageDialog(null, "Debe introducir algun valor antes de continuar", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 					}else{
 					
@@ -470,12 +471,16 @@ public class VentanaAcusar extends JFrame {
 
 				if (respuesta == JOptionPane.YES_OPTION) {
 
+					
 					resolver[0] = base.lugarAcusacion(con, j);
 
 					resolver[2] = psospechoso.getSospechoso();
 
 					resolver[1] = parmas.getArma();
 
+					if (resolver[0]==null||resolver[1]==null||resolver[2]==null){
+						JOptionPane.showMessageDialog(null, "Debe introducir algun valor antes de continuar", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+					}else{
 					String[] resultado = base.obtenerSospechosos(con, p.getCodigo());
 
 					for (String s : resultado) {
@@ -519,18 +524,14 @@ public class VentanaAcusar extends JFrame {
 
 						
 						base.modificarPuntuacion(con, j.getUsuario(), 100, "-");
+					
 					}
-
-				} else {
-
-					JOptionPane.showMessageDialog(null,
-							"¡Lo siento! No has resuelto el misterio, has perdido 100 puntos", "Perdedor",
-							JOptionPane.INFORMATION_MESSAGE);
+				
 
 					
 					base.modificarPuntuacion(con, j.getUsuario(), 100, "-");
 				}
-
+				}
 			}
 		});
 

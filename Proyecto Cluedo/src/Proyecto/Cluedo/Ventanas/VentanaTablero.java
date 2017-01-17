@@ -59,13 +59,12 @@ public class VentanaTablero extends JFrame {
 	private JLabel Label5 = new JLabel();
 	private JLabel[] arrfichas = new JLabel[5];
 	private ArrayList<Point> fichasrojas;
-	
+
 	private HiloTurno hTurno = null;
 	private ArrayList<Point> arrlpuerta;
 
-
 	private hiloFinalizado hiloFin;
-	
+
 	private boolean mostradoI = true;
 
 	private boolean mostradoD = true;
@@ -137,7 +136,7 @@ public class VentanaTablero extends JFrame {
 		// System.out.println("BOTOOM : "+bottom);
 
 		meterFicha(arrjugadores, anchura, altura);
-		//colocarFichaInicio(arrjugadores, anchura, altura);
+		// colocarFichaInicio(arrjugadores, anchura, altura);
 
 		// System.out.println(altura);
 		//
@@ -614,9 +613,9 @@ public class VentanaTablero extends JFrame {
 
 		System.out.println("llego aqui");
 
-		hiloFin= new hiloFinalizado(conexion, p.getCodigo());
+		hiloFin = new hiloFinalizado(conexion, p.getCodigo());
 		hiloFin.start();
-		
+
 		hTurno = new HiloTurno();
 		hTurno.setBase(base);
 		hTurno.setJugador(j);
@@ -624,7 +623,7 @@ public class VentanaTablero extends JFrame {
 		hTurno.setCon(conexion);
 
 		hTurno.start();
-		arrlpuerta=new ArrayList( Arrays.asList(hTurno.getArrpuertas()));
+		arrlpuerta = new ArrayList(Arrays.asList(hTurno.getArrpuertas()));
 
 		pposiciones.addMouseListener(new MouseAdapter() {
 
@@ -633,7 +632,7 @@ public class VentanaTablero extends JFrame {
 
 				System.out.println(reajustarAnchura(e.getX(), anchura));
 				System.out.println(reajustarImagen(e.getY(), altura));
-				
+
 				// Point punto=new Point(e.getX(),e.getY());
 				// System.out.println(punto.getX()+" "+punto.getY());
 				// if(punto.getX()==0){
@@ -653,7 +652,7 @@ public class VentanaTablero extends JFrame {
 				if (hTurno.getCodigoJugadorConTurno() == j.getCodigo()) {
 					System.out.println("entro en el if del pposiciones mouse click");
 					Point puntoSeleccionado = BuscarPuntoPinchado(e.getX(), e.getY(), anchura, altura);
-					if (estaEn(puntoSeleccionado, fichasrojas) && puntoSeleccionado.equals(new Point(0,0))==false) {
+					if (estaEn(puntoSeleccionado, fichasrojas) && puntoSeleccionado.equals(new Point(0, 0)) == false) {
 						pposiciones.volverAColorOriginal(fichasrojas);
 						pposiciones.meterOcupado(puntoSeleccionado);
 						pposiciones.repaint();
@@ -663,45 +662,121 @@ public class VentanaTablero extends JFrame {
 						ObtenerFichaDeJugador(arrjugadores, j).setLocation(
 								reajustarAnchuraFicha((int) puntoSeleccionado.getX() - 28, anchura),
 								reajustarAlturaFicha((int) puntoSeleccionado.getY() - 32, pposiciones.getHeight()));
-						
-						if(estaEn(puntoSeleccionado,arrlpuerta)==false){
+
+						if (estaEn(puntoSeleccionado, arrlpuerta) == false) {
+							
+							hTurno.setLugar(ade);
 							hTurno.CambiarTurno();
 
-						}else{
-							if(puntoSeleccionado.equals(new Point(241,120)) || puntoSeleccionado.equals(new Point(209,255))){
-								base.insertarJugadorLugar(conexion, j, p, 8);//campo
+						} else {
+							if (puntoSeleccionado.equals(new Point(241, 120))
+									|| puntoSeleccionado.equals(new Point(209, 255))) {
+								base.insertarJugadorLugar(conexion, j, p, 8);// campo
+
+								campo.setSeleccionado(true);
+								campo.setC1(0);
+								campo.setC2(0);
+								campo.setC3(255);
+								campo.repaint();
+
+								hTurno.setLugar(campo);
+							} else if (puntoSeleccionado.equals(new Point(295, 104))
+									|| puntoSeleccionado.equals(new Point(629, 113))) {
+								base.insertarJugadorLugar(conexion, j, p, 1);// ingenieria
+								
+								ade.setSeleccionado(true);
+								ade.setC1(247);
+								ade.setC2(191);
+								ade.setC3(190);
+								ade.repaint();
+
+								hTurno.setLugar(ade);
+
+							} else if (puntoSeleccionado.equals(new Point(504, 196))) {
+								base.insertarJugadorLugar(conexion, j, p, 2);// ade
+
+								ade.setSeleccionado(true);
+								ade.setC1(247);
+								ade.setC2(191);
+								ade.setC3(190);
+								ade.repaint();
+
+								hTurno.setLugar(ade);
+
+							} else if (puntoSeleccionado.equals(new Point(1097, 289))
+									|| puntoSeleccionado.equals(new Point(1621, 185))) {
+								base.insertarJugadorLugar(conexion, j, p, 5);// centenario
+								
+								 centenario.setSeleccionado(true);
+								centenario.setC1(102);
+								 centenario.setC2(15);
+								 centenario.setC3(130);
+								 centenario.repaint();
+								 
+								 hTurno.setLugar(centenario);
+
+							} else if (puntoSeleccionado.equals(new Point(1650, 325))
+									|| puntoSeleccionado.equals(new Point(1880, 334))) {
+								base.insertarJugadorLugar(conexion, j, p, 4);// capilla
+								
+								capilla.setSeleccionado(true);
+								capilla.setC1(247);
+								 capilla.setC2(153);
+								 capilla.setC3(133);
+								 capilla.repaint();
+
+								 hTurno.setLugar(capilla);
+								 
+							} else if (puntoSeleccionado.equals(new Point(1876, 174))) {
+								base.insertarJugadorLugar(conexion, j, p, 6);// letras
+								
+								 deLetras.setSeleccionado(true);
+								 deLetras.setC1(128);
+								 deLetras.setC2(128);
+								 deLetras.setC3(128);
+								 deLetras.repaint();
+								
+								hTurno.setLugar(deLetras);
+								 
+							} else if (puntoSeleccionado.equals(new Point(573, 876))) {
+								base.insertarJugadorLugar(conexion, j, p, 9);// zubiarte
+								
+								 zubi.setSeleccionado(true);
+								 zubi.setC1(192);
+								 zubi.setC2(0);
+								 zubi.setC3(64);
+								 zubi.repaint();
+								 
+								 hTurno.setLugar(zubi);
+							} else if (puntoSeleccionado.equals(new Point(1320, 771))) {
+								base.insertarJugadorLugar(conexion, j, p, 7);// crai
+								
+								 crai.setSeleccionado(true);
+								 crai.setC1(22);
+								 crai.setC2(170);
+								 crai.setC3(76);
+								 crai.repaint();
+								
+								 hTurno.setLugar(crai);
+								
+							} else if (puntoSeleccionado.equals(new Point(855, 261))) {
+								base.insertarJugadorLugar(conexion, j, p, 3);// L
+								
+								l.setSeleccionado(true);
+								 l.setC1(179);
+								 l.setC2(223);
+								 l.setC3(83);
+								 l.repaint();
+								 
+								 hTurno.setLugar(l);
 							}
-							else if(puntoSeleccionado.equals(new Point(295,104)) || puntoSeleccionado.equals(new Point(629,113))){
-								base.insertarJugadorLugar(conexion, j, p, 1);//ingenieria
-							}
-							else if(puntoSeleccionado.equals(new Point(504,196)) ){
-								base.insertarJugadorLugar(conexion, j, p, 2);//ade
-							}
-							else if(puntoSeleccionado.equals(new Point(1097,289)) || puntoSeleccionado.equals(new Point(1621,185)) ){
-								base.insertarJugadorLugar(conexion, j, p, 5);//centenario
-							}
-							else if(puntoSeleccionado.equals(new Point(1650,325)) || puntoSeleccionado.equals(new Point(1880,334)) ){
-								base.insertarJugadorLugar(conexion, j, p, 4);//capilla
-							}
-							else if(puntoSeleccionado.equals(new Point(1876,174)) ){
-								base.insertarJugadorLugar(conexion, j, p, 6);//letras
-							}
-							else if(puntoSeleccionado.equals(new Point(573,876)) ){
-								base.insertarJugadorLugar(conexion, j, p, 9);//zubiarte
-							}
-							else if(puntoSeleccionado.equals(new Point(1320,771)) ){
-								base.insertarJugadorLugar(conexion, j, p, 7);//crai
-							}
-							else if(puntoSeleccionado.equals(new Point(855,261)) ){
-								base.insertarJugadorLugar(conexion, j, p, 3);//L
-							}
-							
-							
-							
+
+							base.modificarPuntuacion(conexion, j.getUsuario(), 10, "+");
+
 						}
-						
+
 					}
-					
+
 				}
 
 			}
@@ -899,8 +974,7 @@ public class VentanaTablero extends JFrame {
 			public void windowClosed(WindowEvent arg0) {
 				VentanaMenu ventana = new VentanaMenu(conexion, u, base);
 				ventana.setVisible(true);
-				
-				
+
 			}
 
 		});
@@ -936,7 +1010,6 @@ public class VentanaTablero extends JFrame {
 							imagen = new ImageIcon(VentanaTablero.class
 									.getResource("Imagenes/" + hTurno.getDado() + ".png").toURI().toURL());
 
-
 						} catch (Exception o) {
 
 							System.out.println("No se ha encontrado el archivo");
@@ -971,7 +1044,6 @@ public class VentanaTablero extends JFrame {
 						System.out.println("acaba repaint");
 
 					}
-
 
 				}
 			}
@@ -1415,6 +1487,8 @@ public class VentanaTablero extends JFrame {
 
 								pintar.setAnimacion1(true);
 
+								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+
 								try {
 									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
 											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
@@ -1438,6 +1512,8 @@ public class VentanaTablero extends JFrame {
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion1(true);
+
+								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
 
 								try {
 									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
@@ -1507,9 +1583,12 @@ public class VentanaTablero extends JFrame {
 										trainera.getY());
 								pintar.setAnimacion3(true);
 
+								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
 								try {
-									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
-								       Clip clip = AudioSystem.getClip();
+									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+													.getAbsoluteFile());
+									Clip clip = AudioSystem.getClip();
 									clip.open(audioInputStream);
 									clip.start();
 									pintar.setClip(clip);
@@ -1528,9 +1607,12 @@ public class VentanaTablero extends JFrame {
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion3(true);
 
+								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
 								try {
-									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
-								       
+									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+													.getAbsoluteFile());
+
 									Clip clip = AudioSystem.getClip();
 									clip.open(audioInputStream);
 									clip.start();
@@ -1635,9 +1717,12 @@ public class VentanaTablero extends JFrame {
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion2(true);
 
+								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
 								try {
-									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
-								       
+									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+													.getAbsoluteFile());
+
 									Clip clip = AudioSystem.getClip();
 									clip.open(audioInputStream);
 									clip.start();
@@ -1687,9 +1772,13 @@ public class VentanaTablero extends JFrame {
 
 								pintar.setAnimacion2(true);
 
+								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+
 								try {
-									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
-								       
+									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+													.getAbsoluteFile());
+
 									Clip clip = AudioSystem.getClip();
 									clip.open(audioInputStream);
 									clip.start();
@@ -1726,6 +1815,8 @@ public class VentanaTablero extends JFrame {
 								traineraUPV.repaint();
 								pintar.setFicha(jugador1);
 								pintar.setAnimacion4(true);
+
+								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
 
 								try {
 									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
@@ -1780,9 +1871,13 @@ public class VentanaTablero extends JFrame {
 
 								pintar.setAnimacion4(true);
 
+								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+
 								try {
-									 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav").getAbsoluteFile());
-								       
+									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+													.getAbsoluteFile());
+
 									Clip clip = AudioSystem.getClip();
 									clip.open(audioInputStream);
 									clip.start();
@@ -1802,7 +1897,7 @@ public class VentanaTablero extends JFrame {
 			}
 		}
 
-);
+		);
 
 		// campo.addMouseListener(new MouseAdapter() {
 		//
@@ -2084,16 +2179,18 @@ public class VentanaTablero extends JFrame {
 		return (int) (coordenada * escala);
 
 	}
+
 	public int reajustarAlturaFicha(int coordenada, int altura) {
 
-		double escala = (double)altura / (double)953;
+		double escala = (double) altura / (double) 953;
 
 		return (int) (coordenada * escala);
 
 	}
+
 	public int reajustarAnchuraFicha(int coordenada, int anchura) {
 
-		double escala = (double)anchura / (double)1920;
+		double escala = (double) anchura / (double) 1920;
 
 		return (int) (coordenada * escala);
 
@@ -2154,20 +2251,20 @@ public class VentanaTablero extends JFrame {
 		}
 		return false;
 	}
-	
-	public void colocarFicha(ArrayList<Jugador> arrjug,JLabel [] arrfich,GestionBaseDeDatos base,Connection con,int ancho,int alto){
-		Point [] arr=new Point[arrjug.size()];
-		
-		for(int i=0;i<arrjug.size();i++){
-			arr[i]=base.ObtenerCoordenada(con, arrjug.get(i));
+
+	public void colocarFicha(ArrayList<Jugador> arrjug, JLabel[] arrfich, GestionBaseDeDatos base, Connection con,
+			int ancho, int alto) {
+		Point[] arr = new Point[arrjug.size()];
+
+		for (int i = 0; i < arrjug.size(); i++) {
+			arr[i] = base.ObtenerCoordenada(con, arrjug.get(i));
 		}
-		for(int j=0;j<arrjug.size();j++){
-			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX(),ancho)-28,reajustarAlturaFicha((int)arr[j].getY(),alto)-32);
+		for (int j = 0; j < arrjug.size(); j++) {
+			Point punto = new Point(reajustarAnchuraFicha((int) arr[j].getX(), ancho) - 28,
+					reajustarAlturaFicha((int) arr[j].getY(), alto) - 32);
 			arrfich[j].setLocation(punto);
 		}
 	}
-
-	
 
 }
 

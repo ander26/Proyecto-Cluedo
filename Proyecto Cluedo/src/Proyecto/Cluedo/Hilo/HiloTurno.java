@@ -17,6 +17,7 @@ import Proyecto.Cluedo.Datos.Cartas;
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Ventanas.LabelLugares;
 import Proyecto.Cluedo.Ventanas.VentanaEnviar;
 import Proyecto.Cluedo.Ventanas.VentanaPanel;
 
@@ -39,6 +40,16 @@ public class HiloTurno extends Thread {
 		
 	private int CodigoJugadorConTurnoAntiguo;
 	private boolean MonigoteMovida=false;
+	
+	private LabelLugares lugar;
+	
+	public LabelLugares getLugar() {
+		return lugar;
+	}
+
+	public void setLugar(LabelLugares lugar) {
+		this.lugar = lugar;
+	}
 	
 	public Point[] getArrpuertas() {
 		return arrpuertas;
@@ -343,7 +354,8 @@ public class HiloTurno extends Thread {
 				acusar=false;
 				dado=-1;
 
-				
+				lugar.setSeleccionado(false);
+				lugar.repaint();
 				
 			}
 		}
