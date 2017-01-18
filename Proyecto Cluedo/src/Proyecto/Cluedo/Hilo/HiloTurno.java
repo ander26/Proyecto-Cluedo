@@ -349,6 +349,7 @@ public class HiloTurno extends Thread {
 	public void acaba() {
 		jugando = false;
 	}
+	
 	public void CambiarTurno(){
 		for(int i=0;i<arrjugadores.size();i++){
 			if(CodigoJugadorConTurno==arrjugadores.get(i).getCodigo()){
