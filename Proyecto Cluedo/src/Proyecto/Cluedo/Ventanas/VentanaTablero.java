@@ -59,7 +59,7 @@ public class VentanaTablero extends JFrame {
 	private JLabel Label5 = new JLabel();
 	private JLabel[] arrfichas = new JLabel[5];
 	private ArrayList<Point> fichasrojas;
-	
+	private Point puntoViejo=null;
 	private HiloTurno hTurno = null;
 	private ArrayList<Point> arrlpuerta;
 
@@ -623,7 +623,7 @@ public class VentanaTablero extends JFrame {
 		hTurno.setCon(conexion);
 
 		hTurno.start();
-		arrlpuerta=(ArrayList<Point>) Arrays.asList(hTurno.getArrpuertas());
+		arrlpuerta=new ArrayList(Arrays.asList(hTurno.getArrpuertas()));
 
 		pposiciones.addMouseListener(new MouseAdapter() {
 
@@ -652,7 +652,11 @@ public class VentanaTablero extends JFrame {
 				if (hTurno.getCodigoJugadorConTurno() == j.getCodigo()) {
 					System.out.println("entro en el if del pposiciones mouse click");
 					Point puntoSeleccionado = BuscarPuntoPinchado(e.getX(), e.getY(), anchura, altura);
+					
 					if (estaEn(puntoSeleccionado, fichasrojas) && puntoSeleccionado.equals(new Point(0,0))==false) {
+						if(puntoViejo!=null){
+							fichasrojas.add(puntoViejo);
+						}
 						pposiciones.volverAColorOriginal(fichasrojas);
 						pposiciones.meterOcupado(puntoSeleccionado);
 						pposiciones.repaint();
@@ -662,11 +666,12 @@ public class VentanaTablero extends JFrame {
 						ObtenerFichaDeJugador(arrjugadores, j).setLocation(
 								reajustarAnchuraFicha((int) puntoSeleccionado.getX() - 28, anchura),
 								reajustarAlturaFicha((int) puntoSeleccionado.getY() - 32, pposiciones.getHeight()));
-						
+						puntoViejo=puntoSeleccionado;
 						if(estaEn(puntoSeleccionado,arrlpuerta)==false){
 							hTurno.CambiarTurno();
 
 						}else{
+							System.out.println("cambio lugar");
 							if(puntoSeleccionado.equals(new Point(241,120)) || puntoSeleccionado.equals(new Point(209,255))){
 								base.insertarJugadorLugar(conexion, j, p, 8);//campo
 							}
@@ -704,6 +709,7 @@ public class VentanaTablero extends JFrame {
 				}
 
 			}
+			
 
 			// if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
 			// Point
@@ -957,9 +963,9 @@ public class VentanaTablero extends JFrame {
 						System.out.println("voy a obtener coordenada");
 						Point coord = base.ObtenerCoordenada(conexion, j);
 						camino.add(coord);
-						if (coord.equals(new Point(129, 876))) {
-							numero = numero - 1;
-						}
+//						if (coord.equals(new Point(129, 876))) {
+//							numero = numero - 1;
+//						}
 						ponercircrojos.MoverA(coord, numero, camino, fichasrojas);
 						System.out.println("ya he hecho mover a");
 						pposiciones.meterPosibilidades(fichasrojas);

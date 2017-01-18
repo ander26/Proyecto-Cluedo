@@ -20,7 +20,7 @@ import Proyecto.Cluedo.Logica.FicheroCoordenadasPosiciones;
 public class Panelcirculos extends JPanel{
 	
 
-	public Point [] arrpuertas={new Point(1391,397),new Point(241,120),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1650,325),new Point(1846,174),new Point(1880,334),new Point(1320,771),new Point(573,876),new Point(855,261),new Point(295,104)};
+	public Point [] arrpuertas={new Point(1391,397),new Point(241,121),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1650,325),new Point(1846,174),new Point(1881,334),new Point(1321,771),new Point(573,876),new Point(855,261),new Point(295,104)};
 	public Point [] puente = {new Point(216, 637),new Point(1391,397),new Point(86,414),new Point(1251,673)};
 
 	private ArrayList<Point>arrpuntmarrones=new ArrayList<Point>();	

@@ -20,7 +20,7 @@ public class busquedaposicion {
 			}
 		}
 		ArrayList<Point> arr2= new ArrayList<Point>();
-		arr2.add(new Point(210,682));
+		arr2.add(new Point(211,682));
 		arr2.add(new Point(86,414));
 		hm.put(new Point(216,637), arr2);
 		ArrayList<Point> arr11= new ArrayList<Point>();
@@ -34,22 +34,22 @@ public class busquedaposicion {
 		ArrayList<Point> arr9= new ArrayList<Point>();
 		arr9.add(new Point(191,884));
 		arr9.add(new Point(241,851));
-		arr9.add(new Point(300,874));
+		arr9.add(new Point(301,874));
 		hm.put(new Point(251,879), arr9);
 		ArrayList<Point> arr88= new ArrayList<Point>();
 		arr88.add(new Point(1317,804));
-		hm.put(new Point(1320,771), arr88);
+		hm.put(new Point(1321,771), arr88);
 		ArrayList<Point> arr36= new ArrayList<Point>();
 		arr36.add(new Point(1232,708));
 		arr36.add(new Point(1391,397));
 		hm.put(new Point(1251,673), arr36);
 		ArrayList<Point> arr45= new ArrayList<Point>();
-		arr45.add(new Point(1890,295));
-		arr45.add(new Point(1650,325));
-		hm.put(new Point(1880,334), arr45);
+		arr45.add(new Point(1891,295));
+		arr45.add(new Point(1651,325));
+		hm.put(new Point(1881,334), arr45);
 		ArrayList<Point> arr40= new ArrayList<Point>();
 		arr40.add(new Point(1662,291));
-		arr40.add(new Point(1880,334));
+		arr40.add(new Point(1881,334));
 		arr40.add(new Point(1611,376));
 		hm.put(new Point(1650,325), arr40);
 		ArrayList<Point> arr49= new ArrayList<Point>();
@@ -78,7 +78,7 @@ public class busquedaposicion {
 		arr65.add(new Point(295,104));
 		hm.put(new Point(629,113), arr65);
 		ArrayList<Point> arr69= new ArrayList<Point>();
-		arr69.add(new Point(580,269));
+		arr69.add(new Point(581,269));
 		arr69.add(new Point(613,345));
 		arr69.add(new Point(537,343));
 		hm.put(new Point(580,305), arr69);
@@ -92,7 +92,7 @@ public class busquedaposicion {
 		hm.put(new Point(321,391), arr77);
 		ArrayList<Point> arr82= new ArrayList<Point>();
 		arr82.add(new Point(209,255));
-		arr82.add(new Point(241,120));
+		arr82.add(new Point(241,121));
 		hm.put(new Point(230,288), arr82);
 		ArrayList<Point> arr83= new ArrayList<Point>();
 		arr83.add(new Point(295,104));

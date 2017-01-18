@@ -1527,24 +1527,24 @@ public class GestionBaseDeDatos {
 	public int CambioDeLugarANumero(String lugar) {
 		if (lugar == "Deusto") {
 			return 0;
-		} else if (lugar == "F. Ingenieria") {
+		} else if (lugar.equals("F. Ingenieria")) {
 			return 1;
-		} else if (lugar == "La Comercial") {
+		} else if (lugar.equals("La Comercial")) {
 			return 2;
-		} else if (lugar == "la L") {
+		} else if (lugar.equals("la L")) {
 			return 3;
 
-		} else if (lugar == "La Capilla") {
+		} else if (lugar.equals("La Capilla")) {
 			return 4;
-		} else if (lugar == "Edificio centenario") {
+		} else if (lugar.equals("Edificio centenario")) {
 			return 5;
-		} else if (lugar == "Edificio de letras") {
+		} else if (lugar.equals("Edificio de letras")) {
 			return 6;
-		} else if (lugar == "Biblioteca") {
+		} else if (lugar.equals("Biblioteca")) {
 			return 7;
-		} else if (lugar == "Campo") {
+		} else if (lugar.equals("Campo")) {
 			return 8;
-		} else if (lugar == "Zubiarte") {
+		} else if (lugar.equals("Zubiarte")) {
 			return 9;
 		} else {
 			return 10;
@@ -1625,7 +1625,7 @@ public class GestionBaseDeDatos {
 
 	public String ObtenerPanel(Connection conexion, Partida p) {
 
-		String ret = "";
+		String ret = "cadena vacia";
 
 		String SQL = "";
 
@@ -1650,7 +1650,7 @@ public class GestionBaseDeDatos {
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha modificado correctamente");
 			e.printStackTrace();
-			return null;
+			return "cadena vacia";
 		}
 
 	}
@@ -2585,7 +2585,62 @@ public class GestionBaseDeDatos {
 		}
 		
 	}
+public boolean Aacusado (Connection conexion, int codigo){
+		
+		
+		int k=0;
+		String SQL ="";
+		try{
+			
+			SQL = "SELECT NOMBRECARTALUGAR FROM SOSPECHA WHERE CODPARTIDA= "+codigo;
+			
+			Statement statement = conexion.createStatement();
+			
+			ResultSet resultado = statement.executeQuery(SQL);
+			
+			
+			while (resultado.next()){
+				k=k+1;
+				System.out.println("numero acusaciones"+k);				
+				
+			}
+			resultado.close();
+			statement.close();
+			if(k==1){
+				logger.log(Level.INFO, "Se han obtendo correctamente los sospechosos");
+				return true;
+			}		
+			
+			return false;
+			
+			
+			
+		}catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha conseguido obtener a los sospechosos");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public void borrarAcusacion (Connection conexion, int codigo){
 	
+	String SQL ="";
+	SQL =" DELETE FROM SOSPECHA WHERE CODPARTIDA="+codigo;
+	Statement statement;
+	try {
+		statement = conexion.createStatement();
+		statement.executeUpdate(SQL);
+		logger.log(Level.INFO, "Se ha borrado la acusacion");
+		
+
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		logger.log(Level.SEVERE, "No se ha borrado la acusacion");		
+		e.printStackTrace();
+	}
+	
+	
+	}
 	
 	
 }

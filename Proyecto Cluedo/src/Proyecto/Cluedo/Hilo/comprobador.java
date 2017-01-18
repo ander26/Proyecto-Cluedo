@@ -102,6 +102,7 @@ public class comprobador extends Thread {
 			base.insertarGanador(conexion, u.getUsuario(), 0, p.getCodigo());
 			
 		 }else{
+			 System.out.println("entro");
 		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop,true);
 		 tablero.setVisible(true);
 		 base.insertarGanador(conexion, u.getUsuario(), 0, p.getCodigo());

@@ -427,7 +427,7 @@ public class VentanaAcusar extends JFrame {
 
 
 				if (!(hTurno.isAcusar())) {
-					acusacion[0]=base.lugarAcusacion(con, j); para hacer
+					acusacion[0]=base.lugarAcusacion(con, j); //para hacer
 					// pruebas
 
 					//acusacion[0] = "F. Ingenieria";
@@ -466,7 +466,7 @@ public class VentanaAcusar extends JFrame {
 
 				if (respuesta == JOptionPane.YES_OPTION) {
 
-					resolver[0] = "F. Ingenieria";
+					resolver[0] = base.lugarAcusacion(con, j);
 
 					resolver[2] = psospechoso.getSospechoso();
 
