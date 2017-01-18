@@ -65,7 +65,7 @@ System.out.println("entro en paint componet");
 				imagen = ImageIO.read(getClass().getResource(ruta));
 				Graphics g3=imagen.getGraphics();
 				//g3.setColor(new Color(255,255,0,100));
-				g3.fillRect(0,0,100,150);
+//				g3.fillRect(0,0,100,150);
 				
 //				JPEGImageDecoder decoder=JPEGCodec.createJPEGDecoder(getClass().getResource(ruta));
 //				RescaleOp rop= new RescaleOp(componentes,desplazamiento,null);

@@ -67,6 +67,7 @@ public class hiloPìntado extends Thread {
 	
 	private JLabel ficha;
 
+	private boolean comprobador;
 	
 	
 	private ArrayList<Jugador> arrjug;
@@ -165,7 +166,7 @@ public class hiloPìntado extends Thread {
 
 	public hiloPìntado(JLabel semaforo, JLabel labelDado, JLabel labelAcusar, JLabel trainera, Partida p, Jugador j,
 
-			Connection conexion, int anchura, JLabel traineraUPV,ArrayList<Jugador> arrjug,JLabel [] arrfich,int altura,Panelcirculos panel) {
+			Connection conexion, int anchura, JLabel traineraUPV,ArrayList<Jugador> arrjug,JLabel [] arrfich,int altura,Panelcirculos panel,boolean comprobador) {
 
 		this.semaforo = semaforo;
 		this.labelDado = labelDado;
@@ -182,13 +183,13 @@ public class hiloPìntado extends Thread {
 
 		this.altura = altura;
 		
-	
+		this.comprobador=comprobador;
 
 		turno = -1;
 	}
 
 	public void run() {
-		if(base.ObtenerCodigoJugadorTurno(conexion, p)==-1){
+		if(comprobador){
 			System.out.println("entro");
 			//meterFicha(arrjug, anchura, altura);
 			System.out.println("tamaño"+arrjug.size());

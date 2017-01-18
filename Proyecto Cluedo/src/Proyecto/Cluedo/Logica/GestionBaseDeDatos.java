@@ -1551,6 +1551,34 @@ public class GestionBaseDeDatos {
 		}
 	}
 
+	public ArrayList<String> obtenerNombreCartas(Connection conexion, int codpartida, int codjugadordestino) {
+		ArrayList<String> ret = new ArrayList<>();
+
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT NOMBRECARTA FROM RECIBIRCARTAS WHERE CODPARTIDA=" + codpartida
+					+ "AND CODJUGADORDESTINO=" + codjugadordestino;
+			logger.log(Level.INFO, sentSQL);
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+				logger.log(Level.INFO, "entro en el while de obtener cartas enviadas");
+				ret.add(rs.getString("NOMBRECARTA"));
+				System.out.println(rs.getString("NOMBRECARTA") + "obtenercartasenviadas");
+
+			}
+
+			return ret;
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public ArrayList<Cartas> obtenerCartasEnviadas(Connection conexion, int codpartidda, int codjugordestino) {
 		System.out.println("entro en obtener cartan enviadas");
 		ArrayList<String> ret = new ArrayList<>();
@@ -1583,10 +1611,14 @@ public class GestionBaseDeDatos {
 			statement.close();
 
 			for (int i = 0; i < ret.size(); i++) {
-				arr = consultaATablaCartas(conexion, "NOMBRE='" + ret.get(i) + "'");
+				if (ret.equals("no carta")) {
 
-				logger.log(Level.WARNING, "Construyo array Cartas");
+				} else {
+					arr = consultaATablaCartas(conexion, "NOMBRE='" + ret.get(i) + "'");
 
+					logger.log(Level.WARNING, "Construyo array Cartas");
+
+				}
 			}
 			return arr;
 
@@ -2510,7 +2542,6 @@ public class GestionBaseDeDatos {
 			statement.executeUpdate(SQL);
 
 			logger.log(Level.INFO, "Se ha realizado el borrado completo correctamente");
-			
 
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha podido modificar al ganador");

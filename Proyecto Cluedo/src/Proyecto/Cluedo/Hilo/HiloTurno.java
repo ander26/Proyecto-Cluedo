@@ -216,7 +216,7 @@ public class HiloTurno extends Thread {
 			vpanel.repaint();
 			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL 1");
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);			
-			ArrayList<Cartas> arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+			ArrayList<String> arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurno );
 			//esperamos a que todos los jugadores envien la carta o le den al boton de no enviar nada
 			if (jugador.getCodigo()==CodigoJugadorConTurno){
 			while(arrcartas.size()!=(arrjugadores.size()-1)){
@@ -228,7 +228,7 @@ public class HiloTurno extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+				arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurno );
 				
 				logger.log(Level.INFO, "compruebo si hay cartas");
 			}
@@ -299,7 +299,7 @@ public class HiloTurno extends Thread {
 				}
 			}
 			//esperamos un tiempo a que se borren las cartas
-			arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurnoAntiguo);
+			arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurnoAntiguo);
 			while(arrcartas.size()!=0){
 				System.out.println("tercer while");
 				try {
@@ -308,7 +308,7 @@ public class HiloTurno extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+				arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurno );
 				
 			}
 			}

@@ -1056,7 +1056,7 @@ public class VentanaTablero extends JFrame {
 
 		hiloPìntado pintar = new hiloPìntado(semaforo, labelDado, labelAcusar, trainera, p, j, conexion, anchura,
 
-				traineraUPV, arrjugadores, arrfichas, altura, pposiciones);
+				traineraUPV, arrjugadores, arrfichas, altura, pposiciones,inicio);
 
 		if (base.obtenerOrientacion(conexion, p)) {
 			pintar.setOrientacion(true);
