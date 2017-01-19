@@ -401,7 +401,7 @@ public class VentanaCartas extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				if (poscartas >= 0 && poscartas < numCartas) {
 					SubirAbaseCartaElegida(j, p, con, base);
-
+					dispose();
 				}
 
 			}
@@ -414,7 +414,7 @@ public class VentanaCartas extends JFrame {
 				
 					noSubirCarta(j, p, con, base);
 
-				
+					dispose();
 
 			}
 

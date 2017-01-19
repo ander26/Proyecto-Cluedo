@@ -456,6 +456,8 @@ public class VentanaAcusar extends JFrame {
 							//+ "cometio el crimen \n en" + acusacion[0] + "con  \n el" + acusacion[1], p);
 
 					hTurno.setAcusar(true);
+					
+					dispose();
 					}
 				} else {
 					JOptionPane.showMessageDialog(getContentPane(), "Ya has acusado una vez, espera al sigueinte turno",
@@ -471,6 +473,7 @@ public class VentanaAcusar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
+				if (!(hTurno.isAcusar())) {
 				int respuesta = JOptionPane.showConfirmDialog(getContentPane(),
 						"Estas a punto de resolver el misterio, ¿estas seguro de querer continuar?", "Aviso",
 						JOptionPane.YES_NO_OPTION);
@@ -537,9 +540,16 @@ public class VentanaAcusar extends JFrame {
 					}
 				
 
+					hTurno.setResolver(true);
 					
-					base.modificarPuntuacion(con, j.getUsuario(), 100, "-");
+					
+					
 				}
+					
+				}} else {
+					JOptionPane.showMessageDialog(getContentPane(), "Ya has resuelto una vez, espera al sigueinte turno",
+							"Aviso", JOptionPane.INFORMATION_MESSAGE);
+
 				}
 			}
 		});

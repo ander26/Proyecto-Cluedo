@@ -35,7 +35,10 @@ public class HiloTurno extends Thread {
 	private boolean acusar=false;
 	private int dado=-1;
 	
+	private boolean resolver = false;
+	
 		
+	
 	private Point [] arrpuertas={new Point(1391,397),new Point(241,121),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1651,325),new Point(1846,174),new Point(1881,334),new Point(1321,771),new Point(573,876),new Point(855,261),new Point(295,104)};
 		
 	private int CodigoJugadorConTurnoAntiguo;
@@ -45,6 +48,15 @@ public class HiloTurno extends Thread {
 	
 	
 	
+	
+	public boolean isResolver() {
+		return resolver;
+	}
+
+	public void setResolver(boolean resolver) {
+		this.resolver = resolver;
+	}
+
 	public boolean isVentana() {
 		return ventana;
 	}
@@ -372,7 +384,7 @@ public class HiloTurno extends Thread {
 				}
 				pulsado=false;
 				acusar=false;
-				
+				resolver=false;
 				ventana=false;
 				dado=-1;
 
