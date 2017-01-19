@@ -859,7 +859,7 @@ public class VentanaTablero extends JFrame {
 						}
 
 						// numero = hTurno.getDado();
-						numero = 8;
+						numero = 9;
 						System.out.println(hTurno.getDado());
 
 						try {

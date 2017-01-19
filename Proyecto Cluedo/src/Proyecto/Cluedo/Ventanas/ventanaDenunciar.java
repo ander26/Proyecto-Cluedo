@@ -132,6 +132,7 @@ public class ventanaDenunciar extends JFrame {
 		
 		texto.setBounds(333	, 176, 247, 132);
 		
+		combo.setBounds(355, 112, 225, 17);
 		
 		//Añadimos al contenedor
 		

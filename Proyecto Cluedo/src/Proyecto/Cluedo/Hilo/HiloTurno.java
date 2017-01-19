@@ -178,6 +178,9 @@ public class HiloTurno extends Thread {
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
 				base.modificarturno(con,arrjugadores.get(0).getCodigo(), 1);
 				System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
+				insertarTrampa(arrjugadores);
+				
+				 base.insertarGanador(con, null, 0, partida.getCodigo());
 //				try {
 //					Thread.sleep( 30000 );
 //				} catch (InterruptedException e) {
@@ -410,7 +413,13 @@ public class HiloTurno extends Thread {
 		}return null;
 	}
 		
-	
+	public void insertarTrampa (ArrayList<Jugador> arrjug){
+		
+		for (Jugador j:arrjug){
+			
+			base.insertarTrampa(con, j.getUsuario(), j.getCodigoPartida(), 0);
+		}
+	}
 	
 	
 

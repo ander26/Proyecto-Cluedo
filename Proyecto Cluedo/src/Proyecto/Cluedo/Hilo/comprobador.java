@@ -99,13 +99,13 @@ public class comprobador extends Thread {
 			 VideoPlayer player = new VideoPlayer(conexion, j, u, base, p, prop, true); 
 			player.setVisible(true);
 			
-			base.insertarGanador(conexion, u.getUsuario(), 0, p.getCodigo());
+			
 			
 		 }else{
 			 System.out.println("entro");
 		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop,true);
 		 tablero.setVisible(true);
-		 base.insertarGanador(conexion, u.getUsuario(), 0, p.getCodigo());
+		
 		 }
 		 
 	}

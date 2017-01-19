@@ -186,7 +186,6 @@ public class hiloPìntado extends Thread {
 			// meterFicha(arrjug, anchura, altura);
 			System.out.println("tamaño" + arrjug.size());
 			colocarFichaInicio(arrjug, anchura, altura);
-			insertarTrampa(arrjug);
 			panel.repaint();
 		}
 
@@ -923,13 +922,7 @@ public class hiloPìntado extends Thread {
 		}
 	}
 	
-	public void insertarTrampa (ArrayList<Jugador> arrjug){
-		
-		for (Jugador j:arrjug){
-			
-			base.insertarTrampa(conexion, j.getUsuario(), j.getCodigoPartida(), 0);
-		}
-	}
+
 
 	public int reajustarAltura(int coordenada, int altura) {
 
