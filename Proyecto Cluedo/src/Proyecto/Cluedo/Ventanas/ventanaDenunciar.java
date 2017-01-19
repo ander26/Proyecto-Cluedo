@@ -132,7 +132,7 @@ public class ventanaDenunciar extends JFrame {
 		
 		texto.setBounds(333	, 176, 247, 132);
 		
-		combo.setBounds(355, 112, 225, 17);
+		combo.setBounds(390, 112, 190, 17);
 		
 		//Añadimos al contenedor
 		
@@ -179,8 +179,8 @@ public class ventanaDenunciar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				gestion.insertarDenuncia(conexion, (String)combo.getSelectedItem(), codigo, texto.getText());
-				
+//				gestion.insertarDenuncia(conexion, (String)combo.getSelectedItem(), codigo, texto.getText());
+//				
 				if(gestion.obtenerTrampa(conexion, codigo, (String)combo.getSelectedItem())==1){
 					
 					gestion.modificarPuntuacion(conexion, (String)combo.getSelectedItem(), 200, "-");

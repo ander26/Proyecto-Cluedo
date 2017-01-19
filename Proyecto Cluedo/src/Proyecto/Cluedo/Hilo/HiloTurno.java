@@ -189,6 +189,9 @@ public class HiloTurno extends Thread {
 //				}
 //				
 			}}else{
+				
+			vpanel.dispose();
+			vpanel=new VentanaPanel();
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
 			CodigoJugadorConTurnoAntiguo=CodigoJugadorConTurno;
 			
@@ -394,7 +397,7 @@ public class HiloTurno extends Thread {
 				lugar.setSeleccionado(false);
 				lugar.repaint();
 				
-				vpanel.dispose();
+				
 			}
 		}
 	}
