@@ -400,6 +400,18 @@ public class VentanaCartas extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (poscartas >= 0 && poscartas < numCartas) {
+					
+					String [] lista = base.obtenerAcusacion(con, p.getCodigo());
+					
+						
+						if(lista[0].equals(cartas.get(poscartas).getNombre())||lista[1].equals(cartas.get(poscartas).getNombre())||lista[2].equals(cartas.get(poscartas).getNombre())){
+							
+						}else{
+							base.modificarTrampa(con, j.getUsuario(), p.getCodigo(), 1);
+						}
+						
+					
+					
 					SubirAbaseCartaElegida(j, p, con, base);
 					dispose();
 				}
@@ -413,13 +425,30 @@ public class VentanaCartas extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				
 					noSubirCarta(j, p, con, base);
-
+					
+					if(haceTrampa(base, con, p.getCodigo())){
+						base.modificarTrampa(con, j.getUsuario(), p.getCodigo(), 1);
+					}
+					
 					dispose();
 
 			}
 
 		});
 
+	}
+	
+	public boolean haceTrampa (GestionBaseDeDatos base,Connection conexion,int codigo){
+		
+		String [] lista = base.obtenerAcusacion(conexion, codigo);
+		for (CartasTorcidas ca: cartas){
+			
+			if(lista[0].equals(ca.getNombre())||lista[1].equals(ca.getNombre())||lista[2].equals(ca.getNombre())){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	public void meterCartas(GestionBaseDeDatos base, Connection con, Partida p, Jugador jugador) {

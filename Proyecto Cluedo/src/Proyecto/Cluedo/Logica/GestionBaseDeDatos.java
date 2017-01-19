@@ -2628,63 +2628,189 @@ public class GestionBaseDeDatos {
 
 	}
 
-public boolean Aacusado (Connection conexion, int codigo){
-		
-		
-		int k=0;
-		String SQL ="";
-		try{
-			
-			SQL = "SELECT NOMBRECARTALUGAR FROM SOSPECHA WHERE CODPARTIDA= "+codigo;
-			
+	public boolean Aacusado(Connection conexion, int codigo) {
+
+		int k = 0;
+		String SQL = "";
+		try {
+
+			SQL = "SELECT NOMBRECARTALUGAR FROM SOSPECHA WHERE CODPARTIDA= " + codigo;
+
 			Statement statement = conexion.createStatement();
-			
+
 			ResultSet resultado = statement.executeQuery(SQL);
-			
-			
-			while (resultado.next()){
-				k=k+1;
-				System.out.println("numero acusaciones"+k);				
-				
+
+			while (resultado.next()) {
+				k = k + 1;
+				System.out.println("numero acusaciones" + k);
+
 			}
 			resultado.close();
 			statement.close();
-			if(k==1){
+			if (k == 1) {
 				logger.log(Level.INFO, "Se han obtendo correctamente los sospechosos");
 				return true;
-			}		
-			
+			}
+
 			return false;
-			
-			
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha conseguido obtener a los sospechosos");
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	public void borrarAcusacion (Connection conexion, int codigo){
-	
-	String SQL ="";
-	SQL =" DELETE FROM SOSPECHA WHERE CODPARTIDA="+codigo;
-	Statement statement;
-	try {
-		statement = conexion.createStatement();
-		statement.executeUpdate(SQL);
-		logger.log(Level.INFO, "Se ha borrado la acusacion");
-		
+	public void borrarAcusacion(Connection conexion, int codigo) {
 
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		logger.log(Level.SEVERE, "No se ha borrado la acusacion");		
-		e.printStackTrace();
-	}
-	
-	
-	}
-	
-	
+		String SQL = "";
+		SQL = " DELETE FROM SOSPECHA WHERE CODPARTIDA=" + codigo;
+		Statement statement;
+		try {
+			statement = conexion.createStatement();
+			statement.executeUpdate(SQL);
+			logger.log(Level.INFO, "Se ha borrado la acusacion");
 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			logger.log(Level.SEVERE, "No se ha borrado la acusacion");
+			e.printStackTrace();
+		}
+
+	}
+
+	public void insertarDenuncia(Connection conexion, String usuario, int codigo, String texto) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "INSERT INTO DENUNCIA VALUES (" + codigo + ",'" + usuario + "','" + texto + ","
+					+ System.currentTimeMillis() + ")";
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha añadido correctamente la denuncia");
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha podido insertar la denuncia");
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void insertarTrampa(Connection conexion, String usuario, int codigo, int trampa) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "INSERT INTO TRAMPA VALUES (" + codigo + ",'" + usuario + "'," + trampa + ")";
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha añadido correctamente la trampa:" + SQL);
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha podido insertar la trampa");
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void modificarTrampa(Connection conexion, String usuario, int codigo, int trampa) {
+
+		String SQL = "";
+
+		try {
+
+			SQL = "UPDATE TRAMPA SET TRAMPA=" + trampa + " WHERE CODPARTIDA=" + codigo + " AND USUARIO = '" + usuario
+					+ "'";
+
+			Statement statement = conexion.createStatement();
+
+			statement.executeUpdate(SQL);
+
+			logger.log(Level.INFO, "Se ha modificado correctamente la trampa:" + SQL);
+
+		} catch (Exception e) {
+
+			logger.log(Level.SEVERE, "No se ha podido modificar la trampa");
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public String[] obtenerAcusacion(Connection conexion, int codigo) {
+
+		String SQL = "";
+
+		String[] lista = new String[3];
+
+		try {
+
+			SQL = "SELECT NOMBRECARTALUGAR,NOMBRECARTAARMA,NOMBRECARTAASESINO FROM ACUSA WHERE CODPARTIDA=" + codigo;
+
+			Statement statement = conexion.createStatement();
+
+			ResultSet resultado = statement.executeQuery(SQL);
+
+			while (resultado.next()) {
+
+				lista[0] = resultado.getString("NOMBRECARTALUGAR");
+				lista[1] = resultado.getString("NOMBRECARTAARMA");
+				lista[2] = resultado.getString("NOMBRECARTAASESINO");
+			}
+
+			System.out.println(lista[0] + "    " + lista[1] + "        " + lista[2]);
+
+			return lista;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public int obtenerTrampa (Connection conexion, int codigo,String usuario) {
+
+		String SQL = "";
+
+		int trampa=-1;
+
+		try {
+
+			SQL = "SELECT TRAMPA FROM TRAMPA WHERE CODPARTIDA=" + codigo+" AND USUARIO='"+usuario+"'";
+
+			Statement statement = conexion.createStatement();
+
+			ResultSet resultado = statement.executeQuery(SQL);
+
+			while (resultado.next()) {
+
+				trampa= resultado.getInt("TRAMPA");
+			
+			}
+
+			
+			return trampa;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return trampa;
+		}
+
+	}
 }

@@ -391,6 +391,7 @@ public class HiloTurno extends Thread {
 				lugar.setSeleccionado(false);
 				lugar.repaint();
 				
+				vpanel.dispose();
 			}
 		}
 	}

@@ -60,7 +60,7 @@ public class VentanaTablero extends JFrame {
 	private JLabel[] arrfichas = new JLabel[5];
 	private ArrayList<Point> fichasrojas;
 
-	private Point puntoViejo=null;
+	private Point puntoViejo = null;
 
 	private HiloTurno hTurno = null;
 	private ArrayList<Point> arrlpuerta;
@@ -83,7 +83,7 @@ public class VentanaTablero extends JFrame {
 	private static final int ALTURA = 1040;
 
 	private int barcoX = -20000;
-	
+
 	private ArrayList<Jugador> arrjugadores;
 
 	private static final int ALTURAM = 1020;
@@ -172,24 +172,27 @@ public class VentanaTablero extends JFrame {
 
 		JLabel labelDenunciar = new JLabel();
 
-		JLabel jugador1 = new JLabel();
+		// JLabel jugador1 = new JLabel();
 
 		JPanel panelSemaforo = new JPanel();
 
-		jugador1.setSize(reajustarTamañoAnch(50, anchura), reajustarTamañoAltMaider(60, altura));
+		// jugador1.setSize(reajustarTamañoAnch(50, anchura),
+		// reajustarTamañoAltMaider(60, altura));
 
-		try {
-
-			imagen = new ImageIcon(VentanaTablero.class.getResource("Imagenes/barco.png").toURI().toURL());
-		} catch (Exception e) {
-
-			System.out.println("No se ha encontrado el archivo");
-		}
-
-		icono = new ImageIcon(
-				imagen.getImage().getScaledInstance(jugador1.getWidth(), jugador1.getHeight(), Image.SCALE_DEFAULT));
-
-		jugador1.setIcon(icono);
+		// try {
+		//
+		// imagen = new
+		// ImageIcon(VentanaTablero.class.getResource("Imagenes/barco.png").toURI().toURL());
+		// } catch (Exception e) {
+		//
+		// System.out.println("No se ha encontrado el archivo");
+		// }
+		//
+		// icono = new ImageIcon(
+		// imagen.getImage().getScaledInstance(jugador1.getWidth(),
+		// jugador1.getHeight(), Image.SCALE_DEFAULT));
+		//
+		// jugador1.setIcon(icono);
 
 		labelDado.setBounds(reajustarAnchura(100, anchura), reajustarAltura(130, altura),
 				reajustarTamañoAnch(80, anchura), reajustarTamañoAlt(80, altura));
@@ -597,7 +600,7 @@ public class VentanaTablero extends JFrame {
 
 		panelD.add(cuadradoD);
 
-		pposiciones.add(jugador1);
+		// pposiciones.add(jugador1);
 
 		pposiciones.add(puentedeusto);
 		pposiciones.add(puentecrai);
@@ -629,201 +632,27 @@ public class VentanaTablero extends JFrame {
 
 		arrlpuerta = new ArrayList(Arrays.asList(hTurno.getArrpuertas()));
 
-
-		pposiciones.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-//				System.out.println(reajustarAnchura(e.getX(), anchura));
-//				System.out.println(reajustarImagen(e.getY(), altura));
-
-				// Point punto=new Point(e.getX(),e.getY());
-				// System.out.println(punto.getX()+" "+punto.getY());
-				// if(punto.getX()==0){
-				//// FicheroCoordenadasPosiciones fcoor=new
-				// FicheroCoordenadasPosiciones();
-				//// fcoor.escribirAFicheroConBarras("cordeenadascirculos.txt",
-				// arpunto);
-				// }
-				// else{
-				// if(punto!=null){
-				// arpunto.add(punto);
-				// System.out.println(punto);
-				// }
-				// }
-
-				System.out.println("entro en el mouse clicked");
-				if (hTurno.getCodigoJugadorConTurno() == j.getCodigo()) {
-					System.out.println("entro en el if del pposiciones mouse click");
-					Point puntoSeleccionado = BuscarPuntoPinchado(e.getX(), e.getY(), anchura, altura);
-
-					
-					if (estaEn(puntoSeleccionado, fichasrojas) && puntoSeleccionado.equals(new Point(0,0))==false) {
-						if(puntoViejo!=null){
-							fichasrojas.add(puntoViejo);
-						}
-
-						pposiciones.volverAColorOriginal(fichasrojas);
-						pposiciones.meterOcupado(puntoSeleccionado);
-						pposiciones.repaint();
-						fichasrojas = new ArrayList<Point>();
-						base.modificarCoordenada(conexion, j, ((int) puntoSeleccionado.getX()),
-								((int) puntoSeleccionado.getY()));
-						ObtenerFichaDeJugador(arrjugadores, j).setLocation(
-								reajustarAnchuraFicha((int) puntoSeleccionado.getX() - 28, anchura),
-								reajustarAlturaFicha((int) puntoSeleccionado.getY() - 32, pposiciones.getHeight()));
-
-						puntoViejo=puntoSeleccionado;
-						if (estaEn(puntoSeleccionado, arrlpuerta) == false) {
-							
-							hTurno.setLugar(ade);
-
-							hTurno.CambiarTurno();
-
-
-						} else {
-							if (puntoSeleccionado.equals(new Point(241, 120))
-									|| puntoSeleccionado.equals(new Point(209, 255))) {
-								base.insertarJugadorLugar(conexion, j, p, 8);// campo
-
-								campo.setSeleccionado(true);
-								campo.setC1(0);
-								campo.setC2(0);
-								campo.setC3(255);
-								campo.repaint();
-
-								hTurno.setLugar(campo);
-							} else if (puntoSeleccionado.equals(new Point(295, 104))
-									|| puntoSeleccionado.equals(new Point(629, 113))) {
-								base.insertarJugadorLugar(conexion, j, p, 1);// ingenieria
-								
-								ade.setSeleccionado(true);
-								ade.setC1(247);
-								ade.setC2(191);
-								ade.setC3(190);
-								ade.repaint();
-
-								hTurno.setLugar(ade);
-
-							} else if (puntoSeleccionado.equals(new Point(504, 196))) {
-								base.insertarJugadorLugar(conexion, j, p, 2);// ade
-
-								ade.setSeleccionado(true);
-								ade.setC1(247);
-								ade.setC2(191);
-								ade.setC3(190);
-								ade.repaint();
-
-								hTurno.setLugar(ade);
-
-							} else if (puntoSeleccionado.equals(new Point(1097, 289))
-									|| puntoSeleccionado.equals(new Point(1621, 185))) {
-								base.insertarJugadorLugar(conexion, j, p, 5);// centenario
-								
-								 centenario.setSeleccionado(true);
-								centenario.setC1(102);
-								 centenario.setC2(15);
-								 centenario.setC3(130);
-								 centenario.repaint();
-								 
-								 hTurno.setLugar(centenario);
-
-							} else if (puntoSeleccionado.equals(new Point(1650, 325))
-									|| puntoSeleccionado.equals(new Point(1880, 334))) {
-								base.insertarJugadorLugar(conexion, j, p, 4);// capilla
-								
-								capilla.setSeleccionado(true);
-								capilla.setC1(247);
-								 capilla.setC2(153);
-								 capilla.setC3(133);
-								 capilla.repaint();
-
-								 hTurno.setLugar(capilla);
-								 
-							} else if (puntoSeleccionado.equals(new Point(1876, 174))) {
-								base.insertarJugadorLugar(conexion, j, p, 6);// letras
-								
-								 deLetras.setSeleccionado(true);
-								 deLetras.setC1(128);
-								 deLetras.setC2(128);
-								 deLetras.setC3(128);
-								 deLetras.repaint();
-								
-								hTurno.setLugar(deLetras);
-								 
-							} else if (puntoSeleccionado.equals(new Point(573, 876))) {
-								base.insertarJugadorLugar(conexion, j, p, 9);// zubiarte
-								
-								 zubi.setSeleccionado(true);
-								 zubi.setC1(192);
-								 zubi.setC2(0);
-								 zubi.setC3(64);
-								 zubi.repaint();
-								 
-								 hTurno.setLugar(zubi);
-							} else if (puntoSeleccionado.equals(new Point(1320, 771))) {
-								base.insertarJugadorLugar(conexion, j, p, 7);// crai
-								
-								 crai.setSeleccionado(true);
-								 crai.setC1(22);
-								 crai.setC2(170);
-								 crai.setC3(76);
-								 crai.repaint();
-								
-								 hTurno.setLugar(crai);
-								
-							} else if (puntoSeleccionado.equals(new Point(855, 261))) {
-								base.insertarJugadorLugar(conexion, j, p, 3);// L
-								
-								l.setSeleccionado(true);
-								 l.setC1(179);
-								 l.setC2(223);
-								 l.setC3(83);
-								 l.repaint();
-								 
-								 hTurno.setLugar(l);
-
-						}else{
-							System.out.println("cambio lugar");
-							if(puntoSeleccionado.equals(new Point(241,120)) || puntoSeleccionado.equals(new Point(209,255))){
-								base.insertarJugadorLugar(conexion, j, p, 8);//campo
-
-							}}
-
-							
-							base.modificarPuntuacion(conexion, j.getUsuario(), 10, "+");
-							hTurno.setVentana(true);
-						}
-
-					
-
-				}
-
-			}}});
-			
-
-			// if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
-			// Point
-			// puntoSeleccionado=BuscarPuntoPinchado(e.getX(),e.getY(),anchura,altura);
-			// if(estaEn(puntoSeleccionado,fichasrojas)){
-			// pposiciones.meterOcupado(puntoSeleccionado);
-			// pposiciones.repaint();
-			// }
-			// fichasrojas=new ArrayList<Point>();
-			// base.modificarCoordenada(conexion,
-			// j,(int)(puntoSeleccionado.getY()),((int)puntoSeleccionado.getX()));
-			// ObtenerFichaDeJugador(arrjugadores,
-			// j).setLocation((int)(puntoSeleccionado.getX()-28),(int)(puntoSeleccionado.getY()-16));
-			//
-			// hTurno.CambiarTurno();
-			//
-			// }
-			//
-			//
-			// }
-
 		
+
+		// if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
+		// Point
+		// puntoSeleccionado=BuscarPuntoPinchado(e.getX(),e.getY(),anchura,altura);
+		// if(estaEn(puntoSeleccionado,fichasrojas)){
+		// pposiciones.meterOcupado(puntoSeleccionado);
+		// pposiciones.repaint();
+		// }
+		// fichasrojas=new ArrayList<Point>();
+		// base.modificarCoordenada(conexion,
+		// j,(int)(puntoSeleccionado.getY()),((int)puntoSeleccionado.getX()));
+		// ObtenerFichaDeJugador(arrjugadores,
+		// j).setLocation((int)(puntoSeleccionado.getX()-28),(int)(puntoSeleccionado.getY()-16));
+		//
+		// hTurno.CambiarTurno();
+		//
+		// }
+		//
+		//
+		// }
 
 		flechaI.addMouseListener(new MouseAdapter() {
 
@@ -846,8 +675,8 @@ public class VentanaTablero extends JFrame {
 					animate.start();
 					mostradoI = true;
 				}
-			}
-		});
+			}}
+		);
 
 		flechaD.addMouseListener(new MouseAdapter() {
 
@@ -917,28 +746,28 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				
 				if (hTurno.isPulsado()) {
-					if (hTurno.isVentana()){
-					// meterImgEnlabel("Imagenes/pushbajo.png", labelAcusar,
-					// 100, 100);
-					Jugador a = new Jugador();
-					a.setLugar(2);
-					// mete el fondo del lugar en el que este
-					String[] aimglug = new String[8];
-					aimglug[0] = "Imagenes/ingenieria.jpg";
-					aimglug[1] = "Imagenes/comercial.jpg";
-					aimglug[2] = "Imagenes/capilla.JPG";
-					aimglug[3] = "Imagenes/centenario.jpg";
-					aimglug[4] = "Imagenes/letras.jpg";
-					aimglug[5] = "Imagenes/biblioteca.jpeg";
-					aimglug[6] = "Imagenes/zubiarte.jpg";
-					aimglug[7] = "Imagenes/zubiarte.jpg";
+					if (hTurno.isVentana()) {
+						// meterImgEnlabel("Imagenes/pushbajo.png", labelAcusar,
+						// 100, 100);
+						Jugador a = new Jugador();
+						a.setLugar(2);
+						// mete el fondo del lugar en el que este
+						String[] aimglug = new String[8];
+						aimglug[0] = "Imagenes/ingenieria.jpg";
+						aimglug[1] = "Imagenes/comercial.jpg";
+						aimglug[2] = "Imagenes/capilla.JPG";
+						aimglug[3] = "Imagenes/centenario.jpg";
+						aimglug[4] = "Imagenes/letras.jpg";
+						aimglug[5] = "Imagenes/biblioteca.jpeg";
+						aimglug[6] = "Imagenes/zubiarte.jpg";
+						aimglug[7] = "Imagenes/zubiarte.jpg";
 
-					VentanaAcusar f = new VentanaAcusar(base, conexion, j, p, hTurno);
-					f.setVisible(true);
-					}else{
-						JOptionPane.showMessageDialog(getContentPane(), "No se puede acusar si no estas en una verde", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+						VentanaAcusar f = new VentanaAcusar(base, conexion, j, p, hTurno);
+						f.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(getContentPane(), "No se puede acusar si no estas en una verde",
+								"Aviso", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 
@@ -1019,18 +848,18 @@ public class VentanaTablero extends JFrame {
 
 						Random r = new Random();
 
-						//numero = r.nextInt(7);
-						numero=1;
+						// numero = r.nextInt(7);
+						numero = 1;
 
 						hTurno.setDado(numero);
 
 						while (hTurno.getDado() == 0) {
 							hTurno.setDado(r.nextInt(7));
-							//hTurno.setDado(9);
+							// hTurno.setDado(9);
 						}
 
-						numero = hTurno.getDado();
-//						numero=9;
+						// numero = hTurno.getDado();
+						numero = 8;
 						System.out.println(hTurno.getDado());
 
 						try {
@@ -1061,9 +890,9 @@ public class VentanaTablero extends JFrame {
 						System.out.println("voy a obtener coordenada");
 						Point coord = base.ObtenerCoordenada(conexion, j);
 						camino.add(coord);
-//						if (coord.equals(new Point(129, 876))) {
-//							numero = numero - 1;
-//						}
+						// if (coord.equals(new Point(129, 876))) {
+						// numero = numero - 1;
+						// }
 						ponercircrojos.MoverA(coord, numero, camino, fichasrojas);
 						System.out.println("ya he hecho mover a");
 						pposiciones.meterPosibilidades(fichasrojas);
@@ -1080,7 +909,7 @@ public class VentanaTablero extends JFrame {
 
 		hiloPìntado pintar = new hiloPìntado(semaforo, labelDado, labelAcusar, trainera, p, j, conexion, anchura,
 
-				traineraUPV, arrjugadores, arrfichas, altura, pposiciones,inicio);
+				traineraUPV, arrjugadores, arrfichas, altura, pposiciones, inicio);
 
 		if (base.obtenerOrientacion(conexion, p)) {
 			pintar.setOrientacion(true);
@@ -1460,656 +1289,849 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				jugador1.setLocation(reajustarAnchura(86 - 28, anchura),
-						reajustarAlturaFicha(414 - 32, pposiciones.getHeight()));
-				if (barcoX > reajustarAnchura(-110, anchura) && barcoX < reajustarAnchura(250, anchura)) {
-					if (jugador1.getX() == reajustarAnchura(216 - 28, anchura)
-							&& jugador1.getY() == reajustarAlturaFicha(637 - 32, pposiciones.getHeight())) {
-
-						pintar.setSeguir(false);
-
-						int numero = JOptionPane.showConfirmDialog(getContentPane(),
-								"Tienes la oportunidad de coger el barco, ¿quieres montarte?", "Barco",
-								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-						if (numero == JOptionPane.YES_OPTION) {
-
-							pintar.setSeguir(true);
-
-							if (pintar.isOrientacion()) {
-
-								pintar.setFicha(jugador1);
-
-								try {
-
-									imagen = new ImageIcon(
-											VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
-								} catch (Exception p) {
-								}
-								icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
-										trainera.getHeight(), Image.SCALE_DEFAULT));
-
-								trainera.setIcon(icono);
-
-								try {
-
-									imagen = new ImageIcon(
-											VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
-								} catch (Exception p) {
-								}
-								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-
-								traineraUPV.setIcon(icono);
-
-								base.modificarOrientacion(conexion, p, false);
-
-								pintar.setOrientacion(false);
-
-								base.modificarAccion(conexion, p, true);
-
-								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
-
-								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
-										trainera.getY());
-
-								pintar.setAnimacion1(true);
-
-								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
-
-								try {
-									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
-													.getAbsoluteFile());
-									Clip clip = AudioSystem.getClip();
-									clip.open(audioInputStream);
-									clip.start();
-									pintar.setClip(clip);
-
-								} catch (Exception ex) {
-									System.out.println("Error with playing sound.");
-									ex.printStackTrace();
-								}
-
-							} else {
-								base.modificarAccion(conexion, p, true);
-								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
-								trainera.repaint();
-								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
-										trainera.getY());
-								traineraUPV.repaint();
-								pintar.setFicha(jugador1);
-								pintar.setAnimacion1(true);
-
-								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
-
-								try {
-									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
-													.getAbsoluteFile());
-									Clip clip = AudioSystem.getClip();
-									clip.open(audioInputStream);
-									clip.start();
-									pintar.setClip(clip);
-
-								} catch (Exception ex) {
-									System.out.println("Error with playing sound.");
-									ex.printStackTrace();
-								}
-
-							}
-						} else {
-							pintar.setSeguir(true);
-						}
-					} else if (jugador1.getX() == reajustarAnchura(86 - 28, anchura)
-							&& jugador1.getY() == reajustarAlturaFicha(414 - 32, pposiciones.getHeight())) {
-
-						pintar.setSeguir(false);
-
-						int numero = JOptionPane.showConfirmDialog(getContentPane(),
-								"Tienes la oportunidad de coger el barco, ¿quieres montarte?", "Barco",
-								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-						if (numero == JOptionPane.YES_OPTION) {
-
-							pintar.setSeguir(true);
-
-							if (pintar.isOrientacion()) {
-
-								pintar.setFicha(jugador1);
-
-								try {
-
-									imagen = new ImageIcon(
-											VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
-								} catch (Exception p) {
-								}
-								icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
-										trainera.getHeight(), Image.SCALE_DEFAULT));
-
-								trainera.setIcon(icono);
-
-								System.out.println(reajustarAnchura(29, anchura));
-								try {
-
-									imagen = new ImageIcon(
-											VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
-								} catch (Exception p) {
-								}
-								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-
-								traineraUPV.setIcon(icono);
-
-								base.modificarOrientacion(conexion, p, false);
-
-								pintar.setOrientacion(false);
-
-								base.modificarAccion(conexion, p, true);
-								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
-								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
-										trainera.getY());
-								pintar.setAnimacion3(true);
-
-								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
-								try {
-									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
-													.getAbsoluteFile());
-									Clip clip = AudioSystem.getClip();
-									clip.open(audioInputStream);
-									clip.start();
-									pintar.setClip(clip);
-
-								} catch (Exception ex) {
-									System.out.println("Error with playing sound.");
-									ex.printStackTrace();
-								}
-							} else {
-								base.modificarAccion(conexion, p, true);
-								trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
-								trainera.repaint();
-								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
-										trainera.getY());
-								traineraUPV.repaint();
-								pintar.setFicha(jugador1);
-								pintar.setAnimacion3(true);
-
-								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
-								try {
-									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
-													.getAbsoluteFile());
-
-									Clip clip = AudioSystem.getClip();
-									clip.open(audioInputStream);
-									clip.start();
-									pintar.setClip(clip);
-
-								} catch (Exception ex) {
-									System.out.println("Error with playing sound.");
-									ex.printStackTrace();
-								}
-
-							}
-						} else {
-							pintar.setSeguir(true);
-						}
-
-					}
-
-					// if (pintar.isOrientacion()){
-					//
-					// try{
-					//
-					// imagen = new
-					// ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
-					// }catch (Exception p){
-					// }
-					// icono=new
-					// ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
-					// trainera.getHeight(), Image.SCALE_DEFAULT));
-					//
-					//
-					//
-					// trainera.setIcon(icono);
-					//
-					// try{
-					//
-					// imagen = new
-					// ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
-					// }catch (Exception p){
-					// }
-					// icono=new
-					// ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-					// traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-					//
-					// traineraUPV.setIcon(icono);
-					//
-					// pintar.setOrientacion(false);
-					// }else{
-					//
-					//
-					// try{
-					//
-					// imagen = new
-					// ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeusto.png"));
-					// }catch (Exception p){
-					// }
-					// icono=new
-					// ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
-					// trainera.getHeight(), Image.SCALE_DEFAULT));
-					//
-					//
-					//
-					// trainera.setIcon(icono);
-					//
-					// try{
-					//
-					// imagen = new
-					// ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
-					// }catch (Exception p){
-					// }
-					// icono=new
-					// ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-					// traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-					//
-					// traineraUPV.setIcon(icono);
-					//
-					// pintar.setOrientacion(true);
-					//
-					//
-					// }
-				} else if (barcoX > reajustarAnchura(1090, anchura) && barcoX < reajustarAnchura(1490, anchura)) {
-
-					if (jugador1.getX() == reajustarAnchura(1391 - 28, anchura)
-							&& jugador1.getY() == reajustarAlturaFicha(397 - 32, pposiciones.getHeight())) {
-
-						pintar.setSeguir(false);
-
-						int numero = JOptionPane.showConfirmDialog(getContentPane(),
-								"Tienes la oportunidad de coger el barco, ¿quieres montarte?", "Barco",
-								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-						if (numero == JOptionPane.YES_OPTION) {
-
-							pintar.setSeguir(true);
-
-							if (pintar.isOrientacion()) {
-								base.modificarAccion(conexion, p, true);
-								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
-								trainera.repaint();
-								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
-										trainera.getY());
-								traineraUPV.repaint();
-								pintar.setFicha(jugador1);
-								pintar.setAnimacion2(true);
-
-								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
-								try {
-									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
-													.getAbsoluteFile());
-
-									Clip clip = AudioSystem.getClip();
-									clip.open(audioInputStream);
-									clip.start();
-
-									pintar.setClip(clip);
-								} catch (Exception ex) {
-									System.out.println("Error with playing sound.");
-									ex.printStackTrace();
-								}
-
-							} else {
-
-								pintar.setFicha(jugador1);
-
-								try {
-
-									imagen = new ImageIcon(
-											VentanaTablero.class.getResource("Imagenes/traineradeusto.png"));
-								} catch (Exception p) {
-								}
-								icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
-										trainera.getHeight(), Image.SCALE_DEFAULT));
-
-								trainera.setIcon(icono);
-
-								try {
-
-									imagen = new ImageIcon(
-											VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
-								} catch (Exception p) {
-								}
-								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-
-								traineraUPV.setIcon(icono);
-
-								base.modificarOrientacion(conexion, p, true);
-
-								pintar.setOrientacion(true);
-
-								base.modificarAccion(conexion, p, true);
-
-								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
-
-								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
-										traineraUPV.getY());
-
-								pintar.setAnimacion2(true);
-
-								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
-
-								try {
-									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
-													.getAbsoluteFile());
-
-									Clip clip = AudioSystem.getClip();
-									clip.open(audioInputStream);
-									clip.start();
-									pintar.setClip(clip);
-								} catch (Exception ex) {
-									System.out.println("Error with playing sound.");
-									ex.printStackTrace();
-								}
-
-							}
-						} else {
-							pintar.setSeguir(true);
-						}
-					} else if (jugador1.getX() == reajustarAnchura(1251 - 28, anchura)
-							&& jugador1.getY() == reajustarAlturaFicha(673 - 32, pposiciones.getHeight())) {
-
-						pintar.setSeguir(false);
-
-						int numero = JOptionPane.showConfirmDialog(getContentPane(),
-								"Tienes la oportunidad de coger el barco, ¿quieres montarte?", "Barco",
-								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-						if (numero == JOptionPane.YES_OPTION) {
-
-							pintar.setSeguir(true);
-
-							if (pintar.isOrientacion()) {
-								base.modificarAccion(conexion, p, true);
-
-								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
-								trainera.repaint();
-								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
-										traineraUPV.getY());
-								traineraUPV.repaint();
-								pintar.setFicha(jugador1);
-								pintar.setAnimacion4(true);
-
-								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
-
-								try {
-									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
-													.getAbsoluteFile());
-									Clip clip = AudioSystem.getClip();
-									clip.open(audioInputStream);
-									clip.start();
-
-									pintar.setClip(clip);
-								} catch (Exception ex) {
-									System.out.println("Error with playing sound.");
-									ex.printStackTrace();
-								}
-
-							} else {
-
-								pintar.setFicha(jugador1);
-
-								try {
-
-									imagen = new ImageIcon(
-											VentanaTablero.class.getResource("Imagenes/traineradeusto.png"));
-								} catch (Exception p) {
-								}
-								icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
-										trainera.getHeight(), Image.SCALE_DEFAULT));
-
-								trainera.setIcon(icono);
-
-								try {
-
-									imagen = new ImageIcon(
-											VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
-								} catch (Exception p) {
-								}
-								icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-										traineraUPV.getHeight(), Image.SCALE_DEFAULT));
-
-								traineraUPV.setIcon(icono);
-
-								base.modificarOrientacion(conexion, p, true);
-
-								pintar.setOrientacion(true);
-
-								base.modificarAccion(conexion, p, true);
-
-								trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
-
-								traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
-										traineraUPV.getY());
-
-								pintar.setAnimacion4(true);
-
-								base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
-
-								try {
-									AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-											new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
-													.getAbsoluteFile());
-
-									Clip clip = AudioSystem.getClip();
-									clip.open(audioInputStream);
-									clip.start();
-
-								} catch (Exception ex) {
-									System.out.println("Error with playing sound.");
-									ex.printStackTrace();
-								}
-
-							}
-						} else {
-							pintar.setSeguir(true);
-						}
-
-					}
-				}}});}
-
-		// campo.addMouseListener(new MouseAdapter() {
-		//
-		//
-		// @Override
-		// public void mouseExited(MouseEvent e) {
-		// campo.setSeleccionado(false);
-		// campo.repaint();
-		//
-		// }
-		//
-		// @Override
-		// public void mouseEntered(MouseEvent e) {
-		// campo.setSeleccionado(true);
-		// campo.setC1(0);
-		// campo.setC2(0);
-		// campo.setC3(255);
-		// campo.repaint();
-		//
-		// }
-		//
-		//
-		// });
-		//
-		// ade.addMouseListener(new MouseAdapter() {
-		//
-		//
-		// @Override
-		// public void mouseExited(MouseEvent e) {
-		// ade.setSeleccionado(false);
-		// ade.repaint();
-		//
-		// }
-		//
-		// @Override
-		// public void mouseEntered(MouseEvent e) {
-		// ade.setSeleccionado(true);
-		// ade.setC1(247);
-		// ade.setC2(191);
-		// ade.setC3(190);
-		// ade.repaint();
-		//
-		// }
-		//
-		//
-		// });
-		//
-		// capilla.addMouseListener(new MouseAdapter() {
-		//
-		//
-		// @Override
-		// public void mouseExited(MouseEvent e) {
-		// capilla.setSeleccionado(false);
-		// capilla.repaint();
-		//
-		// }
-		//
-		// @Override
-		// public void mouseEntered(MouseEvent e) {
-		// capilla.setSeleccionado(true);
-		// capilla.setC1(247);
-		// capilla.setC2(153);
-		// capilla.setC3(133);
-		// capilla.repaint();
-		//
-		// }
-		//
-		//
-		// });
-		//
-		// l.addMouseListener(new MouseAdapter() {
-		//
-		//
-		// @Override
-		// public void mouseExited(MouseEvent e) {
-		// l.setSeleccionado(false);
-		// l.repaint();
-		//
-		// }
-		//
-		// @Override
-		// public void mouseEntered(MouseEvent e) {
-		// l.setSeleccionado(true);
-		// l.setC1(179);
-		// l.setC2(223);
-		// l.setC3(83);
-		// l.repaint();
-		//
-		// }
-		//
-		//
-		// });
-		//
-		// deLetras.addMouseListener(new MouseAdapter() {
-		//
-		//
-		// @Override
-		// public void mouseExited(MouseEvent e) {
-		// deLetras.setSeleccionado(false);
-		// deLetras.repaint();
-		//
-		// }
-		//
-		// @Override
-		// public void mouseEntered(MouseEvent e) {
-		// deLetras.setSeleccionado(true);
-		// deLetras.setC1(128);
-		// deLetras.setC2(128);
-		// deLetras.setC3(128);
-		// deLetras.repaint();
-		//
-		// }
-		//
-		//
-		// });
-		//
-		//
-		// crai.addMouseListener(new MouseAdapter() {
-		//
-		//
-		// @Override
-		// public void mouseExited(MouseEvent e) {
-		// crai.setSeleccionado(false);
-		// crai.repaint();
-		//
-		// }
-		//
-		// @Override
-		// public void mouseEntered(MouseEvent e) {
-		// crai.setSeleccionado(true);
-		// crai.setC1(22);
-		// crai.setC2(170);
-		// crai.setC3(76);
-		// crai.repaint();
-		//
-		// }
-		//
-		//
-		// });
-		//
-		// centenario.addMouseListener(new MouseAdapter() {
-		//
-		//
-		// @Override
-		// public void mouseExited(MouseEvent e) {
-		// centenario.setSeleccionado(false);
-		// centenario.repaint();
-		//
-		// }
-		//
-		// @Override
-		// public void mouseEntered(MouseEvent e) {
-		// centenario.setSeleccionado(true);
-		// centenario.setC1(102);
-		// centenario.setC2(15);
-		// centenario.setC3(130);
-		// centenario.repaint();
-		//
-		// }
-		//
-		//
-		// });
-		//
-		//
-		// zubi.addMouseListener(new MouseAdapter() {
-		//
-		//
-		// @Override
-		// public void mouseExited(MouseEvent e) {
-		// zubi.setSeleccionado(false);
-		// zubi.repaint();
-		//
-		// }
-		//
-		// @Override
-		// public void mouseEntered(MouseEvent e) {
-		// zubi.setSeleccionado(true);
-		// zubi.setC1(192);
-		// zubi.setC2(0);
-		// zubi.setC3(64);
-		// zubi.repaint();
-		//
-		// }
-		//
-		//
-		// });
-
+				ventanaDenunciar ventana = new ventanaDenunciar(conexion, arrjugadores, p.getCodigo());
+				ventana.setVisible(true);
+				
+				
+			}
+		});
 		
+		pposiciones.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+				// System.out.println(reajustarAnchura(e.getX(), anchura));
+				// System.out.println(reajustarImagen(e.getY(), altura));
+
+				// Point punto=new Point(e.getX(),e.getY());
+				// System.out.println(punto.getX()+" "+punto.getY());
+				// if(punto.getX()==0){
+				//// FicheroCoordenadasPosiciones fcoor=new
+				// FicheroCoordenadasPosiciones();
+				//// fcoor.escribirAFicheroConBarras("cordeenadascirculos.txt",
+				// arpunto);
+				// }
+				// else{
+				// if(punto!=null){
+				// arpunto.add(punto);
+				// System.out.println(punto);
+				// }
+				// }
+
+				System.out.println("entro en el mouse clicked");
+				if (hTurno.getCodigoJugadorConTurno() == j.getCodigo()) {
+					System.out.println("entro en el if del pposiciones mouse click");
+					Point puntoSeleccionado = BuscarPuntoPinchado(e.getX(), e.getY(), anchura, altura);
+
+					if (estaEn(puntoSeleccionado, fichasrojas) && puntoSeleccionado.equals(new Point(0, 0)) == false) {
+						if (puntoViejo != null) {
+							fichasrojas.add(puntoViejo);
+						}
+
+						pposiciones.volverAColorOriginal(fichasrojas);
+						pposiciones.meterOcupado(puntoSeleccionado);
+						pposiciones.repaint();
+						fichasrojas = new ArrayList<Point>();
+						base.modificarCoordenada(conexion, j, ((int) puntoSeleccionado.getX()),
+								((int) puntoSeleccionado.getY()));
+						ObtenerFichaDeJugador(arrjugadores, j).setLocation(
+								reajustarAnchuraFicha((int) puntoSeleccionado.getX() - 28, anchura),
+								reajustarAlturaFicha((int) puntoSeleccionado.getY() - 32, pposiciones.getHeight()));
+
+						
+						
+						
+						
+//						jugador1.setLocation(reajustarAnchura(86 - 28, anchura),
+//								reajustarAlturaFicha(414 - 32, pposiciones.getHeight()));
+						if (barcoX > reajustarAnchura(-110, anchura) && barcoX < reajustarAnchura(250, anchura)) {
+							if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(216 - 28, anchura)
+									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(637 - 32, pposiciones.getHeight())) {
+
+								pintar.setSeguir(false);
+
+								int numero = JOptionPane.showConfirmDialog(getContentPane(),
+										"Tienes la oportunidad de coger el barco, ¿quieres montarte?", "Barco",
+										JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+								if (numero == JOptionPane.YES_OPTION) {
+
+									pintar.setSeguir(true);
+
+									if (pintar.isOrientacion()) {
+
+										pintar.setFicha(ObtenerFichaDeJugador(arrjugadores, j));
+
+										try {
+
+											imagen = new ImageIcon(
+													VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+										} catch (Exception p) {
+										}
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+												trainera.getHeight(), Image.SCALE_DEFAULT));
+
+										trainera.setIcon(icono);
+
+										try {
+
+											imagen = new ImageIcon(
+													VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
+										} catch (Exception p) {
+										}
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+												traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+
+										traineraUPV.setIcon(icono);
+
+										base.modificarOrientacion(conexion, p, false);
+
+										pintar.setOrientacion(false);
+
+										base.modificarAccion(conexion, p, true);
+
+										trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
+
+										traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
+												trainera.getY());
+
+										pintar.setAnimacion1(true);
+
+										base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+
+										try {
+											AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+													new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+															.getAbsoluteFile());
+											Clip clip = AudioSystem.getClip();
+											clip.open(audioInputStream);
+											clip.start();
+											pintar.setClip(clip);
+
+										} catch (Exception ex) {
+											System.out.println("Error with playing sound.");
+											ex.printStackTrace();
+										}
+
+									} else {
+										base.modificarAccion(conexion, p, true);
+										trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
+										trainera.repaint();
+										traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
+												trainera.getY());
+										traineraUPV.repaint();
+										pintar.setFicha(ObtenerFichaDeJugador(arrjugadores, j));
+										pintar.setAnimacion1(true);
+
+										base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+
+										try {
+											AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+													new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+															.getAbsoluteFile());
+											Clip clip = AudioSystem.getClip();
+											clip.open(audioInputStream);
+											clip.start();
+											pintar.setClip(clip);
+
+										} catch (Exception ex) {
+											System.out.println("Error with playing sound.");
+											ex.printStackTrace();
+										}
+
+									}
+								} else {
+									pintar.setSeguir(true);
+								}
+							} else if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(86 - 28, anchura)
+									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(414 - 32, pposiciones.getHeight())) {
+
+								pintar.setSeguir(false);
+
+								int numero = JOptionPane.showConfirmDialog(getContentPane(),
+										"Tienes la oportunidad de coger el barco, ¿quieres montarte?", "Barco",
+										JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+								if (numero == JOptionPane.YES_OPTION) {
+
+									pintar.setSeguir(true);
+
+									if (pintar.isOrientacion()) {
+
+										pintar.setFicha(ObtenerFichaDeJugador(arrjugadores, j));
+
+										try {
+
+											imagen = new ImageIcon(
+													VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+										} catch (Exception p) {
+										}
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+												trainera.getHeight(), Image.SCALE_DEFAULT));
+
+										trainera.setIcon(icono);
+
+										System.out.println(reajustarAnchura(29, anchura));
+										try {
+
+											imagen = new ImageIcon(
+													VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
+										} catch (Exception p) {
+										}
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+												traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+
+										traineraUPV.setIcon(icono);
+
+										base.modificarOrientacion(conexion, p, false);
+
+										pintar.setOrientacion(false);
+
+										base.modificarAccion(conexion, p, true);
+										trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
+										traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
+												trainera.getY());
+										pintar.setAnimacion3(true);
+
+										base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+										try {
+											AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+													new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+															.getAbsoluteFile());
+											Clip clip = AudioSystem.getClip();
+											clip.open(audioInputStream);
+											clip.start();
+											pintar.setClip(clip);
+
+										} catch (Exception ex) {
+											System.out.println("Error with playing sound.");
+											ex.printStackTrace();
+										}
+									} else {
+										base.modificarAccion(conexion, p, true);
+										trainera.setLocation(reajustarAnchura(29, anchura), trainera.getY());
+										trainera.repaint();
+										traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
+												trainera.getY());
+										traineraUPV.repaint();
+										pintar.setFicha(ObtenerFichaDeJugador(arrjugadores, j));
+										pintar.setAnimacion3(true);
+
+										base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+										try {
+											AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+													new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+															.getAbsoluteFile());
+
+											Clip clip = AudioSystem.getClip();
+											clip.open(audioInputStream);
+											clip.start();
+											pintar.setClip(clip);
+
+										} catch (Exception ex) {
+											System.out.println("Error with playing sound.");
+											ex.printStackTrace();
+										}
+
+									}
+								} else {
+									pintar.setSeguir(true);
+								}
+
+							}
+
+							// if (pintar.isOrientacion()){
+							//
+							// try{
+							//
+							// imagen = new
+							// ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+							// }catch (Exception p){
+							// }
+							// icono=new
+							// ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+							// trainera.getHeight(), Image.SCALE_DEFAULT));
+							//
+							//
+							//
+							// trainera.setIcon(icono);
+							//
+							// try{
+							//
+							// imagen = new
+							// ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
+							// }catch (Exception p){
+							// }
+							// icono=new
+							// ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+							// traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+							//
+							// traineraUPV.setIcon(icono);
+							//
+							// pintar.setOrientacion(false);
+							// }else{
+							//
+							//
+							// try{
+							//
+							// imagen = new
+							// ImageIcon(VentanaTablero.class.getResource("Imagenes/traineradeusto.png"));
+							// }catch (Exception p){
+							// }
+							// icono=new
+							// ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+							// trainera.getHeight(), Image.SCALE_DEFAULT));
+							//
+							//
+							//
+							// trainera.setIcon(icono);
+							//
+							// try{
+							//
+							// imagen = new
+							// ImageIcon(VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
+							// }catch (Exception p){
+							// }
+							// icono=new
+							// ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+							// traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+							//
+							// traineraUPV.setIcon(icono);
+							//
+							// pintar.setOrientacion(true);
+							//
+							//
+							// }
+						} else if (barcoX > reajustarAnchura(1090, anchura) && barcoX < reajustarAnchura(1490, anchura)) {
+
+							if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(1391 - 28, anchura)
+									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(397 - 32, pposiciones.getHeight())) {
+
+								pintar.setSeguir(false);
+
+								int numero = JOptionPane.showConfirmDialog(getContentPane(),
+										"Tienes la oportunidad de coger el barco, ¿quieres montarte?", "Barco",
+										JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+								if (numero == JOptionPane.YES_OPTION) {
+
+									pintar.setSeguir(true);
+
+									if (pintar.isOrientacion()) {
+										base.modificarAccion(conexion, p, true);
+										trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
+										trainera.repaint();
+										traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
+												trainera.getY());
+										traineraUPV.repaint();
+										pintar.setFicha(ObtenerFichaDeJugador(arrjugadores, j));
+										pintar.setAnimacion2(true);
+
+										base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+										try {
+											AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+													new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+															.getAbsoluteFile());
+
+											Clip clip = AudioSystem.getClip();
+											clip.open(audioInputStream);
+											clip.start();
+
+											pintar.setClip(clip);
+										} catch (Exception ex) {
+											System.out.println("Error with playing sound.");
+											ex.printStackTrace();
+										}
+
+									} else {
+
+										pintar.setFicha(ObtenerFichaDeJugador(arrjugadores, j));
+
+										try {
+
+											imagen = new ImageIcon(
+													VentanaTablero.class.getResource("Imagenes/traineradeusto.png"));
+										} catch (Exception p) {
+										}
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+												trainera.getHeight(), Image.SCALE_DEFAULT));
+
+										trainera.setIcon(icono);
+
+										try {
+
+											imagen = new ImageIcon(
+													VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
+										} catch (Exception p) {
+										}
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+												traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+
+										traineraUPV.setIcon(icono);
+
+										base.modificarOrientacion(conexion, p, true);
+
+										pintar.setOrientacion(true);
+
+										base.modificarAccion(conexion, p, true);
+
+										trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
+
+										traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
+												traineraUPV.getY());
+
+										pintar.setAnimacion2(true);
+
+										base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+
+										try {
+											AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+													new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+															.getAbsoluteFile());
+
+											Clip clip = AudioSystem.getClip();
+											clip.open(audioInputStream);
+											clip.start();
+											pintar.setClip(clip);
+										} catch (Exception ex) {
+											System.out.println("Error with playing sound.");
+											ex.printStackTrace();
+										}
+
+									}
+								} else {
+									pintar.setSeguir(true);
+								}
+							} else if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(1251 - 28, anchura)
+									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(673 - 32, pposiciones.getHeight())) {
+
+								pintar.setSeguir(false);
+
+								int numero = JOptionPane.showConfirmDialog(getContentPane(),
+										"Tienes la oportunidad de coger el barco, ¿quieres montarte?", "Barco",
+										JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+								if (numero == JOptionPane.YES_OPTION) {
+
+									pintar.setSeguir(true);
+
+									if (pintar.isOrientacion()) {
+										base.modificarAccion(conexion, p, true);
+
+										trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
+										trainera.repaint();
+										traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
+												traineraUPV.getY());
+										traineraUPV.repaint();
+										pintar.setFicha(ObtenerFichaDeJugador(arrjugadores, j));
+										pintar.setAnimacion4(true);
+
+										base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+
+										try {
+											AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+													new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+															.getAbsoluteFile());
+											Clip clip = AudioSystem.getClip();
+											clip.open(audioInputStream);
+											clip.start();
+
+											pintar.setClip(clip);
+										} catch (Exception ex) {
+											System.out.println("Error with playing sound.");
+											ex.printStackTrace();
+										}
+
+									} else {
+
+										pintar.setFicha(ObtenerFichaDeJugador(arrjugadores, j));
+
+										try {
+
+											imagen = new ImageIcon(
+													VentanaTablero.class.getResource("Imagenes/traineradeusto.png"));
+										} catch (Exception p) {
+										}
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
+												trainera.getHeight(), Image.SCALE_DEFAULT));
+
+										trainera.setIcon(icono);
+
+										try {
+
+											imagen = new ImageIcon(
+													VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
+										} catch (Exception p) {
+										}
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
+												traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+
+										traineraUPV.setIcon(icono);
+
+										base.modificarOrientacion(conexion, p, true);
+
+										pintar.setOrientacion(true);
+
+										base.modificarAccion(conexion, p, true);
+
+										trainera.setLocation(reajustarAnchura(1250, anchura), trainera.getY());
+
+										traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())),
+												traineraUPV.getY());
+
+										pintar.setAnimacion4(true);
+
+										base.modificarPuntuacion(conexion, j.getUsuario(), 5, "+");
+
+										try {
+											AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+													new File("src/Proyecto/Cluedo/Ventanas/Videos/cancion.wav")
+															.getAbsoluteFile());
+
+											Clip clip = AudioSystem.getClip();
+											clip.open(audioInputStream);
+											clip.start();
+
+										} catch (Exception ex) {
+											System.out.println("Error with playing sound.");
+											ex.printStackTrace();
+										}
+
+									}
+								} else {
+									pintar.setSeguir(true);
+								}
+
+							}
+						}}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						puntoViejo = puntoSeleccionado;
+						if (estaEn(puntoSeleccionado, arrlpuerta) == false) {
+
+							hTurno.setLugar(ade);
+
+							hTurno.CambiarTurno();
+
+						} else {
+							if (puntoSeleccionado.equals(new Point(241, 120))
+									|| puntoSeleccionado.equals(new Point(209, 255))) {
+								base.insertarJugadorLugar(conexion, j, p, 8);// campo
+
+								campo.setSeleccionado(true);
+								campo.setC1(0);
+								campo.setC2(0);
+								campo.setC3(255);
+								campo.repaint();
+
+								hTurno.setLugar(campo);
+							} else if (puntoSeleccionado.equals(new Point(295, 104))
+									|| puntoSeleccionado.equals(new Point(629, 113))) {
+								base.insertarJugadorLugar(conexion, j, p, 1);// ingenieria
+
+								ade.setSeleccionado(true);
+								ade.setC1(247);
+								ade.setC2(191);
+								ade.setC3(190);
+								ade.repaint();
+
+								hTurno.setLugar(ade);
+
+							} else if (puntoSeleccionado.equals(new Point(504, 196))) {
+								base.insertarJugadorLugar(conexion, j, p, 2);// ade
+
+								ade.setSeleccionado(true);
+								ade.setC1(247);
+								ade.setC2(191);
+								ade.setC3(190);
+								ade.repaint();
+
+								hTurno.setLugar(ade);
+
+							} else if (puntoSeleccionado.equals(new Point(1097, 289))
+									|| puntoSeleccionado.equals(new Point(1621, 185))) {
+								base.insertarJugadorLugar(conexion, j, p, 5);// centenario
+
+								centenario.setSeleccionado(true);
+								centenario.setC1(102);
+								centenario.setC2(15);
+								centenario.setC3(130);
+								centenario.repaint();
+
+								hTurno.setLugar(centenario);
+
+							} else if (puntoSeleccionado.equals(new Point(1651, 325))
+									|| puntoSeleccionado.equals(new Point(1881, 334))) {
+								base.insertarJugadorLugar(conexion, j, p, 4);// capilla
+
+								capilla.setSeleccionado(true);
+								capilla.setC1(247);
+								capilla.setC2(153);
+								capilla.setC3(133);
+								capilla.repaint();
+
+								hTurno.setLugar(capilla);
+
+							} else if (puntoSeleccionado.equals(new Point(1876, 174))) {
+								base.insertarJugadorLugar(conexion, j, p, 6);// letras
+
+								deLetras.setSeleccionado(true);
+								deLetras.setC1(128);
+								deLetras.setC2(128);
+								deLetras.setC3(128);
+								deLetras.repaint();
+
+								hTurno.setLugar(deLetras);
+
+							} else if (puntoSeleccionado.equals(new Point(573, 876))) {
+								base.insertarJugadorLugar(conexion, j, p, 9);// zubiarte
+
+								zubi.setSeleccionado(true);
+								zubi.setC1(192);
+								zubi.setC2(0);
+								zubi.setC3(64);
+								zubi.repaint();
+
+								hTurno.setLugar(zubi);
+							} else if (puntoSeleccionado.equals(new Point(1321, 771))) {
+								base.insertarJugadorLugar(conexion, j, p, 7);// crai
+
+								System.out.println("ENTRO EN CRAI --------------------------------");
+								crai.setSeleccionado(true);
+								crai.setC1(22);
+								crai.setC2(170);
+								crai.setC3(76);
+								crai.repaint();
+
+								hTurno.setLugar(crai);
+
+							} else if (puntoSeleccionado.equals(new Point(855, 261))) {
+								base.insertarJugadorLugar(conexion, j, p, 3);// L
+
+								l.setSeleccionado(true);
+								l.setC1(179);
+								l.setC2(223);
+								l.setC3(83);
+								l.repaint();
+
+								hTurno.setLugar(l);
+
+							} else {
+								System.out.println("cambio lugar");
+								if (puntoSeleccionado.equals(new Point(241, 121))
+										|| puntoSeleccionado.equals(new Point(209, 255))) {
+									base.insertarJugadorLugar(conexion, j, p, 8);// campo
+
+								}
+							}
+
+							base.modificarPuntuacion(conexion, j.getUsuario(), 10, "+");
+							hTurno.setVentana(true);
+						}
+
+					}
+
+				}
+			
+		});
+	}
+
+	// campo.addMouseListener(new MouseAdapter() {
+	//
+	//
+	// @Override
+	// public void mouseExited(MouseEvent e) {
+	// campo.setSeleccionado(false);
+	// campo.repaint();
+	//
+	// }
+	//
+	// @Override
+	// public void mouseEntered(MouseEvent e) {
+	// campo.setSeleccionado(true);
+	// campo.setC1(0);
+	// campo.setC2(0);
+	// campo.setC3(255);
+	// campo.repaint();
+	//
+	// }
+	//
+	//
+	// });
+	//
+	// ade.addMouseListener(new MouseAdapter() {
+	//
+	//
+	// @Override
+	// public void mouseExited(MouseEvent e) {
+	// ade.setSeleccionado(false);
+	// ade.repaint();
+	//
+	// }
+	//
+	// @Override
+	// public void mouseEntered(MouseEvent e) {
+	// ade.setSeleccionado(true);
+	// ade.setC1(247);
+	// ade.setC2(191);
+	// ade.setC3(190);
+	// ade.repaint();
+	//
+	// }
+	//
+	//
+	// });
+	//
+	// capilla.addMouseListener(new MouseAdapter() {
+	//
+	//
+	// @Override
+	// public void mouseExited(MouseEvent e) {
+	// capilla.setSeleccionado(false);
+	// capilla.repaint();
+	//
+	// }
+	//
+	// @Override
+	// public void mouseEntered(MouseEvent e) {
+	// capilla.setSeleccionado(true);
+	// capilla.setC1(247);
+	// capilla.setC2(153);
+	// capilla.setC3(133);
+	// capilla.repaint();
+	//
+	// }
+	//
+	//
+	// });
+	//
+	// l.addMouseListener(new MouseAdapter() {
+	//
+	//
+	// @Override
+	// public void mouseExited(MouseEvent e) {
+	// l.setSeleccionado(false);
+	// l.repaint();
+	//
+	// }
+	//
+	// @Override
+	// public void mouseEntered(MouseEvent e) {
+	// l.setSeleccionado(true);
+	// l.setC1(179);
+	// l.setC2(223);
+	// l.setC3(83);
+	// l.repaint();
+	//
+	// }
+	//
+	//
+	// });
+	//
+	// deLetras.addMouseListener(new MouseAdapter() {
+	//
+	//
+	// @Override
+	// public void mouseExited(MouseEvent e) {
+	// deLetras.setSeleccionado(false);
+	// deLetras.repaint();
+	//
+	// }
+	//
+	// @Override
+	// public void mouseEntered(MouseEvent e) {
+	// deLetras.setSeleccionado(true);
+	// deLetras.setC1(128);
+	// deLetras.setC2(128);
+	// deLetras.setC3(128);
+	// deLetras.repaint();
+	//
+	// }
+	//
+	//
+	// });
+	//
+	//
+	// crai.addMouseListener(new MouseAdapter() {
+	//
+	//
+	// @Override
+	// public void mouseExited(MouseEvent e) {
+	// crai.setSeleccionado(false);
+	// crai.repaint();
+	//
+	// }
+	//
+	// @Override
+	// public void mouseEntered(MouseEvent e) {
+	// crai.setSeleccionado(true);
+	// crai.setC1(22);
+	// crai.setC2(170);
+	// crai.setC3(76);
+	// crai.repaint();
+	//
+	// }
+	//
+	//
+	// });
+	//
+	// centenario.addMouseListener(new MouseAdapter() {
+	//
+	//
+	// @Override
+	// public void mouseExited(MouseEvent e) {
+	// centenario.setSeleccionado(false);
+	// centenario.repaint();
+	//
+	// }
+	//
+	// @Override
+	// public void mouseEntered(MouseEvent e) {
+	// centenario.setSeleccionado(true);
+	// centenario.setC1(102);
+	// centenario.setC2(15);
+	// centenario.setC3(130);
+	// centenario.repaint();
+	//
+	// }
+	//
+	//
+	// });
+	//
+	//
+	// zubi.addMouseListener(new MouseAdapter() {
+	//
+	//
+	// @Override
+	// public void mouseExited(MouseEvent e) {
+	// zubi.setSeleccionado(false);
+	// zubi.repaint();
+	//
+	// }
+	//
+	// @Override
+	// public void mouseEntered(MouseEvent e) {
+	// zubi.setSeleccionado(true);
+	// zubi.setC1(192);
+	// zubi.setC2(0);
+	// zubi.setC3(64);
+	// zubi.repaint();
+	//
+	// }
+	//
+	//
+	// });
 
 	public void meterImgEnlabel(String ruta, JLabel label, int largo, int ancho) {
 		ImageIcon imicon = new ImageIcon(ventana.class.getResource(ruta));
@@ -2291,7 +2313,7 @@ public class VentanaTablero extends JFrame {
 	}
 
 }
-	
+
 //
 // import java.awt.BorderLayout;
 // import java.awt.Color;
