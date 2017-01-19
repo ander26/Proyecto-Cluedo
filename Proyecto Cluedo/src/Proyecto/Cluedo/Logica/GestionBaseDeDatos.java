@@ -2498,6 +2498,12 @@ public class GestionBaseDeDatos {
 			SQL = " DELETE FROM SOSPECHA WHERE CODPARTIDA=" + codigo;
 
 			statement.executeUpdate(SQL);
+			
+			SQL = " DELETE FROM TRAMPA WHERE CODPARTIDA=" + codigo;
+
+			statement.executeUpdate(SQL);
+			
+			
 
 			logger.log(Level.INFO, "Se ha realizado el borrado completo correctamente");
 
