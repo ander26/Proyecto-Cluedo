@@ -848,8 +848,8 @@ public class VentanaTablero extends JFrame {
 
 						Random r = new Random();
 
-						// numero = r.nextInt(7);
-						numero = 1;
+						 numero = r.nextInt(7);
+//						numero = 1;
 
 						hTurno.setDado(numero);
 
@@ -858,8 +858,8 @@ public class VentanaTablero extends JFrame {
 							// hTurno.setDado(9);
 						}
 
-						// numero = hTurno.getDado();
-						numero = 9;
+						 numero = hTurno.getDado();
+//						numero = 9;
 						System.out.println(hTurno.getDado());
 
 						try {

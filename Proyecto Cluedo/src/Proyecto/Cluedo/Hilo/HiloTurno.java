@@ -316,7 +316,7 @@ public class HiloTurno extends Thread {
 				while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
 					System.out.println("4 while");
 					try {
-						Thread.sleep( 8000 );
+						Thread.sleep( 3000 );
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -330,7 +330,7 @@ public class HiloTurno extends Thread {
 			while(arrcartas.size()!=0){
 				System.out.println("tercer while");
 				try {
-					Thread.sleep( 8000 );
+					Thread.sleep( 2000 );
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -358,7 +358,7 @@ public class HiloTurno extends Thread {
 //
 //			}
 			try {
-			Thread.sleep( 8000 );
+			Thread.sleep( 1000 );
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
