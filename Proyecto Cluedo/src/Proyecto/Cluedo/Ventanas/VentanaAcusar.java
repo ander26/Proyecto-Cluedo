@@ -478,6 +478,7 @@ public class VentanaAcusar extends JFrame {
 				if (respuesta == JOptionPane.YES_OPTION) {
 
 		
+					
 					resolver[0] = base.lugarAcusacion(con, j);
 
 //					resolver[0] ="Edificio de letras";
