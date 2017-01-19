@@ -429,6 +429,7 @@ public class VentanaAcusar extends JFrame {
 				if (!(hTurno.isAcusar())) {
 					System.out.println(base.lugarAcusacion(con, j));
 					acusacion[0]=base.lugarAcusacion(con, j);
+
 					// pruebas
 
 					//acusacion[0] = "F. Ingenieria";
@@ -443,12 +444,17 @@ public class VentanaAcusar extends JFrame {
 					
 					SubirAbaseAcusacion(j, p, con);
 
-					base.modificarPanel(con, "<html><body>El jugador " + j.getUsuario() + "<br> piensa que <br>"
-							+ acusacion[2] + "cometio el crimen <br> en" + acusacion[0] + "con  <br> el" + acusacion[1],
+					base.modificarPanel(con, "<html><body><br> El jugador " + j.getUsuario() + "<br> piensa que <br>"
+							+ acusacion[2] + " cometio el crimen <br> en " + acusacion[0] + " con  <br> el " + acusacion[1],
 							p);
+
 
 //					base.modificarPanel(con, "El jugador " + j.getUsuario() + "<br> piensa que \n" + acusacion[2]
 //							+ "cometio el crimen \n en" + acusacion[0] + "con  \n el" + acusacion[1], p);
+
+					//base.modificarPanel(con, "El jugador " + j.getUsuario() + "\n piensa que \n" + acusacion[2]
+							//+ "cometio el crimen \n en" + acusacion[0] + "con  \n el" + acusacion[1], p);
+
 					hTurno.setAcusar(true);
 					}
 				} else {
@@ -471,7 +477,7 @@ public class VentanaAcusar extends JFrame {
 
 				if (respuesta == JOptionPane.YES_OPTION) {
 
-					
+		
 					resolver[0] = base.lugarAcusacion(con, j);
 
 //					resolver[0] ="Edificio de letras";

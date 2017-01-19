@@ -60,6 +60,8 @@ public class VentanaTablero extends JFrame {
 	private JLabel[] arrfichas = new JLabel[5];
 	private ArrayList<Point> fichasrojas;
 
+	private Point puntoViejo=null;
+
 	private HiloTurno hTurno = null;
 	private ArrayList<Point> arrlpuerta;
 
@@ -81,6 +83,7 @@ public class VentanaTablero extends JFrame {
 	private static final int ALTURA = 1040;
 
 	private int barcoX = -20000;
+	
 	private ArrayList<Jugador> arrjugadores;
 
 	private static final int ALTURAM = 1020;
@@ -623,7 +626,9 @@ public class VentanaTablero extends JFrame {
 		hTurno.setCon(conexion);
 
 		hTurno.start();
+
 		arrlpuerta = new ArrayList(Arrays.asList(hTurno.getArrpuertas()));
+
 
 		pposiciones.addMouseListener(new MouseAdapter() {
 
@@ -652,7 +657,13 @@ public class VentanaTablero extends JFrame {
 				if (hTurno.getCodigoJugadorConTurno() == j.getCodigo()) {
 					System.out.println("entro en el if del pposiciones mouse click");
 					Point puntoSeleccionado = BuscarPuntoPinchado(e.getX(), e.getY(), anchura, altura);
-					if (estaEn(puntoSeleccionado, fichasrojas) && puntoSeleccionado.equals(new Point(0, 0)) == false) {
+
+					
+					if (estaEn(puntoSeleccionado, fichasrojas) && puntoSeleccionado.equals(new Point(0,0))==false) {
+						if(puntoViejo!=null){
+							fichasrojas.add(puntoViejo);
+						}
+
 						pposiciones.volverAColorOriginal(fichasrojas);
 						pposiciones.meterOcupado(puntoSeleccionado);
 						pposiciones.repaint();
@@ -663,10 +674,13 @@ public class VentanaTablero extends JFrame {
 								reajustarAnchuraFicha((int) puntoSeleccionado.getX() - 28, anchura),
 								reajustarAlturaFicha((int) puntoSeleccionado.getY() - 32, pposiciones.getHeight()));
 
+						puntoViejo=puntoSeleccionado;
 						if (estaEn(puntoSeleccionado, arrlpuerta) == false) {
 							
 							hTurno.setLugar(ade);
+
 							hTurno.CambiarTurno();
+
 
 						} else {
 							if (puntoSeleccionado.equals(new Point(241, 120))
@@ -769,17 +783,25 @@ public class VentanaTablero extends JFrame {
 								 l.repaint();
 								 
 								 hTurno.setLugar(l);
-							}
 
+						}else{
+							System.out.println("cambio lugar");
+							if(puntoSeleccionado.equals(new Point(241,120)) || puntoSeleccionado.equals(new Point(209,255))){
+								base.insertarJugadorLugar(conexion, j, p, 8);//campo
+
+							}}
+
+							
 							base.modificarPuntuacion(conexion, j.getUsuario(), 10, "+");
 							hTurno.setVentana(true);
 						}
 
-					}
+					
 
 				}
 
-			}
+			}}});
+			
 
 			// if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
 			// Point
@@ -801,7 +823,7 @@ public class VentanaTablero extends JFrame {
 			//
 			// }
 
-		});
+		
 
 		flechaI.addMouseListener(new MouseAdapter() {
 
@@ -997,16 +1019,18 @@ public class VentanaTablero extends JFrame {
 
 						Random r = new Random();
 
-						numero = r.nextInt(7);
+						//numero = r.nextInt(7);
+						numero=1;
 
 						hTurno.setDado(numero);
 
 						while (hTurno.getDado() == 0) {
 							hTurno.setDado(r.nextInt(7));
+							//hTurno.setDado(9);
 						}
 
-						numero = hTurno.getDado();
-
+						//numero = hTurno.getDado();
+						numero=9;
 						System.out.println(hTurno.getDado());
 
 						try {
@@ -1037,9 +1061,9 @@ public class VentanaTablero extends JFrame {
 						System.out.println("voy a obtener coordenada");
 						Point coord = base.ObtenerCoordenada(conexion, j);
 						camino.add(coord);
-						if (coord.equals(new Point(129, 876))) {
-							numero = numero - 1;
-						}
+//						if (coord.equals(new Point(129, 876))) {
+//							numero = numero - 1;
+//						}
 						ponercircrojos.MoverA(coord, numero, camino, fichasrojas);
 						System.out.println("ya he hecho mover a");
 						pposiciones.meterPosibilidades(fichasrojas);
@@ -1897,11 +1921,7 @@ public class VentanaTablero extends JFrame {
 						}
 
 					}
-				}
-			}
-		}
-
-		);
+				}}});}
 
 		// campo.addMouseListener(new MouseAdapter() {
 		//
@@ -2089,7 +2109,7 @@ public class VentanaTablero extends JFrame {
 		//
 		// });
 
-	}
+		
 
 	public void meterImgEnlabel(String ruta, JLabel label, int largo, int ancho) {
 		ImageIcon imicon = new ImageIcon(ventana.class.getResource(ruta));
@@ -2271,7 +2291,7 @@ public class VentanaTablero extends JFrame {
 	}
 
 }
-
+	
 //
 // import java.awt.BorderLayout;
 // import java.awt.Color;

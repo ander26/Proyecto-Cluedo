@@ -1657,7 +1657,7 @@ public class GestionBaseDeDatos {
 
 	public String ObtenerPanel(Connection conexion, Partida p) {
 
-		String ret = "";
+		String ret = "cadena vacia";
 
 		String SQL = "";
 
@@ -1682,7 +1682,7 @@ public class GestionBaseDeDatos {
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "No se ha modificado correctamente");
 			e.printStackTrace();
-			return null;
+			return "cadena vacia";
 		}
 
 	}
@@ -2627,5 +2627,64 @@ public class GestionBaseDeDatos {
 		}
 
 	}
+
+public boolean Aacusado (Connection conexion, int codigo){
+		
+		
+		int k=0;
+		String SQL ="";
+		try{
+			
+			SQL = "SELECT NOMBRECARTALUGAR FROM SOSPECHA WHERE CODPARTIDA= "+codigo;
+			
+			Statement statement = conexion.createStatement();
+			
+			ResultSet resultado = statement.executeQuery(SQL);
+			
+			
+			while (resultado.next()){
+				k=k+1;
+				System.out.println("numero acusaciones"+k);				
+				
+			}
+			resultado.close();
+			statement.close();
+			if(k==1){
+				logger.log(Level.INFO, "Se han obtendo correctamente los sospechosos");
+				return true;
+			}		
+			
+			return false;
+			
+			
+			
+		}catch (Exception e) {
+			logger.log(Level.SEVERE, "No se ha conseguido obtener a los sospechosos");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public void borrarAcusacion (Connection conexion, int codigo){
+	
+	String SQL ="";
+	SQL =" DELETE FROM SOSPECHA WHERE CODPARTIDA="+codigo;
+	Statement statement;
+	try {
+		statement = conexion.createStatement();
+		statement.executeUpdate(SQL);
+		logger.log(Level.INFO, "Se ha borrado la acusacion");
+		
+
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		logger.log(Level.SEVERE, "No se ha borrado la acusacion");		
+		e.printStackTrace();
+	}
+	
+	
+	}
+	
+	
 
 }
