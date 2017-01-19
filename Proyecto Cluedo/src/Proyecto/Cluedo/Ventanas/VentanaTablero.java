@@ -933,7 +933,7 @@ public class VentanaTablero extends JFrame {
 						}
 
 						//numero = hTurno.getDado();
-						numero=9;
+						numero=6;
 						System.out.println(hTurno.getDado());
 
 						try {
