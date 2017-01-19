@@ -11,7 +11,7 @@ public class FicheroCoordenadasPosiciones {
 	public static ArrayList<ArrayList<Point>> leerDeFicheroConBarrasYa( String nomFic ) {
 		ArrayList<ArrayList<Point>> ret = new ArrayList<ArrayList<Point>>();
 		BufferedReader brFich = null;
-		int k=0;
+		int k=-1;
 		try {
 			brFich = new BufferedReader( new
 					InputStreamReader( new FileInputStream(nomFic) ) );
@@ -20,12 +20,9 @@ public class FicheroCoordenadasPosiciones {
 				// Proceso de línea
 				
 				if(linea.equals("a")){
+					k=k+1;
 					ret.add(new ArrayList<Point>());
-					linea = brFich.readLine();
-					if(k!=0){
-						k=k+1;
-					}
-					
+					linea = brFich.readLine();		
 					
 				}else{
 					StringTokenizer st = new StringTokenizer( linea, "/" );

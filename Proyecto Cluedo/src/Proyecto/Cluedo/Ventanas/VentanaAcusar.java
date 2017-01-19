@@ -439,7 +439,7 @@ public class VentanaAcusar extends JFrame {
 					SubirAbaseAcusacion(j, p, con);
 
 					base.modificarPanel(con, "<html><body><br> El jugador " + j.getUsuario() + "<br> piensa que <br>"
-							+ acusacion[2] + " cometio el crimen <br> en " + acusacion[0] + " con  <br> el " + acusacion[1],
+							+ acusacion[2] + " cometio el crimen <br> en " + acusacion[0] + " con  <br> el arma " + acusacion[1],
 							p);
 
 					//base.modificarPanel(con, "El jugador " + j.getUsuario() + "\n piensa que \n" + acusacion[2]

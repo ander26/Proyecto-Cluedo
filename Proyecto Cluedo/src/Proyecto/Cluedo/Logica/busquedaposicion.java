@@ -51,7 +51,7 @@ public class busquedaposicion {
 		arr40.add(new Point(1662,291));
 		arr40.add(new Point(1881,334));
 		arr40.add(new Point(1611,376));
-		hm.put(new Point(1650,325), arr40);
+		hm.put(new Point(1651,325), arr40);
 		ArrayList<Point> arr49= new ArrayList<Point>();
 		arr49.add(new Point(1887,207));
 		hm.put(new Point(1846,174), arr49);
@@ -91,7 +91,7 @@ public class busquedaposicion {
 		arr77.add(new Point(274,407));
 		hm.put(new Point(321,391), arr77);
 		ArrayList<Point> arr82= new ArrayList<Point>();
-		arr82.add(new Point(230,288));
+		arr82.add(new Point(231,288));
 		arr82.add(new Point(241,121));
 		hm.put(new Point(209,255), arr82);
 		ArrayList<Point> arr83= new ArrayList<Point>();
@@ -156,9 +156,9 @@ public class busquedaposicion {
 	public static void main (String [] args){
 		busquedaposicion aa=new busquedaposicion();
 		ArrayList <Point> ar=new ArrayList<Point>();
-		ar.add(new Point(207,753));
+		ar.add(new Point(1097,289));
 		ArrayList<Point> res=new ArrayList<Point>();
-		aa.MoverA(new Point(207,753),6,ar,res);
+		aa.MoverA(new Point(1097,289),6,ar,res);
 		for(int i=0;i<res.size();i++){
 			System.out.println(res.get(i));
 		}

@@ -630,9 +630,9 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				System.out.println(reajustarAnchura(e.getX(), anchura));
-				System.out.println(reajustarImagen(e.getY(), altura));
-				
+//				System.out.println(reajustarAnchura(e.getX(), anchura));
+//				System.out.println(reajustarImagen(e.getY(), altura));
+//				
 				// Point punto=new Point(e.getX(),e.getY());
 				// System.out.println(punto.getX()+" "+punto.getY());
 				// if(punto.getX()==0){
@@ -672,7 +672,7 @@ public class VentanaTablero extends JFrame {
 
 						}else{
 							System.out.println("cambio lugar");
-							if(puntoSeleccionado.equals(new Point(241,120)) || puntoSeleccionado.equals(new Point(209,255))){
+							if(puntoSeleccionado.equals(new Point(241,121)) || puntoSeleccionado.equals(new Point(209,255))){
 								base.insertarJugadorLugar(conexion, j, p, 8);//campo
 							}
 							else if(puntoSeleccionado.equals(new Point(295,104)) || puntoSeleccionado.equals(new Point(629,113))){
@@ -684,7 +684,7 @@ public class VentanaTablero extends JFrame {
 							else if(puntoSeleccionado.equals(new Point(1097,289)) || puntoSeleccionado.equals(new Point(1621,185)) ){
 								base.insertarJugadorLugar(conexion, j, p, 5);//centenario
 							}
-							else if(puntoSeleccionado.equals(new Point(1650,325)) || puntoSeleccionado.equals(new Point(1880,334)) ){
+							else if(puntoSeleccionado.equals(new Point(1651,325)) || puntoSeleccionado.equals(new Point(1881,334) ) || puntoSeleccionado.equals(new Point(1880,334)) ){
 								base.insertarJugadorLugar(conexion, j, p, 4);//capilla
 							}
 							else if(puntoSeleccionado.equals(new Point(1876,174)) ){
@@ -693,7 +693,7 @@ public class VentanaTablero extends JFrame {
 							else if(puntoSeleccionado.equals(new Point(573,876)) ){
 								base.insertarJugadorLugar(conexion, j, p, 9);//zubiarte
 							}
-							else if(puntoSeleccionado.equals(new Point(1320,771)) ){
+							else if(puntoSeleccionado.equals(new Point(1321,771)) ){
 								base.insertarJugadorLugar(conexion, j, p, 7);//crai
 							}
 							else if(puntoSeleccionado.equals(new Point(855,261)) ){
@@ -933,7 +933,7 @@ public class VentanaTablero extends JFrame {
 						}
 
 						//numero = hTurno.getDado();
-						numero=6;
+						numero=34;
 						System.out.println(hTurno.getDado());
 
 						try {
