@@ -427,7 +427,9 @@ public class VentanaAcusar extends JFrame {
 
 
 				if (!(hTurno.isAcusar())) {
-					acusacion[0]=base.lugarAcusacion(con, j); //para hacer
+					System.out.println(base.lugarAcusacion(con, j));
+					acusacion[0]=base.lugarAcusacion(con, j);
+
 					// pruebas
 
 					//acusacion[0] = "F. Ingenieria";
@@ -436,16 +438,27 @@ public class VentanaAcusar extends JFrame {
 
 					acusacion[1] = parmas.getArma();
 
+					if (acusacion[0]==null||acusacion[1]==null||acusacion[2]==null){
+						JOptionPane.showMessageDialog(null, "Debe introducir algun valor antes de continuar", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+					}else{
+					
 					SubirAbaseAcusacion(j, p, con);
 
 					base.modificarPanel(con, "<html><body><br> El jugador " + j.getUsuario() + "<br> piensa que <br>"
 							+ acusacion[2] + " cometio el crimen <br> en " + acusacion[0] + " con  <br> el arma " + acusacion[1],
 							p);
 
+
+//					base.modificarPanel(con, "El jugador " + j.getUsuario() + "<br> piensa que \n" + acusacion[2]
+//							+ "cometio el crimen \n en" + acusacion[0] + "con  \n el" + acusacion[1], p);
+
 					//base.modificarPanel(con, "El jugador " + j.getUsuario() + "\n piensa que \n" + acusacion[2]
 							//+ "cometio el crimen \n en" + acusacion[0] + "con  \n el" + acusacion[1], p);
-					hTurno.setAcusar(true);
 
+					hTurno.setAcusar(true);
+					
+					dispose();
+					}
 				} else {
 					JOptionPane.showMessageDialog(getContentPane(), "Ya has acusado una vez, espera al sigueinte turno",
 							"Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -460,18 +473,26 @@ public class VentanaAcusar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
+				if (!(hTurno.isAcusar())) {
 				int respuesta = JOptionPane.showConfirmDialog(getContentPane(),
 						"Estas a punto de resolver el misterio, ¿estas seguro de querer continuar?", "Aviso",
 						JOptionPane.YES_NO_OPTION);
 
 				if (respuesta == JOptionPane.YES_OPTION) {
 
+		
+					
 					resolver[0] = base.lugarAcusacion(con, j);
 
+//					resolver[0] ="Edificio de letras";
+					
 					resolver[2] = psospechoso.getSospechoso();
 
 					resolver[1] = parmas.getArma();
 
+					if (resolver[0]==null||resolver[1]==null||resolver[2]==null){
+						JOptionPane.showMessageDialog(null, "Debe introducir algun valor antes de continuar", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+					}else{
 					String[] resultado = base.obtenerSospechosos(con, p.getCodigo());
 
 					for (String s : resultado) {
@@ -515,18 +536,21 @@ public class VentanaAcusar extends JFrame {
 
 						
 						base.modificarPuntuacion(con, j.getUsuario(), 100, "-");
-					}
-
-				} else {
-
-					JOptionPane.showMessageDialog(null,
-							"¡Lo siento! No has resuelto el misterio, has perdido 100 puntos", "Perdedor",
-							JOptionPane.INFORMATION_MESSAGE);
-
 					
-					base.modificarPuntuacion(con, j.getUsuario(), 100, "-");
-				}
+					}
+				
 
+					hTurno.setResolver(true);
+					
+					
+					
+				}
+					
+				}} else {
+					JOptionPane.showMessageDialog(getContentPane(), "Ya has resuelto una vez, espera al sigueinte turno",
+							"Aviso", JOptionPane.INFORMATION_MESSAGE);
+
+				}
 			}
 		});
 

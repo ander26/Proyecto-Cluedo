@@ -17,6 +17,7 @@ import Proyecto.Cluedo.Datos.Cartas;
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Ventanas.LabelLugares;
 import Proyecto.Cluedo.Ventanas.VentanaEnviar;
 import Proyecto.Cluedo.Ventanas.VentanaPanel;
 
@@ -24,7 +25,7 @@ import Proyecto.Cluedo.Ventanas.VentanaPanel;
 public class HiloTurno extends Thread {
 	
 
-	
+	private boolean ventana =false;
 	
 	private boolean jugando=true;
 	private GestionBaseDeDatos base;
@@ -33,12 +34,46 @@ public class HiloTurno extends Thread {
 	private boolean pulsado=false; 
 	private boolean acusar=false;
 	private int dado=-1;
-	private boolean CartasBorradas;
+
+	
+	private boolean resolver = false;
+	
+
 		
+	
 	private Point [] arrpuertas={new Point(1391,397),new Point(241,121),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1651,325),new Point(1846,174),new Point(1881,334),new Point(1321,771),new Point(573,876),new Point(855,261),new Point(295,104)};
 		
 	private int CodigoJugadorConTurnoAntiguo;
 	private boolean MonigoteMovida=false;
+	
+	private LabelLugares lugar;
+	
+	
+	
+	
+	public boolean isResolver() {
+		return resolver;
+	}
+
+	public void setResolver(boolean resolver) {
+		this.resolver = resolver;
+	}
+
+	public boolean isVentana() {
+		return ventana;
+	}
+
+	public void setVentana(boolean ventana) {
+		this.ventana = ventana;
+	}
+
+	public LabelLugares getLugar() {
+		return lugar;
+	}
+
+	public void setLugar(LabelLugares lugar) {
+		this.lugar = lugar;
+	}
 	
 	public Point[] getArrpuertas() {
 		return arrpuertas;
@@ -139,12 +174,15 @@ public class HiloTurno extends Thread {
 			
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
 			System.out.println(CodigoJugadorConTurno+"CodigoJugadorConTurno");
-			CartasBorradas=false;
+			
 			//al inicializar el progrma el jugador con menor codigo tiene el turno
 			if(CodigoJugadorConTurno==-1){
 				if(jugador.getCodigo()==arrjugadores.get(0).getCodigo()){
 				base.modificarturno(con,arrjugadores.get(0).getCodigo(), 1);
 				System.out.println("es el turno de"+arrjugadores.get(0).getUsuario());
+				insertarTrampa(arrjugadores);
+				
+				 base.insertarGanador(con, null, 0, partida.getCodigo());
 //				try {
 //					Thread.sleep( 30000 );
 //				} catch (InterruptedException e) {
@@ -153,6 +191,9 @@ public class HiloTurno extends Thread {
 //				}
 //				
 			}}else{
+				
+			vpanel.dispose();
+			vpanel=new VentanaPanel();
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);
 			CodigoJugadorConTurnoAntiguo=CodigoJugadorConTurno;
 			
@@ -190,6 +231,7 @@ public class HiloTurno extends Thread {
 				
 				System.out.println(mensajePanel);				
 			}
+			
 			System.out.println(mensajePanel+" "+base.ObtenerPanel(con,partida));
 			mensajePanel=base.ObtenerPanel(con,partida);
 			vpanel.setMensaje(mensajePanel);
@@ -199,7 +241,7 @@ public class HiloTurno extends Thread {
 			vpanel.repaint();
 			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL 1");
 			CodigoJugadorConTurno=base.ObtenerCodigoJugadorTurno(con, partida);			
-			ArrayList<Cartas> arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+			ArrayList<String> arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurno );
 			//esperamos a que todos los jugadores envien la carta o le den al boton de no enviar nada
 			if (jugador.getCodigo()==CodigoJugadorConTurno){
 			while(arrcartas.size()!=(arrjugadores.size()-1)){
@@ -211,7 +253,7 @@ public class HiloTurno extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+				arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurno );
 				
 				logger.log(Level.INFO, "compruebo si hay cartas");
 			}
@@ -237,7 +279,7 @@ public class HiloTurno extends Thread {
 					}
 					
 					System.out.println(mensajePanel);	
-					arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+					arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurno );
 					
 				}
 				System.out.println(mensajePanel+" "+base.ObtenerPanel(con,partida));
@@ -277,7 +319,7 @@ public class HiloTurno extends Thread {
 				while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
 					System.out.println("4 while");
 					try {
-						Thread.sleep( 8000 );
+						Thread.sleep( 3000 );
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -287,16 +329,16 @@ public class HiloTurno extends Thread {
 				}
 			}
 			//esperamos un tiempo a que se borren las cartas
-			arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurnoAntiguo);
+			arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurnoAntiguo);
 			while(arrcartas.size()!=0){
 				System.out.println("tercer while");
 				try {
-					Thread.sleep( 8000 );
+					Thread.sleep( 2000 );
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+				arrcartas=base.obtenerNombreCartas(con, partida.getCodigo(),CodigoJugadorConTurno );
 				
 			}
 			}
@@ -319,7 +361,7 @@ public class HiloTurno extends Thread {
 //
 //			}
 			try {
-			Thread.sleep( 8000 );
+			Thread.sleep( 1000 );
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -337,6 +379,7 @@ public class HiloTurno extends Thread {
 	public void acaba() {
 		jugando = false;
 	}
+	
 	public void CambiarTurno(){
 		for(int i=0;i<arrjugadores.size();i++){
 			if(CodigoJugadorConTurno==arrjugadores.get(i).getCodigo()){
@@ -350,8 +393,12 @@ public class HiloTurno extends Thread {
 				}
 				pulsado=false;
 				acusar=false;
+				resolver=false;
+				ventana=false;
 				dado=-1;
 
+				lugar.setSeleccionado(false);
+				lugar.repaint();
 				
 				
 			}
@@ -372,7 +419,13 @@ public class HiloTurno extends Thread {
 		}return null;
 	}
 		
-	
+	public void insertarTrampa (ArrayList<Jugador> arrjug){
+		
+		for (Jugador j:arrjug){
+			
+			base.insertarTrampa(con, j.getUsuario(), j.getCodigoPartida(), 0);
+		}
+	}
 	
 	
 

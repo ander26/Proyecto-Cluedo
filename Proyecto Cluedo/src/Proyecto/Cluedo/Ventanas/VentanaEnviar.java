@@ -123,6 +123,8 @@ public class VentanaEnviar extends JFrame {
 		ArrayList<Cartas> CartasRecibidas;
 		CartasRecibidas=base.obtenerCartasEnviadas(conexion,p.getCodigo(), j.getCodigo());
 		for(int i=0;i<CartasRecibidas.size();i++){
+			
+			
 			ImageIcon imagefondo = new ImageIcon(ventana.class.getResource("Imagenes/MaskX_1.png"));			
 			panelrosa pan=new panelrosa(imagefondo.getImage());
 			JPanel panel=new JPanel();

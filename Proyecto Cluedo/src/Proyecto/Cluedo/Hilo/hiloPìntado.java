@@ -13,13 +13,14 @@ import javax.swing.JLabel;
 import Proyecto.Cluedo.Datos.Partida;
 import Proyecto.Cluedo.Logica.GestionBaseDeDatos;
 import Proyecto.Cluedo.Logica.Jugador;
+import Proyecto.Cluedo.Ventanas.LabelLugares;
 import Proyecto.Cluedo.Ventanas.Panelcirculos;
 import Proyecto.Cluedo.Ventanas.VentanaTablero;
 
 public class hiloPìntado extends Thread {
 
 	private int contador = 0;
-	
+
 	private Clip clip;
 
 	private boolean acabado = true;
@@ -63,17 +64,16 @@ public class hiloPìntado extends Thread {
 	private boolean hecho1 = false;
 
 	private boolean inicio;
-	
+
 	private JLabel ficha;
 
-	
-	private ArrayList<Jugador> arrjug;
-	
-	private JLabel [] arrfich;
-	
-	
-	private Panelcirculos panel;
+	private boolean comprobador;
 
+	private ArrayList<Jugador> arrjug;
+
+	private JLabel[] arrfich;
+
+	private Panelcirculos panel;
 
 	private static final int ANCHURA = 1920;
 
@@ -83,10 +83,6 @@ public class hiloPìntado extends Thread {
 
 	private int altura;
 
-
-	
-	
-	
 	public Clip getClip() {
 		return clip;
 	}
@@ -161,7 +157,8 @@ public class hiloPìntado extends Thread {
 
 	public hiloPìntado(JLabel semaforo, JLabel labelDado, JLabel labelAcusar, JLabel trainera, Partida p, Jugador j,
 
-			Connection conexion, int anchura, JLabel traineraUPV,ArrayList<Jugador> arrjug,JLabel [] arrfich,int altura,Panelcirculos panel) {
+			Connection conexion, int anchura, JLabel traineraUPV, ArrayList<Jugador> arrjug, JLabel[] arrfich,
+			int altura, Panelcirculos panel, boolean comprobador) {
 
 		this.semaforo = semaforo;
 		this.labelDado = labelDado;
@@ -172,28 +169,27 @@ public class hiloPìntado extends Thread {
 		this.conexion = conexion;
 		this.anchura = anchura;
 		this.traineraUPV = traineraUPV;
-		this.arrfich=arrfich;
-		this.arrjug=arrjug;
-		this.panel=panel;
+		this.arrfich = arrfich;
+		this.arrjug = arrjug;
+		this.panel = panel;
 
 		this.altura = altura;
-		
-	
+
+		this.comprobador = comprobador;
 
 		turno = -1;
 	}
 
 	public void run() {
-		if(base.ObtenerCodigoJugadorTurno(conexion, p)==-1){
+		if (comprobador) {
 			System.out.println("entro");
-			//meterFicha(arrjug, anchura, altura);
-			System.out.println("tamaño"+arrjug.size());
+			// meterFicha(arrjug, anchura, altura);
+			System.out.println("tamaño" + arrjug.size());
 			colocarFichaInicio(arrjug, anchura, altura);
 			panel.repaint();
 		}
 
 		if (base.obtenerAccion(conexion, p)) {
-			
 
 			if (turno != base.ObtenerCodigoJugadorTurno(conexion, p)) {
 
@@ -323,15 +319,13 @@ public class hiloPìntado extends Thread {
 
 			int posicion = base.posicionBarco(conexion, p);
 
-			trainera.setBounds(reajustarAnchura(posicion, anchura), reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura),
-					reajustarTamañoAlt(95, altura));
+			trainera.setBounds(reajustarAnchura(posicion, anchura), reajustarAltura(510, altura),
+					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(95, altura));
 
-			traineraUPV.setBounds((reajustarAnchura(posicion,anchura)+2*traineraUPV.getWidth()), reajustarAltura(510, altura),
-					reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
+			traineraUPV.setBounds((reajustarAnchura(posicion, anchura) + 2 * traineraUPV.getWidth()),
+					reajustarAltura(510, altura), reajustarTamañoAnch(250, anchura), reajustarTamañoAlt(100, altura));
 		}
 
-	
-		
 		while (acabado) {
 
 			int entrada = base.obtenerTurno(conexion, j);
@@ -361,13 +355,11 @@ public class hiloPìntado extends Thread {
 							}
 						}
 
-
-
 						int posicion = base.posicionBarco(conexion, p);
 
 						trainera.setLocation(reajustarAnchura(posicion, anchura), trainera.getY());
 
-						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())), traineraUPV.getY());
+						traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())), traineraUPV.getY());
 
 						seguir = true;
 
@@ -389,13 +381,11 @@ public class hiloPìntado extends Thread {
 							}
 						}
 
-						
-
 						int posicion = base.posicionBarco(conexion, p);
 
 						trainera.setLocation(reajustarAnchura(posicion, anchura), trainera.getY());
 
-						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())) , traineraUPV.getY());
+						traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())), traineraUPV.getY());
 
 						seguir = true;
 					}
@@ -427,7 +417,7 @@ public class hiloPìntado extends Thread {
 						icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 								traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())), trainera.getY());
+						traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())), trainera.getY());
 
 						traineraUPV.setIcon(icono);
 
@@ -458,8 +448,7 @@ public class hiloPìntado extends Thread {
 						icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
 								traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
-						
-						traineraUPV.setLocation((trainera.getX() + (2*traineraUPV.getWidth())), trainera.getY());
+						traineraUPV.setLocation((trainera.getX() + (2 * traineraUPV.getWidth())), trainera.getY());
 
 						traineraUPV.setIcon(icono);
 
@@ -477,7 +466,7 @@ public class hiloPìntado extends Thread {
 			// System.out.println(base.ObtenerCodigoJugadorTurno(conexion, p));
 
 			if (turno != base.ObtenerCodigoJugadorTurno(conexion, p)) {
-				colocarFicha(arrjug,arrfich);
+				colocarFicha(arrjug, arrfich);
 				panel.repaint();
 
 				turno = base.ObtenerCodigoJugadorTurno(conexion, p);
@@ -731,7 +720,7 @@ public class hiloPìntado extends Thread {
 									animacion3 = false;
 									clip.stop();
 									ficha.setLocation(reajustarAnchura(1251 - 28, anchura),
-											reajustarAlturaFicha(673-32, panel.getHeight()));
+											reajustarAlturaFicha(673 - 32, panel.getHeight()));
 									ficha.repaint();
 									base.modificarAccion(conexion, p, false);
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
@@ -803,40 +792,45 @@ public class hiloPìntado extends Thread {
 					hecho1 = false;
 
 					if (orientacion) {
-						
-//						if (anchura<ANCHURA){
-//						trainera.setLocation(trainera.getX() - 1, trainera.getY());
-//
-//						trainera.repaint();
-//
-//						traineraUPV.setLocation(traineraUPV.getX() - 1, trainera.getY());
-//
-//						traineraUPV.repaint();
-//						}else{
-						
-						int posi= base.posicionBarco(conexion, p);
-							
-							trainera.setLocation((reajustarAnchura(posi, anchura) - 1), trainera.getY());
 
-							trainera.repaint();
-							if (reajustarAnchura(posi,anchura)<(anchura-(2*reajustarAnchura(250, anchura)))||inicio){
-								
-								if (reajustarAnchura(posi,anchura)<(anchura-(2*reajustarAnchura(250, anchura)))){
-									inicio=false;
-								}
-								
-								
-								
-							traineraUPV.setLocation(((reajustarAnchura(posi, anchura)+(2*traineraUPV.getWidth())) - 1), trainera.getY());
+						// if (anchura<ANCHURA){
+						// trainera.setLocation(trainera.getX() - 1,
+						// trainera.getY());
+						//
+						// trainera.repaint();
+						//
+						// traineraUPV.setLocation(traineraUPV.getX() - 1,
+						// trainera.getY());
+						//
+						// traineraUPV.repaint();
+						// }else{
+
+						int posi = base.posicionBarco(conexion, p);
+
+						trainera.setLocation((reajustarAnchura(posi, anchura) - 1), trainera.getY());
+
+						trainera.repaint();
+						if (reajustarAnchura(posi, anchura) < (anchura - (2 * reajustarAnchura(250, anchura)))
+								|| inicio) {
+
+							if (reajustarAnchura(posi, anchura) < (anchura - (2 * reajustarAnchura(250, anchura)))) {
+								inicio = false;
+							}
+
+							traineraUPV.setLocation(
+									((reajustarAnchura(posi, anchura) + (2 * traineraUPV.getWidth())) - 1),
+									trainera.getY());
 
 							traineraUPV.repaint();
-					}else{
-							traineraUPV.setLocation(reajustarAnchura(250, anchura)-(anchura-reajustarAnchura(posi, anchura)), trainera.getY());
+						} else {
+							traineraUPV.setLocation(
+									reajustarAnchura(250, anchura) - (anchura - reajustarAnchura(posi, anchura)),
+									trainera.getY());
 
-							traineraUPV.repaint();}
-								
-							
-//						}
+							traineraUPV.repaint();
+						}
+
+						// }
 
 						if (trainera.getX() <= reajustarAnchura(-250, anchura)) {
 							trainera.setLocation(anchura, trainera.getY());
@@ -849,38 +843,42 @@ public class hiloPìntado extends Thread {
 						}
 
 					} else {
-						
-//						if (anchura<ANCHURA){
-//						trainera.setLocation(trainera.getX() + 1, trainera.getY());
-//
-//						trainera.repaint();
-//
-//						traineraUPV.setLocation(traineraUPV.getX() + 1, trainera.getY());
-//
-//						traineraUPV.repaint();
-//
-//						}else{
-							
+
+						// if (anchura<ANCHURA){
+						// trainera.setLocation(trainera.getX() + 1,
+						// trainera.getY());
+						//
+						// trainera.repaint();
+						//
+						// traineraUPV.setLocation(traineraUPV.getX() + 1,
+						// trainera.getY());
+						//
+						// traineraUPV.repaint();
+						//
+						// }else{
+
 						int posi2 = base.posicionBarco(conexion, p);
-						
-							trainera.setLocation((reajustarAnchura(posi2, anchura) + 1), trainera.getY());
 
-							trainera.repaint();
+						trainera.setLocation((reajustarAnchura(posi2, anchura) + 1), trainera.getY());
 
-							if (reajustarAnchura(posi2, anchura)<anchura-2*reajustarAnchura(250, anchura)){
-								
-								
-							traineraUPV.setLocation(((reajustarAnchura(posi2, anchura)+(2*traineraUPV.getWidth())) + 1), trainera.getY());
+						trainera.repaint();
 
-							traineraUPV.repaint();}else{
-								traineraUPV.setLocation(reajustarAnchura(250, anchura)-(anchura-reajustarAnchura(posi2, anchura)), trainera.getY());
+						if (reajustarAnchura(posi2, anchura) < anchura - 2 * reajustarAnchura(250, anchura)) {
 
-								traineraUPV.repaint();
-							}
-							
-							
-							
-//						}
+							traineraUPV.setLocation(
+									((reajustarAnchura(posi2, anchura) + (2 * traineraUPV.getWidth())) + 1),
+									trainera.getY());
+
+							traineraUPV.repaint();
+						} else {
+							traineraUPV.setLocation(
+									reajustarAnchura(250, anchura) - (anchura - reajustarAnchura(posi2, anchura)),
+									trainera.getY());
+
+							traineraUPV.repaint();
+						}
+
+						// }
 						if (trainera.getX() >= anchura) {
 							trainera.setLocation(reajustarAnchura(-250, anchura), trainera.getY());
 							trainera.repaint();
@@ -893,10 +891,8 @@ public class hiloPìntado extends Thread {
 
 					}
 
-					
+					base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 
-						base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
-				
 				}
 			}
 			//
@@ -911,24 +907,26 @@ public class hiloPìntado extends Thread {
 		}
 
 	}
-	
+
 	public void colocarFichaInicio(ArrayList<Jugador> arrjug, int anchura, int altura) {
 		Point[] arr = new Point[5];
-		arr[0] = new Point(66,735);
-		arr[1] = new Point(66,785);
-		arr[2] = new Point(66,835);
-		arr[3] = new Point(116,735);
-		arr[4] = new Point(116,785);
+		arr[0] = new Point(66, 735);
+		arr[1] = new Point(66, 785);
+		arr[2] = new Point(66, 835);
+		arr[3] = new Point(116, 735);
+		arr[4] = new Point(116, 785);
 		for (int i = 0; i < arrjug.size(); i++) {
 			arrfich[i].setLocation(arr[i]);
 			System.out.println(i);
-			base.modificarCoordenada(conexion, arrjug.get(i), (int)(arr[i].getX()), (int)(arr[i].getY()));
+			base.modificarCoordenada(conexion, arrjug.get(i), (int) (arr[i].getX()), (int) (arr[i].getY()));
 		}
 	}
+	
+
 
 	public int reajustarAltura(int coordenada, int altura) {
 
-		double escala = (double)altura / (double) ALTURA;
+		double escala = (double) altura / (double) ALTURA;
 
 		return (int) (coordenada * escala);
 
@@ -944,7 +942,7 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarAlturaMaider(int coordenada, int altura) {
 
-		double escala = (double)altura / (double) ALTURAM;
+		double escala = (double) altura / (double) ALTURAM;
 
 		return (int) (coordenada * escala);
 
@@ -952,7 +950,7 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarTamañoAlt(int tamañoY, int altura) {
 
-		double escala = (double)altura / (double) ALTURA;
+		double escala = (double) altura / (double) ALTURA;
 
 		return (int) (tamañoY * escala);
 
@@ -960,7 +958,7 @@ public class hiloPìntado extends Thread {
 
 	public int reajustarTamañoAnch(int tamañoX, int anchura) {
 
-		double escala = (double)anchura / (double) ANCHURA;
+		double escala = (double) anchura / (double) ANCHURA;
 
 		return (int) (tamañoX * escala);
 
@@ -968,12 +966,11 @@ public class hiloPìntado extends Thread {
 
 	public int desajustarX(int coordenada, int anchura) {
 
-		double escala = (double)ANCHURA /(double)  anchura;
+		double escala = (double) ANCHURA / (double) anchura;
 
 		return (int) (coordenada * escala);
 	}
 
-	
 	public void acabar() {
 
 		acabado = false;
@@ -987,6 +984,7 @@ public class hiloPìntado extends Thread {
 		return (int) (coordenada * escala);
 
 	}
+
 	public int reajustarAnchuraFicha(int coordenada, int anchura) {
 
 		double escala = anchura / (double) 1920;
@@ -994,25 +992,25 @@ public class hiloPìntado extends Thread {
 		return (int) (coordenada * escala);
 
 	}
+
 	public int reajustarTamañoAltMaider(int tamañoY, int altura) {
 
-		double escala = (double)altura / (double) ALTURAM;
+		double escala = (double) altura / (double) ALTURAM;
 
 		return (int) (tamañoY * escala);
 
 	}
 
-	
-	public void colocarFicha(ArrayList<Jugador> arrjug,JLabel [] arrfich){
-		Point [] arr=new Point[arrjug.size()];
-		
-		for(int i=0;i<arrjug.size();i++){
-			arr[i]=base.ObtenerCoordenada(conexion, arrjug.get(i));
+	public void colocarFicha(ArrayList<Jugador> arrjug, JLabel[] arrfich) {
+		Point[] arr = new Point[arrjug.size()];
+
+		for (int i = 0; i < arrjug.size(); i++) {
+			arr[i] = base.ObtenerCoordenada(conexion, arrjug.get(i));
 		}
-		for(int j=0;j<arrjug.size();j++){
-			Point punto=new Point(reajustarAnchuraFicha((int)arr[j].getX()-28,anchura),reajustarAlturaFicha((int)(arr[j].getY()-32),panel.getHeight()));
+		for (int j = 0; j < arrjug.size(); j++) {
+			Point punto = new Point(reajustarAnchuraFicha((int) arr[j].getX() - 28, anchura),
+					reajustarAlturaFicha((int) (arr[j].getY() - 32), panel.getHeight()));
 			arrfich[j].setLocation(punto);
 		}
 	}
 }
-
