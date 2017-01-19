@@ -229,6 +229,7 @@ public class HiloTurno extends Thread {
 				
 				System.out.println(mensajePanel);				
 			}
+			
 			System.out.println(mensajePanel+" "+base.ObtenerPanel(con,partida));
 			mensajePanel=base.ObtenerPanel(con,partida);
 			vpanel.setMensaje(mensajePanel);
