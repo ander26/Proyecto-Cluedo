@@ -1482,7 +1482,7 @@ public class GestionBaseDeDatos {
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {
-				luugar = rs.getInt(0);
+				luugar = rs.getInt(1);
 				logger.log(Level.INFO, "el numero del lugar es" + luugar);
 			}
 

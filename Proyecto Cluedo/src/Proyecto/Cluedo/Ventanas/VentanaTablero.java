@@ -922,16 +922,18 @@ public class VentanaTablero extends JFrame {
 
 						Random r = new Random();
 
-						numero = r.nextInt(7);
+						//numero = r.nextInt(7);
+						numero=1;
 
 						hTurno.setDado(numero);
 
 						while (hTurno.getDado() == 0) {
 							hTurno.setDado(r.nextInt(7));
+							//hTurno.setDado(9);
 						}
 
-						numero = hTurno.getDado();
-
+						//numero = hTurno.getDado();
+						numero=9;
 						System.out.println(hTurno.getDado());
 
 						try {

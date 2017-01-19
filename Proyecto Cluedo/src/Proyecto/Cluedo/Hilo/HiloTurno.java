@@ -165,7 +165,8 @@ public class HiloTurno extends Thread {
 			Point punto= base.ObtenerCoordenada(con, jug);
 			
 			while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){//cambia de turno
-			while(punto==base.ObtenerCoordenada(con, jug) || base.Aacusado(con, partida.getCodigo())==false){
+			while(punto.equals(base.ObtenerCoordenada(con, jug)) && base.Aacusado(con, partida.getCodigo())==false){
+				System.out.println("0 while");
 				try {
 					Thread.sleep( 3000 );
 				} catch (InterruptedException e) {
@@ -173,9 +174,12 @@ public class HiloTurno extends Thread {
 					e.printStackTrace();
 				}
 			}
+			System.out.println("salgo 0 while");
+			punto= base.ObtenerCoordenada(con, jug);
 				if(estaEn(punto,arrpuertas)){
+					
 			//esperamos a que cambie el panel
-			while(base.Aacusado(con, partida.getCodigo())==false){//si no esta en linea no funciona
+			while(base.Aacusado(con, partida.getCodigo())==false){
 				System.out.println("primer while");
 				try {
 					Thread.sleep( 5000 );
@@ -232,7 +236,9 @@ public class HiloTurno extends Thread {
 						e.printStackTrace();
 					}
 					
-					System.out.println(mensajePanel);				
+					System.out.println(mensajePanel);	
+					arrcartas=base.obtenerCartasEnviadas(con, partida.getCodigo(),CodigoJugadorConTurno );
+					
 				}
 				System.out.println(mensajePanel+" "+base.ObtenerPanel(con,partida));
 				
@@ -241,9 +247,11 @@ public class HiloTurno extends Thread {
 			mensajePanel=base.ObtenerPanel(con,partida);
 			vpanel.setMensaje(mensajePanel);
 			mensajePanel=base.ObtenerPanel(con,partida);
+			if(jugador.getCodigo()!=CodigoJugadorConTurno){
+				vpanel.setVisible(true);
+				vpanel.repaint();
+			}
 			
-			vpanel.setVisible(true);
-			vpanel.repaint();
 			logger.log(Level.INFO, "MENSAJE INTRODUCIDO EN EL PANEL 2");
 			
 			//esperamos un tiempo y cambiamos de turno

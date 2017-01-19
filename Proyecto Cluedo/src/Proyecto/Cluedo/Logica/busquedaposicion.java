@@ -91,9 +91,9 @@ public class busquedaposicion {
 		arr77.add(new Point(274,407));
 		hm.put(new Point(321,391), arr77);
 		ArrayList<Point> arr82= new ArrayList<Point>();
-		arr82.add(new Point(209,255));
+		arr82.add(new Point(230,288));
 		arr82.add(new Point(241,121));
-		hm.put(new Point(230,288), arr82);
+		hm.put(new Point(209,255), arr82);
 		ArrayList<Point> arr83= new ArrayList<Point>();
 		arr83.add(new Point(295,104));
 		arr83.add(new Point(209,255));

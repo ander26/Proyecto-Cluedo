@@ -125,6 +125,8 @@ public class VentanaEnviar extends JFrame {
 		for(int i=0;i<CartasRecibidas.size();i++){
 			ImageIcon imagefondo = new ImageIcon(ventana.class.getResource("Imagenes/MaskX_1.png"));			
 			panelrosa pan=new panelrosa(imagefondo.getImage());
+			JPanel panel=new JPanel();
+			panel.setOpaque(false);
 			pan.setLayout(new BorderLayout());
 			pan.setOpaque(false);
 			JLabel label=new JLabel();
@@ -133,14 +135,15 @@ public class VentanaEnviar extends JFrame {
 			label.setSize(227,283);
 			Icon icono = new ImageIcon(iconocarta.getImage().getScaledInstance(label.getWidth()	, label.getHeight(), Image.SCALE_DEFAULT));
 			label.setIcon(icono);
-			pan.add(label,BorderLayout.CENTER);
+			panel.add(label);
+			pan.add(panel,BorderLayout.CENTER);
 			paneldentropri.add(pan);
 			label.repaint();
 			paneldentropri.repaint();
 			
 		}
 
-		base.modificarPanel(conexion, "<html><body>El jugador "+j.getUsuario()+"<br> ha recibido "+CartasRecibidas.size()+"<br> cartas ", p);			
+		base.modificarPanel(conexion, "<html><body><br> <br> El jugador "+j.getUsuario()+"<br> ha recibido "+CartasRecibidas.size()+" cartas ", p);			
 
 		
 	}
