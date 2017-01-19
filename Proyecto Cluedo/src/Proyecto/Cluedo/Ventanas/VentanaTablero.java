@@ -635,8 +635,8 @@ public class VentanaTablero extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				System.out.println(reajustarAnchura(e.getX(), anchura));
-				System.out.println(reajustarImagen(e.getY(), altura));
+//				System.out.println(reajustarAnchura(e.getX(), anchura));
+//				System.out.println(reajustarImagen(e.getY(), altura));
 
 				// Point punto=new Point(e.getX(),e.getY());
 				// System.out.println(punto.getX()+" "+punto.getY());
@@ -1029,8 +1029,8 @@ public class VentanaTablero extends JFrame {
 							//hTurno.setDado(9);
 						}
 
-						//numero = hTurno.getDado();
-						numero=9;
+						numero = hTurno.getDado();
+//						numero=9;
 						System.out.println(hTurno.getDado());
 
 						try {
