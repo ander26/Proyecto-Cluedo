@@ -466,6 +466,7 @@ public class hiloPìntado extends Thread {
 			// System.out.println(base.ObtenerCodigoJugadorTurno(conexion, p));
 
 			if (turno != base.ObtenerCodigoJugadorTurno(conexion, p)) {
+				
 				colocarFicha(arrjug, arrfich);
 				panel.repaint();
 

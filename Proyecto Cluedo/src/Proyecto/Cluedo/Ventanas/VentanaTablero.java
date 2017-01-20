@@ -1813,7 +1813,9 @@ public class VentanaTablero extends JFrame {
 						
 						
 						
-						
+						while (pintar.isAnimacion1()||pintar.isAnimacion2()||pintar.isAnimacion3()||pintar.isAnimacion4()){
+							
+						}
 						
 						
 						
