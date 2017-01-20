@@ -467,9 +467,10 @@ public class hiloPìntado extends Thread {
 
 			if (turno != base.ObtenerCodigoJugadorTurno(conexion, p)) {
 				
+				if(animacion1||animacion2||animacion3||animacion4){
 				colocarFicha(arrjug, arrfich);
 				panel.repaint();
-
+				}
 				turno = base.ObtenerCodigoJugadorTurno(conexion, p);
 
 				if (j.getCodigo() == turno) {
@@ -628,6 +629,7 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(reajustarAnchura(1391 - 28, anchura),
 											reajustarAlturaFicha(397 - 32, panel.getHeight()));
 									ficha.repaint();
+									base.modificarCoordenada(conexion, j, 1391, 397);
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 									base.modificarAccion(conexion, p, false);
 								}
@@ -675,6 +677,8 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(reajustarAnchura(216 - 28, anchura),
 											reajustarAlturaFicha(637 - 32, panel.getHeight()));
 									ficha.repaint();
+									
+									base.modificarCoordenada(conexion, j, 216, 637);
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 									base.modificarAccion(conexion, p, false);
 								}
@@ -723,6 +727,7 @@ public class hiloPìntado extends Thread {
 									ficha.setLocation(reajustarAnchura(1251 - 28, anchura),
 											reajustarAlturaFicha(673 - 32, panel.getHeight()));
 									ficha.repaint();
+									base.modificarCoordenada(conexion, j, 1251, 673);
 									base.modificarAccion(conexion, p, false);
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 
@@ -777,6 +782,7 @@ public class hiloPìntado extends Thread {
 										ficha.setLocation(reajustarAnchura(86 - 28, anchura),
 												reajustarAlturaFicha(414 - 32, panel.getHeight()));
 										ficha.repaint();
+										base.modificarCoordenada(conexion, j, 86, 414);
 										base.modificarAccion(conexion, p, false);
 										base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 									}

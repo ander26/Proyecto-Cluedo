@@ -1804,7 +1804,7 @@ public class VentanaTablero extends JFrame {
 								}
 
 							}
-						}}
+						}
 						
 						
 						
@@ -1814,7 +1814,12 @@ public class VentanaTablero extends JFrame {
 						
 						
 						while (pintar.isAnimacion1()||pintar.isAnimacion2()||pintar.isAnimacion3()||pintar.isAnimacion4()){
-							
+							try {
+								Thread.sleep(4000);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
 						
 						
@@ -1944,7 +1949,7 @@ public class VentanaTablero extends JFrame {
 
 					}
 
-				}
+				}}
 			
 		});
 	}
