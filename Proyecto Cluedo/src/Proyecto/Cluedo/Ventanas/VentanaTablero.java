@@ -634,13 +634,25 @@ public class VentanaTablero extends JFrame {
 
 		
 
-
-				
-
-						
-			
-		
-
+		// if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
+		// Point
+		// puntoSeleccionado=BuscarPuntoPinchado(e.getX(),e.getY(),anchura,altura);
+		// if(estaEn(puntoSeleccionado,fichasrojas)){
+		// pposiciones.meterOcupado(puntoSeleccionado);
+		// pposiciones.repaint();
+		// }
+		// fichasrojas=new ArrayList<Point>();
+		// base.modificarCoordenada(conexion,
+		// j,(int)(puntoSeleccionado.getY()),((int)puntoSeleccionado.getX()));
+		// ObtenerFichaDeJugador(arrjugadores,
+		// j).setLocation((int)(puntoSeleccionado.getX()-28),(int)(puntoSeleccionado.getY()-16));
+		//
+		// hTurno.CambiarTurno();
+		//
+		// }
+		//
+		//
+		// }
 
 		flechaI.addMouseListener(new MouseAdapter() {
 
@@ -846,10 +858,8 @@ public class VentanaTablero extends JFrame {
 							// hTurno.setDado(9);
 						}
 
-
 						 numero = hTurno.getDado();
 //						numero = 9;
-
 						System.out.println(hTurno.getDado());
 
 						try {
@@ -1795,45 +1805,6 @@ public class VentanaTablero extends JFrame {
 
 							}
 						}}
-					
-//				}else{
-//					System.out.println("cambio lugar");
-//					if(puntoSeleccionado.equals(new Point(241,121)) || puntoSeleccionado.equals(new Point(209,255))){
-//						base.insertarJugadorLugar(conexion, j, p, 8);//campo
-//					}
-//					else if(puntoSeleccionado.equals(new Point(295,104)) || puntoSeleccionado.equals(new Point(629,113))){
-//						base.insertarJugadorLugar(conexion, j, p, 1);//ingenieria
-//					}
-//					else if(puntoSeleccionado.equals(new Point(504,196)) ){
-//						base.insertarJugadorLugar(conexion, j, p, 2);//ade
-//					}
-//					else if(puntoSeleccionado.equals(new Point(1097,289)) || puntoSeleccionado.equals(new Point(1621,185)) ){
-//						base.insertarJugadorLugar(conexion, j, p, 5);//centenario
-//					}
-//					else if(puntoSeleccionado.equals(new Point(1651,325)) || puntoSeleccionado.equals(new Point(1881,334) ) || puntoSeleccionado.equals(new Point(1880,334)) ){
-//						base.insertarJugadorLugar(conexion, j, p, 4);//capilla
-//					}
-//					else if(puntoSeleccionado.equals(new Point(1876,174)) ){
-//						base.insertarJugadorLugar(conexion, j, p, 6);//letras
-//					}
-//					else if(puntoSeleccionado.equals(new Point(573,876)) ){
-//						base.insertarJugadorLugar(conexion, j, p, 9);//zubiarte
-//					}
-//					else if(puntoSeleccionado.equals(new Point(1321,771)) ){
-//						base.insertarJugadorLugar(conexion, j, p, 7);//crai
-//					}
-//					else if(puntoSeleccionado.equals(new Point(855,261)) ){
-//						base.insertarJugadorLugar(conexion, j, p, 3);//L
-//					}
-//					
-//					
-//					
-//				}
-//				
-//			}
-//			
-//		}
-
 						
 						
 						
@@ -1854,7 +1825,7 @@ public class VentanaTablero extends JFrame {
 							hTurno.CambiarTurno();
 
 						} else {
-							if (puntoSeleccionado.equals(new Point(241, 121))
+							if (puntoSeleccionado.equals(new Point(241, 120))
 									|| puntoSeleccionado.equals(new Point(209, 255))) {
 								base.insertarJugadorLugar(conexion, j, p, 8);// campo
 
@@ -3469,5 +3440,3 @@ public class VentanaTablero extends JFrame {
 //// }
 ////
 ////
-////
-//// }//// }
