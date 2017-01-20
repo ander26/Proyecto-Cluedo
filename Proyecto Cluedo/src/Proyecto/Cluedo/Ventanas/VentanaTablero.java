@@ -62,7 +62,7 @@ public class VentanaTablero extends JFrame {
 
 	private Point[] moradas = { new Point(1391, 397), new Point(216, 637), new Point(1251, 673), new Point(86, 414) };
 
-	private ArrayList<Point> arrmorada;
+	private ArrayList<Point> arrmorada= new ArrayList<>();
 	private Point puntoViejo = null;
 
 	private HiloTurno hTurno = null;
@@ -608,17 +608,17 @@ public class VentanaTablero extends JFrame {
 		panelD.add(cuadradoD);
 
 		// pposiciones.add(jugador1);
-
-		pposiciones.add(puentedeusto);
-		pposiciones.add(puentecrai);
-		pposiciones.add(trainera);
-		pposiciones.add(traineraUPV);
-		pposiciones.add(rio);
 		pposiciones.add(Label1);
 		pposiciones.add(Label2);
 		pposiciones.add(Label3);
 		pposiciones.add(Label4);
 		pposiciones.add(Label5);
+		pposiciones.add(puentedeusto);
+		pposiciones.add(puentecrai);
+		pposiciones.add(trainera);
+		pposiciones.add(traineraUPV);
+		pposiciones.add(rio);
+		
 		fondo.add(pposiciones);
 		getContentPane().setLayout(new BorderLayout());
 
@@ -1831,7 +1831,7 @@ public class VentanaTablero extends JFrame {
 
 							hTurno.setLugar(ade);
 
-							if (estaEn(puntoSeleccionado, arrmorada)) {
+							if (base.obtenerAccion(conexion, p)) {
 							} else {
 								hTurno.CambiarTurno();
 							}
