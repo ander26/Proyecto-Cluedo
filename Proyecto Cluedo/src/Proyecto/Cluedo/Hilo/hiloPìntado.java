@@ -468,7 +468,9 @@ public class hiloPìntado extends Thread {
 			if (turno != base.ObtenerCodigoJugadorTurno(conexion, p)) {
 				
 				if(animacion1||animacion2||animacion3||animacion4){
-				colocarFicha(arrjug, arrfich);
+				
+				}else{
+					colocarFicha(arrjug, arrfich);
 				panel.repaint();
 				}
 				turno = base.ObtenerCodigoJugadorTurno(conexion, p);
