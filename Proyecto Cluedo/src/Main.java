@@ -15,14 +15,14 @@ public class Main {
 
 		GestionBaseDeDatos gestion = new GestionBaseDeDatos();
 		Connection conexion = gestion.inicializarLaBase();
-//
-//		 try{
-//		 Statement statement = conexion.createStatement();
-//		 statement.executeUpdate("DROP TABLE IF EXISTS DENUNCIA");
-//		 System.out.println("Se ha borrado bien");
-//		 }catch (Exception e){
-//			 System.out.println("No se ha borrado bien");
-//		 }
+		//
+		// try{
+		// Statement statement = conexion.createStatement();
+		// statement.executeUpdate("DROP TABLE IF EXISTS DENUNCIA");
+		// System.out.println("Se ha borrado bien");
+		// }catch (Exception e){
+		// System.out.println("No se ha borrado bien");
+		// }
 		// String creacion = "CREATE TABLE PARTIDA (NOMBRE text, CODIGO int NOT
 		// NULL PRIMARY KEY, NUMEROJUGADORESMAXIMO int , NUMEROJUGADORESACTUAL
 		// int,POSICIONBARCO real,MENSAJECARTEL text)";
@@ -52,7 +52,7 @@ public class Main {
 		// try{
 		// Statement statament = conexion.createStatement();
 		//
-		// statament.executeUpdate("DELETE FROM CHAT");
+		// statament.executeUpdate("DELETE FROM PARTIDA");
 		//
 		// System.out.println("Se ha borrado todo");
 		//
@@ -248,16 +248,17 @@ public class Main {
 		// String creacion = "CREATE TABLE GANADOR(CODPARTIDA int NOT NULL
 		// PRIMARY KEY,USUARIO text,GANAR int)";
 		// gestion.crearTabla(creacion,conexion);
-		
-//		String creacion = "CREATE TABLE DENUNCIA(CODPARTIDA int NOT NULL ,USUARIO text ,TEXTO text,TIEMPO bigint,PRIMARY KEY(CODPARTIDA,TIEMPO))"; 
-//		gestion.crearTabla(creacion,conexion);
 
-	
-		
-//		String creacion = "CREATE TABLE TRAMPA(CODPARTIDA int NOT NULL,USUARIO text,TRAMPA int,PRIMARY KEY (CODPARTIDA,USUARIO))"; 
-//		gestion.crearTabla(creacion,conexion);
-//		
-		
+		// String creacion = "CREATE TABLE DENUNCIA(CODPARTIDA int NOT NULL
+		// ,USUARIO text ,TEXTO text,TIEMPO bigint,PRIMARY
+		// KEY(CODPARTIDA,TIEMPO))";
+		// gestion.crearTabla(creacion,conexion);
+
+		// String creacion = "CREATE TABLE TRAMPA(CODPARTIDA int NOT
+		// NULL,USUARIO text,TRAMPA int,PRIMARY KEY (CODPARTIDA,USUARIO))";
+		// gestion.crearTabla(creacion,conexion);
+		//
+
 		VentanaLogo ventana = new VentanaLogo();
 		ventana.setVisible(true);
 

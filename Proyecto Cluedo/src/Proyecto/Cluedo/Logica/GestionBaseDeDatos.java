@@ -1188,10 +1188,15 @@ public class GestionBaseDeDatos {
 		try {
 
 			Statement statement = conexion.createStatement();
+			
+			if(obtenerPosicionChat(conexion, c.getCodigoPartida())==-1){
 
-			SQL = "INSERT INTO CHAT VALUES ('" + c.getMensaje() + "'," + c.getFechaEnvio().getTime() + ","
+			SQL = "INSERT INTO CHAT VALUES ('" + c.getMensaje() + "'," +0 + ","
 					+ c.getCodigoPartida() + "," + c.getCodigoJugador() + ",'" + c.getNombreUsuario() + "')";
-
+			}else{
+				SQL = "INSERT INTO CHAT VALUES ('" + c.getMensaje() + "'," + (obtenerPosicionChat(conexion, c.getCodigoPartida())+1) + ","
+						+ c.getCodigoPartida() + "," + c.getCodigoJugador() + ",'" + c.getNombreUsuario() + "')";
+			}
 			statement.executeUpdate(SQL);
 
 			logger.log(Level.INFO, "Se ha añadido correctamente el chat " + SQL);
@@ -1204,6 +1209,35 @@ public class GestionBaseDeDatos {
 
 			e.printStackTrace();
 		}
+	}
+	
+	public int obtenerPosicionChat (Connection conexion,int codigo){
+		
+		String SQL = "";
+		int numero=-1;
+		try{
+			
+			SQL="SELECT MAX(FECHAENVIO) FROM CHAT WHERE CODIGOPARTIDA="+codigo;
+			
+			Statement statement=conexion.createStatement();
+			
+			ResultSet resultado = statement.executeQuery(SQL);
+			
+			while (resultado.next()){
+				
+				numero=resultado.getInt(1);
+			}
+			
+			return numero;
+			
+			
+		}catch (Exception e){
+			System.out.println("Se ha devuelto el -1");
+			return -1;
+			
+			
+		}
+		
 	}
 
 	public ArrayList<String> obtenerChats(Connection conexion, int codigoPartida) {
@@ -1220,7 +1254,7 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			SQL = "SELECT MENSAJE,NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA=" + codigoPartida;
+			SQL = "SELECT MENSAJE,NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA=" + codigoPartida+" ORDER BY FECHAENVIO";
 
 			ResultSet rs = statement.executeQuery(SQL);
 
