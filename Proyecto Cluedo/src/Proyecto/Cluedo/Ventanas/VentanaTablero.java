@@ -60,6 +60,9 @@ public class VentanaTablero extends JFrame {
 	private JLabel[] arrfichas = new JLabel[5];
 	private ArrayList<Point> fichasrojas;
 
+	private Point[] moradas = { new Point(1391, 397), new Point(216, 637), new Point(1251, 673), new Point(86, 414) };
+
+	private ArrayList<Point> arrmorada;
 	private Point puntoViejo = null;
 
 	private HiloTurno hTurno = null;
@@ -100,6 +103,10 @@ public class VentanaTablero extends JFrame {
 
 	public VentanaTablero(Connection conexion, Jugador j, Usuario u, GestionBaseDeDatos base, Partida p,
 			Propiedades prop, boolean inicio) {
+
+		for (int i = 0; i < 4; i++) {
+			arrmorada.add(moradas[i]);
+		}
 
 		arrfichas[0] = Label1;
 		arrfichas[1] = Label2;
@@ -632,8 +639,6 @@ public class VentanaTablero extends JFrame {
 
 		arrlpuerta = new ArrayList(Arrays.asList(hTurno.getArrpuertas()));
 
-		
-
 		// if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
 		// Point
 		// puntoSeleccionado=BuscarPuntoPinchado(e.getX(),e.getY(),anchura,altura);
@@ -675,8 +680,8 @@ public class VentanaTablero extends JFrame {
 					animate.start();
 					mostradoI = true;
 				}
-			}}
-		);
+			}
+		});
 
 		flechaD.addMouseListener(new MouseAdapter() {
 
@@ -848,8 +853,8 @@ public class VentanaTablero extends JFrame {
 
 						Random r = new Random();
 
-						 numero = r.nextInt(7);
-//						numero = 1;
+						numero = r.nextInt(7);
+						// numero = 1;
 
 						hTurno.setDado(numero);
 
@@ -858,8 +863,8 @@ public class VentanaTablero extends JFrame {
 							// hTurno.setDado(9);
 						}
 
-						 numero = hTurno.getDado();
-//						numero = 9;
+						numero = hTurno.getDado();
+						// numero = 9;
 						System.out.println(hTurno.getDado());
 
 						try {
@@ -909,7 +914,7 @@ public class VentanaTablero extends JFrame {
 
 		hiloPìntado pintar = new hiloPìntado(semaforo, labelDado, labelAcusar, trainera, p, j, conexion, anchura,
 
-				traineraUPV, arrjugadores, arrfichas, altura, pposiciones, inicio);
+				traineraUPV, arrjugadores, arrfichas, altura, pposiciones, inicio,hTurno);
 
 		if (base.obtenerOrientacion(conexion, p)) {
 			pintar.setOrientacion(true);
@@ -1291,11 +1296,10 @@ public class VentanaTablero extends JFrame {
 
 				ventanaDenunciar ventana = new ventanaDenunciar(conexion, arrjugadores, p.getCodigo());
 				ventana.setVisible(true);
-				
-				
+
 			}
 		});
-		
+
 		pposiciones.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -1339,15 +1343,14 @@ public class VentanaTablero extends JFrame {
 								reajustarAnchuraFicha((int) puntoSeleccionado.getX() - 28, anchura),
 								reajustarAlturaFicha((int) puntoSeleccionado.getY() - 32, pposiciones.getHeight()));
 
-						
-						
-						
-						
-//						jugador1.setLocation(reajustarAnchura(86 - 28, anchura),
-//								reajustarAlturaFicha(414 - 32, pposiciones.getHeight()));
+						// jugador1.setLocation(reajustarAnchura(86 - 28,
+						// anchura),
+						// reajustarAlturaFicha(414 - 32,
+						// pposiciones.getHeight()));
 						if (barcoX > reajustarAnchura(-110, anchura) && barcoX < reajustarAnchura(250, anchura)) {
 							if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(216 - 28, anchura)
-									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(637 - 32, pposiciones.getHeight())) {
+									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(637 - 32,
+											pposiciones.getHeight())) {
 
 								pintar.setSeguir(false);
 
@@ -1365,8 +1368,8 @@ public class VentanaTablero extends JFrame {
 
 										try {
 
-											imagen = new ImageIcon(
-													VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+											imagen = new ImageIcon(VentanaTablero.class
+													.getResource("Imagenes/traineradeustoInvertida.png"));
 										} catch (Exception p) {
 										}
 										icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
@@ -1380,8 +1383,8 @@ public class VentanaTablero extends JFrame {
 													VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
 										} catch (Exception p) {
 										}
-										icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-												traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(
+												traineraUPV.getWidth(), traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
 										traineraUPV.setIcon(icono);
 
@@ -1444,8 +1447,10 @@ public class VentanaTablero extends JFrame {
 								} else {
 									pintar.setSeguir(true);
 								}
-							} else if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(86 - 28, anchura)
-									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(414 - 32, pposiciones.getHeight())) {
+							} else if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(86 - 28,
+									anchura)
+									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(414 - 32,
+											pposiciones.getHeight())) {
 
 								pintar.setSeguir(false);
 
@@ -1463,8 +1468,8 @@ public class VentanaTablero extends JFrame {
 
 										try {
 
-											imagen = new ImageIcon(
-													VentanaTablero.class.getResource("Imagenes/traineradeustoInvertida.png"));
+											imagen = new ImageIcon(VentanaTablero.class
+													.getResource("Imagenes/traineradeustoInvertida.png"));
 										} catch (Exception p) {
 										}
 										icono = new ImageIcon(imagen.getImage().getScaledInstance(trainera.getWidth(),
@@ -1479,8 +1484,8 @@ public class VentanaTablero extends JFrame {
 													VentanaTablero.class.getResource("Imagenes/traineraUPV.png"));
 										} catch (Exception p) {
 										}
-										icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-												traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(
+												traineraUPV.getWidth(), traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
 										traineraUPV.setIcon(icono);
 
@@ -1603,10 +1608,12 @@ public class VentanaTablero extends JFrame {
 							//
 							//
 							// }
-						} else if (barcoX > reajustarAnchura(1090, anchura) && barcoX < reajustarAnchura(1490, anchura)) {
+						} else if (barcoX > reajustarAnchura(1090, anchura)
+								&& barcoX < reajustarAnchura(1490, anchura)) {
 
 							if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(1391 - 28, anchura)
-									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(397 - 32, pposiciones.getHeight())) {
+									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(397 - 32,
+											pposiciones.getHeight())) {
 
 								pintar.setSeguir(false);
 
@@ -1661,12 +1668,12 @@ public class VentanaTablero extends JFrame {
 
 										try {
 
-											imagen = new ImageIcon(
-													VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
+											imagen = new ImageIcon(VentanaTablero.class
+													.getResource("Imagenes/traineraUPVInvertida.png"));
 										} catch (Exception p) {
 										}
-										icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-												traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(
+												traineraUPV.getWidth(), traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
 										traineraUPV.setIcon(icono);
 
@@ -1703,8 +1710,10 @@ public class VentanaTablero extends JFrame {
 								} else {
 									pintar.setSeguir(true);
 								}
-							} else if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(1251 - 28, anchura)
-									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(673 - 32, pposiciones.getHeight())) {
+							} else if (ObtenerFichaDeJugador(arrjugadores, j).getX() == reajustarAnchura(1251 - 28,
+									anchura)
+									&& ObtenerFichaDeJugador(arrjugadores, j).getY() == reajustarAlturaFicha(673 - 32,
+											pposiciones.getHeight())) {
 
 								pintar.setSeguir(false);
 
@@ -1760,12 +1769,12 @@ public class VentanaTablero extends JFrame {
 
 										try {
 
-											imagen = new ImageIcon(
-													VentanaTablero.class.getResource("Imagenes/traineraUPVInvertida.png"));
+											imagen = new ImageIcon(VentanaTablero.class
+													.getResource("Imagenes/traineraUPVInvertida.png"));
 										} catch (Exception p) {
 										}
-										icono = new ImageIcon(imagen.getImage().getScaledInstance(traineraUPV.getWidth(),
-												traineraUPV.getHeight(), Image.SCALE_DEFAULT));
+										icono = new ImageIcon(imagen.getImage().getScaledInstance(
+												traineraUPV.getWidth(), traineraUPV.getHeight(), Image.SCALE_DEFAULT));
 
 										traineraUPV.setIcon(icono);
 
@@ -1805,31 +1814,27 @@ public class VentanaTablero extends JFrame {
 
 							}
 						}
-						
-						
-						
-						
-						
-						
-						
-						
-						while (pintar.isAnimacion1()||pintar.isAnimacion2()||pintar.isAnimacion3()||pintar.isAnimacion4()){
-							try {
-								Thread.sleep(4000);
-							} catch (InterruptedException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-						
-						
-						
+
+						// while
+						// (pintar.isAnimacion1()||pintar.isAnimacion2()||pintar.isAnimacion3()||pintar.isAnimacion4()){
+						// try {
+						// Thread.sleep(4000);
+						// } catch (InterruptedException e1) {
+						// // TODO Auto-generated catch block
+						// e1.printStackTrace();
+						// }
+						// }
+						//
+
 						puntoViejo = puntoSeleccionado;
 						if (estaEn(puntoSeleccionado, arrlpuerta) == false) {
 
 							hTurno.setLugar(ade);
 
-							hTurno.CambiarTurno();
+							if (estaEn(puntoSeleccionado, arrmorada)) {
+							} else {
+								hTurno.CambiarTurno();
+							}
 
 						} else {
 							if (puntoSeleccionado.equals(new Point(241, 120))
@@ -1949,8 +1954,9 @@ public class VentanaTablero extends JFrame {
 
 					}
 
-				}}
-			
+				}
+			}
+
 		});
 	}
 

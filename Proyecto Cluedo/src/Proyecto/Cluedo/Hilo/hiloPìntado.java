@@ -56,6 +56,8 @@ public class hiloPìntado extends Thread {
 	private boolean animacion3 = false;
 
 	private boolean animacion4 = false;
+	
+	private HiloTurno hTurno;
 
 	private boolean seguir = true;
 
@@ -158,7 +160,7 @@ public class hiloPìntado extends Thread {
 	public hiloPìntado(JLabel semaforo, JLabel labelDado, JLabel labelAcusar, JLabel trainera, Partida p, Jugador j,
 
 			Connection conexion, int anchura, JLabel traineraUPV, ArrayList<Jugador> arrjug, JLabel[] arrfich,
-			int altura, Panelcirculos panel, boolean comprobador) {
+			int altura, Panelcirculos panel, boolean comprobador,HiloTurno hTurno) {
 
 		this.semaforo = semaforo;
 		this.labelDado = labelDado;
@@ -174,6 +176,8 @@ public class hiloPìntado extends Thread {
 		this.panel = panel;
 
 		this.altura = altura;
+		
+		this.hTurno=hTurno;
 
 		this.comprobador = comprobador;
 
@@ -634,6 +638,7 @@ public class hiloPìntado extends Thread {
 									base.modificarCoordenada(conexion, j, 1391, 397);
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 									base.modificarAccion(conexion, p, false);
+									hTurno.CambiarTurno();
 								}
 							}
 						}
@@ -683,6 +688,7 @@ public class hiloPìntado extends Thread {
 									base.modificarCoordenada(conexion, j, 216, 637);
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
 									base.modificarAccion(conexion, p, false);
+									hTurno.CambiarTurno();
 								}
 							}
 
@@ -732,6 +738,7 @@ public class hiloPìntado extends Thread {
 									base.modificarCoordenada(conexion, j, 1251, 673);
 									base.modificarAccion(conexion, p, false);
 									base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
+									hTurno.CambiarTurno();
 
 								}
 							}
@@ -787,6 +794,9 @@ public class hiloPìntado extends Thread {
 										base.modificarCoordenada(conexion, j, 86, 414);
 										base.modificarAccion(conexion, p, false);
 										base.modificarBarco(conexion, p, desajustarX(trainera.getX(), anchura));
+										
+										hTurno.CambiarTurno();
+										
 									}
 								}
 							}
