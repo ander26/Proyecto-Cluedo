@@ -791,6 +791,7 @@ public class hiloPìntado extends Thread {
 
 						}
 					}
+					
 
 					
 				} else {
