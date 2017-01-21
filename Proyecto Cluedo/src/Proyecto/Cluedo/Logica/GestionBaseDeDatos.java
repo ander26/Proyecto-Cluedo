@@ -1349,7 +1349,40 @@ public class GestionBaseDeDatos {
 			return null;
 		}
 	}
+	
+	public Cartas consultaATablaCartasIndividual(Connection conexion, String seleccion) {
+		Cartas c= new Cartas();
 
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT * FROM CARTA";
+
+			if (seleccion != null && !seleccion.equals(""))
+
+				sentSQL = sentSQL + " WHERE " + seleccion;
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+				c = new Cartas();
+
+				c.setNombre(rs.getString("NOMBRE"));
+				c.setRutaIcono(rs.getString("RUTAICONO"));
+				c.setCulpable(rs.getInt("CULPABLE"));
+				c.setTipo(rs.getInt("TIPOCARTA"));
+				
+			}
+			rs.close();
+			statement.close();
+			return c;
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public ArrayList<String> obtenerCartasDeJugador(Connection conexion, int codpartidda, int codjug, int tipo) {
 		System.out.println("entro en obtener cartas de jugador");
 		ArrayList<String> ret = new ArrayList<>();
@@ -1617,6 +1650,8 @@ public class GestionBaseDeDatos {
 		System.out.println("entro en obtener cartan enviadas");
 		ArrayList<String> ret = new ArrayList<>();
 		ArrayList<Cartas> arr = new ArrayList<Cartas>();
+		
+		Cartas c;
 		// String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA
 		// text ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON
 		// DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR
@@ -1645,11 +1680,12 @@ public class GestionBaseDeDatos {
 			statement.close();
 
 			for (int i = 0; i < ret.size(); i++) {
-				if (ret.equals("no carta")) {
+				if (ret.get(i).equals("no carta")) {
 
 				} else {
-					arr = consultaATablaCartas(conexion, "NOMBRE='" + ret.get(i) + "'");
+					c= consultaATablaCartasIndividual(conexion, "NOMBRE='" + ret.get(i) + "'");
 
+					arr.add(c);
 					logger.log(Level.WARNING, "Construyo array Cartas");
 
 				}

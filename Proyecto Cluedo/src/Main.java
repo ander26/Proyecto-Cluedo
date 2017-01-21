@@ -36,6 +36,7 @@ public class Main {
 		// int,MUÑECO text,DIBUJO bytea,ENLINEA boolean)";
 		// gestion.crearTabla(creacion2,conexion);
 		//
+		
 		// String creacion = "CREATE TABLE JUGADOR(COD_JUG int NOT NULL PRIMARY
 		// KEY,COD_PARTIDA int NOT NULL REFERENCES PARTIDA (CODIGO) ON DELETE
 		// CASCADE,NOMBRE_USUARIO text NOT NULL REFERENCES
