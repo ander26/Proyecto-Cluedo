@@ -41,7 +41,7 @@ public class HiloTurno extends Thread {
 
 		
 	
-	private Point [] arrpuertas={new Point(1391,397),new Point(241,121),new Point(209,255),new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1651,325),new Point(1846,174),new Point(1881,334),new Point(1321,771),new Point(573,876),new Point(855,261),new Point(295,104)};
+	private Point [] arrpuertas={new Point(504,196),new Point(629,113),new Point(1097,289),new Point(1621,185),new Point(1651,325),new Point(1846,174),new Point(1881,334),new Point(1321,771),new Point(573,876),new Point(855,261),new Point(295,104)};
 		
 	private int CodigoJugadorConTurnoAntiguo;
 	private boolean MonigoteMovida=false;
@@ -206,7 +206,7 @@ public class HiloTurno extends Thread {
 			Point punto= base.ObtenerCoordenada(con, jug);
 			
 			while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){//cambia de turno
-			while(punto.equals(base.ObtenerCoordenada(con, jug)) && base.Aacusado(con, partida.getCodigo())==false){
+			while(punto.equals(base.ObtenerCoordenada(con, jug)) && base.Aacusado(con, partida.getCodigo())==false && CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
 				System.out.println("0 while");
 				try {
 					Thread.sleep( 3000 );
@@ -269,7 +269,7 @@ public class HiloTurno extends Thread {
 			}
 			}
 			else{
-				while(arrcartas.size()!=(arrjugadores.size()-1) && CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){//espero a que llegeuen las carts
+				while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){//espero a que llegeuen las carts
 					System.out.println("segundo while");
 					try {
 						Thread.sleep( 8000 );
@@ -311,6 +311,7 @@ public class HiloTurno extends Thread {
 				//borrar de la base las cartas enviadas
 				base.borrarCartas(con, partida,CodigoJugadorConTurno );
 				base.borrarAcusacion(con,partida.getCodigo());
+				System.out.println("CAAMBIAR TURNO HILO------------------------------------");
 				CambiarTurno();
 				
 				

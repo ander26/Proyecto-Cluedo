@@ -1611,7 +1611,7 @@ public class GestionBaseDeDatos {
 			statement.close();
 
 			for (int i = 0; i < ret.size(); i++) {
-				if (ret.equals("no carta")) {
+				if (ret.get(i).equals("no carta")) {
 
 				} else {
 					arr = consultaATablaCartas(conexion, "NOMBRE='" + ret.get(i) + "'");

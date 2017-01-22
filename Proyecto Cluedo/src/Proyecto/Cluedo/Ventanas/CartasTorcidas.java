@@ -65,29 +65,23 @@ System.out.println("entro en paint componet");
 				imagen = ImageIO.read(getClass().getResource(ruta));
 				Graphics g3=imagen.getGraphics();
 				//g3.setColor(new Color(255,255,0,100));
-
 //				g3.fillRect(0,0,100,150);
-
 				//g3.fillRect(0,0,100,150);
-				
-//				JPEGImageDecoder decoder=JPEGCodec.createJPEGDecoder(getClass().getResource(ruta));
+				//JPEGImageDecoder decoder=JPEGCodec.createJPEGDecoder(getClass().getResource(ruta));
 //				RescaleOp rop= new RescaleOp(componentes,desplazamiento,null);
 //				BufferedImage destino=rop.filter(imagen, null);
 	    		//Color c2=new Color(blue+20,green,red);
 	    		//.setRGB(0,0, blue);	    		
 				g2.drawImage( imagen, 550,320, 100,150, null );
-	           	
-			} catch (IOException e) {
+	         } catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 //       		BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null),
 //       		        BufferedImage.TYPE_INT_RGB);
-    		
-    		
-    		//bufferedImage.setRGB(0,0,50);
     			
-    		
+    		//bufferedImage.setRGB(0,0,50);
+    		    		
         //g2.drawImage( img, 550,320, 100,150, null );
        	}else{        
        //	BufferedImage bfimg;

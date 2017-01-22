@@ -49,7 +49,7 @@ public class sospechoso extends panelrosa {
 	public JPanel pcentrar=new JPanel();
 	public JPanel pcentrarlamparas=new JPanel();
 	public personaje [] arrsospechoso= new personaje[7];
-	public JLabel lventana=new JLabel("<html><body> <br> <br> <br> <br> <br> <br><br> <br> <br> <br> <br> <br> </body></html>");
+	public JLabel lventana=new JLabel("<html><body> <br> <br> <br> <br> </body></html>");
 	public JLabel lizquierda=new JLabel("          ");
 	public JLabel [] arrhueco=new JLabel[7];
 	public JPanel [] arrpaneles=new JPanel[7];
@@ -169,9 +169,7 @@ public class sospechoso extends panelrosa {
 			public void mousePressed(MouseEvent e) {
 				
 				if(apuntador==9){
-					arrsospechoso[0].setSeleccionado(true);
-					
-					
+					arrsospechoso[0].setSeleccionado(true);					
 				}
 				
 				
@@ -179,13 +177,9 @@ public class sospechoso extends panelrosa {
 					ImageIcon iiconoHUECO = new ImageIcon(sospechoso.class.getResource("Imagenes/hueco.png"));				
 					Icon iconoHUECO = new ImageIcon(iiconoHUECO.getImage().getScaledInstance(arrhueco[apuntador].getWidth()	, arrhueco[apuntador].getHeight(), Image.SCALE_DEFAULT));
 					arrsospechoso[0].setSeleccionado(true);
-					arrsospechoso[apuntador].setSeleccionado(false);
-							
+					arrsospechoso[apuntador].setSeleccionado(false);							
 					arrhueco[apuntador].setIcon(iconoHUECO);
-					arrpaneles[apuntador].add(arrhueco[apuntador]);
-					
-					
-					
+					arrpaneles[apuntador].add(arrhueco[apuntador]);					
 				}
 				
 				System.out.println(apuntador);

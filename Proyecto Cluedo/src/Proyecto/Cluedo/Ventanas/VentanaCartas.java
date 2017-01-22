@@ -46,6 +46,10 @@ public class VentanaCartas extends JFrame {
 	private int poscartas = 0;
 	private int numCartas;
 	private static Logger logger = Logger.getLogger(VentanaCartas.class.getName());
+	private int comodin1=-1;
+	private int comodin2=-1;
+	private boolean comodin1uso=false;
+	private boolean comodin2uso=false;
 	
 	private JLabel noCartas;
 
@@ -498,6 +502,12 @@ public class VentanaCartas extends JFrame {
 
 		int PCcircunferencia = getWidth() / 2;
 		for (int i = 0; i < numCartas; i++) {
+			if(cartasdepalo.get(i).equals("Comodin1") ){
+				comodin1=i;
+			}
+			if(cartasdepalo.get(i).equals("Comodin2")){
+				comodin2=i;
+			}
 			System.out.println(beta);
 			double x = r * Math.cos(beta) + r + 100;
 			double y = r - (r * Math.sin(beta)) + 50;
