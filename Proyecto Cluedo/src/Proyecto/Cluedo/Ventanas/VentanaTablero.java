@@ -665,11 +665,7 @@ public class VentanaTablero extends JFrame {
 
 		arrlpuerta = new ArrayList(Arrays.asList(hTurno.getArrpuertas()));
 
-<<<<<<< HEAD
-		
 
-=======
->>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
 		// if(hTurno.getCodigoJugadorConTurno()==j.getCodigo()){
 		// Point
 		// puntoSeleccionado=BuscarPuntoPinchado(e.getX(),e.getY(),anchura,altura);
@@ -1851,20 +1847,7 @@ public class VentanaTablero extends JFrame {
 
 							}
 						}
-<<<<<<< HEAD
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-=======
+
 
 						// while
 						// (pintar.isAnimacion1()||pintar.isAnimacion2()||pintar.isAnimacion3()||pintar.isAnimacion4()){
@@ -1877,7 +1860,7 @@ public class VentanaTablero extends JFrame {
 						// }
 						//
 
->>>>>>> branch 'master' of https://github.com/ander26/Proyecto-Cluedo.git
+
 						puntoViejo = puntoSeleccionado;
 						if (estaEn(puntoSeleccionado, arrlpuerta) == false) {
 
@@ -2008,7 +1991,8 @@ public class VentanaTablero extends JFrame {
 					}
 
 				}
-			}
+		
+	
 
 		});
 	}
