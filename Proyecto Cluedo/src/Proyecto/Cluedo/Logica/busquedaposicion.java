@@ -156,9 +156,9 @@ public class busquedaposicion {
 	public static void main (String [] args){
 		busquedaposicion aa=new busquedaposicion();
 		ArrayList <Point> ar=new ArrayList<Point>();
-		ar.add(new Point(1097,289));
+		ar.add(new Point(1669,218));
 		ArrayList<Point> res=new ArrayList<Point>();
-		aa.MoverA(new Point(1097,289),6,ar,res);
+		aa.MoverA(new Point(1669,218),3,ar,res);
 		for(int i=0;i<res.size();i++){
 			System.out.println(res.get(i));
 		}

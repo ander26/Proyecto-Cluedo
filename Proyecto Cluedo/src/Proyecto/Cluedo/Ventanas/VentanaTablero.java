@@ -891,7 +891,7 @@ public class VentanaTablero extends JFrame {
 						}
 
 						 numero = hTurno.getDado();
-						numero = 21;
+						
 
 						System.out.println(hTurno.getDado());
 
@@ -1360,7 +1360,7 @@ public class VentanaTablero extends JFrame {
 						if (puntoViejo != null) {
 							fichasrojas.add(puntoViejo);
 						}
-						if(puntoSeleccionado.equals(new Point(241,121))){
+						if(puntoSeleccionado.equals(new Point(241,121)) || puntoSeleccionado.equals(new Point(209,255))){
 							JOptionPane.showMessageDialog(null,"El campo de futbol esta en obras no se puede acusar ahi","obras",JOptionPane.WARNING_MESSAGE);
 						}
 
