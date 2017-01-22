@@ -386,7 +386,16 @@ public class VentanaMenu extends JFrame{
 			}
 		});
 
-		
+		labelConfiguracion.addMouseListener(new MouseAdapter() {
+			
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ventanaSocial ventana = new ventanaSocial();
+				ventana.setVisible(true);
+				
+			}
+		});
 
 	}
 	
