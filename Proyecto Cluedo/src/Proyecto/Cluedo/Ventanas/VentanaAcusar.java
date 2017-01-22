@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -511,6 +512,10 @@ public class VentanaAcusar extends JFrame {
 								base.modificarPuntuacion(con, j.getUsuario(), 50, "+");
 
 								base.borradoFinal(con, p.getCodigo());
+								
+								for (Window window : Window.getWindows()) {
+								    window.dispose();
+								}
 
 							} else {
 								JOptionPane.showMessageDialog(null,

@@ -80,6 +80,8 @@ public class chatHilo extends Thread {
 			String tabla="<html><body>";
 			
 			for (String s: listaMensajes){
+				
+				System.out.println(s);
 //				StringTokenizer tokenizer= new StringTokenizer(s,":");
 //				String nombreusuario=tokenizer.nextToken();
 //				nombreusuario=nombreusuario.replaceAll("<br>", "");

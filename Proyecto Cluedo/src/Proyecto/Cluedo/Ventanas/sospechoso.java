@@ -49,7 +49,9 @@ public class sospechoso extends panelrosa {
 	public JPanel pcentrar=new JPanel();
 	public JPanel pcentrarlamparas=new JPanel();
 	public personaje [] arrsospechoso= new personaje[7];
-	public JLabel lventana=new JLabel("<html><body> <br> <br> <br> <br> </body></html>");
+
+	public JLabel lventana=new JLabel("<html><body> <br> <br> <br>  <br> <br> <br> <br> </body></html>");
+
 	public JLabel lizquierda=new JLabel("          ");
 	public JLabel [] arrhueco=new JLabel[7];
 	public JPanel [] arrpaneles=new JPanel[7];

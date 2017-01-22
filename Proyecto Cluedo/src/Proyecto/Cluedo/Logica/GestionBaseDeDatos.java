@@ -1188,10 +1188,15 @@ public class GestionBaseDeDatos {
 		try {
 
 			Statement statement = conexion.createStatement();
+			
+			if(obtenerPosicionChat(conexion, c.getCodigoPartida())==-1){
 
-			SQL = "INSERT INTO CHAT VALUES ('" + c.getMensaje() + "'," + c.getFechaEnvio().getTime() + ","
+			SQL = "INSERT INTO CHAT VALUES ('" + c.getMensaje() + "'," +0 + ","
 					+ c.getCodigoPartida() + "," + c.getCodigoJugador() + ",'" + c.getNombreUsuario() + "')";
-
+			}else{
+				SQL = "INSERT INTO CHAT VALUES ('" + c.getMensaje() + "'," + (obtenerPosicionChat(conexion, c.getCodigoPartida())+1) + ","
+						+ c.getCodigoPartida() + "," + c.getCodigoJugador() + ",'" + c.getNombreUsuario() + "')";
+			}
 			statement.executeUpdate(SQL);
 
 			logger.log(Level.INFO, "Se ha añadido correctamente el chat " + SQL);
@@ -1204,6 +1209,35 @@ public class GestionBaseDeDatos {
 
 			e.printStackTrace();
 		}
+	}
+	
+	public int obtenerPosicionChat (Connection conexion,int codigo){
+		
+		String SQL = "";
+		int numero=-1;
+		try{
+			
+			SQL="SELECT MAX(FECHAENVIO) FROM CHAT WHERE CODIGOPARTIDA="+codigo;
+			
+			Statement statement=conexion.createStatement();
+			
+			ResultSet resultado = statement.executeQuery(SQL);
+			
+			while (resultado.next()){
+				
+				numero=resultado.getInt(1);
+			}
+			
+			return numero;
+			
+			
+		}catch (Exception e){
+			System.out.println("Se ha devuelto el -1");
+			return -1;
+			
+			
+		}
+		
 	}
 
 	public ArrayList<String> obtenerChats(Connection conexion, int codigoPartida) {
@@ -1220,7 +1254,7 @@ public class GestionBaseDeDatos {
 
 			Statement statement = conexion.createStatement();
 
-			SQL = "SELECT MENSAJE,NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA=" + codigoPartida;
+			SQL = "SELECT MENSAJE,NOMBREUSUARIO FROM CHAT WHERE CODIGOPARTIDA=" + codigoPartida+" ORDER BY FECHAENVIO";
 
 			ResultSet rs = statement.executeQuery(SQL);
 
@@ -1315,7 +1349,40 @@ public class GestionBaseDeDatos {
 			return null;
 		}
 	}
+	
+	public Cartas consultaATablaCartasIndividual(Connection conexion, String seleccion) {
+		Cartas c= new Cartas();
 
+		try {
+
+			Statement statement = conexion.createStatement();
+
+			String sentSQL = "SELECT * FROM CARTA";
+
+			if (seleccion != null && !seleccion.equals(""))
+
+				sentSQL = sentSQL + " WHERE " + seleccion;
+
+			ResultSet rs = statement.executeQuery(sentSQL);
+
+			while (rs.next()) {
+				c = new Cartas();
+
+				c.setNombre(rs.getString("NOMBRE"));
+				c.setRutaIcono(rs.getString("RUTAICONO"));
+				c.setCulpable(rs.getInt("CULPABLE"));
+				c.setTipo(rs.getInt("TIPOCARTA"));
+				
+			}
+			rs.close();
+			statement.close();
+			return c;
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "No se entiende la expresion que se introduce");
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public ArrayList<String> obtenerCartasDeJugador(Connection conexion, int codpartidda, int codjug, int tipo) {
 		System.out.println("entro en obtener cartas de jugador");
 		ArrayList<String> ret = new ArrayList<>();
@@ -1583,6 +1650,8 @@ public class GestionBaseDeDatos {
 		System.out.println("entro en obtener cartan enviadas");
 		ArrayList<String> ret = new ArrayList<>();
 		ArrayList<Cartas> arr = new ArrayList<Cartas>();
+		
+		Cartas c;
 		// String crearecibircartas = "CREATE TABLE RECIBIRCARTAS(NOMBRECARTA
 		// text ,CODJUGADORORIGEN int NOT NULL REFERENCES JUGADOR (COD_JUG) ON
 		// DELETE CASCADE,CODJUGADORDESTINO int NOT NULL REFERENCES JUGADOR
@@ -1614,8 +1683,9 @@ public class GestionBaseDeDatos {
 				if (ret.get(i).equals("no carta")) {
 
 				} else {
-					arr = consultaATablaCartas(conexion, "NOMBRE='" + ret.get(i) + "'");
+					c= consultaATablaCartasIndividual(conexion, "NOMBRE='" + ret.get(i) + "'");
 
+					arr.add(c);
 					logger.log(Level.WARNING, "Construyo array Cartas");
 
 				}
