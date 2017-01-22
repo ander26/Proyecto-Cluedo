@@ -318,6 +318,9 @@ public class VentanaCrearPartida extends JFrame {
 					JOptionPane.showMessageDialog(getContentPane(), "Debe introducir el nombre de la partida para poder crear una","Aviso",JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					
+					Insets insets2 = v.getInsets();
+
+					System.out.println(insets2.top);
 					for (Window window : Window.getWindows()) {
 					    window.dispose();
 					}
@@ -335,9 +338,6 @@ public class VentanaCrearPartida extends JFrame {
 					Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresMaximo(),conexion,gestion,p);
 					
 
-					Insets insets2 = v.getInsets();
-
-					System.out.println(insets2.top);
 					
 					comprobador comp= new comprobador(p,conexion,j,u,base,prop,insets2.top);
 					

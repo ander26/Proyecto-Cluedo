@@ -373,7 +373,9 @@ public class VentanaBuscarPartida extends JFrame {
 		        JTable table = (JTable)e.getSource();
 		        
 		        int modelRow = Integer.valueOf( e.getActionCommand() );
-		        
+		        Insets insets2 = v.getInsets();
+
+				System.out.println(insets2.top);
 		        
 		        for (Window window : Window.getWindows()) {
 				    window.dispose();
@@ -385,9 +387,7 @@ public class VentanaBuscarPartida extends JFrame {
 
 		       //TODO: Hay que hacer aqui para que elija la ficha
 		       
-				Insets insets2 = v.getInsets();
-
-				System.out.println(insets2.top);
+				
 
 		      ArrayList<Icon> arraymunyecos= meterImgEnlabel(listaDeFichas,100,100,conexion,p.getCodigo());
 		      Object [] arraymunyecosdos=arraymunyecos.toArray();
