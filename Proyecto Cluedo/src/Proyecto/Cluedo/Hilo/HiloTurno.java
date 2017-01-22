@@ -206,7 +206,7 @@ public class HiloTurno extends Thread {
 			Point punto= base.ObtenerCoordenada(con, jug);
 			
 			while(CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){//cambia de turno
-			while(punto.equals(base.ObtenerCoordenada(con, jug)) && base.Aacusado(con, partida.getCodigo())==false){
+			while(punto.equals(base.ObtenerCoordenada(con, jug)) && base.Aacusado(con, partida.getCodigo())==false&&CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){
 				System.out.println("0 while");
 				try {
 					Thread.sleep( 3000 );
@@ -214,6 +214,7 @@ public class HiloTurno extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			
 			}
 			System.out.println("salgo 0 while");
 			punto= base.ObtenerCoordenada(con, jug);
@@ -269,7 +270,7 @@ public class HiloTurno extends Thread {
 			}
 			}
 			else{
-				while(arrcartas.size()!=(arrjugadores.size()-1) && CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){//espero a que llegeuen las carts
+				while( CodigoJugadorConTurnoAntiguo==base.ObtenerCodigoJugadorTurno(con, partida)){//espero a que llegeuen las carts
 					System.out.println("segundo while");
 					try {
 						Thread.sleep( 8000 );

@@ -32,14 +32,17 @@ public class comprobador extends Thread {
 	private Usuario u;
 	
 	private Propiedades prop;
+	
+	private int anchuraTitulo;
 
-	public comprobador(Partida p, Connection conexion,Jugador j,Usuario u,GestionBaseDeDatos base,Propiedades prop) {
+	public comprobador(Partida p, Connection conexion,Jugador j,Usuario u,GestionBaseDeDatos base,Propiedades prop,int anchuraTitulo) {
 		this.p = p;
 		this.conexion = conexion;
 		this.j=j;
 		this.u=u;
 		this.base=base;
 		this.prop=prop;
+		this.anchuraTitulo=anchuraTitulo;
 	}
 
 	public void run() {
@@ -96,14 +99,14 @@ public class comprobador extends Thread {
 						System.setProperty("jna.library.path", vlcPath);
 					}
 				}
-			 VideoPlayer player = new VideoPlayer(conexion, j, u, base, p, prop, true); 
+			 VideoPlayer player = new VideoPlayer(conexion, j, u, base, p, prop, true,anchuraTitulo); 
 			player.setVisible(true);
 			
 			
 			
 		 }else{
 			 System.out.println("entro");
-		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop,true);
+		 VentanaTablero tablero = new VentanaTablero(conexion,j,u,base,p,prop,true,anchuraTitulo);
 		 tablero.setVisible(true);
 		
 		 }

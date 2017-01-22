@@ -44,7 +44,7 @@ public class VideoPlayer extends JFrame {
 	
 	
 	public VideoPlayer(Connection conexion, Jugador j, Usuario u, GestionBaseDeDatos base, Partida p,
-			Propiedades prop, boolean inicio) {
+			Propiedades prop, boolean inicio,int anchura) {
 		
 		setUndecorated(true);
 		
@@ -135,7 +135,7 @@ public class VideoPlayer extends JFrame {
 				public void finished(MediaPlayer mediaPlayer) {
 					dispose();
 					
-					VentanaTablero ventana = new VentanaTablero(conexion, j, u, base, p, prop, inicio);
+					VentanaTablero ventana = new VentanaTablero(conexion, j, u, base, p, prop, inicio,anchura);
 					ventana.setVisible(true);
 				}
 				// Hay error en el formato o en el fichero del vídeo

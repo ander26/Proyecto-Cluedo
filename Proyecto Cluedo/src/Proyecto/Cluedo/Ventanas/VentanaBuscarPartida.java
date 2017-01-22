@@ -7,6 +7,7 @@ import java.awt.Desktop.Action;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.ScrollPane;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -266,6 +267,8 @@ public class VentanaBuscarPartida extends JFrame {
 		tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tabla.getColumnModel().getColumn(1).setPreferredWidth(144);
 		
+		JFrame v=this;
+		
 		AbstractAction añadir2 = new AbstractAction()
 		{
 		    public void actionPerformed(ActionEvent e)
@@ -273,6 +276,10 @@ public class VentanaBuscarPartida extends JFrame {
 		        JTable table = (JTable)e.getSource();
 		        int modelRow = Integer.valueOf( e.getActionCommand() );
 		        System.out.println(modelRow);
+		        
+				Insets insets2 = v.getInsets();
+
+				System.out.println(insets2.top);
 		        
 		        for (Window window : Window.getWindows()) {
 				    window.dispose();
@@ -285,7 +292,7 @@ public class VentanaBuscarPartida extends JFrame {
 		       
 		      Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresActual(),conexion,gestion,p);
 				
-		      VentanaTablero ventana = new VentanaTablero(conexion, j, u, gestion, p, prop,false);
+		      VentanaTablero ventana = new VentanaTablero(conexion, j, u, gestion, p, prop,false,insets2.top);
 		      
 		      ventana.setVisible(true);
 		      
@@ -377,6 +384,10 @@ public class VentanaBuscarPartida extends JFrame {
 		        
 
 		       //TODO: Hay que hacer aqui para que elija la ficha
+		       
+				Insets insets2 = v.getInsets();
+
+				System.out.println(insets2.top);
 
 		      ArrayList<Icon> arraymunyecos= meterImgEnlabel(listaDeFichas,100,100,conexion,p.getCodigo());
 		      Object [] arraymunyecosdos=arraymunyecos.toArray();
@@ -395,7 +406,7 @@ public class VentanaBuscarPartida extends JFrame {
 			       	Propiedades prop=new Propiedades(6,8,7,q.getNumeroJugadoresActual(),conexion,gestion,q);
 					
 			       	
-			        comprobador comp= new comprobador(p,conexion,j,u,gestion,prop);
+			        comprobador comp= new comprobador(p,conexion,j,u,gestion,prop,insets2.top);
 
 		      
 		       

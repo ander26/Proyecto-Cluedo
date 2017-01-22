@@ -102,7 +102,7 @@ public class VentanaTablero extends JFrame {
 	// }
 
 	public VentanaTablero(Connection conexion, Jugador j, Usuario u, GestionBaseDeDatos base, Partida p,
-			Propiedades prop, boolean inicio) {
+			Propiedades prop, boolean inicio,int anchuraTitulo) {
 
 		for (int i = 0; i < 4; i++) {
 			arrmorada.add(moradas[i]);
@@ -566,6 +566,27 @@ public class VentanaTablero extends JFrame {
 		// 1358.0/458.0
 		// 1371.0/433.0
 		// 1391.0/397.0
+		
+
+		JPanel  panelEdificios = new JPanel();
+		pposiciones.setBounds(0,0,anchura,altura-anchuraTitulo);
+		
+		panelEdificios.setOpaque(false);
+		panelEdificios.setLayout(null);
+		
+		
+		panelEdificios.add(pposiciones);
+		panelEdificios.add(campo);
+		panelEdificios.add(ade);
+		panelEdificios.add(l);
+		panelEdificios.add(centenario);
+		panelEdificios.add(deLetras);
+		panelEdificios.add(capilla);
+		panelEdificios.add(crai);
+		panelEdificios.add(zubi);
+		
+		
+		
 
 		fondo.setLayout(new BorderLayout());
 		pposiciones.setLayout(null);
@@ -573,14 +594,14 @@ public class VentanaTablero extends JFrame {
 		pposiciones.add(panelD);
 		pposiciones.add(panelSemaforo);
 		panelSemaforo.add(semaforo);
-		pposiciones.add(campo);
-		pposiciones.add(ade);
-		pposiciones.add(l);
-		pposiciones.add(centenario);
-		pposiciones.add(deLetras);
-		pposiciones.add(capilla);
-		pposiciones.add(crai);
-		pposiciones.add(zubi);
+//		pposiciones.add(campo);
+//		pposiciones.add(ade);
+//		pposiciones.add(l);
+//		pposiciones.add(centenario);
+//		pposiciones.add(deLetras);
+//		pposiciones.add(capilla);
+//		pposiciones.add(crai);
+//		pposiciones.add(zubi);
 
 		panelI.setLayout(null);
 		panelD.setLayout(null);
@@ -608,6 +629,8 @@ public class VentanaTablero extends JFrame {
 		panelD.add(cuadradoD);
 
 		// pposiciones.add(jugador1);
+		
+		
 		pposiciones.add(Label1);
 		pposiciones.add(Label2);
 		pposiciones.add(Label3);
@@ -619,7 +642,10 @@ public class VentanaTablero extends JFrame {
 		pposiciones.add(traineraUPV);
 		pposiciones.add(rio);
 		
-		fondo.add(pposiciones);
+//		fondo.add(pposiciones);
+		
+		fondo.add(panelEdificios);
+		
 		getContentPane().setLayout(new BorderLayout());
 
 		getContentPane().add(fondo, BorderLayout.CENTER);
@@ -854,17 +880,17 @@ public class VentanaTablero extends JFrame {
 						Random r = new Random();
 
 						numero = r.nextInt(7);
-						// numero = 1;
+//						 numero = 20;
 
 						hTurno.setDado(numero);
 
 						while (hTurno.getDado() == 0) {
 							hTurno.setDado(r.nextInt(7));
-							// hTurno.setDado(9);
+//							 hTurno.setDado(20);
 						}
 
 						numero = hTurno.getDado();
-						// numero = 9;
+//						 numero = 20;
 						System.out.println(hTurno.getDado());
 
 						try {
@@ -1801,6 +1827,8 @@ public class VentanaTablero extends JFrame {
 											Clip clip = AudioSystem.getClip();
 											clip.open(audioInputStream);
 											clip.start();
+											
+											
 
 										} catch (Exception ex) {
 											System.out.println("Error with playing sound.");

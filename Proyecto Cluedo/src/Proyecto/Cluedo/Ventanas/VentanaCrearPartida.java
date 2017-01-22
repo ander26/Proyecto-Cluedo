@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -95,7 +96,7 @@ public class VentanaCrearPartida extends JFrame {
 		//setUndecorated (true)
 		//Generamos los componentes
 		
-		
+		JFrame v=this;
 		
 		JLabel labelFondo = new JLabel();
 		
@@ -334,7 +335,11 @@ public class VentanaCrearPartida extends JFrame {
 					Propiedades prop=new Propiedades(6,8,7,p.getNumeroJugadoresMaximo(),conexion,gestion,p);
 					
 
-					comprobador comp= new comprobador(p,conexion,j,u,base,prop);
+					Insets insets2 = v.getInsets();
+
+					System.out.println(insets2.top);
+					
+					comprobador comp= new comprobador(p,conexion,j,u,base,prop,insets2.top);
 					
 					
 					
